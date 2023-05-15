@@ -63,7 +63,9 @@ classdef Features
             % f = prctile(v, [0,50,100]);
             m = median(v);
             md = median(abs(v - m));
-            f = [m, md];
+            mx = max(v);
+            mn = min(v);
+            f = [m, md, mx-mn];
         end
 
 
