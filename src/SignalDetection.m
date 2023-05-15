@@ -44,42 +44,6 @@ classdef SignalDetection
             H = SignalDetection.spectralEntropy(S);
             H = smoothdata(H, 2, "movmedian", M);
             [probs, mu_s, mu_ns, sigma_s, sigma_ns, comp_s, comp_ns, n_iter, converged, LL, mon, fmin, fmax, Ht, contam] = SignalDetection.gmmSE(H);
-%             gmm = fitgmdist(H', 2,"RegularizationValue",1e-8, 'Options',statset('Display','off','MaxIter',30,'TolFun',1e-5));
-%             gaussian = @(x, mu, sigma) 1/sqrt(2*pi)/sigma .* exp(-0.5 * ((x-mu)/sigma).^2);
-%             if gmm.mu(2) > gmm.mu(1)
-%                 mu_ns = gmm.mu(2);
-%                 sigma_ns = sqrt(gmm.Sigma(1, 1, 2));
-%                 mu_s = gmm.mu(1);
-%                 sigma_s = sqrt(gmm.Sigma(1, 1, 1));
-%                 comp_ns = gmm.ComponentProportion(2);
-%                 comp_s = gmm.ComponentProportion(1);
-%             else
-%                 mu_ns = gmm.mu(1);
-%                 sigma_ns = sqrt(gmm.Sigma(1, 1, 1));
-%                 mu_s = gmm.mu(2);
-%                 sigma_s = sqrt(gmm.Sigma(1, 1, 2));
-%                 comp_ns = gmm.ComponentProportion(1);
-%                 comp_s = gmm.ComponentProportion(2);
-%             end
-% 
-%             pNS = @(x) gaussian(x, mu_ns, sigma_ns)*comp_ns;
-%             pS = @(x) gaussian(x, mu_s, sigma_s)*comp_s;
-%             %gmmLLR = @(x) log(pS(x) ./ pNS(x));
-%             %sigmoid = @(x) 1./(1 + exp(-x));
-%             %probs = sigmoid(gmmLLR(H));
-%             probs = pS(H) ./ (pNS(H) + pS(H));
-%             converged = gmm.Converged;
-% 
-%             % p(S|H) = p(H|S)*p(S)/(p(H|S)p(S) + p(H|NS)p(NS))
-%             % p(S|H) = p(H|S)*0.5/(p(H|S)*0.5 + p(H|NS)*0.5)
-%             % p(S|H) = p(H|S)/(p(H|S) + p(H|NS))
-%             % p(S|H) = 1/(1 + p(H|NS)/p(H|S))
-%             %
-%             % LLR = log(p(H|S)/p(H|NS))
-%             %
-%             % p(S|H) = sigmoid(LLR)
-%             %
-%             % sigmoid = 1 / (1 + exp(-x))
         end
 
         function [H, probs, mu_ns, mu_s, beta, delta, converged] = softSignalDetectionIt(S, p, M, iter)
@@ -155,34 +119,6 @@ classdef SignalDetection
             P = 1./(1 + exp(Hs));
         end
 
-        function [H, probs, mu_ns, mu_s, beta] = softSignalDetectionAS(S, p, M, niter, noiseThresh, noiseW)
-            % Perform signal detection as before, but iteratively use
-            % better noise estimates to enhance the entropy measure.
-            L = size(S, 2);
-            Snoise = zeros(size(S));
-            %figure
-            Snew = S;
-            for i = 1:niter
-                [~, probs, ~, ~, ~] = SignalDetection.softSignalDetection(Snew, p, M);
-                %weights = probs < noiseThresh;
-                weights = 1 - min(probs/noiseThresh,1);
-                norms = Tools.blockConv(weights', ones(noiseW, 1), L, true)';
-                norms = 1./norms(1:L);
-                Sscale = S .* weights;
-                for i = 1:size(S, 1)
-                    Si = Tools.blockConv(Sscale(i,:)', ones(noiseW, 1), L, true)';
-                    Si = Si(1:L);
-                    Si = Si.*norms;
-                    Snoise(i, :) = Si;
-                end
-                Snew = S-Snoise;
-                Snew = max(Snew, Snoise/2);
-                figure
-                Tools.plotTF(Snew, 1:size(Snoise,1), true, true);
-                %dummy = 1+1;
-            end
-            [H, probs, mu_ns, mu_s, beta] = SignalDetection.softSignalDetection(Snew, p, M);
-        end
 
         function [mon, lim, dir] = isGMMMonotonic(Hmax, Hmin, mu_s, mu_n, sigma_s, sigma_n) 
             lim = (sigma_s^2*mu_n - sigma_n^2*mu_s)/(sigma_s^2 - sigma_n^2);

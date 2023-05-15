@@ -36,6 +36,7 @@ classdef POI
             "FrequencyRange",[POI.f1, POI.f2]);
 
         MFCCNumCoeff = 20;
+
     end
 
     methods(Static)
@@ -57,34 +58,11 @@ classdef POI
         end
 
         function n = time2psindex(t)
-            n = floor(t*POI.fs/(POI.Nfft - POI.Noverlap));
+            n = POI.index2psindex(t*POI.fs);
         end
 
         function n = index2psindex(idx)
             n = floor(idx/(POI.Nfft - POI.Noverlap));
-        end
-
-        function P = DatasetPower(files)
-            for i = 1:2
-                idx = [files.Dataset] == i;
-                dsfiles = files(idx);
-                p = 0;
-                N = size(dsfiles, 1);
-
-                wb = waitbar(0);
-                parforWaitbar(wb, N);
-                wtq = parallel.pool.DataQueue;
-                afterEach(wtq,@parforWaitbar);
-
-                parfor j = 1:N
-                    fname = convertCharsToStrings(dsfiles(j).name);
-                    x = audioread(POI.Path + fname);
-                    p = p + sum(x.^2)/numel(x)/N;
-                    send(wtq, []);
-                end
-                P(i) = p;
-                delete(wb);
-            end
         end
 
         function [files] = DatasetInfo()
@@ -102,8 +80,6 @@ classdef POI
             x = audioread(fname, [s e])*poi.NormFactor;
         end
 
-       
-
         function [S, f, t] = PowerSpectrum(x)
             Nfft = POI.Nfft;
             Noverlap = POI.Noverlap;
@@ -112,8 +88,6 @@ classdef POI
             S = S.*conj(S)/POI.Nfft;
             t = (0:size(S, 2)-1)*(POI.Nfft - POI.Noverlap)/POI.fs;
         end
-
-         
 
         function [x, S, f, t] = plotPOI(poi)
             x = POI.loadPOI(poi);
@@ -130,18 +104,43 @@ classdef POI
             Smed = smoothdata(Smed, "gaussian", POI.SMedSmooth);
         end
 
-        function res = FindPOI(type, ds, poi_idx, whiten)
-
+        function createSpectrograms(ds)
             path = POI.Path;
+            files = POI.DatasetInfo();
+            files = files([files.Dataset] == ds);            
+            for i = 1:numel(files)
+                f = files(i);
+                name = f.name;
+                names(i) = convertCharsToStrings(name);
+                namesWithoutType(i) = convertCharsToStrings(name(1:end-4));
+                times(i) = datetime(namesWithoutType(i), InputFormat="yyyyMMdd_HHmmss_SSSS");
+            end
+            wb = waitbar(0);
+            parforWaitbar(wb, N);
+            wtq = parallel.pool.DataQueue;
+            afterEach(wtq,@parforWaitbar);
+            N = numel(names);
+            parfor n = 1:N
+                [x, ~] = audioread(p);
+                if numel(x) == 4194304
+                    [S, f, t] = POI.PowerSpectrum(x);
+                    m = matfile(path + sprintf("/spectrograms/%d/", ds) + namesWithoutType(n) + ".mat", 'Writable',true);
+                    m.S = S;
+                    m.f = f;
+                    m.t = t;
+                end
+                send(wtq, []);
+            end
+            delete(wb);
+        end
 
+        function res = FindPOI(ds, poi_idx, whiten)
+            path = POI.Path;
             M = POI.M;
-            f1 = POI.f1;
-            f2 = POI.f2;
-            R = POI.R;
             L = POI.L;
 
             files = POI.DatasetInfo();
-            if nargin >= 2
+            if nargin >= 1
                 files = files([files.Dataset] == ds);
             end
 
@@ -168,10 +167,7 @@ classdef POI
             afterEach(wtq,@parforWaitbar);
 
             fs = 2000;
-            fs = fs/R;
-
-            Nfft = POI.Nfft;
-            k1 = POI.k1; %account for matlab indexing
+            k1 = POI.k1;
             k2 = POI.k2;
 
             res = {};
@@ -182,12 +178,6 @@ classdef POI
                 t = times(i);
 
                 [x, ~] = audioread(p);
-                norm = 1/POI.DatasetAvgPower(files(i).Dataset);
-                x = x*norm;
-
-                if R>1
-                    x = resample(x, 1, R);
-                end
 
                 Nx = numel(x);
                 n = 1;
@@ -203,31 +193,10 @@ classdef POI
                     if whiten
                         S = S./Smed;
                     end
-                    probs = nan;
-                    mu_ns= nan;
-                    mu_s= nan;
-                    sigma_ns= nan;
-                    sigma_s= nan;
-                    pi_ns= nan;
-                    pi_s= nan;
-                    converged= nan;
-                    n_iter= nan;
-                    LL= nan;
-                    mon= nan;
-                    fmin= nan;
-                    fmax= nan;
-                    Ht= nan;
-                    contam= nan;
-                    delta = nan;
-                    H = nan;
 
-                    if type == "kmeans"
-                        [H, probs, mu_ns, mu_s, ~, delta, converged] = SignalDetection.softSignalDetectionIt(S(k1:k2, :), 0.999, M, 15);
+                    [H, probs, mu_ns, mu_s, sigma_ns, sigma_s, pi_ns, pi_s, converged, n_iter, LL, mon, fmin, fmax, Ht, contam] = SignalDetection.softSignalDetectionGMM(S(k1:k2, :), M);
+                    delta = mu_ns - mu_s;
 
-                    elseif type == "gmm"
-                        [H, probs, mu_ns, mu_s, sigma_ns, sigma_s, pi_ns, pi_s, converged, n_iter, LL, mon, fmin, fmax, Ht, contam] = SignalDetection.softSignalDetectionGMM(S(k1:k2, :), M);
-                        delta = mu_ns - mu_s;
-                    end
                     reschunk{j} = struct('StartTime', t + seconds((n-1)/fs), ...
                         'SignalMean', mu_s, 'NoSignalMean', mu_ns, 'MeanDelta', ...
                         delta, 'SignalStd', sigma_s, 'NoSignalStd', sigma_ns,'LogLikelihood', LL,...
@@ -290,68 +259,7 @@ classdef POI
 
         end
 
-        function sampleClustersWav(T, k, Nsamples, ds)
-            path = POI.Path;
-            dsstring = "dataset" + string(ds);
-            mkdir("clustersamples/wav/", dsstring);
-            mkdir("clustersamples/wav/" + dsstring + "/","all");
-            TClust = {};
-            for c = 1:k
-                TClust{c} = T(T.Cluster == c, :);
-            end
-            parfor c = 1:k
-                Tc = TClust{c};
-                Nt = size(Tc, 1);
-                if Nt ~= 0
-                    Ns = min(Nsamples, Nt);
-                    plotidx = randperm(Nt, Ns);
-                    X = [];
-                    mkdir("clustersamples/wav/" + dsstring + "/",string(c));
-                    for i = 1:Ns
-                        idx = plotidx(i);
-                        ti = Tc(idx, :);
-                        % Tc(idx, "File")
-                        fname = path+ti.File;
 
-                        info = audioinfo(fname);
-                        s = ti.Start - 200;
-                        e = ti.End + 200;
-                        if s < 1
-                            s = 1;
-                        end
-                        if e > info.TotalSamples
-                            e = info.TotalSamples;
-                        end
-                        [x , fs]= audioread(fname, [s, e]);
-                        [S, f]= POI.PowerSpectrum(x);
-                        t = (0:size(S, 2)-1)/fs*(POI.Nfft - POI.Noverlap);
-                        fig = figure;
-                        set(gcf,'Visible','off')
-                        Tools.plotTF(S, f, false, true, t)
-                        title(sprintf("f0 = %.1f Hz, Dur = %.2f s", ti.Freq(2), ti.Duration))
-                        saveas(fig, sprintf("clustersamples/wav/%s/%d/%d.png", dsstring, c, i));
-                        xnorm = (x-mean(x, 1));
-                        xnorm = xnorm/max(abs(xnorm));
-                        audiowrite(sprintf("clustersamples/wav/%s/%d/%d.wav", dsstring, c, i), xnorm, POI.fs);
-                        X = [X; xnorm/2];
-                        close(fig);
-                    end
-                    fig = figure;
-                    set(gcf,'Visible','off')
-                    fig.Position = [0 0 1800 900]
-                    [S, f]= POI.PowerSpectrum(X);
-                    t = (0:size(S, 2)-1)/fs*(POI.Nfft - POI.Noverlap);
-                    Tools.plotTF(S, f, false, true, t)
-                    title(sprintf("All sampled snippets (%d)", size(Tc,1)))
-                    saveas(fig, sprintf("clustersamples/wav/%s/%d/ALL.png", dsstring, c));
-                    saveas(fig, sprintf("clustersamples/wav/%s/all/%d.png", dsstring, c));
-                    close(fig);
-                    audiowrite(sprintf("clustersamples/wav/%s/%d/ALL.wav", dsstring, c), X, POI.fs);
-                    audiowrite(sprintf("clustersamples/wav/%s/all/%d.wav", dsstring, c), X, POI.fs);
-                end
-            end
-
-        end
 
         function poi = DiscardPOIData(poi, p, plt)
             poi = poi([poi.Converged]);
@@ -381,7 +289,7 @@ classdef POI
                     fprintf("File %s found. Loading detections.\n", fname)
                     load(fname)
                 end
-            end                
+            end
 
             if ~isfile(fname30)
                 fprintf("File %s not found. Performing discard.\n", fname30)
