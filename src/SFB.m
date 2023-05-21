@@ -9,8 +9,15 @@ classdef SFB < handle
         T %time invariance in ms, i.e., 1/flp
         fs %sampling frequency
         fc %center frequencies
-        psi %modified bandpass IRs
+        psi %unmodified bandpass IRs
+        fpsi %frequency indices of Psi
+        Psi %modified bank of fft(psi)
         phi %invariance scale filter
+        fphi %frequency indices of Phi
+        Phi %fft(phi)
+        Npsi %number of points to convolve with psi
+        Nphi %number of points to colvolve with phi
+        N %signal length
         flow %lowest frequency
         fhigh %highest frequency
         Npsiir %number of points in psi impulse reponse
@@ -24,38 +31,31 @@ classdef SFB < handle
 
     methods(Static)
         function g = gauss(t, sigma)
-            g = single(exp(-(t/sigma).^2)/sqrt(2*pi)/sigma);
+            g = single(exp(-(t/sigma).^2)*sqrt(pi)/sigma*2);
         end
 
         %TODO USE conv ON GPU SINCE IT IS MUCH MUCH FASTER
 
-        function y = convrefl(x, h, Nir)            
-            xrl = fliplr(x(:, 2:Nir));
-            xrr = fliplr(x(:, end-Nir:end-1));
+        function y = convrefl(x, fb, Nir)
+            x = x(:)'; %make sure its 1xN
+            xrl = fliplr(x(2:Nir));
+            xrr = fliplr(x(end-Nir:end-1));
             x = [xrl, x, xrr]; %reflected boundary
-            Npad = (Nir-1)/2;
-            if size(x, 1) == 1
-                y = gpuArray(zeros(size(h,1), size(x,2) + 2*Npad));            
-                for i = 1:size(h,1)
-                    y(i, :) = conv(x, h(i,:));
-                end
-            else
-                y = gpuArray(zeros(size(x,1), size(x,2) + 2*Npad));            
-                for i = 1:size(x,1)
-                    y(i, :) = conv(x(i,:), h);
-                end
-            end
-            y = y(:, (Npad + Nir + (Nir-1)/2):(end - Npad - (Nir-1)/2) - 1); %align the convolution and strip away edges
+            X = fft(x);
+            U = X.*fb;
+            y = ifft(U, size(U, 2), 2);
+            y = y(:, (Nir + (Nir-1)/2):(end- (Nir-1)/2) - 1); %align the convolution and strip away edges
         end
     end
 
     methods
-        function obj = SFB(Q, T, fs, flow, fhigh)
+        function obj = SFB(Q, T, fs, N, flow, fhigh)
             obj.Q = Q;
             obj.T = T;
             obj.fs = fs;
+            obj.N = N;
             obj.flow = flow;
-            if nargin < 5
+            if nargin < 6
                 obj.fhigh = obj.fs/2;
             else
                 obj.fhigh = fhigh;
@@ -87,15 +87,21 @@ classdef SFB < handle
             n = -nmax:nmax;
             t = n / obj.fs;
             obj.phi = obj.gauss(t, sigma_t);
-            obj.phi = obj.phi(:)'; %make sure its 1xNphiir
+            obj.phi = obj.phi(); %make sure its 1xNphiir
+            obj.Phi = fft(gpuArray(obj.phi), obj.Nphi, 2);
+            obj.fphi = (0:obj.Nphi-1)/obj.Nphi*obj.fs;
         end
 
         function setIRLengths(obj)
             sigma_t = 2*obj.Q/obj.lambdas(1);
             t_range = obj.sigmaRange * sigma_t;
-            obj.Npsiir = floor(t_range * obj.fs)*2 + 1;
+            obj.Npsiir = floor(t_range * obj.fs)*2 + 1;   
+
             t_range = obj.sigmaRange * obj.T/2;
             obj.Nphiir = floor(t_range * obj.fs)*2 + 1;
+
+            obj.Npsi = 2*obj.Npsiir + obj.N - 1;
+            obj.Nphi = 2*obj.Nphiir + obj.N - 1;
         end
 
         function setLambdasExponential(obj)                     
@@ -115,26 +121,26 @@ classdef SFB < handle
             for i = 1:numel(obj.fc)
                 obj.psi(i, :) = obj.morlet(obj.lambdas(i));
             end
-            %set energy content above nyquist to 0
-            obj.psi = fft(gpuArray(obj.psi), obj.Npsiir, 2);
-            kmid = ceil(obj.Npsiir/2);
-%             obj.psi(:, kmid+1:end) = 0;
-            obj.psi = gpuArray(ifft(obj.psi, obj.Npsiir, 2));
+            obj.Psi = fft(gpuArray(obj.psi), obj.Npsi, 2);
+            kmid = ceil(obj.Npsi/2);
+            obj.Psi(:, kmid+1:end) = 0;
+            obj.Psi = gpuArray(obj.Psi);
+            obj.fpsi = (0:obj.Npsi-1)/obj.Npsi*obj.fs;
         end
 
         function u = filterU(obj, x)
-            u = abs(obj.convrefl(x, obj.psi, obj.Npsiir));
+            x = gpuArray(single(x));
+            u = gather(abs(obj.convrefl(x, obj.Psi, obj.Npsiir)));
         end
 
         function s = filterS(obj, x)
-            x = x(:)'; %make sure its 1xN
             x = gpuArray(single(x));
             u = obj.filterU(x);
-            s = obj.convrefl(u, obj.phi, obj.Nphiir);
+            s = real(obj.convrefl(x, obj.Phi, obj.Nphiir));
             %downsample
             fT = 1/obj.T/obj.fs; %normalized bandwidth
             R = floor(1/fT/2); %downsampling factor
-            s = gather(s(:, 1:R:end));
+            s = gather(u(:, 1:R:end));
         end
 
         function plot(obj)
