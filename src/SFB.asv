@@ -34,13 +34,14 @@ classdef SFB < handle
             g = single(exp(-(t/sigma).^2)/sqrt(2*pi)/sigma);
         end
 
-        function y = convrefl(x, fb, Nir)            
-            xrl = fliplr(x(:,2:Nir));
-            xrr = fliplr(x(:, end-Nir:end-1));
+        function y = convrefl(x, fb, Nir)
+            x = x(:)'; %make sure its 1xN
+            xrl = fliplr(x(2:Nir));
+            xrr = fliplr(x(end-Nir:end-1));
             x = [xrl, x, xrr]; %reflected boundary
-            X = fft(x, size(x, 2), 2);
-            Y = X.*fb;
-            y = ifft(Y, size(Y, 2), 2);
+            X = fft(x);
+            U = X.*fb;
+            y = ifft(U, size(U, 2), 2);
             y = y(:, (Nir + (Nir-1)/2):(end- (Nir-1)/2) - 1); %align the convolution and strip away edges
         end
     end
@@ -131,17 +132,14 @@ classdef SFB < handle
 
         function s = filterS(obj, x)
             x = x(:)'; %make sure it's 1xN
-            Norig = numel(x);
-            Npad = obj.N - Norig;            
-            x = [x; zeros(1, Npad)];
+            Npad = 
             x = gpuArray(single(x));
             u = obj.filterU(x);
             s = real(obj.convrefl(u, obj.Phi, obj.Nphiir));
-            s = s(:, 1:Norig);
             %downsample
             fT = 1/obj.T/obj.fs; %normalized bandwidth
             R = floor(1/fT/2); %downsampling factor
-            s = gather(s(:, 1:R:end));
+            s = gather(u(:, 1:R:end));
         end
 
         function plot(obj)
