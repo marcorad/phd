@@ -15,18 +15,18 @@ classdef SFB < handle
         phi %invariance scale filter
         fphi %frequency indices of Phi
         Phi %fft(phi)
-        Npsi %number of points to convolve with psi
-        Nphi %number of points to colvolve with phi
         N %signal length
         flow %lowest frequency
         fhigh %highest frequency
-        Npsiir %number of points in psi impulse reponse
-        Nphiir %number of points in phi impulse reponse
         lambdas %center frequencies in rad/s
+        psiBWHz %bandwidths of all the filters in Hz
+        psiTimeSupport %time support of psi fb
+        downsampleS %downsampling factor of U
+        downsamplePhi %dowmsampling factor after calcuting s*phi
     end
 
     properties(Constant)
-        sigmaRange = 5
+        sigmaRange = 4
     end
 
     methods(Static)
@@ -41,7 +41,8 @@ classdef SFB < handle
             X = fft(x, size(x, 2), 2);
             Y = X.*fb;
             y = ifft(Y, size(Y, 2), 2);
-            y = y(:, (Nir + (Nir-1)/2):(end- (Nir-1)/2) - 1); %align the convolution and strip away edges
+            half = ceil((Nir-1)/2);
+            y = y(:, Nir + half:end - half - 1); %align the convolution and strip away edges
         end
     end
 
@@ -52,56 +53,53 @@ classdef SFB < handle
             obj.fs = fs;
             obj.N = N;
             obj.flow = flow;
-            if nargin < 6
-                obj.fhigh = obj.fs/2;
-            else
-                obj.fhigh = fhigh;
-            end            
+            obj.fhigh = fhigh;        
             obj.setLambdasExponential();
-            obj.setIRLengths();
             obj.constructFB();
             obj.constructInvarianceFilter();
         end
 
         function th = theta(obj, t)
-            th = SFB.gauss(t, 2*obj.Q);%sigma_t = 2*Q, sigma_w = 1/Q
+            th = SFB.gauss(t, 4*obj.Q);%sigma_t = 4*Q, sigma_w = 2/Q
         end
 
         %if lamda=1, then this is for 1 rad/s
         %for now, we don't care about the minimum scale
-        function [psi, n, t] = morlet(obj, lambda)
-            nmax = (obj.Npsiir - 1)/2;
-            n = -nmax:nmax;
-            t = n / obj.fs;
-            Thm1 = obj.gauss(-1, 1/obj.Q);
-            Th0 = obj.gauss(0, 1/obj.Q);
+        function [psi, t] = morlet(obj, lambda, t)      
+            Thm1 = obj.gauss(-1, 2/obj.Q);
+            Th0 = obj.gauss(0, 2/obj.Q);
             psi =  single(lambda *( exp(1j*lambda*t) - Thm1/Th0) .* obj.theta(t*lambda));
         end
 
         function constructInvarianceFilter(obj)
+            t_range = obj.sigmaRange * obj.T/2;
+            Nphiir = floor(t_range * obj.fs)*2 + 1;
+
             sigma_t = obj.T/2; %in the paper, T = 1/flp -> a=T/2
-            nmax = (obj.Nphiir - 1)/2;
+            nmax = (Nphiir - 1)/2;
             n = -nmax:nmax;
             t = n / obj.fs;
+
             obj.phi = obj.gauss(t, sigma_t);
             obj.phi = obj.phi(); %make sure its 1xNphiir
-            obj.Phi = fft(gpuArray(obj.phi), obj.Nphi, 2);
-            obj.fphi = (0:obj.Nphi-1)/obj.Nphi*obj.fs;
+
+            obj.phi = obj.phi(1,1:obj.downsampleS:end); %downsample to highest BW of filterbank
+            obj.phi = obj.phi/sum(obj.phi); %normalise to averaging filter
+
+            Nphi = 2*size(obj.phi, 2) + ceil(obj.N/obj.downsampleS) - 1;
+            
+            obj.Phi = fft(gpuArray(obj.phi), Nphi, 2);
+            obj.fphi = (0:Nphi-1)/Nphi*obj.fs/obj.downsampleS;
+            
+            %critcally downsample
+            fT = 1/obj.T/(obj.fs/obj.downsampleS); %normalized bandwidth
+            obj.downsamplePhi = floor(1/fT/2); %downsampling factor
+
         end
 
-        function setIRLengths(obj)
-            sigma_t = 2*obj.Q/obj.lambdas(1);
-            t_range = obj.sigmaRange * sigma_t;
-            obj.Npsiir = floor(t_range * obj.fs)*2 + 1;   
 
-            t_range = obj.sigmaRange * obj.T/2;
-            obj.Nphiir = floor(t_range * obj.fs)*2 + 1;
+        function setLambdasExponential(obj)            
 
-            obj.Npsi = 2*obj.Npsiir + obj.N - 1;
-            obj.Nphi = 2*obj.Nphiir + obj.N - 1;
-        end
-
-        function setLambdasExponential(obj)                     
             obj.lambdas(1) = obj.flow*2*pi;
             k = 1;  
             while obj.lambdas(k) < obj.fhigh * 2*pi
@@ -110,56 +108,74 @@ classdef SFB < handle
             end
             obj.lambdas = flipud(obj.lambdas(1:end-1));
             obj.fc = obj.lambdas/2/pi;
+            obj.psiBWHz = obj.fc/obj.Q;
+
+            bw = max(obj.psiBWHz);
+            obj.downsampleS = floor(obj.fs/2/bw);
+            obj.psiTimeSupport = 4 * obj.Q ./ obj.fc/2/pi;
         end
 
         function constructFB(obj)
+            sigma_t = 4*obj.Q/obj.lambdas(1);
+            t_range = obj.sigmaRange * sigma_t;
+            Npsiir = floor(t_range * obj.fs)*2 + 1; 
+            nmax = (Npsiir - 1)/2;
+            n = -nmax:nmax;
+            t = n / obj.fs;
+
             %psi filterbank
-            obj.psi = zeros(numel(obj.fc), obj.Npsiir);
             for i = 1:numel(obj.fc)
-                obj.psi(i, :) = obj.morlet(obj.lambdas(i));
+                obj.psi(i, :) = obj.morlet(obj.lambdas(i), t)/obj.fs*2;
             end
-            obj.Psi = fft(gpuArray(obj.psi), obj.Npsi, 2);
-%             kmid = ceil(obj.Npsi/2);
-%             obj.Psi(:, kmid+1:end) = 0;
+                        
+            Npsi = 2*Npsiir + obj.N - 1;
+            obj.Psi = fft(gpuArray(obj.psi), Npsi, 2);
             obj.Psi = gpuArray(obj.Psi);
-            obj.fpsi = (0:obj.Npsi-1)/obj.Npsi*obj.fs;
+            obj.fpsi = (0:Npsi-1)/Npsi*obj.fs;            
         end
 
         function u = filterU(obj, x)
-            u = abs(obj.convrefl(x, obj.Psi, obj.Npsiir));
+            u = abs(obj.convrefl(x, obj.Psi, size(obj.psi, 2)));
         end
 
+        function t = getTime(obj, s)
+            t = (0:size(s,2)-1)*(obj.downsamplePhi*obj.downsampleS)/obj.fs;
+        end
+
+
         function s = filterS(obj, x)
+            %prepare x
             x = x(:)'; %make sure it's 1xN
             Norig = numel(x);
             Npad = obj.N - Norig;            
             x = [x; zeros(1, Npad)];
             x = gpuArray(single(x));
+
+            %get Ux and downsample to find Sx
             u = obj.filterU(x);
-            s = real(obj.convrefl(u, obj.Phi, obj.Nphiir));
-            s = s(:, 1:Norig);
-            %downsample
-            fT = 1/obj.T/obj.fs; %normalized bandwidth
-            R = floor(1/fT/2); %downsampling factor
-            s = gather(s(:, 1:R:end));
+            u = u(:, 1:obj.downsampleS:end);
+            s = real(obj.convrefl(u, obj.Phi, size(obj.phi, 2)));
+            s = s(:, 1:floor(Norig/obj.downsampleS));
+            
+            s = gather(s(:, 1:obj.downsamplePhi:end));            
         end
 
         function plot(obj)
             figure
-            subplot(221)
-            plot(0:obj.Nphiir-1, obj.phi)
-            subplot(222)
-            plot(obj.fphi, abs(obj.Phi)/obj.Nphi)
+            subplot(321)
+            plot(0:size(obj.phi, 2)-1, obj.phi)
+            subplot(322)
+            plot(obj.fphi, abs(obj.Phi))
+            xlim([0, obj.fs/2/obj.downsampleS])
+
+            subplot(323)
+            plot(obj.fpsi, abs(sum(obj.Psi, 1)))
+            subplot(324)
+            plot(obj.fpsi, abs(obj.Psi))
             xlim([0, obj.fs/2])
 
-            subplot(223)
-            hold on
-            plot(0:obj.Npsiir-1, real(obj.psi))
-            plot(0:obj.Npsiir-1, imag(obj.psi))
-            hold off
-            subplot(224)
-            plot(obj.fpsi, abs(obj.Psi)/obj.Npsi)
-            xlim([0, obj.fs/2])
+            subplot(3, 2, [5,6])
+            plot(0:size(obj.psi, 2)-1, abs(obj.psi))
         end
 
     end
