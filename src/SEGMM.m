@@ -65,20 +65,20 @@ classdef SEGMM < handle
             obj.n_iter = 0;
             while obj.n_iter < SignalDetection.MaxGMMIter
                 p_s = obj.pi_s * normpdf(obj.H, obj.mu_s, obj.sigma_s);
-                p_ns = obj.pi_n * normpdf(obj.H, obj.mu_n, obj.sigma_n);
+                p_n = obj.pi_n * normpdf(obj.H, obj.mu_n, obj.sigma_n);
                 LL_prev = obj.LL;
-                obj.LL = sum(log(p_s + p_ns));
+                obj.LL = sum(log(p_s + p_n));
                 if abs(obj.LL - LL_prev) < 1e-6
                     break;
                 end
-                gamma_s = p_s ./ (p_s + p_ns);
-                gamma_ns = 1 - gamma_s;
+                gamma_s = p_s ./ (p_s + p_n);
+                gamma_n = 1 - gamma_s;
                 N_s = sum(gamma_s);
-                N_ns = N - N_s;
+                N_n = N - N_s;
                 obj.mu_s = sum(gamma_s .* obj.H) / N_s;
-                obj.mu_n = sum(gamma_ns .* obj.H) / N_ns;
+                obj.mu_n = sum(gamma_n .* obj.H) / N_n;
                 obj.sigma_s = sqrt(sum(gamma_s .* (obj.H - obj.mu_s).*(obj.H - obj.mu_s))/N_s);
-                obj.sigma_n = sqrt(sum(gamma_ns .*(obj.H - obj.mu_n).*(obj.H - obj.mu_n))/N_ns);
+                obj.sigma_n = sqrt(sum(gamma_n .*(obj.H - obj.mu_n).*(obj.H - obj.mu_n))/N_n);
                 obj.pi_s = N_s/N;
                 obj.pi_n = 1 - obj.pi_s;
                 obj.n_iter = obj.n_iter + 1;
@@ -89,7 +89,7 @@ classdef SEGMM < handle
                 [obj.mu_n, obj.mu_s] = swap(obj.mu_n, obj.mu_s);
                 [obj.sigma_n, obj.sigma_s] = swap(obj.sigma_n, obj.sigma_s);
                 [obj.pi_n, obj.pi_s] = swap(obj.pi_n, obj.pi_s);
-                obj.probs = gamma_ns;
+                obj.probs = gamma_n;
             end
 
             %Take care of the monotonicity problems
