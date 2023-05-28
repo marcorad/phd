@@ -17,8 +17,6 @@ classdef DataLoader < handle
         audiowtq
         spectrowtq
 
-        fb
-
     end
 
     methods
@@ -36,8 +34,6 @@ classdef DataLoader < handle
                 obj.audioIdx = ThreadIdx(numel(obj.audiolist), DataLoader.Nthreads);
                 obj.spectroIdx = ThreadIdx(numel(obj.spectrogramlist), DataLoader.Nthreads);
             end
-            load(sprintf("%s\\filterbank.mat", DataLoader.spectrogrampath));
-            obj.fb = fb;
         end
 
         function [D, info] = loadAudio(obj, idx)
@@ -64,14 +60,14 @@ classdef DataLoader < handle
 
         function startAudioWaitbar(obj)
             wb = waitbar(0);
-            parforWaitbar(wb, numel(obj.audiolist));
+            parforWaitbar(wb, N);
             obj.audiowtq = parallel.pool.DataQueue;
             afterEach(obj.audiowtq,@parforWaitbar);
         end
 
-        function startSpectrogramWaitbar(obj)
+        function startSpectroWaitbar(obj)
             wb = waitbar(0);
-            parforWaitbar(wb, numel(obj.spectrogramlist));
+            parforWaitbar(wb, N);
             obj.spectrowtq = parallel.pool.DataQueue;
             afterEach(obj.spectrowtq,@parforWaitbar);
         end

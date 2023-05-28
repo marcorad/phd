@@ -30,8 +30,8 @@ classdef ThreadIdx < handle
             obj.curr(tid) = idx + 1;
         end
 
-        function c = complete(tid)
-            c = obj.curr(tid) == obj.endix(tid) + 1;
+        function c = complete(obj,tid)
+            c = obj.curr(tid) == obj.endidx(tid) + 1;
         end
 
     end
