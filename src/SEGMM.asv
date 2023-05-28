@@ -16,17 +16,19 @@ classdef SEGMM < handle
         n_iter %iterations for convergence
         LL %model log-likelihood
         mon %is the posterior monotonic
-        fmin %minimum value of the pos
-        fmax
-        Ht
-        contam
-        Hmin
-        Hmax
-        dir
-        lim
-        pi_n
-        pi_s
-        f
+        fmin %minimum value of the posterior
+        fmax %maximum value of the posterior
+        Ht %thresholded to set entropy for binary detection
+        contam %amount of class contaminamation
+        Hmin %minimum entropy
+        Hmax %maximum entropy
+        dir %direction in which the posterior is not monotonic
+        lim %the value at which monotonicity breaks
+        pi_n %proportion of noise
+        pi_s %proportion of signal
+        f %the posterior function
+        x %values to evaluate the posterior function
+        pdf %PDF evaluated at x
     end
 
     methods
@@ -64,20 +66,20 @@ classdef SEGMM < handle
             obj.n_iter = 0;
             while obj.n_iter < SignalDetection.MaxGMMIter
                 p_s = obj.pi_s * normpdf(obj.H, obj.mu_s, obj.sigma_s);
-                p_ns = obj.pi_n * normpdf(obj.H, obj.mu_n, obj.sigma_n);
+                p_n = obj.pi_n * normpdf(obj.H, obj.mu_n, obj.sigma_n);
                 LL_prev = obj.LL;
-                obj.LL = sum(log(p_s + p_ns));
+                obj.LL = sum(log(p_s + p_n));
                 if abs(obj.LL - LL_prev) < 1e-6
                     break;
                 end
-                gamma_s = p_s ./ (p_s + p_ns);
-                gamma_ns = 1 - gamma_s;
+                gamma_s = p_s ./ (p_s + p_n);
+                gamma_n = 1 - gamma_s;
                 N_s = sum(gamma_s);
-                N_ns = N - N_s;
+                N_n = N - N_s;
                 obj.mu_s = sum(gamma_s .* obj.H) / N_s;
-                obj.mu_n = sum(gamma_ns .* obj.H) / N_ns;
+                obj.mu_n = sum(gamma_n .* obj.H) / N_n;
                 obj.sigma_s = sqrt(sum(gamma_s .* (obj.H - obj.mu_s).*(obj.H - obj.mu_s))/N_s);
-                obj.sigma_n = sqrt(sum(gamma_ns .*(obj.H - obj.mu_n).*(obj.H - obj.mu_n))/N_ns);
+                obj.sigma_n = sqrt(sum(gamma_n .*(obj.H - obj.mu_n).*(obj.H - obj.mu_n))/N_n);
                 obj.pi_s = N_s/N;
                 obj.pi_n = 1 - obj.pi_s;
                 obj.n_iter = obj.n_iter + 1;
@@ -88,17 +90,13 @@ classdef SEGMM < handle
                 [obj.mu_n, obj.mu_s] = swap(obj.mu_n, obj.mu_s);
                 [obj.sigma_n, obj.sigma_s] = swap(obj.sigma_n, obj.sigma_s);
                 [obj.pi_n, obj.pi_s] = swap(obj.pi_n, obj.pi_s);
-                obj.probs = gamma_ns;
+                obj.probs = gamma_n;
             end
 
             %Take care of the monotonicity problems
-            obj.Hmin = min(obj.H);
-            obj.Hmax = max(obj.H);
             obj.determineMonotonicity();
-            x = linspace(obj.Hmin, obj.Hmax, 1000);
-            obj.modifiedPosterior(x)
-            obj.fmax = max(obj.f);
-            obj.fmin = min(obj.f);
+            obj.modifiedPosterior()
+
             if obj.dir == "min"
                 obj.probs(obj.H < obj.lim) = obj.fmax;
             elseif obj.dir == "max"
@@ -106,20 +104,24 @@ classdef SEGMM < handle
             end
 
             obj.contam = obj.pi_n*normcdf(obj.Ht, obj.mu_n, obj.sigma_n)/(obj.pi_s*normcdf(obj.Ht, obj.mu_s, obj.sigma_s));
+            obj.calculatePDF()
         end
 
-        function modifiedPosterior(obj, x)
-            ps = normpdf(x, obj.mu_s, obj.sigma_s) * obj.pi_s;
-            pn = normpdf(x, obj.mu_n, obj.sigma_n) * obj.pi_n;
+        function modifiedPosterior(obj)
+            obj.x = linspace(obj.Hmin, obj.Hmax, 1000);
+            ps = normpdf(obj.x, obj.mu_s, obj.sigma_s) * obj.pi_s;
+            pn = normpdf(obj.x, obj.mu_n, obj.sigma_n) * obj.pi_n;
             obj.f = ps./(pn+ps);
             obj.fmax = max(obj.f);
             obj.fmin = min(obj.f);
-            if obj.dir == "min"
-                obj.f(obj.f < obj.lim) = obj.fmax;
-            elseif obj.dir == "max"
-                obj.f(obj.f > obj.lim) = obj.fmin;
+            if ~obj.mon
+                if obj.dir == "min"
+                    obj.f(obj.f < obj.lim) = obj.fmax;
+                elseif obj.dir == "max"
+                    obj.f(obj.f > obj.lim) = obj.fmin;
+                end
             end
-            obj.Ht = x(find(obj.f <= SignalDetection.PosteriorThresh, 1, "first"));
+            obj.Ht = obj.x(find(obj.f <= SEGMM.PosteriorThresh, 1, "first"));
         end
 
         function determineMonotonicity(obj)
@@ -131,6 +133,11 @@ classdef SEGMM < handle
                 obj.dir = "min";
                 obj.mon = obj.Hmin > obj.lim;
             end
+        end
+
+        function calculatePDF(obj)
+            obj.pdf(1, :) = normpdf(obj.x, obj.mu_s, obj.sigma_s);
+            obj.pdf(2, :) = normpdf(obj.x, obj.mu_n, obj.sigma_n);
         end
 
     end

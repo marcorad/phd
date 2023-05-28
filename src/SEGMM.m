@@ -27,7 +27,9 @@ classdef SEGMM < handle
         pi_n %proportion of noise
         pi_s %proportion of signal
         f %the posterior function
+        fmod %the modified posterior function
         x %values to evaluate the posterior function
+        pdf %PDF evaluated at x
     end
 
     methods
@@ -49,6 +51,8 @@ classdef SEGMM < handle
             % class means, median-filtered with an ODD window of length obj.M.
             obj.calculateSE(S);
             obj.H = smoothdata(obj.H, 2, "movmedian", obj.M);
+            obj.Hmin = min(obj.H);
+            obj.Hmax = max(obj.H);
             obj.fitGMM();
         end
 
@@ -93,19 +97,19 @@ classdef SEGMM < handle
             end
 
             %Take care of the monotonicity problems
-            obj.Hmin = min(obj.H);
-            obj.Hmax = max(obj.H);
             obj.determineMonotonicity();
             obj.modifiedPosterior()
-            obj.fmax = max(obj.f);
-            obj.fmin = min(obj.f);
-            if obj.dir == "min"
-                obj.probs(obj.H < obj.lim) = obj.fmax;
-            elseif obj.dir == "max"
-                obj.probs(obj.H > obj.lim) = obj.fmin;
+
+            if ~obj.mon
+                if obj.dir == "min"
+                    obj.probs(obj.H < obj.lim) = obj.fmax;
+                elseif obj.dir == "max"
+                    obj.probs(obj.H > obj.lim) = obj.fmin;
+                end
             end
 
             obj.contam = obj.pi_n*normcdf(obj.Ht, obj.mu_n, obj.sigma_n)/(obj.pi_s*normcdf(obj.Ht, obj.mu_s, obj.sigma_s));
+            obj.calculatePDF()
         end
 
         function modifiedPosterior(obj)
@@ -113,12 +117,15 @@ classdef SEGMM < handle
             ps = normpdf(obj.x, obj.mu_s, obj.sigma_s) * obj.pi_s;
             pn = normpdf(obj.x, obj.mu_n, obj.sigma_n) * obj.pi_n;
             obj.f = ps./(pn+ps);
+            obj.fmod = obj.f;
             obj.fmax = max(obj.f);
             obj.fmin = min(obj.f);
-            if obj.dir == "min"
-                obj.f(obj.f < obj.lim) = obj.fmax;
-            elseif obj.dir == "max"
-                obj.f(obj.f > obj.lim) = obj.fmin;
+            if ~obj.mon
+                if obj.dir == "min"
+                    obj.fmod(obj.x < obj.lim) = obj.fmax;
+                elseif obj.dir == "max"
+                    obj.fmod(obj.x > obj.lim) = obj.fmin;
+                end
             end
             obj.Ht = obj.x(find(obj.f <= SEGMM.PosteriorThresh, 1, "first"));
         end
@@ -132,6 +139,11 @@ classdef SEGMM < handle
                 obj.dir = "min";
                 obj.mon = obj.Hmin > obj.lim;
             end
+        end
+
+        function calculatePDF(obj)
+            obj.pdf(1, :) = normpdf(obj.x, obj.mu_s, obj.sigma_s);
+            obj.pdf(2, :) = normpdf(obj.x, obj.mu_n, obj.sigma_n);
         end
 
     end
