@@ -147,7 +147,10 @@ classdef SFB < handle
             %prepare x
             x = x(:)'; %make sure it's 1xN
             Norig = numel(x);
-            Npad = obj.N - Norig;            
+            Npad = obj.N - Norig;  
+            if Npad ~= 0
+                warning(sprintf("Signal is zero-padded with %d zeros to be of length %d.", Npad, obj.N));
+            end
             x = [x; zeros(1, Npad)];
             x = gpuArray(single(x));
 
@@ -155,7 +158,7 @@ classdef SFB < handle
             u = obj.filterU(x);
             u = u(:, 1:obj.downsampleS:end);
             s = real(obj.convrefl(u, obj.Phi, size(obj.phi, 2)));
-            s = s(:, 1:floor(Norig/obj.downsampleS));
+%             s = s(:, 1:floor(Norig/obj.downsampleS));
             
             s = gather(s(:, 1:obj.downsamplePhi:end));            
         end
