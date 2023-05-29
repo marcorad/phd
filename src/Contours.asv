@@ -38,29 +38,22 @@ classdef Contours < handle
     methods
 
         function obj = Contours(t, f, S, info, gmm)
-            if nargin < 5
-                gmm = SEGMM(M);
-                gmm.detect(S);
-            end
-
-            if info == ""
-                info.fid = 1;
-            end
-
             obj.S = S;
             obj.info = info;
             obj.t = t;
-            obj.f = f;            
+            obj.f = f;
 
+            if nargin < 5
+                gmm = SEGMM(M);
+                gmm.detect(obj.S);
+            end
             obj.gmm = gmm;
-            obj.spectrograms();
-        end
 
-        function extractContours(obj)
+            obj.spectrograms();
             obj.connect();
             obj.removeShortContours();
-            obj.removeHarmonics();
-            obj.calculateFeatures();
+            Cdata = obj.removeHarmonics();
+            cfeats = Features.Construct(Cdata, poi(n), St, Sden, S);
         end
 
         function spectrograms(obj)
@@ -75,11 +68,12 @@ classdef Contours < handle
             obj.Smed = smoothdata(obj.Smed, "gaussian", POI.SMedSmooth);
         end
 
-        
-        function connect(obj)
+        %TODO add contour ID
+        function D = connect(obj)
             CC = bwconncomp(obj.St, 8);
             Nfft = POI.Nfft;
             fs = POI.fs;
+            D = {};
             for i = 1:CC.NumObjects
                 idx = CC.PixelIdxList{i};
                 [fi, ti] = ind2sub(size(obj.St), idx);
@@ -107,8 +101,9 @@ classdef Contours < handle
                 cdata.fmax = fmax;
                 cdata.bw = bw;
                 cdata.idx = idx;
-                obj.Cdata(i) = cdata;
+                D{i} = cdata;
             end
+            obj.Cdata = cell2mat(D);
         end
 
         function removeHarmonics(obj)
@@ -148,6 +143,8 @@ classdef Contours < handle
                     end
                 end
             end
+
+
             obj.Cdata = obj.Cdata(~remove);
         end
 
@@ -190,12 +187,12 @@ classdef Contours < handle
                 cf.sidx = c.tmin;
                 cf.eidx = c.tmax;
 
-                cf.cid = i;
-                cf.fid = obj.info.fid;
-
                 cf.calculate(obj.t(2) - obj.t(1));
-                obj.features(i) = cf;
+
             end
+
         end
+
     end
+
 end

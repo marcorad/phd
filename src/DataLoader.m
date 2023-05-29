@@ -113,12 +113,13 @@ classdef DataLoader < handle
             p = sprintf("%s\\%d", DataLoader.audiopath, obj.ds);
             files = dir(p);
             files = files(~[files.isdir]);
+            dataset = obj.ds;
             parfor i = 1:numel(files)
                 name = string(files(i).name);
                 path = sprintf("%s\\%s", p, name);
                 time = datetime(extractBetween(name, 1, 8+6+4+2), ...
                     "InputFormat","yyyyMMdd_HHmmss_SSSS");
-                list(i) = struct("name", name, "path", path, "time", time);
+                list(i) = struct("name", name, "path", path, "time", time, "ds", dataset, "fid", i);
             end
             [~, sidx] = sort([list.time]);
             list = list(sidx);
@@ -129,6 +130,7 @@ classdef DataLoader < handle
             files = dir(p);
             segT = seconds(2^18/2000);
             files = files(~[files.isdir]);
+            dataset = obj.ds;
             parfor i = 1:numel(files)
                 name = string(files(i).name);
                 path = sprintf("%s\\%s", p, name);
@@ -138,7 +140,7 @@ classdef DataLoader < handle
                     'match', 'once' );
                 seg = str2double(seg);
                 time = time + (seg-1)*segT;
-                list(i) = struct("name", name, "path", path, "time", time);
+                list(i) = struct("name", name, "path", path, "time", time, "ds", dataset, "fid", i);
             end
             [~, sidx] = sort([list.time]);
             list = list(sidx);
