@@ -27,6 +27,7 @@ classdef SEGMM < handle
         pi_n %proportion of noise
         pi_s %proportion of signal
         f %the posterior function
+        fmod %the modified posterior function
         x %values to evaluate the posterior function
         pdf %PDF evaluated at x
     end
@@ -34,6 +35,16 @@ classdef SEGMM < handle
     methods
         function obj = SEGMM(M)
             obj.M = M;
+        end
+
+        function stats = getStatistics(obj)
+            stats.mu_n = obj.mu_n;
+            stats.mu_n = obj.mu_n;
+            stats.mu_n = obj.mu_n;
+            stats.mu_n = obj.mu_n;
+            stats.mu_n = obj.mu_n;
+            stats.mu_n = obj.mu_n;
+            stats.mu_n = obj.mu_n;
         end
 
         function calculateSE(obj, S)
@@ -50,6 +61,8 @@ classdef SEGMM < handle
             % class means, median-filtered with an ODD window of length obj.M.
             obj.calculateSE(S);
             obj.H = smoothdata(obj.H, 2, "movmedian", obj.M);
+            obj.Hmin = min(obj.H);
+            obj.Hmax = max(obj.H);
             obj.fitGMM();
         end
 
@@ -97,10 +110,12 @@ classdef SEGMM < handle
             obj.determineMonotonicity();
             obj.modifiedPosterior()
 
-            if obj.dir == "min"
-                obj.probs(obj.H < obj.lim) = obj.fmax;
-            elseif obj.dir == "max"
-                obj.probs(obj.H > obj.lim) = obj.fmin;
+            if ~obj.mon
+                if obj.dir == "min"
+                    obj.probs(obj.H < obj.lim) = obj.fmax;
+                elseif obj.dir == "max"
+                    obj.probs(obj.H > obj.lim) = obj.fmin;
+                end
             end
 
             obj.contam = obj.pi_n*normcdf(obj.Ht, obj.mu_n, obj.sigma_n)/(obj.pi_s*normcdf(obj.Ht, obj.mu_s, obj.sigma_s));
@@ -112,13 +127,14 @@ classdef SEGMM < handle
             ps = normpdf(obj.x, obj.mu_s, obj.sigma_s) * obj.pi_s;
             pn = normpdf(obj.x, obj.mu_n, obj.sigma_n) * obj.pi_n;
             obj.f = ps./(pn+ps);
+            obj.fmod = obj.f;
             obj.fmax = max(obj.f);
             obj.fmin = min(obj.f);
             if ~obj.mon
                 if obj.dir == "min"
-                    obj.f(obj.f < obj.lim) = obj.fmax;
+                    obj.fmod(obj.x < obj.lim) = obj.fmax;
                 elseif obj.dir == "max"
-                    obj.f(obj.f > obj.lim) = obj.fmin;
+                    obj.fmod(obj.x > obj.lim) = obj.fmin;
                 end
             end
             obj.Ht = obj.x(find(obj.f <= SEGMM.PosteriorThresh, 1, "first"));

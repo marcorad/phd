@@ -148,10 +148,15 @@ classdef SFB < handle
             x = x(:)'; %make sure it's 1xN
             Norig = numel(x);
             Npad = obj.N - Norig;  
-            if Npad ~= 0
-                warning(sprintf("Signal is zero-padded with %d zeros to be of length %d.", Npad, obj.N));
+            if Npad > 0
+                warning("Signal is zero-padded with %d zeros to be of length %d.", Npad, obj.N);
             end
-            x = [x; zeros(1, Npad)];
+
+            if Npad < 0
+                error("Signal of length %d must have a maximum length of %d.", Norig, obj.N);
+            end
+
+            x = [x, zeros(1, Npad)];
             x = gpuArray(single(x));
 
             %get Ux and downsample to find Sx

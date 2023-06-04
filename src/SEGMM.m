@@ -37,6 +37,23 @@ classdef SEGMM < handle
             obj.M = M;
         end
 
+        %get the GMM-related values in a structure for easy analysis and
+        %reduced memory usage
+        function stats = getStatistics(obj)
+            stats.mu_n = obj.mu_n;
+            stats.mu_s = obj.mu_s;
+            stats.sigma_n = obj.sigma_n;
+            stats.sigma_s = obj.sigma_s;
+            stats.converged = obj.converged;
+            stats.n_iter = obj.n_iter;
+            stats.LL = obj.LL;
+            stats.mon = obj.mon;
+            stats.contam = obj.contam;
+            stats.pi_n = obj.pi_n;
+            stats.pi_s = obj.pi_s;
+            stats.delta = obj.mu_n - obj.mu_s;
+        end
+
         function calculateSE(obj, S)
             % Generate spectral entropy measure from TF decomposition S.
             % Requires S to be KxT matrix, where K is the frequency bins
@@ -81,8 +98,8 @@ classdef SEGMM < handle
                 N_n = N - N_s;
                 obj.mu_s = sum(gamma_s .* obj.H) / N_s;
                 obj.mu_n = sum(gamma_n .* obj.H) / N_n;
-                obj.sigma_s = sqrt(sum(gamma_s .* (obj.H - obj.mu_s).*(obj.H - obj.mu_s))/N_s);
-                obj.sigma_n = sqrt(sum(gamma_n .*(obj.H - obj.mu_n).*(obj.H - obj.mu_n))/N_n);
+                obj.sigma_s = sqrt(sum(gamma_s .* (obj.H - obj.mu_s).^2)/N_s);
+                obj.sigma_n = sqrt(sum(gamma_n .*(obj.H - obj.mu_n).^2)/N_n);
                 obj.pi_s = N_s/N;
                 obj.pi_n = 1 - obj.pi_s;
                 obj.n_iter = obj.n_iter + 1;
@@ -107,8 +124,9 @@ classdef SEGMM < handle
                     obj.probs(obj.H > obj.lim) = obj.fmin;
                 end
             end
-
-            obj.contam = obj.pi_n*normcdf(obj.Ht, obj.mu_n, obj.sigma_n)/(obj.pi_s*normcdf(obj.Ht, obj.mu_s, obj.sigma_s));
+            
+            obj.contam = obj.pi_n*normcdf(obj.Ht, obj.mu_n, obj.sigma_n)/(obj.pi_s*normcdf(obj.Ht, obj.mu_s, obj.sigma_s));           
+            
             obj.calculatePDF()
         end
 

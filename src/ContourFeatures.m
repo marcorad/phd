@@ -35,7 +35,8 @@ classdef ContourFeatures < handle
 
             dfeats = ["dbw", "df", "dp", "dtp", "dpr", "dh"];
             for feat = dfeats
-                obj.(feat) = diff(obj.(feat))/dt;
+                dfeat = extractAfter(feat,"d");
+                obj.(feat) = diff(obj.(dfeat))/dt;
             end
 
             feats = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp", "pr", "dpr", "h", "dh"];
@@ -47,7 +48,7 @@ classdef ContourFeatures < handle
     end
 
     methods(Static)
-        function d = timedec()
+        function d = timedec(v)
             % f = prctile(v, [0,50,100]);
             m = median(v);
             md = median(abs(v - m));

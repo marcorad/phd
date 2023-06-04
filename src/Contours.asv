@@ -7,9 +7,9 @@ classdef Contours < handle
         ratiosTolUp = Contours.ratios*(1+Features.hrtol); %harmonic ratios positive tolerance
         ratiosTolDown = Contours.ratios/(1+Features.hrtol); %harmonic ratios negative tolerance
         tau = 10; %factor required to be seen as an outlier compared to the denoised spectrum
-        M = 15; %if no gmm provided, this is the default MF window size for entropy
-        Nmin = 3; %the minimum length in time required for a contour
-    end    
+        M = 15; % MF window size for entropy
+        Nmin = 10; %the minimum length in time required for a contour
+    end
 
     properties
         t %the time values of S
@@ -37,39 +37,53 @@ classdef Contours < handle
 
     methods
 
-        function obj = Contours(t, f, S, info, gmm)
-            obj.S = S;
-            obj.info = info;
-            obj.t = t;
-            obj.f = f;
-
-            if nargin < 5
-                gmm = SEGMM(M);
-                gmm.detect(obj.S);
+        function obj = Contours(t, f, S, info, whiten)
+            if info == ""
+                obj.info.fid = 1;
+            else
+                obj.info = info;
             end
-            obj.gmm = gmm;
+
+            obj.S = S;
+            obj.t = t;
+            obj.f = f;     
+
+            obj.noiseEstimate();
+
+            obj.gmm = SEGMM(Contours.M);
+            if whiten
+                obj.gmm.detect(S./obj.Smed);
+            else
+                obj.gmm.detect(S);
+            end
 
             obj.spectrograms();
+
+            obj.Cdata = struct([]);
+            obj.features = struct([]);
+
+        end
+
+        function extractContours(obj)
             obj.connect();
             obj.removeShortContours();
-            Cdata = obj.removeHarmonics();
-            cfeats = Features.Construct(Cdata, poi(n), St, Sden, S);
+            obj.removeHarmonics();
+            obj.calculateFeatures();
         end
 
         function spectrograms(obj)
-            obj.NoiseEstimate();
             obj.mask = obj.gmm.probs >= 0.5;
             obj.St = obj.S .* obj.mask >= obj.Smed*Contours.tau;
             obj.Sden = max(obj.S - obj.Smed, 0);
         end
 
-        function NoiseEstimate(obj)
+        function noiseEstimate(obj)
             obj.Smed = median(medfilt1(obj.S, POI.FreqMF, [], 1, "omitnan","truncate"), 2);
             obj.Smed = smoothdata(obj.Smed, "gaussian", POI.SMedSmooth);
         end
 
-        %TODO add contour ID
-        function D = connect(obj)
+
+        function connect(obj)
             CC = bwconncomp(obj.St, 8);
             Nfft = POI.Nfft;
             fs = POI.fs;
@@ -101,6 +115,7 @@ classdef Contours < handle
                 cdata.fmax = fmax;
                 cdata.bw = bw;
                 cdata.idx = idx;
+                cdata.cid = i;
                 D{i} = cdata;
             end
             obj.Cdata = cell2mat(D);
@@ -134,17 +149,15 @@ classdef Contours < handle
                                 obj.Cdata(i).NHarmonics = obj.Cdata(i).NHarmonics + 1;
                             else
                                 obj.Cdata(i).NContam = obj.Cdata(i).NContam + 1;
-                                obj.Cdata(i).ContamFreq = [obj.Cdata(i).ContamFreq, median(cj.f0)];
+                                obj.Cdata(i).Contamcid = [obj.Cdata(i).Contamcid, cj.cid];
                             end
                         else
                             obj.Cdata(i).NContam = obj.Cdata(i).NContam + 1;
-                            obj.Cdata(i).ContamFreq = [obj.Cdata(i).ContamFreq, median(cj.f0)];
+                            obj.Cdata(i).Contamcid = [obj.Cdata(i).Contamcid, cj.cid];
                         end
                     end
                 end
             end
-
-
             obj.Cdata = obj.Cdata(~remove);
         end
 
@@ -158,13 +171,14 @@ classdef Contours < handle
                 end
                 obj.Cdata(i).NHarmonics = 0;
                 obj.Cdata(i).NContam = 0;
-                obj.Cdata(i).ContamFreq = [];
+                obj.Cdata(i).Contamcid = [];
             end
             obj.Cdata = obj.Cdata(~remove);
         end
 
 
-        function calculateFeatures(obj) 
+        function calculateFeatures(obj)
+            feats = {};
             for i = 1:numel(obj.Cdata)
                 cf = ContourFeatures;
                 c = obj.Cdata(i);
@@ -187,12 +201,13 @@ classdef Contours < handle
                 cf.sidx = c.tmin;
                 cf.eidx = c.tmax;
 
+                cf.cid = i;
+                cf.fid = obj.info.fid;
+
                 cf.calculate(obj.t(2) - obj.t(1));
-
+                feats{} = cf;
             end
-
+            obj.feat
         end
-
     end
-
 end

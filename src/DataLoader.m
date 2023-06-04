@@ -10,9 +10,11 @@ classdef DataLoader < handle
 
         audiolist
         spectrogramlist
+        auxlist
 
         audioIdx
         spectroIdx
+        auxIdx
 
         audiowtq
         spectrowtq
@@ -29,6 +31,16 @@ classdef DataLoader < handle
             obj.ds = ds;
             obj.audiolist = obj.listAudio();
             obj.spectrogramlist = obj.listSpectrograms();
+            obj.resetIdx(mode);
+            load(sprintf("%s\\filterbank.mat", DataLoader.spectrogrampath));
+            obj.fb = fb;
+        end
+
+        function auxLoader(infolist)
+
+        end
+
+        function resetIdx(obj, mode)
             if mode == "single"
                 obj.audioIdx = ThreadIdx(numel(obj.audiolist), 1);
                 obj.spectroIdx = ThreadIdx(numel(obj.spectrogramlist), 1);
@@ -36,8 +48,6 @@ classdef DataLoader < handle
                 obj.audioIdx = ThreadIdx(numel(obj.audiolist), DataLoader.Nthreads);
                 obj.spectroIdx = ThreadIdx(numel(obj.spectrogramlist), DataLoader.Nthreads);
             end
-            load(sprintf("%s\\filterbank.mat", DataLoader.spectrogrampath));
-            obj.fb = fb;
         end
 
         function [D, info] = loadAudio(obj, idx)
@@ -99,17 +109,23 @@ classdef DataLoader < handle
         end
 
         function c = isAudioComplete(obj, tid)
+            if nargin < 2
+                tid = 1;
+            end
             c = obj.audioIdx.complete(tid);
         end
 
         function c = isSpectrogramComplete(obj, tid)
+            if nargin < 2
+                tid = 1;
+            end
             c = obj.spectroIdx.complete(tid);
         end
 
     end
 
     methods(Access=private)
-        function list = listAudio(obj)
+        function L = listAudio(obj)
             p = sprintf("%s\\%d", DataLoader.audiopath, obj.ds);
             files = dir(p);
             files = files(~[files.isdir]);
@@ -119,13 +135,17 @@ classdef DataLoader < handle
                 path = sprintf("%s\\%s", p, name);
                 time = datetime(extractBetween(name, 1, 8+6+4+2), ...
                     "InputFormat","yyyyMMdd_HHmmss_SSSS");
-                list(i) = struct("name", name, "path", path, "time", time, "ds", dataset, "fid", i);
+                L(i) = struct("name", name, "path", path, "time", time, "ds", dataset, "fid", i);
             end
-            [~, sidx] = sort([list.time]);
-            list = list(sidx);
+            [~, sidx] = sort([L.time]);
+            L = L(sidx);
+            if ~isempty(L)
+                [~, sidx] = sort([L.time]);
+                L = L(sidx);
+            end
         end
 
-        function list = listSpectrograms(obj)
+        function L = listSpectrograms(obj)
             p = sprintf("%s\\%d", DataLoader.spectrogrampath, obj.ds);
             files = dir(p);
             segT = seconds(2^18/2000);
@@ -140,10 +160,12 @@ classdef DataLoader < handle
                     'match', 'once' );
                 seg = str2double(seg);
                 time = time + (seg-1)*segT;
-                list(i) = struct("name", name, "path", path, "time", time, "ds", dataset, "fid", i);
+                L(i) = struct("name", name, "path", path, "time", time, "ds", dataset, "fid", i);
             end
-            [~, sidx] = sort([list.time]);
-            list = list(sidx);
+            if exist("L")
+                [~, sidx] = sort([L.time]);
+                L = L(sidx);
+            end
         end
     end
 
