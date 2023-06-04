@@ -7,8 +7,8 @@ fb = SFB(16, 0.05, 2000, 2^18, 25, 1000);
 savepath = sprintf("%s/spectrograms/filterbank.mat", Path);
 save(savepath, "fb", "-mat");
 
-for ds = [1]
-    dl = DataLoader(ds);
+for ds = [2]
+    dl = DataLoader(ds, "single");
     dl.startAudioWaitbar();
     while ~dl.isAudioComplete()
     [segments, info] = dl.nextAudio();

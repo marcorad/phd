@@ -36,7 +36,7 @@ classdef DataLoader < handle
             obj.fb = fb;
         end
 
-        function auxLoader(infolist)
+        function auxLoader(obj, infolist)
 
         end
 
@@ -165,6 +165,8 @@ classdef DataLoader < handle
             if exist("L")
                 [~, sidx] = sort([L.time]);
                 L = L(sidx);
+            else
+                L = []
             end
         end
     end
