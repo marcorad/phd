@@ -15,13 +15,16 @@ spmd
         ct.extractContours();
         D = [D, ct.features];
     end
+    [T, featnames] = ContourFeatures.featureTable(D);
     catch err
         disp(getReport(err, "extended"))
     end
 end
+T = vertcat(T);
 D = D{:};
+featnames = featnames{1};
 save(sprintf("store\\features_%d.mat", ds), "D", '-mat');
-T = ContourFeatures.featureTable(D);
-save(sprintf("store\\feature_table_%d.mat", ds), "T", '-mat');
+% T = ContourFeatures.featureTable(D);
+save(sprintf("store\\feature_table_%d.mat", ds), "T", "featnames", '-mat');
 end
 end

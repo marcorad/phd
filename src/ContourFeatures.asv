@@ -61,8 +61,8 @@ classdef ContourFeatures < handle
 
     methods(Static)
         function feats = getFeatureVectorNames()
-%               feats = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp", "pr", "dpr", "h", "dh"];
-            feats = ["duration", "bw", "dbw", "f", "df", "p", "dp", "tp", "dtp"];
+              feats = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp", "pr", "dpr", "h", "dh"];
+%             feats = ["duration", "bw", "dbw", "f", "df", "p", "dp", "tp", "dtp"];
         end
 
         function d = timedec(v)
@@ -83,13 +83,12 @@ classdef ContourFeatures < handle
             end
         end
 
-        function [T, featnames] = featureTable(features)
+        function T = featureTable(features)
             T = {};
-            featnames = "";
-            mmr = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp", "pr", "dpr", "h", "dh"];
-            mmr_names = ["Bandwidth", "DeltaBandwidth", "Frequency", "DeltaFrequency", "Power", "DeltaPower", "TotalPower", "DeltaTotalPower", "PowerRatio", "DeltaPowerRatio", "Entropy", "DeltaEntropy"];
+            mmr = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp"];
+            mmr_names = ["Bandwidth", "DeltaBandwidth", "Frequency", "DeltaFrequency", "Power", "DeltaPower", "TotalPower", "DeltaTotalPower"];
             N = numel(features);
-%             h = waitbar(0, 'Please wait...');
+            h = waitbar(0, 'Please wait...');
             for i = 1:N
                 %convert to med, mad, range
                 if mod(i, 100) == 0
@@ -99,19 +98,10 @@ classdef ContourFeatures < handle
                 for j = 1:numel(mmr)
                     name = mmr(j);
                     t_name = mmr_names(j);
-                    colname = sprintf("%s%s", t_name, "Median");
-                    featnames = [featnames, colname];
-                    s.(colname) = f.(name)(1);
-                    
-                    colname = sprintf("%s%s", t_name, "MAD");
-                    featnames = [featnames, colname];
-                    s.(colname) = f.(name)(2);
-
-                    colname = sprintf("%s%s", t_name, "Range");
-                    featnames = [featnames, colname];
-                    s.(colname) = f.(name)(3);
+                    s.(sprintf("%s%s", t_name, "Median")) = f.(name)(1);
+                    s.(sprintf("%s%s", t_name, "MAD")) = f.(name)(2);
+                    s.(sprintf("%s%s", t_name, "Range")) = f.(name)(3);
                 end
-                featnames = [featnames, "Duration", "NumberHarmonics"];
                 s.Duration = f.duration;
                 s.Spectrum = f.spectrum;
                 s.FileID = f.fid;
@@ -121,15 +111,10 @@ classdef ContourFeatures < handle
                 s.BLSNR  = f.blsnr;
                 s.StartIndex = f.sidx;
                 s.EndIndex = f.eidx;
-                s.NumberHarmonics = f.harm;
                 T{end+1} = s;
             end
             T = struct2table(cell2mat(T));
-            for featname = featnames %clean up inf values
-                idx = isinf(T{:, featname});
-                T(idx, featname) = nan;
-            end
-%             close(h);
+            close(h);
         end
 
         function f = filter(T, col, bounds, isabs)
