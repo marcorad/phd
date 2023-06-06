@@ -40,20 +40,20 @@ classdef Contours < handle
         end
     end
 
-    methods        
+    methods
 
-        function obj = Contours(t, f, S, info)
-            if nargin == 3
+        function obj = Contours(fb, S, info)
+            if nargin == 2
                 obj.info.fid = 1;
             else
                 obj.info = info;
             end
 
             obj.S = S;
-            obj.t = t;
-            obj.f = f;
+            obj.t = fb.getTime(S);
+            obj.f = fb.fc;
 
-            obj.noiseEstimate();           
+            obj.noiseEstimate();
 
             obj.Cdata = struct([]);
             obj.features = struct([]);
@@ -67,13 +67,13 @@ classdef Contours < handle
         end
 
         function fitGMM(obj, whiten)
-             obj.gmm = SEGMM(Contours.M);
+            obj.gmm = SEGMM(Contours.M);
             if whiten
                 obj.gmm.detect(obj.S./obj.Smed);
             else
                 obj.gmm.detect(obj.S);
             end
-            obj.spectrograms();            
+            obj.spectrograms();
         end
 
         function extractContours(obj)
@@ -235,5 +235,40 @@ classdef Contours < handle
                 obj.features = [];
             end
         end
+
+        function debugplot(obj, fb)
+            figure
+            ax1 = subplot(211);
+            fb.plotS(obj.S, true)
+
+            map =  rand(numel(obj.Cdata)*4, 3);
+            map = rgb2hsv(map);
+            map(:, 3) = min(map(:, 3) + 0.5, 1);
+            map = hsv2rgb(map);
+            map(1,:) = 0;
+
+            ax2 = subplot(212);
+            imagesc(obj.t, obj.f, obj.Scont)
+            set(gca, "Ydir", "normal");
+            set(gca, "Yscale", "log");
+            yticks(round(obj.f(1:8:end),0))
+            colormap(ax2, map)
+            linkaxes([ax1, ax2]);
+            ylim([min(obj.f) max(obj.f)])
+            hold on
+            for c = obj.Cdata
+                tpl = obj.t(c.tmin:c.tmax);
+                plot(tpl, c.f0, "w")
+                bwu = c.f0 + c.bw;
+                bwl = fliplr(c.f0 - c.bw);
+                bwpl = [bwu, bwl];
+                tbw = [tpl, fliplr(tpl)];
+                fill(tbw, bwpl, "red", "FaceAlpha",0.5);
+            end
+            hold off
+        end
+
+
+
     end
 end

@@ -12,14 +12,15 @@ classdef DataLoader < handle
         spectrogramlist
         auxlist
 
-        audioIdx
-        spectroIdx
-        auxIdx
+        audioIdx ThreadIdx
+        spectroIdx ThreadIdx
+        auxIdx ThreadIdx
 
         audiowtq
         spectrowtq
+        auxwtq
 
-        fb
+        fb SFB
 
     end
 
@@ -29,24 +30,32 @@ classdef DataLoader < handle
                 mode = "single";
             end
             obj.ds = ds;
-            obj.audiolist = obj.listAudio();
-            obj.spectrogramlist = obj.listSpectrograms();
+            if ds ~= 0
+                obj.audiolist = obj.listAudio();
+                obj.spectrogramlist = obj.listSpectrograms();
+            end
             obj.resetIdx(mode);
             load(sprintf("%s\\filterbank.mat", DataLoader.spectrogrampath));
             obj.fb = fb;
         end
 
-        function auxLoader(obj, infolist)
-
+        function auxLoader(obj, infolist, mode)
+            if nargin < 2
+                mode = "single";
+            end
+            obj.auxlist = infolist;
+            obj.resetIdx(mode);
         end
 
         function resetIdx(obj, mode)
             if mode == "single"
                 obj.audioIdx = ThreadIdx(numel(obj.audiolist), 1);
                 obj.spectroIdx = ThreadIdx(numel(obj.spectrogramlist), 1);
+                obj.auxIdx = ThreadIdx(numel(obj.auxlist), 1);
             elseif mode == "parallel"
                 obj.audioIdx = ThreadIdx(numel(obj.audiolist), DataLoader.Nthreads);
                 obj.spectroIdx = ThreadIdx(numel(obj.spectrogramlist), DataLoader.Nthreads);
+                obj.auxIdx = ThreadIdx(numel(obj.auxlist), DataLoader.Nthreads);
             end
         end
 
@@ -70,6 +79,13 @@ classdef DataLoader < handle
         function [s, info] = loadSpectrogram(obj, idx)
             info = obj.spectrogramlist(idx);
             load(info.path);
+        end
+
+        function startAuxWaitbar(obj)
+            wb = waitbar(0);
+            parforWaitbar(wb, numel(obj.auxlist));
+            obj.auxwtq = parallel.pool.DataQueue;
+            afterEach(obj.auxwtq,@parforWaitbar);
         end
 
         function startAudioWaitbar(obj)
@@ -97,6 +113,46 @@ classdef DataLoader < handle
             end
         end
 
+        function [s, info] = loadAux(obj, idx)
+            info = obj.auxlist(idx);
+            load(info.path);
+        end
+
+        function [S, info, x] = loadAuxFromFID(obj, fid)
+            idx = find([obj.auxlist.fid] == fid);
+            [S, info] = obj.loadAux(idx);
+            name = convertStringsToChars(info.name);
+            underscore = find(name == '_', 1, 'last');
+            dot = find(name == '.', 1, 'last');
+            seg = str2num(name(underscore+1:dot-1));
+            path = sprintf("%s\\%d\\%s.wav", DataLoader.audiopath, info.ds, name(1:underscore-1));
+            x = audioread(path);
+            L = 2^18;
+            s = 1;
+            e = L;
+            for i = 1:16
+                if e > numel(x)
+                    D{i} = x(s:end);
+                    break;
+                end
+                D{i} = x(s:e);
+                s = s + L;
+                e = e + L;
+            end
+            x = D{seg};
+        end
+
+        function [s, info] = nextAux(obj, tid)
+            if nargin < 2
+                tid = 1;
+            end
+            idx = obj.auxIdx.next(tid);
+            [s, info] = obj.loadAux(idx);
+            if ~isempty(obj.auxwtq)
+                send(obj.auxwtq, []);
+            end
+        end
+
         function [s, info] = nextSpectrogram(obj, tid)
             if nargin < 2
                 tid = 1;
@@ -106,6 +162,13 @@ classdef DataLoader < handle
             if ~isempty(obj.spectrowtq)
                 send(obj.spectrowtq, []);
             end
+        end
+
+        function c = isAuxComplete(obj, tid)
+            if nargin < 2
+                tid = 1;
+            end
+            c = obj.auxIdx.complete(tid);
         end
 
         function c = isAudioComplete(obj, tid)
@@ -166,7 +229,7 @@ classdef DataLoader < handle
                 [~, sidx] = sort([L.time]);
                 L = L(sidx);
             else
-                L = []
+                L = [];
             end
         end
     end

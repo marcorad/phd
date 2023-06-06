@@ -44,17 +44,20 @@ classdef Tools
             
         end
 
-        function plotTF(S, F, logf, logp, t)
+        function plotTF(S, F, logf, logp, t, fig)
             if nargin < 5
                 t = 1:size(S,2);
             end
             if logp
                 S = log(S);
             end
-            imagesc(t, F, S);
-            set(gca, "YDir", "Normal");
+            if nargin < 6
+                fig = gca;  
+            end
+            imagesc(fig, t, F, S);
+            set(fig, "YDir", "Normal");
             if logf
-                set(gca, "YScale", "Log");
+                set(fig, "YScale", "Log");
             end
         end
 

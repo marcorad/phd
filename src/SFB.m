@@ -186,6 +186,20 @@ classdef SFB < handle
             plot(0:size(obj.psi, 2)-1, abs(obj.psi))
         end
 
+        function plotS(obj, s, logp, fig)
+            if nargin < 3
+                logp = true;
+            end
+            if nargin < 4
+                fig = gca;
+            end
+            Tools.plotTF(s, obj.fc, true, logp, obj.getTime(s), fig);
+            nt = floor(size(s, 1)/10);
+            yticks(fig, round(obj.fc(1:nt:end),0))
+            xlabel(fig, "Time (s)");
+            ylabel(fig, "Frequency (Hz)");
+        end
+
     end
 
 end
