@@ -1,29 +1,36 @@
 classdef ContourFeatures < handle
 
     properties
-        fid %file id of this contour
-        cid %contour id of this contour
-        duration %duration
-        spectrum %average spectra
-        bw %bandwidth
-        dbw %delta bandwidth
-        f %frequency
-        df %delta freq
-        p %contour power
-        dp  %delta contour power
-        tp  %total power above contour
-        dtp %delta total power above contour
-        pr  %power ratio p/tp
-        dpr %delta power ratio
-        h %entropy
-        dh %delta entropy
-        harm %number of detected harmonics
-        ncontam %number of other contaminating contours
-        contamids %the cids of all the contaminating contours
-        contamlower %whether all contaminating contours are lower than this one
-        blsnr %estimated snr bandlimited to fundamental
-        sidx %start index in S
-        eidx %end index in S
+        FileID %file id of this contour
+        ContourID %contour id of this contour
+        Duration %Duration
+        Spectrum %average spectra
+        Bandwidth %bandwidth
+        DeltaBandwidth %delta bandwidth
+        Frequency %frequency
+        DeltaFrequency %delta freq
+        Power %contour power
+        DeltaPower  %delta contour power
+        TotalPower  %total power above contour
+        DeltaTotalPower %delta total power above contour
+        PowerRatio  %power ratio Power/TotalPower
+        DeltaPowerRatio %delta power ratio
+        Entropy %entropy
+        DeltaEntropy %delta entropy
+        Harmonics %number of detected harmonics
+        Contamination %number of other contaminating contours
+        ContaminationIDs %the cids of all the contaminating contours
+        ContaminationLower %whether all contaminating contours are lower than this one
+        BLSNR %estimated snr bandlimited to fundamental
+        StartIndex %start index in S
+        EndIndex %end index in S
+    end
+
+    properties(Constant)
+        filter_names = ["Bandwidth", "DeltaBandwidth", "Frequency", "DeltaFrequency", "Power", "DeltaPower", "TotalPower", "DeltaTotalPower", "PowerRatio", "DeltaPowerRatio", "Entropy", "DeltaEntropy"];
+        filter_types = ["Median", "MAD", "Min", "Q1", "Q3", "Max", "Start", "End", "IQR"];
+        standalone_filters = ["FileID", "Harmonics", "BLSNR", "Duration"];
+        struct_names = ContourFeatures.structNames();
     end
 
     methods
@@ -33,15 +40,17 @@ classdef ContourFeatures < handle
                 dt = 1;
             end
 
-            dfeats = ["dbw", "df", "dp", "dtp", "dpr", "dh"];
+            dfeats = ["DeltaBandwidth", "DeltaFrequency", "DeltaPower", "DeltaTotalPower", "DeltaPowerRatio", "DeltaEntropy"];
             for feat = dfeats
-                dfeat = extractAfter(feat,"d");
+                dfeat = extractAfter(feat,"Delta");
                 obj.(feat) = diff(obj.(dfeat))/dt;
             end
 
-            feats = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp", "pr", "dpr", "h", "dh"];
+            feats = ["Bandwidth", "DeltaBandwidth", "Frequency", "DeltaFrequency", "Power", "DeltaPower", "TotalPower", "DeltaTotalPower", "PowerRatio", "DeltaPowerRatio", "Entropy", "DeltaEntropy"];
             for feat = feats
-                obj.(feat) = ContourFeatures.timedec(obj.(feat));
+                decimated = ContourFeatures.timedec(obj.(feat));
+                decimated(isnan(decimated) | isinf(decimated)) = 0;
+                obj.(feat) = decimated;
             end
         end
 
@@ -49,7 +58,7 @@ classdef ContourFeatures < handle
 
         function m = featureVector(obj)
             feats = ContourFeatures.getFeatureVectorNames();
-            m = zeros(numel(feats), numel(obj.f));
+            m = zeros(numel(feats), numel(obj.Frequency));
             for i = 1:numel(feats)
                 feat = feats(i);
                 m(i, :) = obj.(feat);
@@ -57,21 +66,20 @@ classdef ContourFeatures < handle
             m = m(:);
         end
 
+        function s = toStruct(obj)
+            for name = ContourFeatures.struct_names
+                s.(name) = obj.(name);
+            end
+        end
     end
 
     methods(Static)
-        function feats = getFeatureVectorNames()
-              feats = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp", "pr", "dpr", "h", "dh"];
-%             feats = ["duration", "bw", "dbw", "f", "df", "p", "dp", "tp", "dtp"];
-        end
 
         function d = timedec(v)
-            % f = prctile(v, [0,50,100]);
+            q = prctile(v, [0,25,75,100]);
             m = median(v);
             md = median(abs(v - m));
-            mx = max(v);
-            mn = min(v);
-            d = [m, md, mx-mn];
+            d = [m, md, q, v(1), v(end), q];
         end
 
         function D = featureMatrix(features)
@@ -83,56 +91,42 @@ classdef ContourFeatures < handle
             end
         end
 
-        function T = featureTable(features)
-            T = {};
-            mmr = ["bw", "dbw", "f", "df", "p", "dp", "tp", "dtp"];
-            mmr_names = ["Bandwidth", "DeltaBandwidth", "Frequency", "DeltaFrequency", "Power", "DeltaPower", "TotalPower", "DeltaTotalPower"];
-            N = numel(features);
-            h = waitbar(0, 'Please wait...');
-            for i = 1:N
-                %convert to med, mad, range
-                if mod(i, 100) == 0
-                waitbar(i/N, h);
+        function s = structNames()
+            mc = ?ContourFeatures;
+            l = mc.PropertyList;
+            s = "";
+            for i = 1:numel(l)
+                p = l(i);
+                if p.Constant == 0
+                    s(end+1) = p.Name;
                 end
-                f = features(i);
-                for j = 1:numel(mmr)
-                    name = mmr(j);
-                    t_name = mmr_names(j);
-                    s.(sprintf("%s%s", t_name, "Median")) = f.(name)(1);
-                    s.(sprintf("%s%s", t_name, "MAD")) = f.(name)(2);
-                    s.(sprintf("%s%s", t_name, "Range")) = f.(name)(3);
-                end
-                s.Duration = f.duration;
-                s.Spectrum = f.spectrum;
-                s.FileID = f.fid;
-                s.ContourID = f.cid;
-                s.ContamIDs = f.contamids;
-                s.ContamLower = f.contamlower;
-                s.BLSNR  = f.blsnr;
-                s.StartIndex = f.sidx;
-                s.EndIndex = f.eidx;
-                T{end+1} = s;
             end
-            T = struct2table(cell2mat(T));
-            close(h);
+            s = s(2:end);
         end
 
-        function f = filter(T, col, bounds, isabs)
-            if nargin < 4
+        function Frequency = filter(T, col, type, bounds, isabs)
+            if nargin < 5
                 isabs = false;
             end
-            vals = T.(col);
+            vals = T{:, col};
+            if type ~= ""
+                vals = vals(:, type == ContourFeatures.filter_types);
+            end
             if isabs
                 vals = abs(vals);
             end
-            f = T(vals >= bounds(1) & vals <= bounds(2), :);
+            Frequency = T(vals >= bounds(1) & vals <= bounds(2), :);
         end
 
-        function m = columnMinMax(T, col, p)
-            if nargin < 3
+        function m = columnMinMax(T, col, type, p)
+            if nargin < 4
                 p = 0;
             end
-            vals = T.(col);
+            vals = T{:, col};
+            if type ~= ""
+                vals = vals(:, type == ContourFeatures.filter_types);
+            end
+            vals(isinf(vals)) = nan;
             m = [prctile(vals, p), prctile(vals, 100-p)];
         end
 

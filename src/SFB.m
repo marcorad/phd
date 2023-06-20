@@ -142,6 +142,10 @@ classdef SFB < handle
             t = (0:size(s,2)-1)*(obj.downsamplePhi*obj.downsampleS)/obj.fs;
         end
 
+        function fs = getSSamplingFreq(obj)
+            fs = obj.fs/(obj.downsamplePhi*obj.downsampleS);
+        end
+
 
         function s = filterS(obj, x)
             %prepare x
@@ -198,6 +202,7 @@ classdef SFB < handle
             yticks(fig, round(obj.fc(1:nt:end),0))
             xlabel(fig, "Time (s)");
             ylabel(fig, "Frequency (Hz)");
+            ylim([min(obj.fc), max(obj.fc)])
         end
 
     end
