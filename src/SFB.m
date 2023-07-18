@@ -21,8 +21,11 @@ classdef SFB < handle
         lambdas %center frequencies in rad/s
         psiBWHz %bandwidths of all the filters in Hz
         psiTimeSupport %time support of psi fb
-        downsampleS %downsampling factor of U
-        downsamplePhi %dowmsampling factor after calcuting s*phi
+        downsampleU %downsampling factor of U
+        downsampleS %dowmsampling factor after calcuting s*phi
+        Nu %number of resulting elements in U
+        Ns %number of resulting elements in S
+        allowDSU = true;
     end
 
     properties(Constant)
@@ -42,21 +45,32 @@ classdef SFB < handle
             Y = X.*fb;
             y = ifft(Y, size(Y, 2), 2);
             half = ceil((Nir-1)/2);
-            y = y(:, Nir + half:end - half - 1); %align the convolution and strip away edges
+            if mod(Nir, 2) == 0
+                e = half;
+            else
+                e = half + 1;
+            end
+            y = y(:, Nir + half:end - e); %align the convolution and strip away edges
         end
     end
 
     methods
-        function obj = SFB(Q, T, fs, N, flow, fhigh)
+        function obj = SFB(Q, T, fs, N, flow, fhigh, allowDSU)
             obj.Q = Q;
             obj.T = T;
             obj.fs = fs;
             obj.N = N;
             obj.flow = flow;
             obj.fhigh = fhigh;        
+            if nargin < 7
+                obj.allowDSU = true;
+            else
+                obj.allowDSU = allowDSU;
+            end
             obj.setLambdasExponential();
             obj.constructFB();
             obj.constructInvarianceFilter();
+
         end
 
         function th = theta(obj, t)
@@ -66,9 +80,11 @@ classdef SFB < handle
         %if lamda=1, then this is for 1 rad/s
         %for now, we don't care about the minimum scale
         function [psi, t] = morlet(obj, lambda, t)      
-            Thm1 = obj.gauss(-1, 2/obj.Q);
-            Th0 = obj.gauss(0, 2/obj.Q);
-            psi =  single(lambda *( exp(1j*lambda*t) - Thm1/Th0) .* obj.theta(t*lambda));
+%             Thm1 = obj.gauss(-1, 2/obj.Q);
+%             Th0 = obj.gauss(0, 2/obj.Q);
+%             psi =  single(lambda *( exp(1j*lambda*t) - Thm1/Th0) .* obj.theta(t*lambda));
+              psi =  single(lambda * obj.theta(t*lambda).*exp(1j*lambda*t));
+              psi = psi - mean(psi);
         end
 
         function constructInvarianceFilter(obj)
@@ -83,17 +99,19 @@ classdef SFB < handle
             obj.phi = obj.gauss(t, sigma_t);
             obj.phi = obj.phi(); %make sure its 1xNphiir
 
-            obj.phi = obj.phi(1,1:obj.downsampleS:end); %downsample to highest BW of filterbank
+            obj.phi = obj.phi(1,1:obj.downsampleU:end); %downsample to highest BW of filterbank
             obj.phi = obj.phi/sum(obj.phi); %normalise to averaging filter
 
-            Nphi = 2*size(obj.phi, 2) + ceil(obj.N/obj.downsampleS) - 1;
+            Nphi = 2*size(obj.phi, 2) + obj.Nu - 1;
             
             obj.Phi = fft(gpuArray(obj.phi), Nphi, 2);
-            obj.fphi = (0:Nphi-1)/Nphi*obj.fs/obj.downsampleS;
+            obj.fphi = (0:Nphi-1)/Nphi*obj.fs/obj.downsampleU;
             
             %critcally downsample
-            fT = 1/obj.T/(obj.fs/obj.downsampleS); %normalized bandwidth
-            obj.downsamplePhi = floor(1/fT/2); %downsampling factor
+            fT = 1/obj.T/(obj.fs/obj.downsampleU); %normalized bandwidth
+            obj.downsampleS = floor(1/fT/2); %downsampling factor
+            
+            obj.Ns = ceil(obj.Nu/obj.downsampleS);
 
         end
 
@@ -111,8 +129,14 @@ classdef SFB < handle
             obj.psiBWHz = obj.fc/obj.Q;
 
             bw = max(obj.psiBWHz);
-            obj.downsampleS = floor(obj.fs/2/bw);
+            if obj.allowDSU
+                minDownsample = floor(obj.fs*obj.T/2);
+                obj.downsampleU = max(min(floor(obj.fs/2/bw), minDownsample), 1);
+            else
+                obj.downsampleU = 1; %downsampling factor
+            end
             obj.psiTimeSupport = 4 * obj.Q ./ obj.fc/2/pi;
+            obj.Nu = ceil(obj.N / obj.downsampleU);
         end
 
         function constructFB(obj)
@@ -131,19 +155,21 @@ classdef SFB < handle
             Npsi = 2*Npsiir + obj.N - 1;
             obj.Psi = fft(gpuArray(obj.psi), Npsi, 2);
             obj.Psi = gpuArray(obj.Psi);
-            obj.fpsi = (0:Npsi-1)/Npsi*obj.fs;            
+            obj.fpsi = (0:Npsi-1)/Npsi*obj.fs;    
+
         end
 
         function u = filterU(obj, x)
             u = abs(obj.convrefl(x, obj.Psi, size(obj.psi, 2)));
+            u = u(:, 1:obj.downsampleU:end);
         end
 
         function t = getTime(obj, s)
-            t = (0:size(s,2)-1)*(obj.downsamplePhi*obj.downsampleS)/obj.fs;
+            t = (0:size(s,2)-1)*(obj.downsampleS*obj.downsampleU)/obj.fs;
         end
 
         function fs = getSSamplingFreq(obj)
-            fs = obj.fs/(obj.downsamplePhi*obj.downsampleS);
+            fs = obj.fs/(obj.downsampleS*obj.downsampleU);
         end
 
 
@@ -165,11 +191,36 @@ classdef SFB < handle
 
             %get Ux and downsample to find Sx
             u = obj.filterU(x);
-            u = u(:, 1:obj.downsampleS:end);
             s = real(obj.convrefl(u, obj.Phi, size(obj.phi, 2)));
-%             s = s(:, 1:floor(Norig/obj.downsampleS));
             
-            s = gather(s(:, 1:obj.downsamplePhi:end));            
+            s = gather(s(:, 1:obj.downsampleS:end));
+            if Npad > 0
+                s = s(:, 1:floor(Norig/obj.downsampleU/obj.downsampleS));
+            end
+        end
+
+        function [s, u] = filterSU(obj, x)
+            %prepare x
+            x = x(:)'; %make sure it's 1xN
+            Norig = numel(x);
+            Npad = obj.N - Norig;  
+            if Npad > 0
+                warning("Signal is zero-padded with %d zeros to be of length %d.", Npad, obj.N);
+            end
+
+            if Npad < 0
+                error("Signal of length %d must have a maximum length of %d.", Norig, obj.N);
+            end
+
+            x = [x, zeros(1, Npad)];
+            x = gpuArray(single(x));
+
+            %get Ux and downsample to find Sx
+            u = obj.filterU(x);
+            s = real(obj.convrefl(u, obj.Phi, size(obj.phi, 2)));
+            
+            s = gather(s(:, 1:obj.downsampleS:end));
+            u = gather(u);
         end
 
         function plot(obj)
@@ -178,7 +229,7 @@ classdef SFB < handle
             plot(0:size(obj.phi, 2)-1, obj.phi)
             subplot(322)
             plot(obj.fphi, abs(obj.Phi))
-            xlim([0, obj.fs/2/obj.downsampleS])
+            xlim([0, obj.fs/2/obj.downsampleU])
 
             subplot(323)
             plot(obj.fpsi, abs(sum(obj.Psi, 1)))

@@ -1,38 +1,26 @@
-classdef SEGMMCreator
-    properties
+classdef NoiseEstimateCreator < handle
+properties
         dl DataLoader2
         foldername
         path
-        fbfs
     end
 
     properties(Constant)
-        datapath = "D:\\Whale Data\\Raw Audio Data\\";
-        Tmf = 0.8;        
+        datapath = "D:\\Whale Data\\Raw Audio Data\\"; 
     end
 
     methods
-        function obj = SEGMMCreator(foldername, fbfs)
+        function obj = NoiseEstimateCreator(foldername)
             obj.foldername = foldername;
             obj.path = SpectrogramCreator.datapath + string(foldername);
             obj.dl = DataLoader2(obj.path + "\\spectrograms", "mat", "parallel", true);
-            obj.fbfs = fbfs;
         end
 
-
-
         function create(obj)
-            sdir = obj.path + "\\segmm\\";
-            sdirwhite = sdir + "white\\";
-            sdirnotwhite = sdir + "notwhite\\";
+            sdir = obj.path + "\\noise\\";
             mkdir(sdir);
-            mkdir(sdirwhite);
-            mkdir(sdirnotwhite);
             obj.dl.startWaitbar();
             spmd
-%                             for spmdIndex = 1
-                segmmTableWhite = {};
-                segmmTableNotWhite = {};
                 noiseEstimates = {};
                 noiseVarianceEstimates = {};
                 t = {};
@@ -46,25 +34,8 @@ classdef SEGMMCreator
                     t{end+1} = info.time;
                     noiseEstimates{end + 1} = smed;
                     noiseVarianceEstimates{end + 1} = svar;
-
-                    M = floor(SEGMMCreator.Tmf * obj.fbfs)*2 + 1;
-
-                    %whitened spectrogram detection
-                    segmmwhite = SEGMM(M);
-                    segmmwhite.detect(s./smed);
-                    segmmTableWhite{end + 1} = segmmwhite.getStatistics();
-                    SEGMMCreator.parsave(sdirwhite + info.name, segmmwhite);
-
-                    %non-whitened spectrogram detection
-                    segmmnotwhite = SEGMM(M);
-                    segmmnotwhite.detect(s);
-                    segmmTableNotWhite{end + 1} = segmmnotwhite.getStatistics();
-                    SEGMMCreator.parsave(sdirnotwhite + info.name, segmmnotwhite);
                 end                
             end
-            segmmTableWhite = struct2table(cell2mat([segmmTableWhite{:}]));
-            segmmTableNotWhite = struct2table(cell2mat([segmmTableNotWhite{:}]));
-            save(sdir + "SEGMM.mat", 'segmmTableWhite', 'segmmTableNotWhite');
             noiseEstimates = [noiseEstimates{:}];
             noiseEstimates = [noiseEstimates{:}];
             noiseVarianceEstimates = [noiseVarianceEstimates{:}];
@@ -76,13 +47,7 @@ classdef SEGMMCreator
             noiseVarianceEstimates = noiseVarianceEstimates(:, sidx);
             save(sdir + "NoiseEstimate.mat", 't', 'noiseEstimates');
             save(sdir + "NoiseVarianceEstimate.mat", 't', 'noiseVarianceEstimates');
-
         end
     end
 
-    methods(Static)
-        function parsave(fname, segmm)
-            save(fname, 'segmm');
-        end
-    end
 end

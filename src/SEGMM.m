@@ -124,6 +124,10 @@ classdef SEGMM < handle
                     obj.probs(obj.H > obj.lim) = obj.fmin;
                 end
             end
+
+%             minp = min(obj.probs);
+%             maxp = max(obj.probs);
+%             obj.probs = (obj.probs - minp)/(maxp - minp);
             
             obj.contam = obj.pi_n*normcdf(obj.Ht, obj.mu_n, obj.sigma_n)/(obj.pi_s*normcdf(obj.Ht, obj.mu_s, obj.sigma_s));           
             

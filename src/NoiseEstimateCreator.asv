@@ -1,14 +1,11 @@
-classdef SEGMMCreator
-    properties
+classdef NoiseEstimateCreator < handle
+properties
         dl DataLoader2
         foldername
-        path
-        fbfs
     end
 
     properties(Constant)
-        datapath = "D:\\Whale Data\\Raw Audio Data\\";
-        Tmf = 0.8;        
+        datapath = "D:\\Whale Data\\Raw Audio Data\\"; 
     end
 
     methods
@@ -19,20 +16,11 @@ classdef SEGMMCreator
             obj.fbfs = fbfs;
         end
 
-
-
         function create(obj)
-            sdir = obj.path + "\\segmm\\";
-            sdirwhite = sdir + "white\\";
-            sdirnotwhite = sdir + "notwhite\\";
+            sdir = obj.path + "\\noise\\";
             mkdir(sdir);
-            mkdir(sdirwhite);
-            mkdir(sdirnotwhite);
             obj.dl.startWaitbar();
             spmd
-%                             for spmdIndex = 1
-                segmmTableWhite = {};
-                segmmTableNotWhite = {};
                 noiseEstimates = {};
                 noiseVarianceEstimates = {};
                 t = {};
@@ -80,9 +68,4 @@ classdef SEGMMCreator
         end
     end
 
-    methods(Static)
-        function parsave(fname, segmm)
-            save(fname, 'segmm');
-        end
-    end
 end

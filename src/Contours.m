@@ -6,13 +6,17 @@ classdef Contours < handle
         ratios = Contours.getRatios(); %harmonic ratios
         ratiosTolUp = Contours.ratios*(1+Contours.hrtol); %harmonic ratios positive tolerance
         ratiosTolDown = Contours.ratios/(1+Contours.hrtol); %harmonic ratios negative tolerance
-        tau = 10; %factor required to be seen as an outlier compared to the denoised spectrum
-        M = 15; % MF window size for entropy
-        Tmin = 0.3; %the minimum length in time required for a contour
-        FreqMF = 15;
+        tau = 5; %factor required to be seen as an outlier compared to the noise spectrum
+         
+        Tmin = 0.5; %the minimum length in time required for a contour
+        FreqMF = 7;
         PHarmonic = 0.8;
         PDuration = 0.9;
-        SMedSmooth = 3;
+        NoiseSmooth = 2;
+        ProbMul = 1.5;
+        BlurStdT = 0.6;
+        BlurStdF = 0.2;
+        
     end
 
     properties
@@ -29,6 +33,8 @@ classdef Contours < handle
         Cdata %the connected contour segments
         Scont %the filled in contour map for visualisation
         Nmin %the minimum length of the contour in samples
+        M % MF window size for entropy
+        Blur = true;
     end
 
     methods(Static)
@@ -42,8 +48,14 @@ classdef Contours < handle
 
         function Smed = estimateNoise(S)
             Smed = median(medfilt1(S, Contours.FreqMF, [], 1, "omitnan","truncate"), 2);
-            Smed = smoothdata(Smed, "gaussian", Contours.SMedSmooth);
+            Smed = smoothdata(Smed, "gaussian", Contours.NoiseSmooth);
         end
+
+        function Svar = estimateNoiseVar(S)
+            Smf = medfilt1(S, Contours.FreqMF, [], 1, "omitnan","truncate");
+            Svar = (median(abs(S - Smf), 2)*1.4826).^2;
+        end
+
     end
 
     methods
@@ -59,8 +71,12 @@ classdef Contours < handle
             obj.t = fb.getTime(S);
             obj.f = fb.fc;
             obj.Nmin = floor(Contours.Tmin*fb.getSSamplingFreq());
+            obj.M = floor(SEGMMCreator.Tmf * fb.getSSamplingFreq())*2 + 1;
 
             obj.Smed = Contours.estimateNoise(S);
+            if obj.Blur
+                obj.S = imgaussfilt(obj.S, [Contours.BlurStdF, fb.getSSamplingFreq() * Contours.BlurStdT]);
+            end
 
             obj.Cdata = struct([]);
             obj.features = struct([]);
@@ -74,7 +90,7 @@ classdef Contours < handle
         end
 
         function fitGMM(obj, whiten)
-            obj.gmm = SEGMM(Contours.M);
+            obj.gmm = SEGMM(obj.M);
             if whiten
                 obj.gmm.detect(obj.S./obj.Smed);
             else
@@ -99,7 +115,7 @@ classdef Contours < handle
         end
 
         function spectrograms(obj)
-            obj.mask = obj.gmm.probs >= 0.5;
+            obj.mask = obj.gmm.probs >= min(obj.gmm.probs) * Contours.ProbMul;
             obj.St = obj.S .* obj.mask >= obj.Smed*Contours.tau;
             obj.Sden = max(obj.S - obj.Smed, 0);
         end
@@ -120,7 +136,7 @@ classdef Contours < handle
                 tishift = ti - tmin + 1;
                 fishift = fi - fmin + 1;
                 contourmask(sub2ind(size(contourmask), fishift, tishift)) = 1;
-                maskamp(sub2ind(size(contourmask), fishift, tishift)) = obj.S(idx);
+                maskamp(sub2ind(size(contourmask), fishift, tishift)) = obj.Sden(idx);
                 frange = obj.f((1:size(contourmask, 1)) + fmin - 1);
                 ampnorm = maskamp./sum(maskamp, 1);
                 cenf = sum(frange'.*ampnorm, 1);
@@ -177,7 +193,7 @@ classdef Contours < handle
                     end
                 end
             end
-            obj.Cdata = obj.Cdata(~remove);
+%             obj.Cdata = obj.Cdata(~remove);
         end
 
         function removeShortContours(obj)
@@ -205,7 +221,7 @@ classdef Contours < handle
                     cf.Bandwidth = c.bw;
                     cf.Frequency = c.f0;
                     cf.Power = c.P;
-                    kbot = find(obj.f - min(c.f0 - c.bw) > 0, 1); %only consider above F0min - BW
+                    kbot = max(find(obj.f - min(c.f0 - c.bw) >= 0, 1)-1, 1); %only consider above F0min - BW
                     ampmask = ~obj.St(:,c.tmin:c.tmax);
                     Sm = obj.Sden(:,c.tmin:c.tmax);
                     Sm(ampmask) = 0;
@@ -242,9 +258,9 @@ classdef Contours < handle
             figure
             ax1 = subplot(211);
             yyaxis left
-            fb.plotS(obj.S, true);
+            fb.plotS(obj.S./obj.Smed, true);
             yyaxis right
-            plot(obj.t, obj.gmm.H);
+            plot(obj.t, obj.gmm.probs);
 
             map =  rand(numel(obj.Cdata)*4, 3);
             map = rgb2hsv(map);

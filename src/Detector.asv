@@ -1,0 +1,64 @@
+classdef Detector < handle
+
+    properties
+        dl DataLoader2
+        foldername
+        path
+        noiseEstimate
+        annotationTable
+    end
+
+    properties(Constant)
+        datapath = "D:\\Whale Data\\Raw Audio Data\\"; 
+        Tmf = 0.8;
+        
+    end
+
+    methods
+        function obj = NoiseEstimateCreator(foldername)
+            obj.foldername = foldername;
+            obj.path = SpectrogramCreator.datapath + string(foldername);
+            obj.dl = DataLoader2(obj.path + "\\spectrograms", "mat", "parallel", true);
+            obj.noiseEstimate = load(obj.path + "\\noise\\NoiseEstimate.mat").noiseEstimate;
+            obj.annotationTable = load(obj.path + "\\annotations\\annotations.mat").annotationTable;
+        end
+
+        function detections(obj)
+            M = SEG
+            for spmdIndex = 1
+                D = {};            
+                while ~obj.dl.isComplete(spmdIndex)
+                    [s, info, fs] = obj.dl.next(spmdIndex);
+                    s = s.^2;
+                    fid = info.fid;
+                    noise = obj.noiseEstimate(:, fid).^2;
+                    sw = s./noise;
+                    M = floor(Detector.Tmf * fs)*2 + 1;
+                    detectors.segmm = SEGMM(M);
+                    detectors.segmmwhite = SEGMM(M);
+                    detectors.bled = BLED();
+                    detectors.bledwhite = BLED();
+                    detectors.segmm.detect(s);
+                    detectors.bled.detect(s);
+                    detectors.segmmwhite.detect(sw);
+                    detectors.bledwhite.detect(sw);
+                    detectors.info = info;
+                    
+                    anns = obj.annotationTable(obj.annotationTable.FileID == fid, :);
+                    truelabels = zeros(size(s, 2));
+                    for i = 1:size(anns, 1)
+                        sidx = anns.SpectrogramStartIndex(i);
+                        eidx = anns.SpectrogramEndIndex(i);
+                        truelabels()
+                    end
+
+                    D{end + 1} = detectors;
+                end
+        
+            end
+            D = [D{:}];
+            D = [D{:}];
+        end
+    end
+
+end
