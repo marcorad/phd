@@ -26,6 +26,11 @@ fhigh = 120;
 %     sc = SpectrogramCreator(outputnames(idx));
 %     sc.create(Q, T, fs, AudioDataConverter.L, flow, fhigh);
 % end
+%create spectrograms
+% for idx = 2%numel(outputnames)
+%     sc = STFTCreator(outputnames(idx));
+%     sc.create(512, 256, fs);
+% end
 % 
 % %create gmms
 % for idx = 2%numel(outputnames)
@@ -33,18 +38,23 @@ fhigh = 120;
 %     nec.create();
 % end
 % 
-% %convert annotations
-% for fidx = 2%numel(outputnames)
-%     ac = AnnotationConverter(inputdirs(fidx), outputnames(fidx));
-%     ac.convert();
-% end
 
-Q = [8, 3];
-flow = [15, 0.75];
-fhigh = [120, 3.5];
 
+T = 1;
+Q = [10, 4];
+flow = 15;
+fhigh = 120;
+
+%TODO change scattering to only compute the paths that actually have
+%significant energy
 %scattering
 for idx = 2%numel(outputnames)
-    scc = ScatteringCreator(outputnames(idx), Q, flow, fhigh);
+    scc = ScatteringCreator(outputnames(idx), Q, flow, fhigh, T);
     scc.create();
+end
+
+%convert annotations
+for fidx = 2%numel(outputnames)
+    ac = AnnotationConverter(inputdirs(fidx), outputnames(fidx));
+    ac.convert();
 end

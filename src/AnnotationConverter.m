@@ -10,7 +10,8 @@ classdef AnnotationConverter < handle
         outputname
         outputpath
         annotationTable
-        sfs
+        scalogramfs
+        scatteringfs
         xfs
         f
     end
@@ -22,9 +23,11 @@ classdef AnnotationConverter < handle
             obj.outputname = outputname;
             obj.outputpath = AnnotationConverter.datapath + obj.outputname;
             fb = load(obj.outputpath + "\\spectrograms\\filterbank.mat").fb;
-            obj.sfs = fb.getSSamplingFreq();
-            obj.xfs = fb.fs;
-            obj.f = fb.fc;
+            obj.scalogramfs = fb.getSSamplingFreq();
+            fb = load(obj.outputpath + "\\scattering\\filterbank.mat").fb;
+            obj.scatteringfs = fb.filterBanks(1).getSSamplingFreq();
+            obj.xfs = fb.filterBanks(1).fs;
+            obj.f = fb.filterBanks(1).fc;
         end
 
         function convert(obj)
@@ -91,10 +94,17 @@ classdef AnnotationConverter < handle
                     row.File = matchedfile;
                     row.FileID = matchedfids;
 
-                    specstart = floor(row.StartIndex / obj.xfs * obj.sfs) + 1; %covert bins to sampling freq of the spectrogram
-                    specend = ceil(row.EndIndex / obj.xfs * obj.sfs) + 1;
-                    row.SpectrogramStartIndex = specstart;
-                    row.SpectrogramEndIndex = specend;
+                    %scalogram
+                    specstart = floor(row.StartIndex / obj.xfs * obj.scalogramfs) + 1; %covert bins to sampling freq of the spectrogram
+                    specend = ceil(row.EndIndex / obj.xfs * obj.scalogramfs) + 1;
+                    row.ScalogramStartIndex = specstart;
+                    row.ScalogramEndIndex = specend;
+                    %scattering
+                    specstart = floor(row.StartIndex / obj.xfs * obj.scatteringfs) + 1; %covert bins to sampling freq of the spectrogram
+                    specend = ceil(row.EndIndex / obj.xfs * obj.scatteringfs) + 1;
+                    row.ScatteringStartIndex = specstart;
+                    row.ScatteringEndIndex = specend;
+
                     row.AnnotationToNoiseRatio = zeros(size(specstart));
                     row.AnnotationToNoiseRatioDB = zeros(size(specstart));
                     row.AnnotationSignificance = zeros(size(specstart));
@@ -109,7 +119,7 @@ classdef AnnotationConverter < handle
             obj.annotationTable = obj.annotationTable(obj.annotationTable.StartFrequency < maxf, :);
             obj.annotationTable.StartFrequency = max(obj.annotationTable.StartFrequency, minf);
             obj.annotationTable.EndFrequency = min(obj.annotationTable.EndFrequency, maxf);
-            obj.calcANR();
+%             obj.calcANR();
 
             savepath = obj.outputpath + "\\annotations";
             mkdir(savepath);

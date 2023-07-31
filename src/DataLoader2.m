@@ -10,7 +10,7 @@ classdef DataLoader2 < handle
         Idx ThreadIdx
         wtq
         isformatted %whether the data is formatted to the dataset convention in AudioDataConverter
-        fb SFB
+        fb
     end
 
     methods
@@ -32,9 +32,14 @@ classdef DataLoader2 < handle
 
         function [x, info, fs] = load(obj, idx)
             info = obj.filelist(idx);
+            
             if obj.dtype == "mat"
                 x = load(info.path).s;
-                fs = obj.fb.getSSamplingFreq();
+                if class(obj.fb) == "SFB"
+                    fs = obj.fb.getSSamplingFreq();
+                elseif class(obj.fb) == "Scattering"
+                    fs = obj.fb.filterBanks(1).getSSamplingFreq();
+                end
             elseif obj.dtype == "wav"
                 [x, fs] = audioread(info.path);
             end

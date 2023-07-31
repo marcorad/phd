@@ -30,6 +30,8 @@ classdef SEGMM < handle
         fmod %the modified posterior function
         x %values to evaluate the posterior function
         pdf %PDF evaluated at x
+        beta %beta for k-means
+        g %gain for k-means
     end
 
     methods
@@ -71,6 +73,32 @@ classdef SEGMM < handle
             obj.Hmin = min(obj.H);
             obj.Hmax = max(obj.H);
             obj.fitGMM();
+        end
+
+        function fitKMeans(obj)
+            % Perform k-means to determine the entropy class means.
+            mus = [max(obj.H); min(obj.H)];
+            Mprev = mus+100;
+            epsilon = 1e-7;
+            obj.converged = false;
+            for i=1:SEGMM.MaxGMMIter
+                if max(abs(Mprev-mus)) < epsilon
+                    obj.converged = true;
+                    break;
+                end
+                D = (E - mus).^2; %distances
+                [~,S] = min(D,[],1); %assignment
+                Mprev = mus;
+                mus(1) = mean(E(S==1));
+                mus(2) = mean(E(S==2));
+            end
+            obj.beta = mus(1) + (mus(2) - mus(1))/2;
+            obj.mu_n = mus(1);
+            obj.mu_s = mus(2);
+            p = 0.99;
+            obj.g = (obj.mu_n - obj.mu_s)/(obj.mu_s - obj.beta)/2*log(1/p-1);
+            Hs = 2*obj.g*(obj.H - obj.beta)/(obj.mu_n - obj.mu_s);
+            obj.probs = 1./(1 + exp(Hs));
         end
 
         function fitGMM(obj)

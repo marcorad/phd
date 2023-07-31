@@ -1,17 +1,22 @@
 classdef Scattering < handle
 
     properties
-        filterBanks (:, 1) SFB      
+        filterBanks (:, 1) SFB
+        paths
+        pathsizes
+        pathstart
     end
 
     methods
         function obj = Scattering(Q, T, fs, N, flow, fhigh)
-            fsfb = fs;
-            Nfb = N;
-            for i = 1:numel(Q)                
-                obj.filterBanks(i) = SFB(Q(i), T, fsfb, Nfb, flow(i), fhigh(i), i == 1);
-                fsfb = fsfb / obj.filterBanks(i).downsampleU;
-                Nfb  = obj.filterBanks(i).Nu;
+            obj.filterBanks(1) = SFB(Q(1), T, fs, N, flow, fhigh, true);
+            fsfb = fs/obj.filterBanks(1).downsampleU;
+            Nfb  = obj.filterBanks(1).Nu;
+            for i = 2:numel(Q)         
+                prevfb = obj.filterBanks(i-1);
+                obj.filterBanks(i) = SFB(Q(i), T, fsfb, Nfb, 1/T, max(prevfb.psiBWHz), false);
+%                 fsfb = fsfb / obj.filterBanks(i).downsampleU;
+%                 Nfb  = obj.filterBanks(i).Nu;
             end
         end
 
@@ -23,21 +28,34 @@ classdef Scattering < handle
             prevu = {u};
             curru = {};
             currfb = 2;
+            prevbw = fb.psiBWrad;
+            path = {1};
+            pathstartidx = 1;
             while currfb <= numel(obj.filterBanks)
-                fb = obj.filterBanks(currfb);
+                fb = obj.filterBanks(currfb);                
                 for i = 1:numel(prevu)
                     u = prevu{i};
                     for j = 1:size(u, 1)
-                        [s, unext] = fb.filterSU(u(j, :));
+                        [s, unext] = fb.filterSU(u(j, :), prevbw(j));
                         curru{end + 1} = unext;
                         coeffs{end + 1} = s;
+                        path{end+1} = [path{pathstartidx}, j];
                     end
+                    pathstartidx = pathstartidx +1;
                 end
                 prevu = curru;
                 currfb = currfb + 1;
                 curru = {};
+                prevbw = fb.psiBWHz;
             end
-            coeffs = vertcat(coeffs{:});
+            nanidx = cellfun(@(c) numel(c)>1,coeffs);
+            pathsize = cellfun(@(p) size(p, 1), coeffs);
+            coeffs = vertcat(coeffs{nanidx});
+            path = path(nanidx);
+            pathsize = pathsize(nanidx);
+            obj.paths = path;
+            obj.pathsizes = pathsize;
+            obj.pathstart = cumsum([1, obj.pathsizes(1:end-1)]);
             N = numel(x);
             Nspec = ceil(N/obj.filterBanks(1).downsampleU/obj.filterBanks(1).downsampleS);
             coeffs = coeffs(:, 1:Nspec);

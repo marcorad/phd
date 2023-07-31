@@ -12,12 +12,12 @@ classdef ScatteringCreator
     end
 
     methods
-        function obj = ScatteringCreator(foldername, Q, fl, fh)
+        function obj = ScatteringCreator(foldername, Q, fl, fh, T)
             obj.foldername = foldername;
             obj.path = ScatteringCreator.datapath + string(foldername);
             obj.dl = DataLoader2(obj.path, "wav", "single", true);
             sfb = load(obj.path + "\\spectrograms\\filterbank.mat").fb;
-            obj.fb = Scattering(Q, sfb.T*ScatteringCreator.Tmul, sfb.fs, sfb.N, fl, fh);
+            obj.fb = Scattering(Q, T, sfb.fs, sfb.N, fl, fh);
             sdir = obj.path + "\\scattering\\";
             mkdir(sdir);  
             fb = obj.fb;
