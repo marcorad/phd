@@ -9,31 +9,31 @@ classdef ScatteringCreator
     properties(Constant)
         datapath = "D:\\Whale Data\\Raw Audio Data\\";
         Tmul = 6;
+        R = 1;
     end
 
     methods
-        function obj = ScatteringCreator(foldername, Q, fl, fh, T)
-            obj.foldername = foldername;
-            obj.path = ScatteringCreator.datapath + string(foldername);
-            obj.dl = DataLoader2(obj.path, "wav", "single", true);
-            sfb = load(obj.path + "\\spectrograms\\filterbank.mat").fb;
-            obj.fb = Scattering(Q, T, sfb.fs, sfb.N, fl, fh);
-            sdir = obj.path + "\\scattering\\";
-            mkdir(sdir);  
-            fb = obj.fb;
-            save(sdir + "filterbank.mat", "fb", '-mat');
+        function this = ScatteringCreator(foldername, Q, fl, fh, T, oversample)
+            this.foldername = foldername;
+            this.path = ScatteringCreator.datapath + string(foldername);
+            this.dl = DataLoader2(this.path, "wav", "single", true);
+            this.fb = Scattering(Q, T, 250, AudioDataConverter.L, fl, fh, oversample);
+            sdir = this.path + "\\scattering\\";
+            mkdir(sdir); 
         end
 
-        function create(obj)          
-            obj.dl.startWaitbar();
-            sdir = obj.path + "\\scattering\\";
-            while ~obj.dl.isComplete()
-                [x, info, ~] = obj.dl.next();
-                s = obj.fb.scattering(x);
+        function create(this)          
+            this.dl.startWaitbar();
+            sdir = this.path + "\\scattering\\";
+            while ~this.dl.isComplete()
+                [x, info, ~] = this.dl.next();
+                x = resample(x, 1, this.R); %resample to 250Hz for speed
+                s = this.fb.scattering(x);
                 name = string(info.time) + ".mat";
                 save(sdir + name, "s", '-mat');
             end   
-            
+            fb = this.fb;
+            save(sdir + "filterbank.mat", "fb", '-mat');            
         end
     end
 end

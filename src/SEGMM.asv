@@ -34,9 +34,6 @@ classdef SEGMM < handle
         g %gain for k-means
         KLDiv_ns %the KL divergence between the 2 gaussians as measure of distance KL(f_n||f_s)
         KLDiv_sn %the KL divergence between the 2 gaussians as measure of distance KL(f_s||f_n)
-        MDist_s %the Mahalanobis distance between the signal mean given the noise distribution
-        MDist_n %the Mahalanobis distance between the noise mean given the signal distribution
-        MDist_minH %the Mahalanobis distance between the minimum observed entropy and the noise distribution
     end
 
     methods(Static)
@@ -45,21 +42,14 @@ classdef SEGMM < handle
             varq = sigmaq^2;
             kld = 0.5*(log(varq/varp) - 1 + (mup-muq)^2/varq + varp/varq);
         end
-
-        function z = MahalanobisDist(x, mu, sigma)
-           z = abs((x-mu)/sigma);
-        end
     end
 
     methods
         
         
-        function calcDistances(this)
+        function calcKLDiv(this)
             this.KLDiv_sn = this.KLD(this.mu_s, this.sigma_s, this.mu_n, this.sigma_n);
             this.KLDiv_ns = this.KLD(this.mu_n, this.sigma_n, this.mu_s, this.sigma_s);
-            this.MDist_s = this.MahalanobisDist(this.mu_s, this.mu_n, this.sigma_n);
-            this.MDist_n = this.MahalanobisDist(this.mu_n, this.mu_s, this.sigma_s);
-            this.MDist_minH = this.MahalanobisDist(this.Hmin, this.mu_n, this.sigma_n);
         end
 
         function this = SEGMM(M)
@@ -194,7 +184,7 @@ classdef SEGMM < handle
             this.contam = this.pi_n*normcdf(this.Ht, this.mu_n, this.sigma_n)/(this.pi_s*normcdf(this.Ht, this.mu_s, this.sigma_s));           
             
             this.calculatePDF();
-            this.calcDistances();
+            this.calcKLDiv();
         end
 
         function modifiedPosterior(this)

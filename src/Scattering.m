@@ -8,13 +8,13 @@ classdef Scattering < handle
     end
 
     methods
-        function obj = Scattering(Q, T, fs, N, flow, fhigh)
-            obj.filterBanks(1) = SFB(Q(1), T, fs, N, flow, fhigh, true);
+        function obj = Scattering(Q, T, fs, N, flow, fhigh, oversample)
+            obj.filterBanks(1) = SFB(Q(1), T, fs, N, flow, fhigh, true, oversample);
             fsfb = fs/obj.filterBanks(1).downsampleU;
             Nfb  = obj.filterBanks(1).Nu;
             for i = 2:numel(Q)         
                 prevfb = obj.filterBanks(i-1);
-                obj.filterBanks(i) = SFB(Q(i), T, fsfb, Nfb, 1/T, max(prevfb.psiBWHz), false);
+                obj.filterBanks(i) = SFB(Q(i), T, fsfb, Nfb, 1/T, max(prevfb.psiBWHz), false, oversample);
 %                 fsfb = fsfb / obj.filterBanks(i).downsampleU;
 %                 Nfb  = obj.filterBanks(i).Nu;
             end

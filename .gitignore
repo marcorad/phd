@@ -2,3 +2,4 @@
 !/**/*.m
 !/**/*.mlx
 /store/*
+/detections/*

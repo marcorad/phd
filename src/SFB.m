@@ -28,6 +28,7 @@ classdef SFB < handle
         Ns %number of resulting elements in S
         alpha %factor to multiply Q to get BW
         allowDSU = true;
+        oversample = 1; %oversampling factor of coefficients
     end
 
     properties(Constant)
@@ -57,173 +58,182 @@ classdef SFB < handle
     end
 
     methods
-        function obj = SFB(Q, T, fs, N, flow, fhigh, allowDSU)
-            obj.Q = Q;
-            obj.T = T;
-            obj.fs = fs;
-            obj.N = N;
-            obj.flow = flow;
-            obj.fhigh = fhigh;       
-            obj.alpha = 2;
+        function this = SFB(Q, T, fs, N, flow, fhigh, allowDSU, oversample)
+            this.Q = Q;
+            this.T = T;
+            this.fs = fs;
+            this.N = N;
+            this.flow = flow;
+            this.fhigh = fhigh;       
+            this.alpha = 1;
+            
             if nargin < 7
-                obj.allowDSU = true;
+                this.allowDSU = true;
             else
-                obj.allowDSU = allowDSU;
+                this.allowDSU = allowDSU;
             end
-            obj.setLambdasExponential();
-            obj.constructFB();
-            obj.constructInvarianceFilter();
 
+            if nargin < 8
+                this.oversample = 1;
+            else
+                this.oversample = oversample;
+            end
+            this.setLambdasExponential();
+            this.constructFB();
+            this.constructInvarianceFilter();
+            
         end
 
-        function bw = filterBW(obj)
-            bw = obj.alpha*obj.Q;
+        function bw = filterBW(this)
+            bw = this.alpha*this.Q;
         end
 
-        function th = theta(obj, t)
-            th = SFB.gauss(t, obj.filterBW());%sigma_t = Q, sigma_w = 1/Q
+        function th = theta(this, t)
+            th = SFB.gauss(t, this.filterBW());%sigma_t = Q, sigma_w = 1/Q
         end
 
         %if lamda=1, then this is for 1 rad/s
         %for now, we don't care about the minimum scale
-        function [psi, t] = morlet(obj, lambda, t)      
-            Thm1 = obj.gauss(-1, 1/obj.filterBW());
-            Th0 = obj.gauss(0, 1/obj.filterBW());
-%             psi =  single(lambda *( exp(1j*lambda*t) - Thm1/Th0) .* obj.theta(t*lambda));
-              psi =  single(lambda * obj.theta(t*lambda).*( exp(1j*lambda*t) - Thm1/Th0));
+        function [psi, t] = morlet(this, lambda, t)      
+            Thm1 = this.gauss(-1, 1/this.filterBW());
+            Th0 = this.gauss(0, 1/this.filterBW());
+%             psi =  single(lambda *( exp(1j*lambda*t) - Thm1/Th0) .* this.theta(t*lambda));
+              psi =  single(lambda * this.theta(t*lambda).*( exp(1j*lambda*t) - Thm1/Th0));
               psi = psi - mean(psi);
         end
 
-        function constructInvarianceFilter(obj)
-            sigma_t = obj.T/2/pi; %in the paper, T = 2*pi/flp -> T = -> a=T/2
+        function constructInvarianceFilter(this)
+            sigma_t = this.T/2/pi; %in the paper, T = 2*pi/flp -> T = -> a=T/2
 
-            t_range = obj.sigmaRange * obj.T;
-            Nphiir = floor(t_range * obj.fs)*2 + 1;
+            t_range = this.sigmaRange * this.T;
+            Nphiir = floor(t_range * this.fs)*2 + 1;
 
             
             nmax = (Nphiir - 1)/2;
             n = -nmax:nmax;
-            t = n / obj.fs;
+            t = n / this.fs;
 
-            obj.phi = obj.gauss(t, sigma_t);
-            obj.phi = obj.phi(); %make sure its 1xNphiir
+            this.phi = this.gauss(t, sigma_t);
+            this.phi = this.phi(); %make sure its 1xNphiir
 
-            obj.phi = obj.phi(1,1:obj.downsampleU:end); %downsample to highest BW of filterbank
-            obj.phi = obj.phi/sum(obj.phi); %normalise to averaging filter
+            this.phi = this.phi(1,1:this.downsampleU:end); %downsample to highest BW of filterbank
+            this.phi = this.phi/sum(this.phi); %normalise to averaging filter
 
-            Nphi = 2*size(obj.phi, 2) + obj.Nu - 1;
+            Nphi = 2*size(this.phi, 2) + this.Nu - 1;
             
-            obj.Phi = fft(gpuArray(obj.phi), Nphi, 2);
-            obj.fphi = (0:Nphi-1)/Nphi*obj.fs/obj.downsampleU;
+            this.Phi = fft(gpuArray(this.phi), Nphi, 2);
+            this.fphi = (0:Nphi-1)/Nphi*this.fs/this.downsampleU;
             
             %critcally downsample
-            fT = 1/obj.T/(obj.fs/obj.downsampleU); %normalized bandwidth
-            obj.downsampleS = floor(1/fT/4); %downsampling factor
+            fT = 1/this.T/(this.fs/this.downsampleU); %normalized bandwidth
+            this.downsampleS = floor(1/fT/4/this.oversample); %downsampling factor
             
-            obj.Ns = ceil(obj.Nu/obj.downsampleS);
+            this.Ns = ceil(this.Nu/this.downsampleS);
 
         end
 
 
-        function setLambdasExponential(obj)            
+        function setLambdasExponential(this)            
 
-            obj.lambdas(1) = obj.flow*2*pi;
+            this.lambdas(1) = this.flow*2*pi;
+            %exponential
             k = 1;  
-            while obj.lambdas(k) < obj.fhigh * 2*pi
-                obj.lambdas(k+1) = obj.flow * 2*pi * 2^(k/obj.Q);
+            while this.lambdas(k) < this.fhigh * 2*pi
+                this.lambdas(k+1) = this.flow * 2*pi * 2^(k/this.Q);
                 k = k + 1;
             end
-            obj.lambdas = flipud(obj.lambdas(1:end-1));
-            obj.fc = obj.lambdas/2/pi;
-            obj.psiBWrad = obj.lambdas/obj.filterBW();
-            obj.psiBWHz = obj.psiBWrad/2/pi;
 
-            bw = max(obj.psiBWHz)*2;
-            if obj.allowDSU
-%                 minDownsample = floor(obj.fs*obj.T/2);
-                obj.downsampleU = max(floor(obj.fs/2/bw), 1);
+            this.lambdas = flipud(this.lambdas(1:end-1));
+            this.fc = this.lambdas/2/pi;
+            this.psiBWrad = this.lambdas/this.filterBW();
+            this.psiBWHz = this.psiBWrad/2/pi;
+
+            bw = max(this.psiBWHz)*2;
+            if this.allowDSU
+%                 minDownsample = floor(this.fs*this.T/2);
+                this.downsampleU = max(floor(this.fs/2/bw), 1);
             else
-                obj.downsampleU = 1; %downsampling factor
+                this.downsampleU = 1; %downsampling factor
             end
-            obj.psiTimeSupport = 1./obj.psiBWrad;
-            obj.Nu = ceil(obj.N / obj.downsampleU);
+            this.psiTimeSupport = 1./this.psiBWrad;
+            this.Nu = ceil(this.N / this.downsampleU);
         end
 
-        function constructFB(obj)
-            sigma_t = max(obj.psiTimeSupport);
-            t_range = obj.sigmaRange * sigma_t;
-            Npsiir = floor(t_range * obj.fs)*2 + 1; 
+        function constructFB(this)
+            sigma_t = max(this.psiTimeSupport);
+            t_range = this.sigmaRange * sigma_t;
+            Npsiir = floor(t_range * this.fs)*2 + 1; 
             nmax = (Npsiir - 1)/2;
             n = -nmax:nmax;
-            t = n / obj.fs;
+            t = n / this.fs;
 
             %psi filterbank
-            for i = 1:numel(obj.fc)
-                obj.psi(i, :) = obj.morlet(obj.lambdas(i), t)/obj.fs*2;
+            for i = 1:numel(this.fc)
+                this.psi(i, :) = this.morlet(this.lambdas(i), t)/this.fs*2;
             end
                         
-            Npsi = 2*Npsiir + obj.N - 1;
-            obj.Psi = fft(gpuArray(obj.psi), Npsi, 2);
-            obj.Psi = gpuArray(obj.Psi);
-            obj.fpsi = (0:Npsi-1)/Npsi*obj.fs;    
+            Npsi = 2*Npsiir + this.N - 1;
+            this.Psi = fft(gpuArray(this.psi), Npsi, 2);
+            this.Psi = gpuArray(this.Psi);
+            this.fpsi = (0:Npsi-1)/Npsi*this.fs;    
 
         end
 
-        function u = filterU(obj, x, filteridx)
+        function u = filterU(this, x, filteridx)
             if nargin < 3
-                u = abs(obj.convrefl(x, obj.Psi, size(obj.psi, 2)));                
+                u = abs(this.convrefl(x, this.Psi, size(this.psi, 2)));                
             else                               
-                u = abs(obj.convrefl(x, obj.Psi(filteridx, :), size(obj.psi, 2))); 
+                u = abs(this.convrefl(x, this.Psi(filteridx, :), size(this.psi, 2))); 
             end
-            u = u(:, 1:obj.downsampleU:end);
+            u = u(:, 1:this.downsampleU:end);
         end
 
-        function t = getTime(obj, s)
-            t = (0:size(s,2)-1)*(obj.downsampleS*obj.downsampleU)/obj.fs;
+        function t = getTime(this, s)
+            t = (0:size(s,2)-1)*(this.downsampleS*this.downsampleU)/this.fs;
         end
 
-        function fs = getSSamplingFreq(obj)
-            fs = obj.fs/(obj.downsampleS*obj.downsampleU);
+        function fs = getSSamplingFreq(this)
+            fs = this.fs/(this.downsampleS*this.downsampleU);
         end
 
 
-        function s = filterS(obj, x)
+        function s = filterS(this, x)
             %prepare x
             x = x(:)'; %make sure it's 1xN
             Norig = numel(x);
-            Npad = obj.N - Norig;  
+            Npad = this.N - Norig;  
             if Npad > 0
-                warning("Signal is zero-padded with %d zeros to be of length %d.", Npad, obj.N);
+                warning("Signal is zero-padded with %d zeros to be of length %d.", Npad, this.N);
             end
 
             if Npad < 0
-                error("Signal of length %d must have a maximum length of %d.", Norig, obj.N);
+                error("Signal of length %d must have a maximum length of %d.", Norig, this.N);
             end
 
             x = [x, zeros(1, Npad)];
             x = gpuArray(single(x));
 
             %get Ux and downsample to find Sx
-            u = obj.filterU(x);
-            s = real(obj.convrefl(u, obj.Phi, size(obj.phi, 2)));
+            u = this.filterU(x);
+            s = real(this.convrefl(u, this.Phi, size(this.phi, 2)));
             
-            s = gather(s(:, 1:obj.downsampleS:end));
+            s = gather(s(:, 1:this.downsampleS:end));
             if Npad > 0
-                s = s(:, 1:floor(Norig/obj.downsampleU/obj.downsampleS));
+                s = s(:, 1:floor(Norig/this.downsampleU/this.downsampleS));
             end
         end
 
-        function [s, u] = filterSU(obj, x, bwrad)
+        function [s, u] = filterSU(this, x, bwrad)
             %prepare x
             x = x(:)'; %make sure it's 1xN
             Norig = numel(x);
-            Npad = obj.N - Norig;  
+            Npad = this.N - Norig;  
             if Npad > 0
-                warning("Signal is zero-padded with %d zeros to be of length %d.", Npad, obj.N);
+                warning("Signal is zero-padded with %d zeros to be of length %d.", Npad, this.N);
             end
 
             if Npad < 0
-                error("Signal of length %d must have a maximum length of %d.", Norig, obj.N);
+                error("Signal of length %d must have a maximum length of %d.", Norig, this.N);
             end
 
             x = [x, zeros(1, Npad)];
@@ -231,52 +241,52 @@ classdef SFB < handle
 
             if nargin < 3            
                 %get Ux and downsample to find Sx
-                u = obj.filterU(x);            
+                u = this.filterU(x);            
             else
-                filteridx = obj.lambdas - obj.psiBWrad < bwrad; 
+                filteridx = this.lambdas - this.psiBWrad < bwrad; 
                 if all(filteridx == false)
                     u = nan;
                     s = nan;
                     return;
                 end
-                u = obj.filterU(x, filteridx);
+                u = this.filterU(x, filteridx);
             end
-            s = real(obj.convrefl(u, obj.Phi, size(obj.phi, 2)));            
-            s = gather(s(:, 1:obj.downsampleS:end));
+            s = real(this.convrefl(u, this.Phi, size(this.phi, 2)));            
+            s = gather(s(:, 1:this.downsampleS:end));
             u = gather(u);
         end
 
-        function plot(obj)
+        function plot(this)
             figure
             subplot(321)
-            plot(0:size(obj.phi, 2)-1, obj.phi)
+            plot(0:size(this.phi, 2)-1, this.phi)
             subplot(322)
-            plot(obj.fphi, abs(obj.Phi))
-            xlim([0, obj.fs/2/obj.downsampleU])
+            plot(this.fphi, abs(this.Phi))
+            xlim([0, this.fs/2/this.downsampleU])
 
             subplot(323)
-            plot(obj.fpsi, abs(sum(obj.Psi, 1)))
+            plot(this.fpsi, abs(sum(this.Psi, 1)))
             subplot(324)
-            plot(obj.fpsi, abs(obj.Psi))
-            xlim([0, obj.fs/2])
+            plot(this.fpsi, abs(this.Psi))
+            xlim([0, this.fs/2])
 
             subplot(3, 2, [5,6])
-            plot(0:size(obj.psi, 2)-1, abs(obj.psi))
+            plot(0:size(this.psi, 2)-1, abs(this.psi))
         end
 
-        function plotS(obj, s, logp, fig)
+        function plotS(this, s, logp, fig)
             if nargin < 3
                 logp = true;
             end
             if nargin < 4
                 fig = gca;
             end
-            Tools.plotTF(s, obj.fc, true, logp, obj.getTime(s), fig);
+            Tools.plotTF(s, this.fc, true, logp, this.getTime(s), fig);
             nt = floor(size(s, 1)/10);
-            yticks(fig, round(obj.fc(1:nt:end),0))
+            yticks(fig, round(this.fc(1:nt:end),0))
             xlabel(fig, "Time (s)");
             ylabel(fig, "Frequency (Hz)");
-            ylim([min(obj.fc), max(obj.fc)])
+            ylim([min(this.fc), max(this.fc)])
         end
 
     end

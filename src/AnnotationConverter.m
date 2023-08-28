@@ -10,7 +10,6 @@ classdef AnnotationConverter < handle
         outputname
         outputpath
         annotationTable
-        scalogramfs
         scatteringfs
         xfs
         f
@@ -18,37 +17,35 @@ classdef AnnotationConverter < handle
 
     methods
 
-        function obj = AnnotationConverter(inputpath, outputname)
-            obj.inputpath = inputpath;
-            obj.outputname = outputname;
-            obj.outputpath = AnnotationConverter.datapath + obj.outputname;
-            fb = load(obj.outputpath + "\\spectrograms\\filterbank.mat").fb;
-            obj.scalogramfs = fb.getSSamplingFreq();
-            fb = load(obj.outputpath + "\\scattering\\filterbank.mat").fb;
-            obj.scatteringfs = fb.filterBanks(1).getSSamplingFreq();
-            obj.xfs = fb.filterBanks(1).fs;
-            obj.f = fb.filterBanks(1).fc;
+        function this = AnnotationConverter(inputpath, outputname, xfs)
+            this.inputpath = inputpath;
+            this.outputname = outputname;
+            this.outputpath = AnnotationConverter.datapath + this.outputname;
+            fb = load(this.outputpath + "\\scattering\\filterbank.mat").fb;
+            this.scatteringfs = fb.filterBanks(1).getSSamplingFreq();
+            this.xfs = xfs;
+            this.f = fb.filterBanks(1).fc;
         end
 
-        function convert(obj)
+        function convert(this)
 
-            dl = DataLoader2(obj.outputpath, 'wav', 'single', true);
+            dl = DataLoader2(this.outputpath, 'wav', 'single', true);
             filelist = dl.filelist;
             FIDlist = [filelist.fid];
             [filelisttimes, sidx] = sort([filelist.time]);
             filelist = filelist(sidx);
             FIDlist = FIDlist(sidx);
 
-            minf = min(obj.f);
-            maxf = max(obj.f);
+            minf = min(this.f);
+            maxf = max(this.f);
 
-            files = dir(obj.inputpath);
+            files = dir(this.inputpath);
             annotations = convertCharsToStrings({files.name});
             idx = arrayfun(@(s) s.contains("selections.txt"), annotations);
             annotations = annotations(idx);
             ann = {};
             for fname = annotations
-                T = readtable(obj.inputpath + fname, "Delimiter","\t");
+                T = readtable(this.inputpath + fname, "Delimiter","\t");
                 idx = find(fname{:} == '.');
                 type = extractBetween(fname, idx(1)+1, idx(end-1)-1);
                 type = type.replace(".", "_");
@@ -80,28 +77,23 @@ classdef AnnotationConverter < handle
                     timestr = extractBefore(lower(row.File), ".wav");
                     timestr = extractBetween(timestr, 1, strlength(AnnotationConverter.dtformat));
                     ftime = datetime(timestr, "InputFormat", AnnotationConverter.dtformat);
-                    dt = seconds(row.StartIndex/1000);
+                    dt = seconds(row.StartIndex/this.xfs);
                     ftime = ftime + dt;
                     matchedfileidx = arrayfun(@(time)find(time >= (filelisttimes'), 1, "last"), ftime);
                     matchedfile = [filelist(matchedfileidx).name]';
                     matchedfiletimes = [filelist(matchedfileidx).time]';
                     matchedfids = [FIDlist(matchedfileidx)]';
-                    offset = floor(seconds(ftime - matchedfiletimes)*1000);
-                    dur = ceil(row.Duration * 1000);
+                    offset = floor(seconds(ftime - matchedfiletimes)*this.xfs);
+                    dur = ceil(row.Duration * this.xfs);
                     row.StartIndex = offset;
                     row.EndIndex = row.StartIndex + dur;
                     row.OrigFile = row.File;
                     row.File = matchedfile;
                     row.FileID = matchedfids;
 
-                    %scalogram
-                    specstart = floor(row.StartIndex / obj.xfs * obj.scalogramfs) + 1; %covert bins to sampling freq of the spectrogram
-                    specend = ceil(row.EndIndex / obj.xfs * obj.scalogramfs) + 1;
-                    row.ScalogramStartIndex = specstart;
-                    row.ScalogramEndIndex = specend;
                     %scattering
-                    specstart = floor(row.StartIndex / obj.xfs * obj.scatteringfs) + 1; %covert bins to sampling freq of the spectrogram
-                    specend = ceil(row.EndIndex / obj.xfs * obj.scatteringfs) + 1;
+                    specstart = floor(row.StartIndex / this.xfs * this.scatteringfs) + 1; %covert bins to sampling freq of the spectrogram
+                    specend = ceil(row.EndIndex / this.xfs * this.scatteringfs) + 1;
                     row.ScatteringStartIndex = specstart;
                     row.ScatteringEndIndex = specend;
 
@@ -113,32 +105,32 @@ classdef AnnotationConverter < handle
                     annotationTable{end + 1} = row;
                 end
             end
-            obj.annotationTable = vertcat(annotationTable{:});
-            obj.annotationTable.AnnotationID = (1:size(obj.annotationTable, 1))';
+            this.annotationTable = vertcat(annotationTable{:});
+            this.annotationTable.AnnotationID = (1:size(this.annotationTable, 1))';
             %clean up annotation frequencies
-            obj.annotationTable = obj.annotationTable(obj.annotationTable.StartFrequency < maxf, :);
-            obj.annotationTable.StartFrequency = max(obj.annotationTable.StartFrequency, minf);
-            obj.annotationTable.EndFrequency = min(obj.annotationTable.EndFrequency, maxf);
-%             obj.calcANR();
+            this.annotationTable = this.annotationTable(this.annotationTable.StartFrequency < maxf, :);
+            this.annotationTable.StartFrequency = max(this.annotationTable.StartFrequency, minf);
+            this.annotationTable.EndFrequency = min(this.annotationTable.EndFrequency, maxf);
+%             this.calcANR();
 
-            savepath = obj.outputpath + "\\annotations";
+            savepath = this.outputpath + "\\annotations";
             mkdir(savepath);
-            annotationTable = obj.annotationTable;
+            annotationTable = this.annotationTable;
             save(savepath + "\\annotations.mat", "annotationTable", '-mat');
         end
 
-        function calcANR(obj)
-            fileIDs = unique(obj.annotationTable.FileID);
-            specpath = obj.outputpath + "\\spectrograms\\";
-            noisepath = obj.outputpath + "\\noise\\NoiseEstimate.mat";
-            varpath = obj.outputpath + "\\noise\\NoiseVarianceEstimate.mat";
+        function calcANR(this)
+            fileIDs = unique(this.annotationTable.FileID);
+            specpath = this.outputpath + "\\spectrograms\\";
+            noisepath = this.outputpath + "\\noise\\NoiseEstimate.mat";
+            varpath = this.outputpath + "\\noise\\NoiseVarianceEstimate.mat";
             noiseEstimate = load(noisepath).noiseEstimates;
             noiseVarianceEstimate = load(varpath).noiseVarianceEstimates;
             for idx = 1:numel(fileIDs)
                 %get spectrogram
                 fid = fileIDs(idx);
-                annidx = obj.annotationTable.FileID == fid;
-                annotations = obj.annotationTable(annidx, :);
+                annidx = this.annotationTable.FileID == fid;
+                annotations = this.annotationTable(annidx, :);
                 specname = extractBefore(annotations.File(1), ".wav") + ".mat";
                 s = load(specpath + specname).s;
                 s = s.^2;
@@ -146,18 +138,18 @@ classdef AnnotationConverter < handle
                 Svar = noiseVarianceEstimate(:, fid);
                 %get file and limit EndIndex for annotations that overlap
                 %with files
-                rowidx = 1:size(obj.annotationTable, 1);
+                rowidx = 1:size(this.annotationTable, 1);
                 rowidx = rowidx(annidx);
-                obj.annotationTable.SpectrogramEndIndex(rowidx) = min(obj.annotationTable.SpectrogramEndIndex(rowidx), size(s, 2));
-                annotations = obj.annotationTable(annidx, :);
+                this.annotationTable.SpectrogramEndIndex(rowidx) = min(this.annotationTable.SpectrogramEndIndex(rowidx), size(s, 2));
+                annotations = this.annotationTable(annidx, :);
                 %calculate ANR
                 for j = 1:size(annotations, 1)
                     row = annotations(j, :);
                     ridx = rowidx(j);
                     sidx = row.SpectrogramStartIndex;
                     eidx = row.SpectrogramEndIndex;
-                    [~, fstart] = min(abs(obj.f - row.StartFrequency));
-                    [~, fend] = min(abs(obj.f - row.EndFrequency));
+                    [~, fstart] = min(abs(this.f - row.StartFrequency));
+                    [~, fend] = min(abs(this.f - row.EndFrequency));
                     try
                     meanpower = mean(sum(s(fstart:fend, sidx:eidx), 1));
                     noisepower = sum(Snoise(fstart:fend));
@@ -165,9 +157,9 @@ classdef AnnotationConverter < handle
                         disp 1            
                     end
                     noisevar = sum(Svar(fstart:fend));
-                    obj.annotationTable.AnnotationToNoiseRatio(ridx) = (meanpower - noisepower)/noisepower;
-                    obj.annotationTable.AnnotationToNoiseRatioDB(ridx) = mag2db((meanpower - noisepower)/noisepower);
-                    obj.annotationTable.AnnotationSignificance(ridx) = 1 - normcdf(meanpower, noisepower, sqrt(noisevar)); %p-value for a normal distribution
+                    this.annotationTable.AnnotationToNoiseRatio(ridx) = (meanpower - noisepower)/noisepower;
+                    this.annotationTable.AnnotationToNoiseRatioDB(ridx) = mag2db((meanpower - noisepower)/noisepower);
+                    this.annotationTable.AnnotationSignificance(ridx) = 1 - normcdf(meanpower, noisepower, sqrt(noisevar)); %p-value for a normal distribution
                 end
             end
         end

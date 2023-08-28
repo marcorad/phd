@@ -14,65 +14,65 @@ classdef DataLoader2 < handle
     end
 
     methods
-        function obj = DataLoader2(path, dtype, idxmode, isformatted)
-            obj.path = path;
-            obj.dtype = dtype;
-            obj.isformatted = isformatted;
-            obj.filelist = obj.listFiles();
-            obj.resetIdx(idxmode);            
+        function this = DataLoader2(path, dtype, idxmode, isformatted)
+            this.path = path;
+            this.dtype = dtype;
+            this.isformatted = isformatted;
+            this.filelist = this.listFiles();
+            this.resetIdx(idxmode);            
         end
 
-        function resetIdx(obj, mode)
+        function resetIdx(this, mode)
             if mode == "single"
-                obj.Idx = ThreadIdx(numel(obj.filelist), 1);
+                this.Idx = ThreadIdx(numel(this.filelist), 1);
             elseif mode == "parallel"
-                obj.Idx = ThreadIdx(numel(obj.filelist), DataLoader2.Nthreads);
+                this.Idx = ThreadIdx(numel(this.filelist), DataLoader2.Nthreads);
             end
         end
 
-        function [x, info, fs] = load(obj, idx)
-            info = obj.filelist(idx);
+        function [x, info, fs] = load(this, idx)
+            info = this.filelist(idx);
             
-            if obj.dtype == "mat"
+            if this.dtype == "mat"
                 x = load(info.path).s;
-                if class(obj.fb) == "SFB"
-                    fs = obj.fb.getSSamplingFreq();
-                elseif class(obj.fb) == "Scattering"
-                    fs = obj.fb.filterBanks(1).getSSamplingFreq();
+                if class(this.fb) == "SFB"
+                    fs = this.fb.getSSamplingFreq();
+                elseif class(this.fb) == "Scattering"
+                    fs = this.fb.filterBanks(1).getSSamplingFreq();
                 end
-            elseif obj.dtype == "wav"
+            elseif this.dtype == "wav"
                 [x, fs] = audioread(info.path);
             end
         end
 
-        function startWaitbar(obj)
+        function startWaitbar(this)
             wb = waitbar(0);
-            parforWaitbar(wb, numel(obj.filelist));
-            obj.wtq = parallel.pool.DataQueue;
-            afterEach(obj.wtq,@parforWaitbar);
+            parforWaitbar(wb, numel(this.filelist));
+            this.wtq = parallel.pool.DataQueue;
+            afterEach(this.wtq,@parforWaitbar);
         end
 
-        function [x, info, fs] = next(obj, tid)
+        function [x, info, fs] = next(this, tid)
             if nargin < 2
                 tid = 1;
             end
-            idx = obj.Idx.next(tid);
-            [x, info, fs] = obj.load(idx);
-            if ~isempty(obj.wtq)
-                send(obj.wtq, []);
+            idx = this.Idx.next(tid);
+            [x, info, fs] = this.load(idx);
+            if ~isempty(this.wtq)
+                send(this.wtq, []);
             end
         end
 
-        function [x, info, fs] = loadFID(obj, fid)
-            idx = find([obj.auxlist.fid] == fid);
-            [x, info, fs] = obj.load(idx);
+        function [x, info, fs] = loadFID(this, fid)
+            idx = find([this.auxlist.fid] == fid);
+            [x, info, fs] = this.load(idx);
         end
 
-        function c = isComplete(obj, tid)
+        function c = isComplete(this, tid)
             if nargin < 2
                 tid = 1;
             end
-            c = obj.Idx.complete(tid);
+            c = this.Idx.complete(tid);
         end
 
 
@@ -80,22 +80,22 @@ classdef DataLoader2 < handle
     end
 
     methods(Access=private)
-        function filelist = listFiles(obj)
-            files = dir(obj.path);
+        function filelist = listFiles(this)
+            files = dir(this.path);
             files = files(~[files.isdir]);
             files = convertCharsToStrings({files.name});
-            idx = arrayfun(@(s) s.contains(sprintf(".%s", obj.dtype)), files);
+            idx = arrayfun(@(s) s.contains(sprintf(".%s", this.dtype)), files);
             files = files(idx);
-            if obj.isformatted && obj.dtype == "mat"
+            if this.isformatted && this.dtype == "mat"
                 files = files(files ~= "filterbank.mat");
-                obj.fb = load(obj.path + "\\filterbank.mat").fb;
+                this.fb = load(this.path + "\\filterbank.mat").fb;
             end
             for i = 1:numel(files)
                 s.name = string(files(i));
-                s.path = sprintf("%s\\%s", obj.path, s.name);
+                s.path = sprintf("%s\\%s", this.path, s.name);
                 s.fid = i;
-                if obj.isformatted
-                    s.time = obj.filename2datetime(s.name);
+                if this.isformatted
+                    s.time = this.filename2datetime(s.name);
                 end
                 filelist(i) = s;
             end

@@ -16,7 +16,7 @@ outputdir = "D:\\Whale Data\\Raw Audio Data\\";
 dtformat = "yyyyMMdd_HHmmss";
 
 Q = 16;
-T = 1;
+T = 1.5;
 fs = 1000;
 flow = 15;
 fhigh = 120;
@@ -40,21 +40,21 @@ fhigh = 120;
 % 
 
 
-T = 1;
-Q = [10, 4];
+T = 1.5;
+Q = [16, 4];
 flow = 15;
 fhigh = 120;
+fs = 250;
+oversample = 2;
 
-%TODO change scattering to only compute the paths that actually have
-%significant energy
-%scattering
-for idx = 2%numel(outputnames)
-    scc = ScatteringCreator(outputnames(idx), Q, flow, fhigh, T);
-    scc.create();
-end
+% %scattering
+% for idx = 2%numel(outputnames)
+%     scc = ScatteringCreator(outputnames(idx), Q, flow, fhigh, T, oversample);
+%     scc.create();
+% end
 
 %convert annotations
 for fidx = 2%numel(outputnames)
-    ac = AnnotationConverter(inputdirs(fidx), outputnames(fidx));
+    ac = AnnotationConverter(inputdirs(fidx), outputnames(fidx), 1000);
     ac.convert();
 end

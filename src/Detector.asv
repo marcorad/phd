@@ -16,26 +16,32 @@ classdef Detector < handle
         datapath = "D:\\Whale Data\\Raw Audio Data\\"; 
         Tmf = 0.6;
         Tmfscat = 10;
-        ScatP = 50;
+        ScatP = 30;
     end
 
     methods
 
-        function sw = ScatteringNoiseEstimate(obj, s) 
+        function sw = ScatteringNoiseEstimate(obj, s, scat1size, pathstart) 
             M = floor(obj.Tmfscat * obj.scatfs / 2)*2 + 1;
-            s = smoothdata(s, 2, "movmedian", M);
-            sw = prctile(s, obj.ScatP, 2);
+            s1 = smoothdata(s(1:scat1size,:), 1, "movmedian", 4);
+            sw = zeros(size(s, 1), 1);
+            sw(1:scatsize, :) = prctile(s1, obj.ScatP, 2);
+            i = 1;
+            for ps = pathstart(2:end)
+                sw(ps:end) = sw(i);
+                i
+            end
         end
 
-        function obj = Detector(foldername, annsig)
+        function obj = Detector(foldername)
             obj.foldername = foldername;
             obj.path = SpectrogramCreator.datapath + string(foldername);
-            obj.dlscalogram = DataLoader2(obj.path + "\\spectrograms", "mat", "parallel", true);
+%             obj.dlscalogram = DataLoader2(obj.path + "\\spectrograms", "mat", "parallel", true);
             obj.noiseEstimate = load(obj.path + "\\noise\\NoiseEstimate.mat").noiseEstimates;
             obj.annotationTable = load(obj.path + "\\annotations\\annotations.mat").annotationTable;
-            obj.annotationTable = obj.annotationTable(obj.annotationTable.AnnotationSignificance <= annsig, :);
-            obj.dlscat = DataLoader2(obj.path + "\\spectrograms", "mat", "parallel", true);
-            obj.scatfb = load(path + "\\scattering\\fb.mat", "fb");
+%             obj.annotationTable = obj.annotationTable(obj.annotationTable.AnnotationSignificance <= annsig, :);
+            obj.dlscat = DataLoader2(obj.path + "\\scattering", "mat", "parallel", true);
+            obj.scatfb = load(obj.path + "\\scattering\\filterbank.mat").fb;
             obj.scatfs = obj.scatfb.filterBanks(1).getSSamplingFreq();
             obj.scat1size = numel(obj.scatfb.filterBanks(1).lambdas);
         end
@@ -44,37 +50,46 @@ classdef Detector < handle
             sdir = obj.path + "\\detectors\\";
             mkdir(sdir);
             obj.dlscat.startWaitbar();
-            spmd %for spmdIndex = 1
+            spmd%for spmdIndex = 1
                 D = {};            
                 while ~obj.dlscat.isComplete(spmdIndex)
                     [s, info, fs] = obj.dlscat.next(spmdIndex);
                     s = s.^2;
+                    
                     fid = info.fid;
                     noise = obj.ScatteringNoiseEstimate(s);
                     sw = s./noise;
-                    M = floor(Detector.Tmf * fs)*2 + 1;
+                    
+                    s1 = s(1:obj.scat1size, :);
+                    s1w = sw(1:obj.scat1size, :);
+
+                    M = floor(Detector.Tmf * obj.scatfs)*2 + 1;
                     detectors.segmms1 = SEGMM(M);
-                    detectors.segmmwhite = SEGMM(M);
-                    detectors.segmmwhite = SEGMM(M);
-                    detectors.segmmwhite = SEGMM(M);
+                    detectors.segmms1white = SEGMM(M);
+                    detectors.segmmscat = SEGMM(M);
+                    detectors.segmmscatwhite = SEGMM(M);
                     detectors.bled = BLED();
                     detectors.bledwhite = BLED();
-                    detectors.segmm.detect(s);
-                    detectors.bled.detect(s);
-                    detectors.segmmwhite.detect(sw);
-                    detectors.segmmwhitegauss.detect(swg);
-                    detectors.bledwhite.detect(sw);
+
+                    detectors.segmms1.detect(s1);
+                    detectors.segmms1white.detect(s1w);
+                    detectors.segmmscat.detect(s);
+                    detectors.segmmscatwhite.detect(sw);
+                    detectors.bled.detect(s1./obj.scatfb.filterBanks(1).lambdas');
+                    detectors.bledwhite.detect(s1w);
                     detectors.info = info;
                     
                     anns = obj.annotationTable(obj.annotationTable.FileID == fid, :);
-                    truelabels = zeros(1, size(s, 2));
+                    detectors.annotations = anns;
+
+                    truelabels = zeros(1, size(s1, 2));
                     for i = 1:size(anns, 1)
-                        sidx = anns.SpectrogramStartIndex(i);
-                        eidx = anns.SpectrogramEndIndex(i);
+                        sidx = anns.ScatteringStartIndex(i);
+                        eidx = min(anns.ScatteringEndIndex(i), size(s, 2));
                         truelabels(sidx:eidx) = 1;
                     end
-                    detectors.annotations = anns;
-                    detectors.truelabels = truelabels;
+                    detectors.truelabels = truelabels;                
+                    
 
                     D{end + 1} = detectors;
                 end

@@ -178,6 +178,22 @@ classdef Tools
             scatter(x2, y2, size, 'filled' ,"MarkerEdgeColor",c2, "MarkerFaceAlpha",alpha, "MarkerEdgeAlpha",alpha);
             hold off
         end
+
+        function mask = threshhyst(x, topen, tclose)
+            mask = zeros(size(x));
+            open = false;
+            for i = 1:numel(x)
+                xi = x(i);
+                if xi > topen
+                    open = true;
+                end
+                if open && xi < tclose
+                    open = false;
+                end
+                mask(i) = open;
+            end
+        end
+
     
     end
 
