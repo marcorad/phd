@@ -49,12 +49,14 @@ classdef Detector < handle
             detector.kmeans = SEGMM(M);
             detector.bled = BLED();
             detector.bledwhite = BLED();
+            
 
             detector.kmeans.detect(s1, true);
             detector.segmms1.detect(s1);
             detector.segmms1white.detect(s1w);
             detector.bled.detect(s1./this.scatfb.filterBanks(1).lambdas');
             detector.bledwhite.detect(s1w);
+            
         end
 
         function detections(this)
@@ -84,10 +86,9 @@ classdef Detector < handle
                     detectors.kmeans.detect(s1sq, true);
                     detectors.segmms1.detect(s1sq);
                     detectors.segmms1white.detect(s1w);
-%                     detectors.segmmscat.detect(s);
-%                     detectors.segmmscatwhite.detect(sw);
                     detectors.bled.detect(s1sq./this.scatfb.filterBanks(1).lambdas');
                     detectors.bledwhite.detect(s1wsq);
+                    detectors.bledwhite.probs = smoothdata(detectors.bledwhite.probs, 2, "movmedian", M);
                     detectors.info = info;
                     
                     anns = this.annotationTable(this.annotationTable.File == fname, :);

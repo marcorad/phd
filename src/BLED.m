@@ -8,7 +8,7 @@ classdef BLED < handle
 
     methods
         function detect(obj, S)
-            e = sum(S, 1);
+            e = mean(S, 1);
             obj.probs = e;
         end
     end

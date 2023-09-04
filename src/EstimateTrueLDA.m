@@ -1,6 +1,6 @@
 classes = ["Bm_Ant_A", "Bm_Ant_B", "Bm_Ant_Z", "Bm_D", "Bp_20Plus"];
-alphas = [0.69,0.69,0.48,0.69,0.48];
-gammas = [0.33,0.55,0.55,0.78,0.55];
+alphas = [0.78,0.66,0.29,0.41,0.05];
+gammas = [0.36,0.49,0.49,0.87,0.99];
 
 folder = "D:\Whale Data\Raw Audio Data\CaseyIslands2017";
 data = load(folder + "\features\features.mat").data;
@@ -39,7 +39,7 @@ for i=1:numel(classes)
 
 end
 
-Nplot = 100;
+Nplot = 400;
 
 files = unique(data.File);
 idx = randperm(numel(files), Nplot);

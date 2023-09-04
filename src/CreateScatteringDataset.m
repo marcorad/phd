@@ -8,7 +8,7 @@ Ns1 = numel(fb.filterBanks(1).lambdas);
 
 dl.startWaitbar();
 
-spmd%for spmdIndex = 1
+spmd %for spmdIndex = 1
     data = cell2table(cell(0, 6), 'VariableNames',["File", "Annotation", "Features", "AnnotationPower", "StartIndex", "EndIndex"]);
     counter = 0;
     while ~dl.isComplete(spmdIndex)% && counter < 5
@@ -18,18 +18,19 @@ spmd%for spmdIndex = 1
         s1 = s(1:Ns1, :);
         sw = noiseEstimate(s1, 9, floor(120/2*fs)*2 + 1);
         s1w = s1./sw;
-        segmm = SEGMM(floor(1.5*fs/2)*2 + 1);
+        segmm = SEGMM(floor(1.5*fs)*2 + 1);
         segmm.detect(s1w);
         
-        if ~segmm.converged || segmm.Hmax - segmm.Hmin <= snr2dh(db2mag(-10), Ns1)
+        if ~segmm.converged
             continue;
         end
-
-        rle = Tools.rle(Tools.threshhyst(segmm.probs, 0.6, 0.3));
-        extend_n = floor(fs*5); 
+        dets = segmm.probs > 0.7;
         %extend the detections
-        rle.Start = max(rle.Start - extend_n, 1);
-        rle.End = min(rle.End + extend_n, size(s, 2));
+        extend_n = floor(fs*3)*2 + 1; 
+        dets = movmax(dets, extend_n);
+        rle = Tools.rle(dets);       
+%         rle.Start = max(rle.Start - extend_n, 1);
+%         rle.End = min(rle.End + extend_n, size(s, 2));
         for i = 1:size(rle, 1)
             r = rle(i, :);
             dur = ann.ScatteringEndIndex - ann.ScatteringStartIndex;
