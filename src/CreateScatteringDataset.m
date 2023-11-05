@@ -6,6 +6,8 @@ annotations = load(folder + "\annotations\annotations.mat").annotationTable;
 fb = load(folder + "\scattering\filterbank.mat").fb;
 Ns1 = numel(fb.filterBanks(1).lambdas);
 
+annotations.Annotation(contains(annotations.Annotation, "Bp")) = "Bp";
+
 dl.startWaitbar();
 
 spmd %for spmdIndex = 1
@@ -14,17 +16,18 @@ spmd %for spmdIndex = 1
     while ~dl.isComplete(spmdIndex)% && counter < 5
         [s, info, fs] = dl.next(spmdIndex);
         ann = annotations(annotations.File == replace(info.name, ".mat", ".wav"), :);
-        s = s.^2;
+        
         s1 = s(1:Ns1, :);
-        sw = noiseEstimate(s1, 9, floor(120/2*fs)*2 + 1);
+        sw = noiseEstimate(s1, fs);
         s1w = s1./sw;
-        segmm = SEGMM(floor(1.5*fs)*2 + 1);
+        segmm = SEGMM(floor(0.75*fs)*2 + 1);
+        s1w = s1w.^2;
         segmm.detect(s1w);
         
         if ~segmm.converged
             continue;
         end
-        dets = segmm.probs > 0.7;
+        dets = segmm.probs > 0.3;
         %extend the detections
         extend_n = floor(fs*3)*2 + 1; 
         dets = movmax(dets, extend_n);
@@ -39,7 +42,10 @@ spmd %for spmdIndex = 1
             ss = r.Start;
             se = r.End;
 %             coeffs = mean(s(:, ss:se),  2);
-            coeffs = max(s(:, ss:se), [],  2);
+            lambda1 = fb.filterBanks(1).lambdas';
+            pt = sum(s(1:numel(lambda1), ss:se).^2./lambda1, 1);
+            p = mean(pt, 2); %RMS
+            coeffs = max(s(:, ss:se), [],  2)/p; %normalise by RMS
             coeffs = cosineLogScattering(coeffs, fb.pathstart);
             row.Features = [coeffs, r.End-r.Start];
             row.Annotation = "Noise";
@@ -47,14 +53,20 @@ spmd %for spmdIndex = 1
             row.StartIndex = r.Start;
             row.EndIndex = r.End;
             row.File = info.name;
-            if sum(ovr) == 1
-                row.Annotation = ann.Annotation(ovr);
+            allsame = false;
+            first_idx = find(ovr, 1);
+            nann = sum(ovr);
+            if nann > 1
+                allsame = all(ann.Annotation(ovr) == ann.Annotation(first_idx));
+            end
+            if nann == 1 || allsame
+                row.Annotation = ann.Annotation(first_idx);
                 fc = fb.filterBanks(1).fc;
-                currann = ann(ovr, :);
+                currann = ann(first_idx, :);
                 fidx = fc >= currann.StartFrequency & fc <= currann.EndFrequency;                
                 tidx = currann.ScatteringStartIndex:min(currann.ScatteringEndIndex, size(s1w, 2));
                 row.AnnotationPower = mean(s1w(fidx,tidx), "all");
-            elseif sum(ovr) > 1
+            elseif nann > 1
                 row.Annotation = "Multiple";
             end
            data = [data; struct2table(row)];

@@ -1,22 +1,40 @@
 
-function sweepresults = SweepLDA()
+res_80 = trials(0.8, 20, false, 0)
+res_20 = trials(0.2, 20, false, 0)
+res_80_fs = trials(0.8, 20, true, 0)
+res_20_fs = trials(0.2, 20, true, 0)
+res_5_fs = trials(0.05, 100, true, 0)
+res_5_fs_disc5 = trials(0.05, 100, true, 5)
+
+% res_80 = trials(0.05, 1, true, 5)
+
+function sweepresults = trials(s, N, feat_select, discardp)
 
 %load the data
 folder = "D:\Whale Data\Raw Audio Data\CaseyIslands2017";
 data = load(folder + "\features\features.mat").data;
 
-classes_to_sweep = ["Bm_Ant_A", "Bm_Ant_B", "Bm_Ant_Z", "Bm_D", "Bp_20Plus"];
+classes_to_sweep = ["Bm_Ant_A", "Bm_Ant_B", "Bm_Ant_Z", "Bm_D", "Bp"];
 
 sweepresults = {};
+
+snridx = data.Annotation ~= "Noise" & data.Annotation ~= "Multiple" & data.Annotation ~= "Unidentified_calls";
+
+snrlim = prctile(data.AnnotationPower(snridx), discardp);
+discardidx = data.AnnotationPower < snrlim & snridx;
+data = data(~discardidx, :);
+groupcounts(data, "Annotation")
 
 for i = 1:numel(classes_to_sweep)
 
     class = classes_to_sweep(i)
 
+    
+
     %prepare the data
     X = data{:, "Features"};
     X = double(X);
-    y = data{:, "Annotation"};
+    y = data{:, "Annotation"};    
 
     y = replace(y, "-", "_");
 
@@ -37,22 +55,21 @@ for i = 1:numel(classes_to_sweep)
 
     %sweep hyperparams
     noiseps = linspace(0.05, 0.9, 8);
-    gammas = linspace(0.1, 1, 8);
+    gammas = linspace(0, 1, 8);
     C = numel(unique(y));
     cm = zeros(C, C, numel(noiseps), numel(gammas));
     varcm = cm;
     
     score = zeros(numel(noiseps), numel(gammas));
-    N = 20;
     parfor j = 1:N     
-        fprintf("%d", j);
-        [cmt, scoret] = sweep(Xn, y, noiseps, gammas, 2);
+%         fprintf("%d", j);
+        [cmt, scoret] = sweep(Xn, y, noiseps, gammas, 2, s, feat_select);
         cm = cm + cmt/N;
         varcm = varcm + (cmt./sum(cmt, 2)).^2/N;
         score = score + scoret/N;
     end
 
-    fprintf("\n");
+%     fprintf("\n");
 
     stdcm = sqrt(varcm - (cm./sum(cm, 2)).^2);
 
@@ -63,8 +80,12 @@ for i = 1:numel(classes_to_sweep)
     ylabel("\alpha")
     zlabel("Average Accuracy")
     title(class, Interpreter="none");
-    saveas(fig, sprintf("fig/sweep 50/%s_hyperparameters.pdf", class));
-    saveas(fig, sprintf("fig/sweep 50/%s_hyperparameters.png", class));
+    fs_str = "";
+    if feat_select
+    fs_str = "selected";
+    end
+    saveas(fig, sprintf("fig/sweep/%s_%d_%s.pdf", class, floor(s*100), fs_str));
+    close(fig);
     
     [mscore, midx] = max(score, [], "all");
     [aidx, gammaidx] = ind2sub(size(score), midx);
@@ -92,13 +113,13 @@ for i = 1:numel(classes_to_sweep)
 
 end
     sweepresults = vertcat(sweepresults{:});
-    sweepresults = struct2table(sweepresults)
+    sweepresults = struct2table(sweepresults);
 
 end
 
 
 
-function [cm, score] = sweep(Xn, y, noiseps, gammas, lambda)
+function [cm, score] = sweep(Xn, y, noiseps, gammas, lambda, s, feat_select)
 
 C = numel(unique(y));
 cm = zeros(C, C, numel(noiseps), numel(gammas));
@@ -106,14 +127,20 @@ sigvsnoise = zeros(2, 2, numel(noiseps), numel(gammas));
 score = zeros(numel(noiseps), numel(gammas));
 for i = 1:numel(noiseps)
     noisep = noiseps(i);
-    fprintf("%d\r", i);
+%     fprintf("%d\r", i);
     for j = 1:numel(gammas)
         gamma = gammas(j);
         sigp = (1- noisep);
-        prior = struct("Bm_Ant_A",sigp,"Bm_Ant_B",sigp,"Bm_Ant_Z",sigp,"Bm_Ant",sigp, "Bm_D", sigp, "Bp_20Plus", sigp, "Noise", noisep);
-        covtype = struct("Bm_Ant_A","full","Bm_Ant_B","full","Bm_Ant_Z","full","Bm_Ant","full", "Bm_D", "full", "Bp_20Plus", "full", "Noise", "diag");
+        prior = struct("Bm_Ant_A",sigp,"Bm_Ant_B",sigp,"Bm_Ant_Z",sigp,"Bm_Ant",sigp, "Bm_D", sigp, "Bp", sigp, "Noise", noisep);
+        covtype = struct("Bm_Ant_A","full","Bm_Ant_B","full","Bm_Ant_Z","full","Bm_Ant","full", "Bm_D", "full", "Bp", "full", "Noise", "diag");
         cls = Discriminant(gamma, "linear", 0);        
-        [Xtrain, ytrain, Xtest, ytest] = split(Xn, y, 0.2, 0.2);
+        [Xtrain, ytrain, Xtest, ytest] = split(Xn, y, s, s);
+        if feat_select
+            [~, scores] = fscchi2(Xtrain, ytrain, Prior="empirical");
+            topidx = scores > -log(0.05); %only when significant with p=.05
+            Xtrain = Xtrain(:, topidx);
+            Xtest = Xtest(:, topidx);
+        end
         cls.fit(Xtrain, ytrain, prior, covtype);
         yhat = cls.predict(Xtest);
         [c, order] = confusionmat(ytest, yhat);

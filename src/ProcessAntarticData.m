@@ -48,10 +48,10 @@ fs = 250;
 oversample = 2;
 
 % %scattering
-% for idx = 2%numel(outputnames)
-%     scc = ScatteringCreator(outputnames(idx), Q, flow, fhigh, T, oversample);
-%     scc.create();
-% end
+for idx = 2%numel(outputnames)
+    scc = ScatteringCreator(outputnames(idx), Q, flow, fhigh, T, oversample, 1/T);
+    scc.create();
+end
 
 %convert annotations
 for fidx = 2%numel(outputnames)

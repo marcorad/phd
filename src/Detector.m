@@ -13,7 +13,7 @@ classdef Detector < handle
 
     properties(Constant)
         datapath = "D:\\Whale Data\\Raw Audio Data\\"; 
-        Tmf = 1.5;
+        Tmf = 0.75;
         Tmfscat = 10;
         ScatP = 50;
     end
@@ -21,9 +21,7 @@ classdef Detector < handle
     methods
 
         function snoise = ScatteringNoiseEstimate(this, s1) 
-            s1smooth = smoothdata(s1, 1, "movmedian", 9);
-            s1smooth = smoothdata(s1smooth, 2, "movmedian", floor(this.scatfs*5));
-            snoise = smoothdata(s1smooth, 2, "movmean", floor(this.scatfs*60));
+            snoise = noiseEstimate(s1, this.scatfs);
         end
 
         function this = Detector(foldername)
@@ -85,7 +83,7 @@ classdef Detector < handle
 
                     detectors.kmeans.detect(s1sq, true);
                     detectors.segmms1.detect(s1sq);
-                    detectors.segmms1white.detect(s1w);
+                    detectors.segmms1white.detect(s1wsq);
                     detectors.bled.detect(s1sq./this.scatfb.filterBanks(1).lambdas');
                     detectors.bledwhite.detect(s1wsq);
                     detectors.bledwhite.probs = smoothdata(detectors.bledwhite.probs, 2, "movmedian", M);

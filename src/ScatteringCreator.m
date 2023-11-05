@@ -13,11 +13,11 @@ classdef ScatteringCreator
     end
 
     methods
-        function this = ScatteringCreator(foldername, Q, fl, fh, T, oversample)
+        function this = ScatteringCreator(foldername, Q, fl, fh, T, oversample, s2fstart)
             this.foldername = foldername;
             this.path = ScatteringCreator.datapath + string(foldername);
             this.dl = DataLoader2(this.path, "wav", "single", true);
-            this.fb = Scattering(Q, T, 250, AudioDataConverter.L, fl, fh, oversample);
+            this.fb = Scattering(Q, T, 250, AudioDataConverter.L, fl, fh, oversample, s2fstart);
             sdir = this.path + "\\scattering\\";
             mkdir(sdir); 
         end

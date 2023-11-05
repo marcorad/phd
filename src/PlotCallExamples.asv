@@ -1,0 +1,32 @@
+folder = "D:\Whale Data\Raw Audio Data\CaseyIslands2017";
+ann = load(folder + "\annotations\annotations.mat").annotationTable;
+
+classes = ["Bm_Ant-A", "Bm_Ant-B", "Bm_Ant-Z", "Bm_D", "Bp_20Plus"];
+filenum = [984, 387, 98, 98, 30];
+
+groupcounts(ann, "Annotation")
+fb = load(folder + "\scattering\filterbank.mat").fb;
+fb1 = fb.filterBanks(1);
+f = fb1.fc;
+fs = fb1.getSSamplingFreq();
+
+for c = 1:numel(classes)
+    class = classes(c);
+    ann_filter = ann(ann.Annotation == class, :);
+    
+    for i = 1:size(ann_filter, 2)
+    a = ann_filter(i,:);
+    fname = replace(a.File, ".wav", ".mat");
+    s = load(folder + "\scattering\" + fname).s;
+    s = s(1:numel(f), :);
+
+    fig = figure;
+    Tools.plotTF(s,f, true, true, fb1.getTime(s));
+    t = [a.ScatteringStartIndex, a.ScatteringEndIndex]/fs;
+    t = t + [-1 1] * 5;
+    xlim(t)
+    title(class, Interpreter="none");
+    saveas(fig, "fig/vocalisations/" + sprintf("%s_%d"))
+    end
+
+end

@@ -1,6 +1,6 @@
 classdef SEGMM < handle
     properties(Constant)
-        MaxGMMIter = 200;
+        MaxGMMIter = 500;
         PosteriorThresh = 0.5;
     end
 

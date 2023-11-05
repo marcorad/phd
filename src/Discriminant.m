@@ -53,7 +53,8 @@ classdef Discriminant < handle
             for c = 1:this.C
                 idx = y == this.classes(c);
                 x = this.Xtrain(idx, :);
-                this.mu(:, c) = mean(x, 1); %median estimator of means
+%                 this.mu(:, c) = mean(x, 1); %median estimator of means
+                this.mu(:, c) = median(x, 1);
                 if this.mode == "linear"
                     this.sigma = this.sigma + cov(x)/this.C; %equal weighting of the covariance matrices
                 elseif this.mode == "quadratic"

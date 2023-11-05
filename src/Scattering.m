@@ -8,15 +8,16 @@ classdef Scattering < handle
     end
 
     methods
-        function obj = Scattering(Q, T, fs, N, flow, fhigh, oversample)
+        function obj = Scattering(Q, T, fs, N, flow, fhigh, oversample, s2fstart)
             obj.filterBanks(1) = SFB(Q(1), T, fs, N, flow, fhigh, true, oversample);
             fsfb = fs/obj.filterBanks(1).downsampleU;
             Nfb  = obj.filterBanks(1).Nu;
             for i = 2:numel(Q)         
                 prevfb = obj.filterBanks(i-1);
-                obj.filterBanks(i) = SFB(Q(i), T, fsfb, Nfb, 1/T, max(prevfb.psiBWHz), false, oversample);
-%                 fsfb = fsfb / obj.filterBanks(i).downsampleU;
-%                 Nfb  = obj.filterBanks(i).Nu;
+                if nargin < 7
+                    s2fstart = 1/T; %if not specified, start where the lpf cuts off
+                end
+                obj.filterBanks(i) = SFB(Q(i), T, fsfb, Nfb, s2fstart, max(prevfb.psiBWHz), false, oversample);
             end
         end
 

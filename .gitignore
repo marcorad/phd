@@ -3,3 +3,4 @@
 !/**/*.mlx
 /store/*
 /detections/*
+**/__pycache__
