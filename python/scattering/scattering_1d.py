@@ -12,9 +12,15 @@ from torch import complex128, float64
 import torch
 import torch.nn as nn
 
+from sympy import factorint
+
 FB_data_type = np.complex128
 torch_data_type = complex128
 torch_output_data_type = float64
+
+#If equal to one, then there will be some aliasing, but when equal to 2, there is minimal aliasing
+#This parameter controls what is considered the BW with reference to sigma_w, i.e., 1 implies that 1 std. dev. is the bandwidth of the filter
+BW_TO_SIGMA_RATIO = 1
 
 class MorletBW(IntEnum):
     _2SIGMA_AT_NEXT_MORLET = auto()
@@ -29,8 +35,8 @@ class LambdasScalingMode(IntEnum):
 class DownsampleMode(IntEnum):
     OFF = auto()
     MAXIMUM_UNIFORM = auto()
-    MAXIMUM_SPLIT = auto()
-    MULTIPLE_OF_LPF = auto()    
+    OPTIMAL_T = auto()  
+    MULTIPLE_OF_LPF = auto()  
   
 class Morlet1DConfig:
     '''
@@ -51,8 +57,11 @@ class Morlet1DConfig:
     def __str__(self) -> str:
         return "Morlet @ {:.2f}+-{:.2f} supported on (-{st:.2f}:{st:.2f}) (m = {:d}, lin = {:b})".format(self.f_c, self.BW_hz, self.downsampling_factor, self.is_linear, st=self.sigma_t)
     
-def lpf_downsampling(ws, lpf_freq_sigma, oversample):
-    return int(np.floor(ws/4/lpf_freq_sigma/oversample))
+def lpf_downsampling(fs, T, oversample):
+    return int(np.floor(fs/2/BW_TO_SIGMA_RATIO*T/oversample))
+
+def downsampling_to_T(fs, ds: int, oversample: int) -> float:
+    return ds * 2 * BW_TO_SIGMA_RATIO * oversample / fs
 
 def maximum_downsampling(ws, bw_rad, lpf_freq_sigma, oversample):
     final_lpf_downsample = lpf_downsampling(ws, lpf_freq_sigma, oversample)
@@ -65,8 +74,10 @@ class ScatteringFB1DConfig:
     '''
     
     def __init__(self, Q, T, fs, scaling_mode = LambdasScalingMode.LINEAR_FOR_LARGER_TIME_SUPPORT, BW_mode = MorletBW._2SIGMA_AT_NEXT_MORLET,
-        fstart=0.0, fend=None, approximation_support=5.0, oversampling_factor = 1, downsample_mode=DownsampleMode.MAXIMUM_UNIFORM) -> None:
-        if fend == None: fend = fs
+        fstart=0.0, fend=None, approximation_support=5.0, oversampling_factor = 1, downsample_mode=DownsampleMode.MAXIMUM_UNIFORM, T_range: int = None) -> None:
+        if fend == None: fend = fs/2
+        if T_range == None: T_range = 0.1*T
+        self.valid = True
         #choose the BW of each wavelet according to the mode
         psi_w_sigma = 0.0            
         match BW_mode:
@@ -80,7 +91,23 @@ class ScatteringFB1DConfig:
 
         #determine the time supports and starting frequency according to T, fstart, fend
         lambda_0 = 2 * np.pi * fstart
-        lambda_end = min(2 * np.pi * fend, fs*2 * np.pi)/2
+        lambda_end = min(2 * np.pi * fend, fs*2 * np.pi/2)
+        
+        if downsample_mode == DownsampleMode.OPTIMAL_T:
+            #adjust T so that the downsampling factor contains the maximum number of prime factors
+            ds_l = lpf_downsampling(fs, (T - T_range), oversampling_factor)
+            ds_h = lpf_downsampling(fs, (T + T_range), oversampling_factor)
+            best_ds = 1
+            most_factors = 0
+            for ds in range(ds_l, ds_h+1):
+                factors = factorint(ds).items()
+                n_factors = 0
+                for p in factors: n_factors += p[1]
+                if n_factors > most_factors:
+                    most_factors = n_factors
+                    best_ds = ds
+            T = downsampling_to_T(fs, best_ds, oversampling_factor)
+                
 
         self.lpf_w_sigma = 2 * np.pi / T #sets the cut-off frequency to 1/T Hz, with cut-off defined as 1 standard deviation in the frequency domain
         self.lpf_t_sigma = 1 / self.lpf_w_sigma
@@ -97,24 +124,29 @@ class ScatteringFB1DConfig:
         if scaling_mode == LambdasScalingMode.LINEAR_FOR_LARGER_TIME_SUPPORT:
             bw = psi_w_sigma * lambda_
             dlambda_ = 2*self.lpf_w_sigma #TODO: set dlambda_ so that similar placement is achieved compared to the exponentially scaled filters
-            while bw < self.lpf_w_sigma:
+            while bw < self.lpf_w_sigma and lambda_ < lambda_end:
                 lambdas += [lambda_]
                 psi_time_sigma_lin = self.lpf_t_sigma * lambda_ #ensures that the time support of the wavelet will result in a BW equal to lpf_freq_sigma
                 psi_freq_sigma_lin = 1 / psi_time_sigma_lin
-                bw_lin = 2*psi_freq_sigma_lin*lambda_
+                bw_lin = BW_TO_SIGMA_RATIO*psi_freq_sigma_lin*lambda_
                 downsample = maximum_downsampling(self.ws, bw_lin, self.lpf_w_sigma, oversampling_factor) 
-                morlets +=  [Morlet1DConfig(lambda_, lambda_/2 / np.pi, psi_time_sigma_lin, psi_time_sigma_lin/lambda_, psi_freq_sigma_lin/2 / np.pi, psi_freq_sigma_lin, True, bw_lin/2 / np.pi, downsample, fs)]
+                morlets +=  [Morlet1DConfig(lambda_, lambda_/2 / np.pi, psi_time_sigma_lin, psi_time_sigma_lin/lambda_, psi_freq_sigma_lin/2 / np.pi, psi_freq_sigma_lin, True, bw_lin/2/np.pi, downsample, fs)]
                 lambda_ += dlambda_
                 bw = psi_w_sigma * lambda_        
           
         while lambda_ < lambda_end:
             lambdas += [lambda_]   
-            bw = psi_w_sigma * lambda_
-            downsample = maximum_downsampling(self.ws, 2*bw, self.lpf_w_sigma, oversampling_factor)   
-            morlets += [Morlet1DConfig(lambda_, lambda_/2 / np.pi, psi_t_sigma, psi_t_sigma/lambda_, lambda_/psi_t_sigma/2 / np.pi, 1.0/psi_t_sigma, False, 2/psi_t_sigma/2 / np.pi*lambda_, downsample, fs)]
+            bw = psi_w_sigma * lambda_ * BW_TO_SIGMA_RATIO
+            downsample = maximum_downsampling(self.ws, bw, self.lpf_w_sigma, oversampling_factor)   
+            morlets += [Morlet1DConfig(lambda_, lambda_/2 / np.pi, psi_t_sigma, psi_t_sigma/lambda_, lambda_/psi_t_sigma/2 / np.pi, 1.0/psi_t_sigma, False, bw/2/np.pi, downsample, fs)]
             lambda_ *= 2**(1/Q)        
+            
+        if len(morlets) == 0: 
+            print(f'WARNING: COULD NOT CREATE FILTERBANK AT FS={fs} with T={T} and Q={Q}')
+            self.valid = False
+            return
 
-        lpf_downsample = lpf_downsampling(self.ws, self.lpf_w_sigma, oversampling_factor)
+        lpf_downsample = lpf_downsampling(fs, T, oversampling_factor)
         print('LPF downsamples by ', lpf_downsample)
         #depending on the downsampling mode, modify the wavelets
         if downsample_mode == DownsampleMode.OFF:
@@ -125,33 +157,20 @@ class ScatteringFB1DConfig:
             ds = morlets[-1].downsampling_factor
             for m in morlets:
                 m.downsampling_factor = ds
-            
-        elif downsample_mode == DownsampleMode.MULTIPLE_OF_LPF:        
+                
+        elif downsample_mode == DownsampleMode.OPTIMAL_T or downsample_mode == DownsampleMode.MULTIPLE_OF_LPF:        
+            ds = morlets[-1].downsampling_factor    
+            while lpf_downsample % ds != 0: ds -= 1
             for m in morlets:
-                ds = m.downsampling_factor
-                #find the closest downsampling factor that will allow for a further dowmsampling step to the LPF
-                while lpf_downsample % ds != 0:
-                    ds -= 1                
-                m.downsampling_factor = ds           
+                m.downsampling_factor = ds
         
-        #calculate the resulting sample frequency after each downsampling step
-        for m in morlets:
-            m.output_fs = fs/m.downsampling_factor
-            print(m)        
-
-        #prepare the DS map
-        map = {}
-
-        for i in range(len(morlets)):
-            m = morlets[i]
-            if m.downsampling_factor not in map.keys():
-                map[m.downsampling_factor]  = [i]
-            else:
-                map[m.downsampling_factor] += [i]           
         
-        print(map)
+        # #calculate the resulting sample frequency after each downsampling step
+        # for m in morlets:
+        #     m.output_fs = fs/m.downsampling_factor
+        #     print(m)        
 
-        ns = int(np.ceil(max(morlets[1].sigma_t*fs*approximation_support, self.lpf_t_sigma*approximation_support*fs)))
+        ns = int(np.ceil(max(morlets[0].sigma_t*fs*approximation_support, self.lpf_t_sigma*approximation_support*fs)))
                 
         self.Q: int = Q
         self.T: float = T
@@ -162,7 +181,6 @@ class ScatteringFB1DConfig:
         self.BW_mode: MorletBW = BW_mode
         self.scaling_mode: LambdasScalingMode = scaling_mode
         self.morlets: List[Morlet1DConfig] = morlets
-        self.downsample_map: Dict[int, List[int]] = map #TODO: implement later
         self.number_of_wavelets: int = len(morlets)
         self.oversampling_factor: int = oversampling_factor
         self.max_output_BW_hz: float = morlets[-1].BW_hz
@@ -171,13 +189,10 @@ class ScatteringFB1DConfig:
         self.downsample_mode = downsample_mode
         
         self.filter_downsampling_factor = self.morlets[0].downsampling_factor 
-        ws_ds = self.ws/self.filter_downsampling_factor        
-        self.lpf_downsampling_factor = lpf_downsampling(ws_ds, self.lpf_w_sigma, self.oversampling_factor)
+        fs_ds = fs/self.filter_downsampling_factor        
+        self.lpf_downsampling_factor = lpf_downsampling(fs_ds, T, self.oversampling_factor)
         self.lpf_output_fs = self.fs / self.lpf_downsampling_factor / self.filter_downsampling_factor
-        self.filter_output_fs = self.fs / self.filter_downsampling_factor
-        self.eff_T = 4/self.filter_output_fs
-        self.eff_lpf_w_sigma = 2 * np.pi / self.eff_T #sets the cut-off frequency to 1/T_eff Hz which modifies T to fit with the various downsampling stages
-        self.eff_lpf_t_sigma = 1 / self.lpf_w_sigma
+        self.filter_output_fs = fs_ds
    
 class ScatteringFB1D:
     '''
@@ -197,20 +212,18 @@ class ScatteringFB1D:
             m = self.config.morlets[k]
             self.filters[:, k] = morlet.sample_morlet(self.t, m.lambda_, m.psi_time_sigma, dir = dir)
             
-        #construct the LPF for each downsampling amount
-        self.t_lpf = {}
-        self.lpf = {}
-        self.lpf_filter_size = {}
-        
-        for d in self.config.downsample_map.keys():            
-            self.t_lpf[d] = self.t[::d]
-            self.lpf[d] = morlet.sample_gauss(self.t_lpf, self.config.eff_lpf_t_sigma)
-            self.lpf_filter_size[d] = len(self.lpf)
-        
-        # self.t_lpf = self.t[::self.config.morlets[0].downsampling_factor]
-        # self.lpf = morlet.sample_gauss(self.t_lpf, self.config.eff_lpf_t_sigma)
-        # self.lpf_filter_size = len(self.lpf)
         self.filter_size = len(n)
+        #construct the LPF      
+        
+        
+        fs_d = self.config.filter_output_fs
+        supp = self.config.lpf_t_sigma * self.config.approximation_support #+- support for LPF in seconds
+        N = int(np.ceil(supp*fs_d))
+        n = np.arange(-N, N+1)
+        self.t_lpf = n / fs_d
+        self.lpf = morlet.sample_gauss(self.t_lpf, self.config.lpf_t_sigma)
+        self.lpf_filter_size = len(self.lpf)
+        
      
     
             
@@ -227,9 +240,6 @@ class ScatteringFB1D:
         plt.show(block=True)
         
       
-# --------------------------------------------------------------------------------------------  
-# TODO: FIX THE MULTIPLE DS LEVELS, SINCE IT WONT WORK AS IT IS CURRENTLY FOR MULTIPLE LEVELS!
-# --------------------------------------------------------------------------------------------  
         
 class ScatteringFB1DModule(nn.Module):
     '''
@@ -243,38 +253,12 @@ class ScatteringFB1DModule(nn.Module):
         
         #for convenience        
         self.downsample_mode = fb.config.downsample_mode
-        self.downsample_map = fb.config.downsample_map
         
         self._create_psi()
-        self._create_phi()        
-        
-        
-        print(self.Phi)
-        
-    def _init_psi_multiple_ds(self):
-        self.Psi: Union[Dict[int, Conv1d], Conv1d] = {}
-        sub_portion_found = False
-        for d in self.downsample_map.keys():
-            filters_in_section = self.downsample_map[d]
-            if self.num_filters in filters_in_section:
-                sub_portion_index = filters_in_section.index(self.num_filters)
-                filters_in_section = filters_in_section[:sub_portion_index] #get rid of extraneous filters
-                sub_portion_found = True
-            conv = self.Psi = Conv1d(
-                in_channels=1,
-                out_channels=len(filters_in_section),
-                kernel_size=self.fb.filter_size,
-                stride=d,
-                padding=self.fb.filter_size//2,
-                dtype=torch_data_type,
-                bias=False             
-            )
-            w = torch.from_numpy(self.fb.filters[:, np.newaxis, filters_in_section].T) #(N, in_channels, kernel_size)
-            conv.weight = nn.Parameter(w, requires_grad = False)
-            self.Psi[d] = conv
-            if sub_portion_found: break
+        self._create_phi()         
+
             
-    def _init_psi_uniform_ds(self):
+    def _create_psi(self):
         self.Psi = Conv1d(
                 in_channels=1,
                 out_channels=self.num_filters,
@@ -285,38 +269,11 @@ class ScatteringFB1DModule(nn.Module):
                 bias=False             
             )
         w = torch.from_numpy(self.fb.filters[:, np.newaxis, 0:self.num_filters].T) #(N, in_channels, kernel_size)
-        self.Psi.weight = nn.Parameter(w, requires_grad = False) 
-        
-    def _create_psi(self):
-        if self.downsample_mode == DownsampleMode.MULTIPLE_OF_LPF:
-            self._init_psi_multiple_ds()
-        else:
-            self._init_psi_uniform_ds()
-            
-    def _init_phi_multiple_ds(self):
-        self.Phi = {}
-        for d in self.fb.lpf.keys():
-            lpf = self.fb.lpf[d]
-            size = self.fb.lpf_filter_size[d]
-            C = self.Psi[d].out_channels
-            conv = Conv1d(
-                in_channels=C,
-                out_channels=C,
-                kernel_size=size,
-                stride=d,
-                padding=size//2,
-                dtype = torch_output_data_type,
-                groups = C,
-                bias = False         
-            ) 
-            w = np.tile(lpf, (self.num_filters, 1, 1))
-            w = torch.from_numpy(w)
-            conv.weight = nn.Parameter(w, requires_grad = False)
-            self.Phi[d] = conv
-    
-    def _init_phi_uniform_ds(self):
-        lpf = self.fb.lpf.values()[0]
-        size = self.fb.lpf_filter_size.values()[0]
+        self.Psi.weight = nn.Parameter(w, requires_grad = False)         
+   
+    def _create_phi(self):
+        lpf = self.fb.lpf
+        size = self.fb.lpf_filter_size
         self.Phi = Conv1d(
             in_channels=self.num_filters,
             out_channels=self.num_filters,
@@ -331,11 +288,7 @@ class ScatteringFB1DModule(nn.Module):
         w = torch.from_numpy(w)
         self.Phi.weight = nn.Parameter(w, requires_grad = False)
     
-    def _create_phi(self):
-        if self.downsample_mode == DownsampleMode.MULTIPLE_OF_LPF:
-            self._init_phi_multiple_ds()
-        else:
-            self._init_phi_uniform_ds()
+
                
 
     def U(self, x: torch.Tensor):
@@ -354,12 +307,11 @@ class Scattering1D:
     '''
     Configures the filter banks and performs scattering computations for an arbitrary scattering depth.
     '''
-    def __init__(self, Q_list, T, fs, oversample=1, fstart = 0.0, fend = None, ds_mode = DownsampleMode.MAXIMUM_UNIFORM) -> None:
+    def __init__(self, Q_list, T, fs, oversample=1, fstart = 0.0, fend = None) -> None:
         if not fend: fend = fs
         self.Q_list = Q_list
         self.num_levels = len(Q_list)
-        self.T = T
-        self.fs = fs
+        
         self.filter_banks: List[ScatteringFB1D] = []
         #each level has a number of filterbank modules, indexed by the number of filters that should be computed
         self.filter_bank_modules: List[Dict[int, ScatteringFB1DModule]] = [] #stores a FB module that computes the number of filters specified by the key
@@ -367,18 +319,28 @@ class Scattering1D:
         
         conf = ScatteringFB1DConfig(Q_list[0], T, fs, approximation_support=3.0, 
                                     oversampling_factor=oversample, fstart=fstart,         
-                                    fend=fend, downsample_mode=ds_mode)
+                                    fend=fend, downsample_mode=DownsampleMode.OPTIMAL_T)
         root_fb = ScatteringFB1D(conf)
         self.filter_banks += [root_fb]
         self.module_indices += [[conf.number_of_wavelets]*conf.number_of_wavelets] #all filters in first level use the same module
+        self.T = conf.T #T will adapt to be optimal
+        self.fs = fs
         
         
+        prev_level = 0
         if self.num_levels > 1:
             for Q in Q_list[1:]:
-                conf = ScatteringFB1DConfig(Q, T, self.filter_banks[0].config.filter_output_fs, 
+                print("OUTPUT FS", self.filter_banks[prev_level].config.filter_output_fs)
+                conf = ScatteringFB1DConfig(Q, self.T, self.filter_banks[prev_level].config.filter_output_fs, 
                                             approximation_support=3.0, oversampling_factor=oversample, 
-                                            downsample_mode=DownsampleMode.OFF)
+                                            downsample_mode=DownsampleMode.MULTIPLE_OF_LPF)
+                if not conf.valid: 
+                    print(f'ONLY CONFIGURING FOR {prev_level + 1} LEVELS.')
+                    self.num_levels = prev_level + 1
+                    self.Q_list = self.Q_list[:self.num_levels]
+                    break
                 self.filter_banks += [ScatteringFB1D(conf)]
+                prev_level += 1
                 
         #prepare the torch modules
         self.root_module = ScatteringFB1DModule(self.filter_banks[0])
@@ -393,13 +355,14 @@ class Scattering1D:
             for curr_filter in prev_fb.config.morlets:
                 bw = curr_filter.BW_hz
                 num_filts = 0
+                EPS = 1e-6
                 for next_filter in curr_fb.config.morlets:
                     #check to see if the filter in the next filterbank will capture significant information
-                    if bw < next_filter.f_c - next_filter.BW_hz: break
+                    if np.abs(bw - (next_filter.f_c - next_filter.BW_hz*BW_TO_SIGMA_RATIO)) < EPS: break
                     num_filts += 1
                 curr_fb_amounts += [num_filts]
-                if num_filts not in modules.keys():
-                    modules[num_filts] = ScatteringFB1DModule(curr_fb)
+                if num_filts not in modules.keys():                    
+                    modules[num_filts] = ScatteringFB1DModule(curr_fb, num_filts) if num_filts > 0 else None
                 
             self.module_indices += [curr_fb_amounts]
             self.filter_bank_modules += [modules]
@@ -408,13 +371,13 @@ class Scattering1D:
         return self.root_module.US(x)
     
     def _transform(self, result, u_prev, path: List[int], curr_fb_index: int):
-        prev_fb_index = curr_fb_index - 1
         if curr_fb_index >= self.num_levels: return
-        K = self.filter_banks[prev_fb_index].config.number_of_wavelets
+        K = u_prev.shape[1]
         for k in range(K):
-            x = u_prev[:, [k], :]
             num_filters_required = self.module_indices[curr_fb_index][k]
             module = self.filter_bank_modules[curr_fb_index][num_filters_required]
+            if module == None: return
+            x = u_prev[:, [k], :]
             u_curr, s_curr = module.US(x)
             p = path + (k, )
             result[p] = (u_curr, s_curr, u_curr.shape[1], u_curr.shape[2])

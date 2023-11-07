@@ -7,14 +7,15 @@ import numpy as np
 sys.path.append("../python")
 
 import scattering.scattering_1d as s1d
+from scattering.test_signals.fm import fm_sin, fm_tri
 
 fs = 250.0
 
-config = s1d.ScatteringFB1DConfig(16, 2.0481, fs, fstart=15, approximation_support=3.0, downsample_mode=s1d.DownsampleMode.MAXIMUM_UNIFORM)
+config = s1d.ScatteringFB1DConfig(16, 8.0, fs, fstart=15, approximation_support=3.0, downsample_mode=s1d.DownsampleMode.OPTIMAL_T, oversampling_factor=1)
 
 fb = s1d.ScatteringFB1D(config)
 
-print("Output FS ", fb.config.lpf_output_fs, "Effective T ", 4/fb.config.lpf_output_fs)
+print("Output FS ", fb.config.lpf_output_fs, "Effective T ", fb.config.T)
 
 
 
@@ -32,17 +33,21 @@ x = torch.zeros((N, 1, L), dtype=s1d.torch_data_type)
 x[0, 0, L//2] = 1.0
 x[0, 0, :] = torch.sin(dw)
 
+x = fm_tri(fs, L, 50, 0.3, 20, N) + fm_sin(fs, L, 100, 0.5, 10, N)
+
+
+
+
+
 t0 = time.time()
-y: torch.Tensor = conv(x)
-t1 = time.time()
-
-print(t1 - t0)
-print(y, len(fb.t_lpf))
-
 u, s = conv.US(x)
+t1 = time.time()
+print(t1 - t0)
+
 u = u.detach().numpy()[0, :, :]
 s = s.detach().numpy()[0, :, :]
 
+# fb.plot()
 
 plt.subplot(121)
 plt.imshow(u, extent=(0, 1, 0, 1))

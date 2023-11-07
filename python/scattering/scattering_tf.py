@@ -10,19 +10,23 @@ from torch.nn import Conv2d
 mpl.rcParams['text.usetex'] = True
 mpl.rcParams.update(mpl.rcParamsDefault)
 
-class MorletFBConfigTF:
-    def __init__(self, Q_time:int, Q_quefrequency, T_time, T_bins_quefrequency, fs, approximation_support=5.0) -> None:  
+class ScatteringFBTFConfig:
+    """
+    Configure a TF scattering FB using 2 1D filterbanks. The 2D wavelet is factorised as psi(t, log(lambda)) = psi(t) * psi(log(lambda)).
+    """
+    def __init__(self, Q_time:int, Q_quefrequency, T_time, T_bins_quefrequency, fs, approximation_support=5.0, ds_mode = s1d.DownsampleMode.MULTIPLE_OF_LPF) -> None:  
         self.time_config = s1d.ScatteringFB1DConfig(Q_time, T_time, fs, 
-                                              approximation_support=approximation_support, downsample_mode= s1d.DownsampleMode.MAXIMUM_UNIFORM)
+                                              approximation_support=approximation_support, downsample_mode = ds_mode)
         self.quefrequency_config = s1d.ScatteringFB1DConfig(Q_quefrequency, T_bins_quefrequency*2*np.pi, 1.0, approximation_support=approximation_support, 
-                                                      downsample_mode = s1d.DownsampleMode.MAXIMUM_UNIFORM)
+                                                      downsample_mode = ds_mode)
     
     def from_1D(conf1d: s1d.ScatteringFB1DConfig, Q_time, Q_quefrequency, T_bins_quefrequency, approximation_support=5.0):
-        return MorletFBConfigTF(Q_time, Q_quefrequency, conf1d.T, T_bins_quefrequency, conf1d.morlets[0].output_fs, approximation_support=approximation_support)    
-    
+        return ScatteringFBTFConfig(Q_time, Q_quefrequency, conf1d.T, T_bins_quefrequency, conf1d.morlets[0].output_fs, approximation_support=approximation_support)    
+
+ 
         
-class ScatteringFilterBank2D:
-    def __init__(self, config: MorletFBConfigTF) -> None:
+class ScatteringFilterBankTF:
+    def __init__(self, config: ScatteringFBTFConfig) -> None:
         self.config = config
         self.time_fb = s1d.ScatteringFB1D(config.time_config)
         self.qf_fb_pos = s1d.ScatteringFB1D(config.quefrequency_config)
@@ -114,6 +118,10 @@ class ScatteringFilterBank2D:
         plt.show(block=True)
         
         
-        
-        
+def get_eligible_filter_indices(fb0: ScatteringFilterBankTF, k0 , fb1: ScatteringFilterBankTF):    
+        """
+        For a given filter with index k0 in a FB fb0, compute all the relevant filter indices 
+        in fb1 that will capture significant information.
+        """          
+        pass
                 
