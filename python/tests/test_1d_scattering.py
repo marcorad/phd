@@ -6,26 +6,29 @@ import numpy as np
 
 sys.path.append("../python")
 
-import scattering.scattering_1d as s1d
+import phd.scattering.scattering_1d as s1d
 
 fs = 250.0
 
 L = int(fs*60*60)
 N = 10
 
-x = torch.zeros((N, 1, L), dtype=s1d.torch_data_type)
+x = torch.zeros((N, 1, L), dtype=s1d.TORCH_DATA_TYPE)
 
 x[0, 0, 0] = 1.0
 
 
-scat = s1d.Scattering1D([16, 4, 2], 8.0, fs, fstart=15.0, oversample=1)
+scat = s1d.Scattering1D([16, 4, 2], 2.0, fs, fstart=15.0, oversample=1)
 
 
 
 
 t0 = time.time()
 res = scat.transform(x)
+torch.cuda.synchronize()
 t1 = time.time()
+dt = t1 - t0
+print("TOOK ", dt, f" seconds {dt/L/N*fs*60*60} per hour of audio")
 
 for p, r in res.items(): print(p, r[0].shape, r[1].shape)
 

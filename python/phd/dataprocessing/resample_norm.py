@@ -2,10 +2,11 @@ from torch import max, abs
 from torchaudio.transforms import Resample
 
 import os
-import torchaudio as ta
+import soundfile as sf
 import torch
 
 from tqdm import tqdm
+
 
 
 
@@ -33,7 +34,7 @@ class PreProcess:
                 self.files.append(entry.name)
                 
         
-        _, self.orig_fs = ta.load(self.inputdir + "\\" + self.files[0])
+        _, self.orig_fs = sf.read(self.inputdir + "\\" + self.files[0])
                 
         self.resample = Resample(self.orig_fs, self.target_fs, dtype=torch.float32)
         
@@ -42,10 +43,10 @@ class PreProcess:
                 
     def process(self):
         for fname in tqdm(self.files): 
-            x, _ = ta.load(self.inputdir + "\\" + fname, channels_first = True)
-            xr = self.resample(x)
+            x, _ = sf.read(self.inputdir + "\\" + fname)
+            xr = self.resample(torch.Tensor(x))
             xr = xr/max(abs(xr))         
-            ta.save(self.outputdir + "\\" + fname, xr, self.target_fs, channels_first = True, format='wav')
+            sf.write(self.outputdir + "\\" + fname, xr, self.target_fs, format='wav')
             
         
         

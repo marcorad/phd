@@ -6,8 +6,8 @@ import numpy as np
 
 sys.path.append("../python")
 
-import scattering.scattering_1d as s1d
-from scattering.test_signals.fm import fm_sin, fm_tri
+from phd.scattering import scattering_1d  as s1d
+from phd.scattering.test_signals.fm import fm_sin, fm_tri
 
 fs = 250.0
 
@@ -28,7 +28,7 @@ t = n / fs
 dw = torch.cumsum(2*np.pi*50 + 2*np.pi*(20.0*torch.sin(2*np.pi*t*0.3)), 0) / fs
 N = 1
 
-x = torch.zeros((N, 1, L), dtype=s1d.torch_data_type)
+x = torch.zeros((N, 1, L), dtype=s1d.TORCH_DATA_TYPE)
 
 x[0, 0, L//2] = 1.0
 x[0, 0, :] = torch.sin(dw)

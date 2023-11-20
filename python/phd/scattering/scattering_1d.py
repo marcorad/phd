@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Union
 import numpy as np
 from torch.nn.common_types import _size_1_t
-from scattering import morlet
+from . import morlet
 from numpy.fft import fft
 import matplotlib.pyplot as plt
 
@@ -15,8 +15,11 @@ import torch.nn as nn
 from sympy import factorint
 
 FB_data_type = np.complex128
-torch_data_type = complex128
-torch_output_data_type = float64
+TORCH_DATA_TYPE = complex128
+TORCH_OUTPUT_DATA_TYPE = float64
+
+DEVICE = torch.device('cuda')  
+torch.set_default_device(DEVICE)
 
 #If equal to one, then there will be some aliasing, but when equal to 2, there is minimal aliasing
 #This parameter controls what is considered the BW with reference to sigma_w, i.e., 1 implies that 1 std. dev. is the bandwidth of the filter
@@ -258,41 +261,45 @@ class ScatteringFB1DModule(nn.Module):
         self._create_phi()         
 
             
-    def _create_psi(self):
+    def _create_psi(self): 
         self.Psi = Conv1d(
                 in_channels=1,
                 out_channels=self.num_filters,
                 kernel_size=self.fb.filter_size,
                 stride=self.fb.config.filter_downsampling_factor,
                 padding=self.fb.filter_size//2,
-                dtype=torch_data_type,
-                bias=False             
+                dtype=TORCH_DATA_TYPE,
+                bias=False,    
+                device = DEVICE                        
             )
-        w = torch.from_numpy(self.fb.filters[:, np.newaxis, 0:self.num_filters].T) #(N, in_channels, kernel_size)
+        w = torch.from_numpy(self.fb.filters[:, np.newaxis, 0:self.num_filters].T) #(out_channels, in_channels/groups, L)
+        w = w.to(DEVICE)
         self.Psi.weight = nn.Parameter(w, requires_grad = False)         
    
     def _create_phi(self):
         lpf = self.fb.lpf
-        size = self.fb.lpf_filter_size
+        size = self.fb.lpf_filter_size        
         self.Phi = Conv1d(
             in_channels=self.num_filters,
             out_channels=self.num_filters,
             kernel_size=size,
             stride=self.fb.config.lpf_downsampling_factor,
             padding=self.fb.lpf_filter_size//2,
-            dtype = torch_output_data_type,
+            dtype = TORCH_OUTPUT_DATA_TYPE,
             groups = self.num_filters,
-            bias = False         
+            bias = False,    
+            device = DEVICE                
         ) 
         w = np.tile(lpf, (self.num_filters, 1, 1))
         w = torch.from_numpy(w)
+        w = w.to(DEVICE)
         self.Phi.weight = nn.Parameter(w, requires_grad = False)
     
 
                
 
     def U(self, x: torch.Tensor):
-        x = x.type(torch_data_type)
+        x = x.type(TORCH_DATA_TYPE)
         return torch.abs(self.Psi(x))
     
     def S(self, u: torch.Tensor):
@@ -322,7 +329,7 @@ class Scattering1D:
                                     fend=fend, downsample_mode=DownsampleMode.OPTIMAL_T)
         root_fb = ScatteringFB1D(conf)
         self.filter_banks += [root_fb]
-        self.module_indices += [[conf.number_of_wavelets]*conf.number_of_wavelets] #all filters in first level use the same module
+        self.module_indices += [[conf.number_of_wavelets]*conf.number_of_wavelets] #all filters in first level use the same module (unused)
         self.T = conf.T #T will adapt to be optimal
         self.fs = fs
         
@@ -355,10 +362,10 @@ class Scattering1D:
             for curr_filter in prev_fb.config.morlets:
                 bw = curr_filter.BW_hz
                 num_filts = 0
-                EPS = 1e-6
+                EPS = 1e-6 #TODO: make EPS adaptive to the smallest BW
                 for next_filter in curr_fb.config.morlets:
                     #check to see if the filter in the next filterbank will capture significant information
-                    if np.abs(bw - (next_filter.f_c - next_filter.BW_hz*BW_TO_SIGMA_RATIO)) < EPS: break
+                    if bw < next_filter.f_c - next_filter.BW_hz*BW_TO_SIGMA_RATIO + EPS: break
                     num_filts += 1
                 curr_fb_amounts += [num_filts]
                 if num_filts not in modules.keys():                    
