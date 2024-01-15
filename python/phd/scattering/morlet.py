@@ -8,3 +8,4 @@ def sample_morlet(t, lambda_, sigma, dir=1.0):
     g = sample_gauss(t_times_lambda, sigma)
     beta = (sample_gauss(-1.0, 1.0 / sigma) / sample_gauss(0.0, 1.0 / sigma))
     return lambda_ * (np.exp(t_times_lambda*(1j * dir)) - beta) * g
+
