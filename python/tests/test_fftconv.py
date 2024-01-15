@@ -26,12 +26,13 @@ x[:, 0, F//2, 0] = 1.0
 Nh = 255
 h = torch.zeros((2, Nh), dtype=s1d.TORCH_DATA_TYPE)
 h[:, [Nh//2-1, Nh//2, Nh//2+1]] = torch.tensor([-0.5, 1.0, -0.5], dtype=s1d.TORCH_DATA_TYPE)
-conv1 = Conv1D(h, conv_dim=-1, ds=64)
+conv1 = Conv1D(h, conv_dim=-1, ds=1)
+
 
 Nh = 25
 h = torch.zeros((2, Nh), dtype=s1d.TORCH_DATA_TYPE)
 h[:, [Nh//2-1, Nh//2, Nh//2+1]] = torch.tensor([-0.5, 1.0, -0.5], dtype=s1d.TORCH_DATA_TYPE)
-conv2 = Conv1D(h, conv_dim=-2, ds=2)
+conv2 = Conv1D(h, conv_dim=-2, ds=1)
 
 t0 = time.time()
 #perform seperable convolution
