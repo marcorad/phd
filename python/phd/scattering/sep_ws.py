@@ -5,7 +5,7 @@ from typing import List, Dict, Union
 
 import numpy as np
 import matplotlib.pyplot as plt
-import torch
+from torch import Tensor
 from sympy.ntheory import factorint
 
 from .morlet import sample_gauss, sample_morlet
@@ -32,7 +32,7 @@ def optimise_T(T_nom, fs, eps = 0.1):
     return T_opt
 
 
-class FB1D:
+class MorletSampler1D:
 
     def __init__(self, Q, T, fs_in, fstart = None, pol=1.0) -> None:
         self.Q = Q
@@ -41,7 +41,9 @@ class FB1D:
         self.fstart = fstart
         self.d_tot = max(int(np.floor(fs_in * T / 2 / MORLET_DEFINITION.beta)), 1) #total allowed downsampling
         self.polarity = pol
-        self._init_filters()      
+        self._init_filters()
+        self.is_conv = False
+    
         
     def _init_filters(self):
         #std dev of lpf (phi)
@@ -84,7 +86,7 @@ class FB1D:
             sigma_lambda_w = lambda_*sigma_w
 
         #initialise psi
-        self.psi = np.array(psi)
+        self.psi = np.array(psi) #(Nfilt, L)
         self.lambdas = lambdas
         self.fc = (np.array(lambdas)/2/PI).tolist()
         self.max_sigma_lambda_w = lambdas[-1] * sigma_w
@@ -94,6 +96,7 @@ class FB1D:
         nmax = int(np.floor(MORLET_DEFINITION.k * PI * self.fs_psi_out / sigma_phi_w))
         t = np.arange(start=-nmax, stop=nmax+1) / self.fs_psi_out
         self.phi = sample_gauss(t, 1/sigma_phi_w)/self.fs_psi_out
+        self.phi = self.phi[None, :] #rehape to (1, L)
         self.t_phi = t
 
     def _init_downsampling_factors(self):
@@ -110,6 +113,14 @@ class FB1D:
         self.d_phi = self.d_tot // d_lambda #downsampling of phi filter
         self.fs_psi_out = self.fs_in / self.d_lambda #output frequency of the psi filters
         self.fs_out = self.fs_in / self.d_tot #output frequency of the phi filters
+
+class MorletSampler1DFull: #for both positive and negative frequency filters, intended to be used in multiple dimensions
+    def __init__(self, Q, T, fs_in) -> None:
+        self.fb_pos = MorletSampler1D(Q, T, fs_in, pol=+1)
+        self.fb_neg = MorletSampler1D(Q, T, fs_in, pol=-1)
+        self.psi = np.concatenate((self.fb_pos.psi, self.fb_pos.phi, self.fb_neg.psi), axis=0)
+        self.phi = self.fb_pos.phi
+        #TODO: add other properties from MorletSampler1D
 
 
         
