@@ -31,5 +31,5 @@ print(fb.fc)
 f = np.arange(fb.psi.shape[1])/fb.psi.shape[1]*fs
 plt.plot(f, np.abs(np.fft.fft(fb.psi, axis=1)).T)
 f = np.arange(fb.phi.shape[1])/fb.phi.shape[1]*fb.fs_psi_out
-plt.plot(f, np.abs(np.fft.fft(fb.phi, axis=1)), '--')
+plt.plot(f, np.abs(np.fft.fft(fb.phi, axis=1)).T, '--')
 plt.show(block=True)

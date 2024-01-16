@@ -44,7 +44,7 @@ class Conv1D:
         self._init_straight_conv_layer(filter_weights)
         self.Nfilt = filter_weights.shape[0]
         filter_weights = nn.functional.pad(filter_weights, pad, mode='constant', value=0.0)        
-        self.H = torch.fft.fft(filter_weights, dim=-1) #precompute filter FFT
+        self.H = torch.fft.fft(filter_weights.cuda(), dim=-1) #precompute filter FFT
         self.H = self.H[None, :, None, None, :] #(1, Nfilt, 1, 1, Nh)
         self.overlap = self.M-1
         self.step_size = self.N - self.overlap
@@ -71,35 +71,44 @@ class Conv1D:
             y[:, :, i, :] = self.conv_layer(x[:, :, i, :])
         return y
         
-    def _conv_oas(self, x: Tensor):     
-        print("USING OAS CONV")   
+    def _conv_oas(self, x: Tensor, filter_idx = None):     
+        # print("USING OAS CONV")   
         #requires the last dimension to be the convolution dimension
+
+        #compute OAS windows for x
         origL = x.shape[-1]
         P = self.lenH//2 
         Pend = self.N*(ceil((origL+2*P + self.M)/self.N)+1) - (origL+2*P + self.M)         
         x = nn.functional.pad(x, [P + self.M, P + Pend], mode='constant', value=0.0)
         x = x.unfold(-1, self.N, self.step_size) #(Nbatch, 1, Nch, Nwind, Nh)
+        x = x.cuda()
         Y: Tensor = torch.fft.fft(x, dim=-1)
-        Y = Y*self.H #(Nbatch, 1, Nch, Nwind, Nh) * (1, Nfilt, 1, 1, Nh)
+
+        #select the filters
+        H = self.H if filter_idx == None else self.H[:, filter_idx, :, :, :]
+
+        Y = Y*H #(Nbatch, 1, Nch, Nwind, Nh) * (1, Nfilt, 1, 1, Nh)
         Y = torch.fft.ifft(Y, dim=-1)
         Y = Y[:, :, :, :, (self.M-1):self.N] #OAS segments        
         s = list(Y.shape[:-1])
         s[-1] = s[-1]*Y.shape[-1]
         Y = Y.reshape(s) 
-        Y = Y[:, :, :, self.lenH:(origL + self.lenH):self.ds]        
+        Y = Y[:, :, :, self.lenH:(origL + self.lenH + 1):self.ds]     
+           
         return Y #(Nbatch, Nfilt, Nch, Nx)
     
     def _use_oas(self, N):
         return self.ds < (self.M-1)/(2*log2(self.M) + 1) and self.M < N
         
     #input Tensor of size (Nbatch, 1, Nch, Nx)
-    def conv_multiple(self, x: Tensor) -> Tensor:
+    def conv_multiple(self, x: Tensor, filter_idx = None) -> Tensor:
         """1D convolution across multiple dimensions and batches. 
         Batch dimension may be treated as an arbitrary data dimension.
-        Will use the optimal convolution method (straight via NN or FTT OAS).
+        Will use the FFT OAS convolution.
 
         Args:
             x (Tensor): Input tensor of shape (Nbatch, 1, Nch, Nx)
+            filter_idx (List[int], optional): List of filter indices to compute. When None, computes all filters. Default to None (all filters).
 
         Returns:
             Tensor: Convolved signal of shape (Nbatch, Nfilt, Nch, Nx)
@@ -109,18 +118,24 @@ class Conv1D:
             x = x.swapaxes(-1, self.conv_dim)
             
         #convolve optimally
-        if self._use_oas(x.shape[self.conv_dim]):
-            y = self._conv_oas(x)
-        else:
-            y =  self._conv_straight(x)
+        # DISABLE NN CONV FOR NOW
+        # if self._use_oas(x.shape[self.conv_dim]):
+        #     y = self._conv_oas(x)
+        # else:
+        #     y =  self._conv_straight(x)
+            
+        y = self._conv_oas(x, filter_idx)
             
         #swap dimension back
         if self.conv_dim != -1:
             y = y.swapaxes(-1, self.conv_dim)
+
+        torch.cuda.empty_cache()
         return y
     
     #input Tensor of size (Nbatch, 1, Nx)
     def conv(self, x: Tensor):
+        
         return self.conv_multiple(x[:, :, None, :])[:, :, 0, :] #(Nbatch, Nfilt, Nx)
         
 
