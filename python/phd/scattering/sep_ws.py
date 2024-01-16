@@ -108,7 +108,7 @@ class MorletSampler1D:
         self.sigma_phi_w = sigma_phi_w
 
     def _init_downsampling_factors(self):
-        max_bw = self.max_sigma_lambda_w * MORLET_DEFINITION.beta
+        max_bw = self.max_sigma_lambda_w * MORLET_DEFINITION.beta / 2 / PI
         d_lambda = max(int(np.floor(self.fs_in/2/max_bw)),1)
 
         #find the largest d_lambda such that it divides d_total
@@ -272,10 +272,10 @@ class SeperableScatteringLayerND:
         assert dimcheck, "Only dimensions [0, 2, 3, -1] are allowed for convolutions"
 
         self.conv_layers: List[ScatteringLayer1D] = []
-        for i in self.ndim:
+        for i in range(self.ndim):
             #we only expect real signals, meaning we must cover only half frequency plane
             #by default, the first specified dimension only gets half coverage
-            self.conv_layers += [ScatteringLayer1D(Q[i], T[i], fs_in[i], dim=self.conv_dims[i], full=(i==0))]
+            self.conv_layers += [ScatteringLayer1D(Q[i], T[i], fs_in[i], dim=self.conv_dims[i], full=(i!=0))]
 
     def _conv_dim_psi(self, C: Tensor, layer_idx: int, bw_w: List[float]):
         nfilt = C.shape[1]
@@ -309,9 +309,9 @@ class SeperableScatteringLayerND:
         #Compute S = U * phi
         S = self._conv_dim_phi(U, 0)
         for layer_idx in range(1, self.ndim):
-            S = self._conv_dim_phi(S, layer_idx)
+            S = self._conv_dim_phi(torch.real(S), layer_idx)
 
-        return U, S  
+        return U, torch.real(S)  
 
 
 class SeperableScatteringLayerNDS0:

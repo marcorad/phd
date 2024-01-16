@@ -11,15 +11,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-fs = 250
-T = optimise_T(2, fs)
+fs = 1
+T = optimise_T(64, fs)
 
-Q = 4
+Q = 2
 
 fb = MorletSampler1D(Q, T, fs)
 
-print(fb.psi.shape)
-print(fb.fc)
+print(fb.d_lambda)
 
 # plt.plot(fb.phi)
 # plt.show()

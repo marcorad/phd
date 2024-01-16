@@ -93,7 +93,7 @@ class Conv1D:
         s = list(Y.shape[:-1])
         s[-1] = s[-1]*Y.shape[-1]
         Y = Y.reshape(s) 
-        Y = Y[:, :, :, self.lenH:(origL + self.lenH + 1):self.ds]     
+        Y = Y[:, :, :, self.lenH:(origL + self.lenH):self.ds]     
            
         return Y #(Nbatch, Nfilt, Nch, Nx)
     
