@@ -48,9 +48,9 @@ class MorletDefinition:
             return self._alpha_small_Q
         
 
-MORLET_DEF_PERFORMANCE =    MorletDefinition(2, 1, 3, 2, 3)
-MORLET_DEF_ACCURACY =       MorletDefinition(2, 3, 3, 2, 5)
-MORLET_DEF_BALANCED =       MorletDefinition(2, 2, 3, 2, 4)
+MORLET_DEF_PERFORMANCE =    MorletDefinition(2, 1, 3, 2, 2)
+MORLET_DEF_ACCURACY =       MorletDefinition(2, 3, 3, 2, 4)
+MORLET_DEF_BALANCED =       MorletDefinition(2, 2, 3, 2, 3)
 
 MORLET_DEFINITION = MORLET_DEF_BALANCED
 
