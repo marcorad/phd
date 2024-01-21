@@ -39,7 +39,7 @@ print(T)
 #TODO VERTICAL IS MISSING! FIX THIS!
 
 Nx = 32
-f0 = 1/32
+f0 = 1/16
 nx = np.arange(Nx)[:, None]
 ny = (np.arange(Nx)[:, None]).T
 print(nx.shape, ny.shape)

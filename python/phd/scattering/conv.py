@@ -38,8 +38,8 @@ class Conv1D:
         lenH = filter_weights.shape[-1]
         self.M = 2**ceil(log2(lenH))
         self.lenH = lenH
-        self.N = _optimise_cost(self.M)
-        pad = [0, self.N - lenH]
+        self.Nir = _optimise_cost(self.M)
+        pad = [0, self.Nir - lenH]
         self.ir_pad = pad[1]
         self._init_straight_conv_layer(filter_weights)
         self.Nfilt = filter_weights.shape[0]
@@ -47,7 +47,7 @@ class Conv1D:
         self.H = torch.fft.fft(filter_weights.cuda(), dim=-1) #precompute filter FFT
         self.H = self.H[None, :, None, None, :] #(1, Nfilt, 1, 1, Nh)
         self.overlap = self.M-1
-        self.step_size = self.N - self.overlap
+        self.step_size = self.Nir - self.overlap
         
         
     def _init_straight_conv_layer(self, w: Tensor):
@@ -78,9 +78,9 @@ class Conv1D:
         #compute OAS windows for x
         origL = x.shape[-1]
         P = self.lenH//2 
-        Pend = self.N*(ceil((origL+2*P + self.M)/self.N)+1) - (origL+2*P + self.M)         
+        Pend = self.Nir*(ceil((origL+2*P + self.M)/self.Nir)+1) - (origL+2*P + self.M)         
         x = nn.functional.pad(x, [P + self.M, P + Pend], mode='constant', value=0.0)
-        x = x.unfold(-1, self.N, self.step_size) #(Nbatch, 1, Nch, Nwind, Nh)
+        x = x.unfold(-1, self.Nir, self.step_size) #(Nbatch, 1, Nch, Nwind, Nh)
         x = x.cuda()
         Y: Tensor = torch.fft.fft(x, dim=-1)
 
@@ -89,7 +89,7 @@ class Conv1D:
 
         Y = Y*H #(Nbatch, 1, Nch, Nwind, Nh) * (1, Nfilt, 1, 1, Nh)
         Y = torch.fft.ifft(Y, dim=-1)
-        Y = Y[:, :, :, :, (self.M-1):self.N] #OAS segments        
+        Y = Y[:, :, :, :, (self.M-1):self.Nir] #OAS segments        
         s = list(Y.shape[:-1])
         s[-1] = s[-1]*Y.shape[-1]
         Y = Y.reshape(s) 
@@ -97,8 +97,7 @@ class Conv1D:
            
         return Y #(Nbatch, Nfilt, Nch, Nx)
     
-    def _use_oas(self, N):
-        return self.ds < (self.M-1)/(2*log2(self.M) + 1) and self.M < N
+    
         
     #input Tensor of size (Nbatch, 1, Nch, Nx)
     def conv_multiple(self, x: Tensor, filter_idx = None) -> Tensor:
