@@ -37,41 +37,49 @@ class Conv1D:
         """
         self.ds = ds
         lenH = filter_weights.shape[-1]
-        self.M = 2**ceil(log2(lenH))
+        self.M = lenH #2**ceil(log2(lenH))
         self.lenH = lenH    
         self.Nir = _optimise_cost(self.M)
         pad = [0, self.Nir - lenH]
         self.ir_pad = pad[1]
         self.Nfilt = filter_weights.shape[0]
-        filter_weights = nn.functional.pad(filter_weights, pad, mode='constant', value=0.0)        
-        self.H = torch.fft.fft(filter_weights.cuda(), dim=-1) #precompute filter FFT
+
+        #filter for OAS
+        h = nn.functional.pad(filter_weights, pad, mode='constant', value=0.0)        
+        self.H_oas = torch.fft.fft(h.cuda(), dim=-1) #precompute filter FFT
         self.overlap = self.M-1
         self.step_size = self.Nir - self.overlap 
-        
-    
-        
-    def _conv(self, x: Tensor, filter_idx = None):     
-         
+
+        self.sig_len_limit = ceil(2**((log2(self.Nir)+1) * self.Nir / (self.Nir - self.lenH + 1) -1))
+
+        #filter for direct FFT convolution        
+        self.h_direct: Tensor = filter_weights #precompute filter FFT
+        self.prev_direct_size = None
+        self.prev_direct_H = None
+
+
+    def _oas(self, x: Tensor, filter_idx):
+        # print("OAS")
         #requires the last dimension to be the convolution dimension
 
-        origL = x.shape[-1]
-
-        #TODO: Do normal FFT conv for short signals, i.e. when len(padded x) < Nir
+        origL = x.shape[-1]        
 
         #input shape of (...xd)
         #x reshaped to (...x(d-1), 1, #windows, Nir)
         #filter shape of (1...x(d-1), Nfilt, 1, Nir)
 
+        #select the filters
+        if filter_idx != None:
+            H = torch.index_select(H, dim=0, index=filter_idx)  
+
         #reshape filter stored as (Nfilt, Nir)
-        H = self.H[:, None, :] #(Nfilt, 1, Nir)
+        H = self.H_oas[:, None, :] #(Nfilt, 1, Nir)
         d = len(x.shape)
         for _ in range(d - 1): H = torch.unsqueeze(H, 0) #(1...x(d-1), Nfilt, 1, Nir)
 
 
-        #select the filters
-        if filter_idx != None:
-            H = torch.index_select(H, dim=-3, index=filter_idx)              
-
+                       
+        
         
         P = self.lenH//2 
         Pend = self.Nir*(ceil((origL+2*P + self.M)/self.Nir)+1) - (origL+2*P + self.M)         
@@ -79,7 +87,10 @@ class Conv1D:
         x = x.unfold(-1, self.Nir, self.step_size) #(...x(d-1), #windows, Nw)
         x = torch.unsqueeze(x, -3) #(...x(d-1), 1, #windows, Nw)
         x = x.cuda()
-        Y: Tensor = torch.fft.fft(x, dim=-1)            
+        Y: Tensor = torch.fft.fft(x, dim=-1)  
+        torch.cuda.empty_cache()   
+
+        torch.convolution()              
 
         Y = Y*H#(1...x(d-1), Nfilt, 1, Nw)*(...x(d-1), 1, #windows, Nir)=(...x(d-1), Nfilt, #windows, Nir)
         del H   
@@ -94,6 +105,75 @@ class Conv1D:
         Y = torch.slice_copy(Y, -1, start=self.lenH, end=origL + self.lenH, step=self.ds) #trim IR ends and downsample (...x(d-1), Nfilt, downsample(d[-1]))
         
         return torch.swapaxes(Y, -1, -2) #(...xd, Nfilt)
+    
+
+    def _direct(self, x: Tensor, filter_idx):
+
+        #TODO: do subsampling in frequency domain
+
+        # print("DIRECT")
+        origL = x.shape[-1]
+
+        H = self.h_direct #(Nfilt, Nh)
+
+            
+        pad_len = origL + self.lenH - 1
+        #https://dsp.stackexchange.com/questions/64821/2d-fourier-downsampling
+        # dec_m= pad_len//self.ds + 1
+        # dec_n=dec_m//self.ds
+
+        if pad_len == self.prev_direct_size:
+            H = self.prev_direct_H
+        else:
+            H = nn.functional.pad(H, [0, (origL + self.lenH - 1) - self.lenH], mode='constant', value=0.0)
+            H = H.swapaxes(0, 1).cuda() #(Nh, Nfilt)
+            H = torch.fft.fft(H, dim=0)
+            # H = torch.fft.fftshift(H, dim=0)
+            # H = torch.slice_copy(H, )
+            self.prev_direct_H = H
+            self.prev_direct_size = pad_len
+
+
+        #select the filters
+        if filter_idx != None:
+            H = torch.index_select(H, dim=1, index=filter_idx.cuda())            
+
+        d = len(x.shape)
+        for _ in range(d-1): H = torch.unsqueeze(H, 0) #(1...x(d-1), Nir, Nfilt)
+
+         
+            
+
+        #pad x to the max signal length of efficiency
+        P = self.lenH//2   
+        x = nn.functional.pad(x, [P, P], mode='constant', value=0.0)
+        x = x.unsqueeze(-1).cuda() #(...x(d-1), Nir, 1)
+
+        Y: Tensor = torch.fft.fft(x, dim=-2)
+        del x
+        Y = H * Y
+        
+
+        
+
+        start = self.lenH - 1
+
+        Y = torch.fft.ifft(Y, dim=-2)
+        Y = torch.slice_copy(Y, dim=-2, start=start, end=start+origL, step=self.ds)
+
+        return Y
+
+        
+    
+        
+    def _conv(self, x: Tensor, filter_idx = None):     
+        origL = x.shape[-1]
+        P = self.lenH//2 
+        if origL + 2*P > self.sig_len_limit:
+            return self._oas(x, filter_idx)
+        else:
+            return self._direct(x, filter_idx)
+    
         
         
     #input Tensor of size (Nbatch, 1, Nch, Nx)
@@ -110,16 +190,17 @@ class Conv1D:
         Returns:
             Tensor: Convolved signal of shape (...xd, Nfilt)
         """
+        conv_dim = len(x.shape) + conv_dim if conv_dim < 0 else conv_dim
+        is_last_dim = conv_dim == len(x.shape) - 1
         #swap out dimensions, since self._conv requires the last dimension
-        if conv_dim != -1:
+        if not is_last_dim:
             x = x.swapaxes(-1, conv_dim)           
         
         y = self._conv(x, filter_idx)
             
         #swap dimension back
-        if conv_dim != -1:
-            y = y.swapaxes(-2, conv_dim-1) #extra dimension added
-        
+        if not is_last_dim:
+            y = y.swapaxes(-2, conv_dim)
         return y
     
     
