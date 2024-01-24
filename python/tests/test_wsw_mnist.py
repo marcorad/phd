@@ -5,7 +5,7 @@ sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 3, 4)
+config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 3, 3, 4)
 config.set_precision('single')
 config.ENABLE_DS = True
 
@@ -23,11 +23,11 @@ torch.cuda.empty_cache()
 
 
 fs = [1, 1]
-Q = [[1, 1], [1, 1]]
+Q = [[2, 2], [1, 1]]
 T = [optimise_T(48, 1, eps=0.05)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], False, prune=True)
 
 
 # plt.subplot(Np, Np, 1)
@@ -54,8 +54,8 @@ from mnist import MNIST
 mndata = MNIST('../../python-mnist/data')
 images, labels = mndata.load_training()
 
-images = np.array(images)[0::1, :].reshape((-1, 28, 28)).astype(config.NUMPY_REAL)
-labels = np.array(labels)[0::1]
+images = np.array(images)[0::20, :].reshape((-1, 28, 28)).astype(config.NUMPY_REAL)
+labels = np.array(labels)[0::20]
 
 images = (images - np.mean(images))/np.std(images)
 
@@ -77,8 +77,8 @@ print(X_test.shape)
 
 t0 = time()
 
-S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=512)
-S_test  = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=512)
+S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=1024)
+S_test  = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=1024)
 print(S_train.shape)
 
 torch.cuda.synchronize()

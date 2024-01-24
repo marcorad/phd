@@ -3,7 +3,7 @@ import sys
 sys.path.append('../python')
 
 import phd.scattering.config as config
-config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
+config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 3, 4)
 # config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
 config.set_precision('single')
 config.ENABLE_DS = True
@@ -41,7 +41,7 @@ import skimage as ski
 
 im = ski.data.retina().astype(config.NUMPY_REAL)/256
 print(im.shape)
-im = ski.transform.downscale_local_mean(im, (8,8,1))
+im = ski.transform.downscale_local_mean(im, (2,2,1))
 # if len(im.shape) > 2:
 #     im = ski.color.rgb2gray(im).astype(config.NUMPY_REAL)
 
@@ -59,8 +59,8 @@ plt.imshow(im, cmap='gray')
 
 for i in range(min(U.shape[-1], Np*Np-1)):
     plt.subplot(Np, Np, i + 2)
-    im_filt = U.cpu()[..., i].norm(2, dim=2)
-    # im_filt /= torch.max(im_filt)
+    im_filt = U.cpu()[..., i]
+    im_filt /= torch.max(im_filt)
     plt.imshow(im_filt, cmap='gray')
     lambdas = wsl.filter_lambda_pairs[i]
     plt.title("{:.2f}, {:.2f}".format(*lambdas))

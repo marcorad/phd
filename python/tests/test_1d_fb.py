@@ -3,8 +3,9 @@ import sys
 sys.path.append('../python')
 
 import phd.scattering.config as config
-config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
+config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 4)
 config.set_precision('single')
+config.ENABLE_DS = False
 
 from phd.scattering.sep_ws import MorletSampler1D, optimise_T
 import matplotlib.pyplot as plt
@@ -12,9 +13,9 @@ import numpy as np
 
 
 fs = 1
-T = optimise_T(64, fs)
+T = optimise_T(128, fs)
 
-Q = 2
+Q = 4
 
 fb = MorletSampler1D(Q, T, fs)
 

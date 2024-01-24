@@ -88,9 +88,7 @@ class Conv1D:
         x = torch.unsqueeze(x, -3) #(...x(d-1), 1, #windows, Nw)
         x = x.cuda()
         Y: Tensor = torch.fft.fft(x, dim=-1)  
-        torch.cuda.empty_cache()   
-
-        torch.convolution()              
+        torch.cuda.empty_cache()              
 
         Y = Y*H#(1...x(d-1), Nfilt, 1, Nw)*(...x(d-1), 1, #windows, Nir)=(...x(d-1), Nfilt, #windows, Nir)
         del H   
@@ -119,8 +117,8 @@ class Conv1D:
             
         pad_len = origL + self.lenH - 1
         #https://dsp.stackexchange.com/questions/64821/2d-fourier-downsampling
-        # dec_m= pad_len//self.ds + 1
-        # dec_n=dec_m//self.ds
+        dec_m= pad_len//2 + 1
+        dec_n=dec_m//self.ds
 
         if pad_len == self.prev_direct_size:
             H = self.prev_direct_H
@@ -128,8 +126,8 @@ class Conv1D:
             H = nn.functional.pad(H, [0, (origL + self.lenH - 1) - self.lenH], mode='constant', value=0.0)
             H = H.swapaxes(0, 1).cuda() #(Nh, Nfilt)
             H = torch.fft.fft(H, dim=0)
-            # H = torch.fft.fftshift(H, dim=0)
-            # H = torch.slice_copy(H, )
+            H = torch.fft.fftshift(H, dim=0)
+            H = torch.slice_copy(H, start=dec_m - dec_n, end=dec_m + dec_n +1, dim=0)
             self.prev_direct_H = H
             self.prev_direct_size = pad_len
 
@@ -150,6 +148,8 @@ class Conv1D:
         x = x.unsqueeze(-1).cuda() #(...x(d-1), Nir, 1)
 
         Y: Tensor = torch.fft.fft(x, dim=-2)
+        Y = torch.fft.fftshift(Y, dim=-2)
+        Y = torch.slice_copy(Y, start=dec_m - dec_n, end=dec_m + dec_n +1, dim=-2)
         del x
         Y = H * Y
         
@@ -158,8 +158,9 @@ class Conv1D:
 
         start = self.lenH - 1
 
-        Y = torch.fft.ifft(Y, dim=-2)
-        Y = torch.slice_copy(Y, dim=-2, start=start, end=start+origL, step=self.ds)
+        Y = torch.fft.ifft(torch.fft.ifftshift(Y, dim=-2), dim=-2)
+        # Y = torch.slice_copy(Y, dim=-2, start=start, end=start+origL, step=self.ds)
+        Y = torch.slice_copy(Y, dim=-2, start=start//self.ds, end=(start+origL)//self.ds)
 
         return Y
 

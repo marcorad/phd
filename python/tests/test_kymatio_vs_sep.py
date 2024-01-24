@@ -5,7 +5,7 @@ from time import time
 
 # Set the parameters of the scattering transform.
 J = 3
-M, N = 64, 64
+M, N = 32, 32
 
 # Generate a sample signal.
 x = torch.from_numpy(np.random.randn(1024, M, N).astype(np.float32))
@@ -30,7 +30,7 @@ sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 2, 3)
+config.MORLET_DEFINITION = config.MorletDefinition(2, 2.5, 2, 3, 3)
 config.set_precision('single')
 config.ENABLE_DS = True
 
@@ -48,7 +48,7 @@ Q = [[1, 1], [1, 1]]
 T = [optimise_T(32, 1, eps=0.05)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], False, prune=True)
 
 t0 = time()
 Sx = ws.scatteringTransform(x)

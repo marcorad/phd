@@ -3,9 +3,9 @@ import sys
 sys.path.append('../python')
 
 import phd.scattering.config as config
-config.MORLET_DEFINITION = config.MORLET_DEF_BALANCED
+config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 3, 4)
 # config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
-config.set_precision('double')
+config.set_precision('single')
 config.ENABLE_DS = False
 
 from phd.scattering.sep_ws import SeperableScatteringLayer, optimise_T
@@ -18,7 +18,7 @@ torch.cuda.empty_cache()
 
 fs = [1, 1]
 Q = [1, 1]
-T = [optimise_T(32, 1), optimise_T(32, 1)]
+T = [optimise_T(48, 1), optimise_T(48, 1)]
 print(T)
 
 # wsl = ScatteringLayer1D(Q, T, fs)
@@ -40,11 +40,11 @@ print(T)
 #TODO VERTICAL IS MISSING! FIX THIS!
 
 Nx = 31
-f0 = 1/32
-nx = np.arange(Nx)[:, None]
-ny = (np.arange(Nx)[:, None]).T
-print(nx.shape, ny.shape)
-x = np.sign(np.sin(f0*nx*np.pi*2, dtype=config.NUMPY_REAL) * np.sin(f0*ny*np.pi*2, dtype=config.NUMPY_REAL))
+# f0 = 1/32
+# nx = np.arange(Nx)[:, None]
+# ny = (np.arange(Nx)[:, None]).T
+# print(nx.shape, ny.shape)
+# x = np.sign(np.sin(f0*nx*np.pi*2, dtype=config.NUMPY_REAL) * np.sin(f0*ny*np.pi*2, dtype=config.NUMPY_REAL))
 
 x = np.zeros((Nx, Nx), dtype=config.NUMPY_REAL)
 x[Nx//2, Nx//2] = 1.0
@@ -52,7 +52,7 @@ x[Nx//2, Nx//2] = 1.0
 print(x.shape)
 x = torch.from_numpy(x)
 
-wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], include_on_axis_wavelets=False)
+wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], include_on_axis_wavelets=True)
 
 U, S = wsl.US(x, nonlin=None)
 print(U.shape, S.shape)

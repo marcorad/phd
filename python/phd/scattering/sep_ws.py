@@ -297,7 +297,7 @@ class SeperableScatteringLayer:
         return x
     
     def US(self, x: Tensor, bw_w = None, nonlin=torch.abs):
-        U, S, _ = self._US_info(x, bw_w)
+        U, S, _ = self._US_info(x, bw_w, nonlin)
         return U, S
     
     def _US_info(self, x: Tensor, bw_w = None, nonlin=torch.abs):
