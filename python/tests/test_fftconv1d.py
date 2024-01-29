@@ -19,30 +19,37 @@ torch.cuda.empty_cache()
 
 fs = 250.0
 
-d1 = 64
-d2 = 4096
+d1 = 2048
+d2 = 17
 d3 = 64
 
 x = torch.zeros((d1, d2, d3), dtype=config.TORCH_REAL)
 
 
 
-x[20:30, 20:30, :] = 1.0
+x[:, d2//2, :] = 1.0
 
-Nh = 31
+Nh = 7
 h = torch.zeros((2, Nh), dtype=config.TORCH_COMPLEX)
-h[:, [Nh//2-1, Nh//2, Nh//2+1]] = torch.tensor([-0, 1.0, -0], dtype=config.TORCH_COMPLEX)
-conv1 = Conv1D(h, ds=1)
+h[:, [Nh//2-2, Nh//2-1, Nh//2, Nh//2+1, Nh//2+2]] = torch.tensor([0.0, 0.0, 1.0, 0.0, 0.0], dtype=config.TORCH_COMPLEX)
+conv1 = Conv1D(h, d2, ds=1, conv_dim=1)
 
+
+xp = conv1.add_padding(x)
 
 t0 = time.time()
 #perform seperable convolution
-y = torch.real(conv1.convolve(x, conv_dim=-2))
+y = torch.real(conv1.convolve(xp))
 torch.cuda.synchronize()
 t1 = time.time()
 print("TOOK ", t1 - t0)
-
 print(y.shape)
+y = conv1.remove_padding(y)
+print(y.shape)
+
+
+
+
 
 
 # plt.subplot(211)

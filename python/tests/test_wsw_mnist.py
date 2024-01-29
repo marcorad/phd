@@ -1,11 +1,12 @@
 
 import sys
 
+
 sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 3, 3, 4)
+config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 4)
 config.set_precision('single')
 config.ENABLE_DS = True
 
@@ -23,11 +24,11 @@ torch.cuda.empty_cache()
 
 
 fs = [1, 1]
-Q = [[2, 2], [1, 1]]
-T = [optimise_T(48, 1, eps=0.05)]*2
+Q = [[1, 1], [1, 1]]
+T = [optimise_T(32, 1, eps=0.05)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], False, prune=True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], True, prune=True)
 
 
 # plt.subplot(Np, Np, 1)
@@ -69,7 +70,7 @@ clf = svm.SVC(cache_size=1024, verbose=True)
 
 # Split data into 50% train and 50% test subsets
 X_train, X_test, y_train, y_test = train_test_split(
-    images, labels, test_size=0.2, shuffle=True
+    images, labels, test_size=0.2, shuffle=False
 )
 
 print(X_train.shape)
@@ -87,13 +88,23 @@ t1 = time()
 
 print("Scattering took {:.2f} ms".format((t1 - t0)*1000))
 
+# S_train = ws.dct(S_train)
+# S_test = ws.dct(S_test)
+
+print(S_train.shape)
+
 S_train = S_train.cpu().flatten(start_dim=1).numpy()
 S_test = S_test.cpu().flatten(start_dim=1).numpy()
+
 
 mu = np.mean(S_train, axis=0)
 std = np.std(S_train, axis=0)
 S_train = (S_train - mu)/std
 S_test = (S_test - mu)/std
+
+# u, s, v = np.linalg.svd(S_train.T, full_matrices=False)
+# S_train = v.T
+# S_test = np.matmul(S_test, u/s[None, :])
 
 print(S_train.shape)
 print(S_test.shape)

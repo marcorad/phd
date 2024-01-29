@@ -42,6 +42,8 @@ from time import time
 
 torch.cuda.empty_cache()
 
+import cProfile
+
 
 fs = [1, 1]
 Q = [[1, 1], [1, 1]]
@@ -53,6 +55,8 @@ ws = SeperableWaveletScattering(Q, T, fs, [1, 2], False, prune=True)
 t0 = time()
 Sx = ws.scatteringTransform(x)
 t1 = time()
+
+cProfile.run('ws.scatteringTransform(x)')
 
 print(t1 - t0)
 

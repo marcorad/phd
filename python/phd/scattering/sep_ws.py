@@ -418,7 +418,7 @@ class SeperableWaveletScattering:
         else:
             return U, torch.concat(S, dim=-1)
     
-    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, discard_U = True, prune = True, flatten = False) -> Tuple[Union[None, List[Tensor]], Tensor]:
+    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, discard_U = True, prune = True, flatten = False, dct = False) -> Tuple[Union[None, List[Tensor]], Tensor]:
         
         if batch_dim == None:
             if prune:
@@ -438,6 +438,21 @@ class SeperableWaveletScattering:
                 i += batch_size
                 print(i)
             return torch.concat(S_batch, dim=batch_dim)
+        
+    def _dct(self, S: Tensor, d):
+        orig_shape = S.shape
+        N = S.shape[d]
+        S = torch.cat([S, torch.slice_copy(torch.flip(S, dims = [d]), start=1, dim = d)], dim=d)
+        S = torch.view_as_real(torch.fft.rfft(S, dim=d))
+        k = - torch.arange(N, dtype=S.dtype, device=S.device) * np.pi / (2 * N)
+        new_shape = np.ones(len(S.shape)-1, dtype=np.int64).tolist()
+        new_shape[d] = N
+        k = k.reshape(new_shape)
+        W_r = torch.cos(k)
+        W_i = torch.sin(k)
+        S = S[..., 0] * W_r - S[..., 1] * W_i
+        S = 2 * S.view(*orig_shape)
+        return S
                 
 
             
