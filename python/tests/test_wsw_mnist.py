@@ -6,7 +6,7 @@ sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 4)
+config.MORLET_DEFINITION = config.MorletDefinition(3, 2, 2, 3, 4)
 config.set_precision('single')
 config.ENABLE_DS = True
 
@@ -28,7 +28,7 @@ Q = [[1, 1], [1, 1]]
 T = [optimise_T(32, 1, eps=0.05)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], True, prune=True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], [28, 28])
 
 
 # plt.subplot(Np, Np, 1)
@@ -55,8 +55,8 @@ from mnist import MNIST
 mndata = MNIST('../../python-mnist/data')
 images, labels = mndata.load_training()
 
-images = np.array(images)[0::20, :].reshape((-1, 28, 28)).astype(config.NUMPY_REAL)
-labels = np.array(labels)[0::20]
+images = np.array(images)[0::10, :].reshape((-1, 28, 28)).astype(config.NUMPY_REAL)
+labels = np.array(labels)[0::10]
 
 images = (images - np.mean(images))/np.std(images)
 
@@ -64,13 +64,13 @@ print(images.shape)
 
 
 # Create a classifier: a support vector classifier
-clf = svm.SVC(cache_size=1024, verbose=True)
+clf = svm.SVC(cache_size=512, verbose=True)
 # clf = LogisticRegression()
 # clf = LinearDiscriminantAnalysis()
 
 # Split data into 50% train and 50% test subsets
 X_train, X_test, y_train, y_test = train_test_split(
-    images, labels, test_size=0.2, shuffle=False
+    images, labels, test_size=0.5, shuffle=False
 )
 
 print(X_train.shape)

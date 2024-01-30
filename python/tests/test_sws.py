@@ -3,12 +3,10 @@ import sys
 sys.path.append('../python')
 
 import phd.scattering.config as config
-config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 3, 4)
-# config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
 config.set_precision('single')
 config.ENABLE_DS = True
 
-from phd.scattering.sep_ws import SeperableScatteringLayer, optimise_T
+from phd.scattering.sep_ws import SeperableWaveletScattering, optimise_T
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -30,12 +28,24 @@ Nx = im.shape[0:2]
 torch.cuda.empty_cache()
 
 fs = [1, 1]
-Q = [1, 1]
+Q = [[1, 1]] * 2
 T = [optimise_T(128, 1)]*2
 print(T)
 
-wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], Nx, include_on_axis_wavelets=False)
+ws = SeperableWaveletScattering(Q, T, fs, [0, 1], Nx, include_on_axis_wavelets=False)
 
+
+for l in ws.sws_layers:
+    print("SCAT LAYER")
+    print(l.get_psi_output_fs())
+    print(l.get_psi_output_N())
+
+import pprint
+pp = pprint.PrettyPrinter(depth=10)
+pp.pprint(ws.paths)
+
+print("Number of paths: ", len(ws.paths.keys()))
+print(any([k == None for k in ws.paths.items()]))
 
 # plt.subplot(Np, Np, 1)
 # plt.imshow(x.cpu())
@@ -50,15 +60,14 @@ wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], Nx, include_on_axis_wavelets=Fa
 
 
 t0 = time()
-idx, _ = wsl.select_filters()
-U, S = wsl.US(im_torch, idx)
+U, S = ws.scatteringTransform(im_torch, discard_U=False)
 torch.cuda.synchronize()
 t1 = time()
 print(f"Took {t1 - t0} s")
 
 
 
-print(U.shape)
+# print(U)
 print(S.shape)
 
 Np = 7

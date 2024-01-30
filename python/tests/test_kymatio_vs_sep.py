@@ -5,7 +5,7 @@ from time import time
 
 # Set the parameters of the scattering transform.
 J = 3
-M, N = 32, 32
+M, N = 128, 128
 
 # Generate a sample signal.
 x = torch.from_numpy(np.random.randn(1024, M, N).astype(np.float32))
@@ -17,6 +17,8 @@ S = Scattering2D(J, (M, N))
 t0 = time()
 Sx = S.scattering(x)
 t1 = time()
+
+time_km = t1 - t0
 
 print(t1 - t0)
 
@@ -30,7 +32,7 @@ sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 2.5, 2, 3, 3)
+
 config.set_precision('single')
 config.ENABLE_DS = True
 
@@ -50,14 +52,19 @@ Q = [[1, 1], [1, 1]]
 T = [optimise_T(32, 1, eps=0.05)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], False, prune=True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], (M,N), True, prune=True)
 
 t0 = time()
 Sx = ws.scatteringTransform(x)
+torch.cuda.synchronize()
 t1 = time()
+
+time_mine = t1 - t0
 
 cProfile.run('ws.scatteringTransform(x)')
 
 print(t1 - t0)
 
 print(Sx.shape)
+
+print("Speedup of {:.2f}".format(time_km/time_mine))

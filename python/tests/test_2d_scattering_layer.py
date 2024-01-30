@@ -3,10 +3,10 @@ import sys
 sys.path.append('../python')
 
 import phd.scattering.config as config
-config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 3, 4)
+# config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 3, 4)
 # config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
 config.set_precision('single')
-config.ENABLE_DS = False
+config.ENABLE_DS = True
 
 from phd.scattering.sep_ws import SeperableScatteringLayer, optimise_T
 import matplotlib.pyplot as plt
@@ -18,33 +18,9 @@ torch.cuda.empty_cache()
 
 fs = [1, 1]
 Q = [1, 1]
-T = [optimise_T(48, 1), optimise_T(48, 1)]
+T = [optimise_T(32, 1), optimise_T(32, 1)]
 print(T)
-
-# wsl = ScatteringLayer1D(Q, T, fs)
-
-
-# f = np.arange(wsl.sampler.psi.shape[1])/wsl.sampler.psi.shape[1]*fs
-# plt.plot(f, np.abs(np.fft.fft(wsl.sampler.psi, axis=1)).T)
-# f = np.arange(wsl.sampler.phi.shape[1])/wsl.sampler.phi.shape[1]*wsl.sampler.fs_psi_out
-
-# plt.plot(f, np.abs(np.fft.fft(wsl.sampler.phi, axis=1)).T, '--')
-# plt.show()
-
-# f = np.arange(wslf.sampler.psi.shape[1])/wslf.sampler.psi.shape[1]*fs
-# plt.plot(f, np.abs(np.fft.fft(wslf.sampler.psi, axis=1)).T)
-# f = np.arange(wslf.sampler.phi.shape1])/wslf.sampler.phi.shape[1]*wslf.sampler.fs_psi_out
-# plt.plot(f, np.abs(np.fft.fft(wslf.sampler.phi, axis=1)).T, '--')
-# plt.show(block=True)
-
-#TODO VERTICAL IS MISSING! FIX THIS!
-
-Nx = 31
-# f0 = 1/32
-# nx = np.arange(Nx)[:, None]
-# ny = (np.arange(Nx)[:, None]).T
-# print(nx.shape, ny.shape)
-# x = np.sign(np.sin(f0*nx*np.pi*2, dtype=config.NUMPY_REAL) * np.sin(f0*ny*np.pi*2, dtype=config.NUMPY_REAL))
+Nx = 32
 
 x = np.zeros((Nx, Nx), dtype=config.NUMPY_REAL)
 x[Nx//2, Nx//2] = 1.0
@@ -52,21 +28,31 @@ x[Nx//2, Nx//2] = 1.0
 print(x.shape)
 x = torch.from_numpy(x)
 
-wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], include_on_axis_wavelets=True)
+wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], [Nx, Nx], include_on_axis_wavelets=True)
 
-U, S = wsl.US(x, nonlin=None)
+
+idx, _ = wsl.select_filters()
+
+
+
+U, S = wsl.US(x, idx)
 print(U.shape, S.shape)
 
+print(U.shape, S.shape)
 Np = 7
 
 plt.subplot(Np, Np, 1)
 plt.imshow(x.cpu())
 
 for i in range(min(U.shape[-1], Np*Np-1)):
-    plt.subplot(Np, Np, i + 1)
+    plt.subplot(Np, Np, i + 2)
     plt.imshow(U.cpu()[:, :, i].real)
-    lambdas = wsl.filter_lambda_pairs[i]
-    plt.title("{:.2f}, {:.2f}".format(*lambdas))
+
+plt.show()
+
+for i in range(min(U.shape[-1], Np*Np-1)):
+    plt.subplot(Np, Np, i + 2)
+    plt.imshow(S.cpu()[:, :, i].real)
 
 plt.show()
 

@@ -22,11 +22,11 @@ d1 = 2048
 d2 = 128
 d3 = 128
 
-x = torch.randn((d1, d2, d3), dtype=config.TORCH_REAL)
-# x = torch.zeros((d1, d2, d3), dtype=config.TORCH_REAL)
-# x[:, d2//2, d3//2] = 1.0
-# x[:, d2//4, d3//4] = 1.0
-# x[:, d2//8, d3//8] = 1.0
+# x = torch.randn((d1, d2, d3), dtype=config.TORCH_REAL)
+x = torch.zeros((d1, d2, d3), dtype=config.TORCH_REAL)
+x[:, d2//2, d3//2] = 1.0
+x[:, d2//4, d3//4] = 1.0
+x[:, d2//8, d3//8] = 1.0
 
 
 Nh = 19
@@ -42,7 +42,7 @@ xp = conv1.add_padding(x, pad_mode='constant')
 
 t0 = time.time()
 #perform seperable convolution
-y = torch.real(conv1.convolve(xp))
+y = conv1.convolve(xp, fun_before_ds=torch.real)
 torch.cuda.synchronize()
 t1 = time.time()
 print("TOOK ", t1 - t0)
