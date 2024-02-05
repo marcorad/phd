@@ -4,3 +4,4 @@
 /store/*
 /detections/*
 **/__pycache__
+/python/data/*

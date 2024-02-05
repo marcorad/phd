@@ -19,23 +19,25 @@ torch.cuda.empty_cache()
 fs = 250.0
 
 d1 = 2048
-d2 = 128
-d3 = 128
+d2 = 32
+d3 = 32
 
 # x = torch.randn((d1, d2, d3), dtype=config.TORCH_REAL)
 x = torch.zeros((d1, d2, d3), dtype=config.TORCH_REAL)
-x[:, d2//2, d3//2] = 1.0
-x[:, d2//4, d3//4] = 1.0
-x[:, d2//8, d3//8] = 1.0
+# x[:, d2//2, d3//2] = 1.0
+# x[:, d2//4, d3//4] = 1.0
+# x[:, d2//8, d3//8] = 1.0
+x[:, 0, 0] = 1.0
+x[:, d2-1, d3-1] = -1.0
 
 
-Nh = 19
+Nh = 11
 n = np.arange(-Nh//2 + 1, Nh//2 + 1)
 print(n)
 g = sample_gauss(n, Nh/2/3)
 h = torch.zeros((1, Nh), dtype=config.TORCH_COMPLEX)
 h[:, :] = torch.tensor(g, dtype=config.TORCH_COMPLEX)/5
-conv1 = SeperableConv([h, h], [d2, d3], ds=[4, 4], conv_dim=[1, 2])
+conv1 = SeperableConv([h, h], [d2, d3], ds=[1, 1], conv_dim=[1, 2], enable_freq_ds=False)
 
 
 xp = conv1.add_padding(x, pad_mode='constant')

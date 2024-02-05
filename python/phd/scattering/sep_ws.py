@@ -15,6 +15,8 @@ from .config import *
 from itertools import product
 from math import ceil, floor
 
+from tqdm import tqdm
+
 PI = np.pi
 
 def optimise_T(T_nom, fs, eps = 0.1):
@@ -143,9 +145,9 @@ class MorletSampler1D:
         self.fs_out = self.fs_in / self.d_tot #output frequency of the phi filters
 
 class MorletSampler1DFull: #for both positive and negative frequency filters, intended to be used in multiple dimensions
-    def __init__(self, Q, T, fs_in, include_lpf = True) -> None:
-        self.fb_pos = MorletSampler1D(Q, T, fs_in, pol=+1, include_lpf=include_lpf) #include lpf in positive fb
-        self.fb_neg = MorletSampler1D(Q, T, fs_in, pol=-1)
+    def __init__(self, Q, T, fs_in, include_lpf = True, fstart = None) -> None:
+        self.fb_pos = MorletSampler1D(Q, T, fs_in, pol=+1, include_lpf=include_lpf, fstart = fstart) #include lpf in positive fb
+        self.fb_neg = MorletSampler1D(Q, T, fs_in, pol=-1, fstart = fstart)
 
         #properties from MorletSampler1D
         self.Q = Q
@@ -178,7 +180,7 @@ def ravel_index(pos, shape):
 class SeperableScatteringLayer:
     def __init__(self, Q: Union[List[float], float] , T: Union[List[float], float], 
                  fs_in: Union[List[float], float], dims: Union[List[int], int], N: Union[List[int], int],
-                 include_on_axis_wavelets = True) -> None:
+                 include_on_axis_wavelets = True, fstart: Union[List[float], None] = None) -> None:
         
         if type(Q) != list: #convert to list if 1D
             Q  = [Q]
@@ -198,26 +200,26 @@ class SeperableScatteringLayer:
 
         #first dimension is only half of the frequency plane, since we expect input to be real
         #NOTE: when convolving, take care to exclude the path where the filter is at 0 (in d dimensions)
-        self.samplers = [MorletSampler1D(Q[0], T[0], fs_in[0], include_lpf=include_on_axis_wavelets)]
+        self.samplers = [MorletSampler1D(Q[0], T[0], fs_in[0], include_lpf=include_on_axis_wavelets, fstart= fstart[0] if fstart else None)]
         self.fzero_idx = [0]
         for i in range(1, self.ndim):
-            samp = MorletSampler1DFull(Q[i], T[i], fs_in[i], include_lpf=include_on_axis_wavelets)
+            samp = MorletSampler1DFull(Q[i], T[i], fs_in[i], include_lpf=include_on_axis_wavelets, fstart = fstart[i] if fstart else None)
             self.samplers += [samp]
             self.fzero_idx += [len(samp.lambdas)//2]
 
         self.conv_psi = SeperableConv(
             [torch.from_numpy(s.psi) for s in self.samplers], 
-            N, [s.d_lambda for s in self.samplers], dims
+            N, [s.d_lambda for s in self.samplers], dims, enable_freq_ds=ENABLE_FREQ_DS
             )
         self.conv_phi = SeperableConv(
             [torch.from_numpy(s.phi) for s in self.samplers], 
             [ceil(n/s.d_lambda) for n, s in zip(N, self.samplers)], 
             [s.d_phi for s in self.samplers], 
-            dims
+            dims, enable_freq_ds=ENABLE_FREQ_DS
             )           
 
     
-    def select_filters(self, bw_w = None):
+    def select_filters(self, bw_w = None, prune = True):
 
         if bw_w == None: 
             bw_w = [fs*PI for fs in self.fs_in]                    
@@ -228,13 +230,17 @@ class SeperableScatteringLayer:
             sampler = self.samplers[i]
             start = -1
             start_lambda = -1
+            if prune:
             #look for the first filter that falls within the BW
-            for j in range(len(sampler.lambdas)):
-                l, bw = sampler.lambdas[j], sampler.bw_w[j]
-                if abs(l) <= bw_w[i]:
-                    start = j
-                    start_lambda = l
-                    break
+                for j in range(len(sampler.lambdas)):
+                    l, bw = sampler.lambdas[j], sampler.bw_w[j]
+                    if abs(l) <= bw_w[i]:
+                        start = j
+                        start_lambda = l
+                        break
+            else:
+                start = 0
+                start_lambda = sampler.lambdas[0]
             #if none were found, ignore this filterbank
             if start == -1: 
                 return None
@@ -242,12 +248,17 @@ class SeperableScatteringLayer:
             #look for the first filter that exceeds the BW
             end = -1
             end_lambda = -1
-            for j in range(start, len(sampler.lambdas)):
-                l, bw = sampler.lambdas[j], sampler.bw_w[j]
-                if abs(l) > bw_w[i]:
-                    end = j - 1
-                    end_lambda = sampler.lambdas[j - 1]
-                    break
+            if prune:
+                for j in range(start, len(sampler.lambdas)):
+                    l, bw = sampler.lambdas[j], sampler.bw_w[j]
+                    if abs(l) > bw_w[i]:
+                        end = j - 1
+                        end_lambda = sampler.lambdas[j - 1]
+                        break
+            else: 
+                end = len(sampler.lambdas) - 1
+                end_lambda = sampler.lambdas[end]
+
             #if none were found, then all filters must be used
             if end == -1:
                 end = len(sampler.lambdas) - 1
@@ -267,7 +278,8 @@ class SeperableScatteringLayer:
                 'start_lambda': start_lambda,
                 'end_lambda': end_lambda,
                 'bw': bw_w[i],
-                'end_lambda_bw': sampler.bw_w[end]
+                'end_lambda_bw': sampler.bw_w[end],
+                'lambdas': sampler.lambdas[start:end+1]
             }
 
         #get the BWs of the flattened output
@@ -332,7 +344,7 @@ class SeperableScatteringLayerS0:
             self.d_tot += [d_tot]
             self.phi += [torch.from_numpy(phi)]
 
-        self.conv = SeperableConv(self.phi, N, self.d_tot, self.conv_dims)
+        self.conv = SeperableConv(self.phi, N, self.d_tot, self.conv_dims, enable_freq_ds=ENABLE_FREQ_DS)
 
         
     def S0(self, x: Tensor):
@@ -345,7 +357,7 @@ class SeperableScatteringLayerS0:
 
 class SeperableWaveletScattering:
     
-    def __init__(self, Q, T, fs, dims, N, include_on_axis_wavelets=True, prune=True) -> None:
+    def __init__(self, Q, T, fs, dims, N, include_on_axis_wavelets=True, prune=True, fstart = None) -> None:
         self.J = len(Q)
         self.dims = dims
         self.Q = Q
@@ -355,7 +367,7 @@ class SeperableWaveletScattering:
         self.N = N
         self.s0_layer = SeperableScatteringLayerS0(T, fs, dims, N)
         
-        self.sws_layers: List[SeperableScatteringLayer] = [SeperableScatteringLayer(Q[0], T, fs, dims, N, include_on_axis_wavelets)]
+        self.sws_layers: List[SeperableScatteringLayer] = [SeperableScatteringLayer(Q[0], T, fs, dims, N, include_on_axis_wavelets, fstart)]
         for j in range(1, self.J):
             self.sws_layers += [SeperableScatteringLayer(
                 Q[j], T, self.sws_layers[j-1].get_psi_output_fs(), dims, 
@@ -363,13 +375,15 @@ class SeperableWaveletScattering:
                 )]
             
         self._compute_paths()
+        self._compute_SU_metadata()
+        self._remove_root_wavelet()
 
 
     def _compute_paths_rec(self, paths: Dict, curr_layer: int, curr_bws: List, prev_path_index: Tuple):
         if curr_layer >= len(self.sws_layers): return
         ws = self.sws_layers[curr_layer]
         for i, bw in enumerate(curr_bws):
-            idx, next_bws = ws.select_filters(bw)
+            idx, next_bws = ws.select_filters(bw, self.prune)
             
             curr_path_index = prev_path_index + (i,)
             paths[curr_path_index] = idx
@@ -377,13 +391,48 @@ class SeperableWaveletScattering:
 
     def _compute_paths(self):
         paths = {}
-        idx, bws = self.sws_layers[0].select_filters()
+        idx, bws = self.sws_layers[0].select_filters(prune=self.prune)
         
         paths[(0,)] = idx
         self._compute_paths_rec(paths, 1, bws, (0,))  
         self.paths = paths  
 
-    def _US_rec(self, U, S, prev_path, curr_level: int, u_curr: Tensor, discard_U):
+    def _compute_SU_metadata(self):
+        self.path_lambdas = {}
+        for k, v in self.paths.items():
+            lambdas_list = []
+            for dim, path in v.items():
+                lambdas_list.append(path['lambdas'])
+            self.path_lambdas[k] = list(product(*lambdas_list))
+        self.flattened_lambdas = []
+        for k, v in self.path_lambdas.items():
+            self.flattened_lambdas += v
+        
+
+    def _remove_root_wavelet(self):
+        new_flat_l = []
+        self.keep_idx: List[int] = []
+        for i, ls in enumerate(self.flattened_lambdas):
+            if not all([l == 0 for l in ls]): 
+                new_flat_l.append(ls)
+                self.keep_idx.append(i + 1) #account for S0 offset
+        self.flattened_lambdas = new_flat_l   
+        new_path_l = {}
+        linear_path_lambdas = []
+        for k, v in self.path_lambdas.items():
+            new_ls = []
+            for ls in v:
+                if not all([l == 0 for l in ls]): 
+                    new_ls.append(ls)
+            new_path_l[k] = new_ls
+            linear_path_lambdas.append(new_ls)
+        self.path_lambdas = new_path_l
+        self.path_lambdas[(-1,)] = tuple([0 for _ in range(len(self.dims))])
+        self.linear_path_lambdas = linear_path_lambdas
+        
+
+
+    def _US_rec(self, U, S, prev_path, curr_level: int, u_curr: Tensor, discard_U, normalise):
         if curr_level == self.J: return        
         sws = self.sws_layers[curr_level]
         n_filt = u_curr.shape[-1]
@@ -391,31 +440,50 @@ class SeperableWaveletScattering:
         for n in range(n_filt):
             u_n = u_curr.select(dim=-1, index=n)
             curr_path = prev_path + (n,)
-            u, s = sws.US(u_n, self.paths[curr_path])            
+            u, s = sws.US(u_n, self.paths[curr_path])   
+            if normalise: s = self._normalise(s)         
             if u != None:
-                S += [s]
-                self._US_rec(U, S, curr_path, curr_level+1, u, discard_U)
+                S[curr_path] = s
+                self._US_rec(U, S, curr_path, curr_level+1, u, discard_U, normalise)
                 if not discard_U: U_temp += [u]
                 else: del u
         if not discard_U: U += U_temp
 
+    def _normalise(self, s: Tensor):
+        smax = s
+        for d in self.dims:
+            smax, _ = torch.max(smax, dim=d, keepdim=True)        
+        smax, _ = torch.max(smax, dim=-1, keepdim=True)
+        # smax[smax <= 1e-12] = 1.0
+        sdiv = s/smax
+        del smax, s
+        return sdiv
+
     
-    def _US(self, x: Tensor, discard_U = True) -> Union[Tuple[List[Tensor], Tensor], Tensor]:        
+    def _US(self, x: Tensor, discard_U = True, normalise=False) -> Union[Tuple[List[Tensor], Tensor], Tensor]:        
         s0 = self.s0_layer.S0(x)
-        u1, s1 = self.sws_layers[0].US(x, self.paths[(0,)])        
+        u1, s1 = self.sws_layers[0].US(x, self.paths[(0,)])  
+        if normalise:
+            s1 = self._normalise(s1)     
+            s0 = self._normalise(s0)     
         U = None if discard_U else [u1]
-        S = [s0, s1]
-        self._US_rec(U, S, (0,), 1, u1, discard_U)   
+        S = {}
+        S[(-1,)] = s0
+        S[(0,)] = s1
+        self._US_rec(U, S, (0,), 1, u1, discard_U, normalise) 
+        s_list = list(S.values())       
+        S = torch.concat(s_list, dim=-1).cpu()
+        S = torch.index_select(S, dim=-1, index=torch.IntTensor([0] + self.keep_idx))
         if discard_U:
             del u1 
-            return torch.concat(S, dim=-1)
+            return S
         else:
-            return U, torch.concat(S, dim=-1)
+            return U, S
     
-    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, discard_U = True, prune = True, flatten = False, dct = False) -> Tuple[Union[None, List[Tensor]], Tensor]:
-        
+    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, discard_U = True, prune = True, flatten = False, dct = False, normalise=False) -> Tuple[Union[None, List[Tensor]], Tensor]:
+        x = x.cuda()
         if batch_dim == None:
-            return self._US(x, discard_U)            
+            return self._US(x, discard_U, normalise)            
         else:
             n_samples = x.shape[batch_dim]
             S_batch = []
@@ -423,7 +491,7 @@ class SeperableWaveletScattering:
             while i < n_samples:
                 #only supports pruning and U discard
                 xb = torch.narrow(x, batch_dim, start=i, length=min(batch_size, n_samples - i))
-                s = self._US(xb, True).cpu()
+                s = self._US(xb, True, normalise).cpu()
                 torch.cuda.empty_cache() 
                             
                 S_batch += [s]
@@ -447,5 +515,29 @@ class SeperableWaveletScattering:
         return S
                 
 
-            
+
+class JointTFScattering:
+    def __init__(self, Q, T, fs, dim, N) -> None:
+        self.Q = Q
+        self.T = T
+        self.fs = fs
+        self.dim = dim
+        self.N = N   
+        Qtime = Q[0]
+        Qtf = Q[1:]
+        Tt = T[0]
+        Ttf = T[1]
+
+        #TODO: add frequency limits!
+
+        self.ws_t = SeperableWaveletScattering([Qtime], [Tt], [fs], dim, 
+                    N, include_on_axis_wavelets=False, prune=False)
+        
+        self.ws_tf = SeperableWaveletScattering(
+            Qtf, [Tt, Ttf], [self.ws_t.sws_layers[0].samplers[0].fs_psi_out, 1], 
+            dims=[dim, dim+1], include_on_axis_wavelets=True, prune=True)
+
+    def scatteringTransform(self, x):
+        return self.ws_tf.scatteringTransform(self.ws_t.scatteringTransform(x))
+
         

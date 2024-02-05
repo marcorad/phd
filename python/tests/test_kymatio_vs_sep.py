@@ -8,7 +8,7 @@ J = 3
 M, N = 128, 128
 
 # Generate a sample signal.
-x = torch.from_numpy(np.random.randn(1024, M, N).astype(np.float32))
+x = torch.from_numpy(np.random.randn(256, M, N).astype(np.float32))
 
 # Define a Scattering2D object.
 S = Scattering2D(J, (M, N))
@@ -49,13 +49,13 @@ import cProfile
 
 fs = [1, 1]
 Q = [[1, 1], [1, 1]]
-T = [optimise_T(32, 1, eps=0.05)]*2
+T = [optimise_T(64, 1, eps=0.05)]*2
 print(T)
 
 ws = SeperableWaveletScattering(Q, T, fs, [1, 2], (M,N), True, prune=True)
 
 t0 = time()
-Sx = ws.scatteringTransform(x)
+Sx = ws.scatteringTransform(x, prune=False)
 torch.cuda.synchronize()
 t1 = time()
 

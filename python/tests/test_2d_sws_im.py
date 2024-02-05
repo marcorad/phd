@@ -54,6 +54,7 @@ print(S.shape)
 
 Np = 7
 
+
 plt.subplot(Np, Np, 1)
 plt.imshow(im, cmap='gray')
 
@@ -66,6 +67,7 @@ for i in range(min(S.shape[-1], Np*Np-1)):
     # plt.title("{:.2f}, {:.2f}".format(*lambdas))
 
 plt.show()
+
 
 
 

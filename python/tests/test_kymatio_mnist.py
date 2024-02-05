@@ -6,10 +6,9 @@ sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 3)
+# config.MORLET_DEFINITION = config.MorletDefinition(3, 2, 2, 3, 4)
 config.set_precision('single')
 config.ENABLE_DS = True
-config.ENABLE_FREQ_DS = True
 
 from phd.scattering.sep_ws import SeperableWaveletScattering, optimise_T
 import matplotlib.pyplot as plt
@@ -19,25 +18,11 @@ from time import time
 
 torch.cuda.empty_cache()
 
+from kymatio.torch import Scattering2D
 
-fs = [1, 1]
-Q = [[1, 1], [1, 1]]
-T = [optimise_T(32, 1, eps=0.0)]*2
-print(T)
-
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], [28, 28], include_on_axis_wavelets=True, prune=True)
+import skimage as ski
 
 
-# plt.subplot(Np, Np, 1)
-# plt.imshow(x.cpu())
-
-# for i in range(min(U.shape[-1], Np*Np-1)):
-#     plt.subplot(Np, Np, i + 1)
-#     plt.imshow(U.cpu()[:, :, i].real)
-#     lambdas = wsl.filter_lambda_pairs[i]
-#     plt.title("{:.2f}, {:.2f}".format(*lambdas))
-
-# plt.show()
 
 from sklearn import datasets, metrics, svm
 from sklearn.linear_model import LogisticRegression
@@ -57,8 +42,7 @@ print(images.shape)
 
 
 # Create a classifier: a support vector classifier
-# clf = svm.SVC(cache_size=512, verbose=True)
-clf = LinearDiscriminantAnalysis('svd')
+clf = svm.SVC(cache_size=512, verbose=True)
 # clf = LogisticRegression()
 # clf = LinearDiscriminantAnalysis()
 
@@ -72,8 +56,13 @@ print(X_test.shape)
 
 t0 = time()
 
-S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=2048, normalise=False)
-S_test  = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=2048,  normalise=False)
+ws = Scattering2D(3, (28, 28))
+
+S_train = ws.scattering(torch.from_numpy(X_train))
+S_test  = ws.scattering(torch.from_numpy(X_test))
+
+
+
 print(S_train.shape)
 
 torch.cuda.synchronize()
@@ -87,8 +76,6 @@ print("Scattering took {:.2f} ms".format((t1 - t0)*1000))
 
 print(S_train.shape)
 
-
-
 S_train = S_train.cpu().flatten(start_dim=1).numpy()
 S_test = S_test.cpu().flatten(start_dim=1).numpy()
 
@@ -98,7 +85,9 @@ std = np.std(S_train, axis=0)
 S_train = (S_train - mu)/std
 S_test = (S_test - mu)/std
 
-
+# u, s, v = np.linalg.svd(S_train.T, full_matrices=False)
+# S_train = v.T
+# S_test = np.matmul(S_test, u/s[None, :])
 
 print(S_train.shape)
 print(S_test.shape)

@@ -23,6 +23,7 @@ NUMPY_COMPLEX = _NUMPY_COMPLEX128
 NUMPY_REAL = _NUMPY_REAL64
 
 ENABLE_DS = True
+ENABLE_FREQ_DS = True
 
 def set_precision(prec: Literal['single', 'double']):
     global TORCH_COMPLEX, TORCH_REAL, NUMPY_COMPLEX, NUMPY_REAL
