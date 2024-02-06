@@ -8,7 +8,7 @@ import phd.scattering.config as config
 config.set_precision('single')
 config.ENABLE_DS = True
 
-from phd.scattering.sep_ws import SeperableScatteringLayer, optimise_T
+from phd.scattering.scattering_layer import SeperableScatteringLayer
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -17,8 +17,8 @@ from time import time
 torch.cuda.empty_cache()
 
 fs = [1, 1]
-Q = [1, 1]
-T = [optimise_T(32, 1), optimise_T(32, 1)]
+Q = [2, 2]
+T = [64]*2
 print(T)
 Nx = 32
 
@@ -26,35 +26,27 @@ x = np.zeros((Nx, Nx), dtype=config.NUMPY_REAL)
 x[Nx//2, Nx//2] = 1.0
 
 print(x.shape)
-x = torch.from_numpy(x)
+x = torch.from_numpy(x).cuda()
 
 wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], [Nx, Nx], include_on_axis_wavelets=True)
 
+print(wsl.paths)
+print(len(wsl.paths))
 
-idx, _ = wsl.select_filters()
+U, S = wsl.US(x)
+
+print("--------u---------")
+for u in U.values():
+    print(u.shape)
+    
+print("--------s---------")
+for s in S.values():
+    print(s.shape)
 
 
 
-U, S = wsl.US(x, idx)
-print(U.shape, S.shape)
 
-print(U.shape, S.shape)
-Np = 7
 
-plt.subplot(Np, Np, 1)
-plt.imshow(x.cpu())
-
-for i in range(min(U.shape[-1], Np*Np-1)):
-    plt.subplot(Np, Np, i + 2)
-    plt.imshow(U.cpu()[:, :, i].real)
-
-plt.show()
-
-for i in range(min(U.shape[-1], Np*Np-1)):
-    plt.subplot(Np, Np, i + 2)
-    plt.imshow(S.cpu()[:, :, i].real)
-
-plt.show()
 
 
 

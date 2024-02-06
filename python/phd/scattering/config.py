@@ -4,7 +4,7 @@ from typing import Literal
 from dataclasses import dataclass
 
 import os
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:1024"
 
 _TORCH_COMPLEX128= torch.complex128
 _TORCH_REAL64 = torch.float64
@@ -23,7 +23,8 @@ NUMPY_COMPLEX = _NUMPY_COMPLEX128
 NUMPY_REAL = _NUMPY_REAL64
 
 ENABLE_DS = True
-ENABLE_FREQ_DS = True
+ENABLE_FREQ_DS = False #MORE WORK NEEDS TO BE DONE HERE!
+PAD_MODE = 'constant'
 
 def set_precision(prec: Literal['single', 'double']):
     global TORCH_COMPLEX, TORCH_REAL, NUMPY_COMPLEX, NUMPY_REAL

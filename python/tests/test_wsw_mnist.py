@@ -9,7 +9,7 @@ import phd.scattering.config as config
 config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 3)
 config.set_precision('single')
 config.ENABLE_DS = True
-config.ENABLE_FREQ_DS = True
+config.ENABLE_FREQ_DS = False
 
 from phd.scattering.sep_ws import SeperableWaveletScattering, optimise_T
 import matplotlib.pyplot as plt
@@ -25,7 +25,7 @@ Q = [[1, 1], [1, 1]]
 T = [optimise_T(32, 1, eps=0.0)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], [28, 28], include_on_axis_wavelets=True, prune=True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], [28, 28], include_on_axis_wavelets=True, prune=False)
 
 
 # plt.subplot(Np, Np, 1)
@@ -57,8 +57,8 @@ print(images.shape)
 
 
 # Create a classifier: a support vector classifier
-# clf = svm.SVC(cache_size=512, verbose=True)
-clf = LinearDiscriminantAnalysis('svd')
+clf = svm.SVC(cache_size=512, verbose=True)
+# clf = LinearDiscriminantAnalysis('svd')
 # clf = LogisticRegression()
 # clf = LinearDiscriminantAnalysis()
 
@@ -72,8 +72,8 @@ print(X_test.shape)
 
 t0 = time()
 
-S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=2048, normalise=False)
-S_test  = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=2048,  normalise=False)
+S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=1024, normalise=False)
+S_test  = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=1024,  normalise=False)
 print(S_train.shape)
 
 torch.cuda.synchronize()
