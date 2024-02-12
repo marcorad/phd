@@ -3,7 +3,7 @@ import sys
 sys.path.append('../python')
 
 import phd.scattering.config as config
-config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
+# config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
 # config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
 config.set_precision('single')
 config.ENABLE_DS = True
@@ -18,10 +18,9 @@ torch.cuda.empty_cache()
 
 fs = [1, 1]
 Q = [[1, 1]]*2
-T = [optimise_T(256, 1)]*2
+T = [optimise_T(32, 1)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [0,1], False)
 
 
 # plt.subplot(Np, Np, 1)
@@ -39,20 +38,21 @@ import skimage as ski
 
 
 
-im = ski.data.brick().astype(config.NUMPY_REAL)/256
+im = ski.data.retina().astype(config.NUMPY_REAL)/256
 print(im.shape)
-im = ski.transform.downscale_local_mean(im, (4,4))
+# im = ski.transform.downscale_local_mean(im, (4,4))
 # if len(im.shape) > 2:
 #     im = ski.color.rgb2gray(im).astype(config.NUMPY_REAL)
+# print(im.shape)
 
-print(im.shape)
+ws = SeperableWaveletScattering(Q, T, fs, [0,1], im.shape[0:2], include_on_axis_wavelets=True)
 im_torch = torch.from_numpy(im)
-U, S = ws._US_prune(im_torch)
+S = ws.scatteringTransform(im_torch, discard_U=True)
 
 # print(U.shape)
 print(S.shape)
 
-Np = 7
+Np = 10
 
 
 plt.subplot(Np, Np, 1)

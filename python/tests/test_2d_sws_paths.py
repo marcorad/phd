@@ -5,7 +5,7 @@ sys.path.append('../python')
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
 # config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
-config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 3)
+# config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 3)
 config.set_precision('single')
 config.ENABLE_DS = True
 
@@ -18,24 +18,42 @@ from time import time
 torch.cuda.empty_cache()
 
 fs = [1, 1]
-Q = [[1, 1]]*3
+Q = [[1, 1]]*2
 T = [optimise_T(32, 1)]*2
-print(T)
-
+dims = [0, 1]
 Nx = 32
+N = [Nx]*2
 
-ws = SeperableWaveletScattering(Q, T, fs, [0,1], [Nx, Nx], include_on_axis_wavelets=False)
+ws = SeperableWaveletScattering(Q, T, fs, dims, N, include_on_axis_wavelets=True)
 
-import pprint
-pp = pprint.PrettyPrinter(depth=10)
-pp.pprint(ws.paths)
+x = torch.zeros(N + [4096], dtype=config.TORCH_REAL)
 
-print("Number of paths: ", len(ws.paths.keys()))
-print(any([k == None for k in ws.paths.items()]))
+# print(list(ws.sws_layers.keys()))
 
-for l in ws.sws_layers:
-    print(l.get_psi_output_fs())
-    print(l.get_psi_output_N())
+U, S = ws.scatteringTransform(x, discard_U=False)
+print(S.shape)
+
+U, S = ws._US(x, discard_U=False)
+
+print('KEYS')
+sum = 0
+for k, v in S.items():
+    tot = len(v.keys())
+    print(k, tot)
+    sum += tot
+    
+print('N Paths', sum)
+
+# import pprint
+# pp = pprint.PrettyPrinter(depth=10)
+# pp.pprint(ws.paths)
+
+# print("Number of paths: ", len(ws.paths.keys()))
+# print(any([k == None for k in ws.paths.items()]))
+
+# for l in ws.sws_layers:
+#     print(l.get_psi_output_fs())
+#     print(l.get_psi_output_N())
 
 
 # plt.subplot(Np, Np, 1)

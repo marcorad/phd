@@ -43,7 +43,7 @@ class MorletFilter1D:
 
 class MorletSampler1D:
 
-    def __init__(self, Q, T, fs_in, fstart = None, pol=1.0, include_lpf = False, allow_seperate_ds = True) -> None:
+    def __init__(self, Q, T, fs_in, fstart = None, pol=1.0, include_lpf = False, allow_seperate_ds = True, bw_lim_w = None) -> None:
         self.Q = Q
         self.T = T
         self.fs_in = fs_in
@@ -52,13 +52,15 @@ class MorletSampler1D:
         self.d_tot = max(int(np.floor(fs_in * T / 2 / MORLET_DEFINITION.beta)), 1) if ENABLE_DS else 1 #total allowed downsampling
         self.polarity = pol
         self.allow_seperate_ds = allow_seperate_ds
+        self.is_empty = False
+        self.bw_lim_w = bw_lim_w
         self._init_filters()
     
         
     def _init_filters(self):
         #std dev of lpf (phi)
-        sigma_phi_w = 2 * PI * MORLET_DEFINITION.beta / self.T
-        ws = self.fs_in * 2 * PI
+        sigma_phi_w = 2 * PI / self.T
+        ws = self.fs_in * 2 * PI   
 
         if self.fstart:
             lambda_ = self.fstart * 2 * PI
@@ -66,6 +68,11 @@ class MorletSampler1D:
             assert(lambda_ >= 2 * PI * MORLET_DEFINITION.alpha(self.Q) / self.T)
         else:
             lambda_ = 2 * PI * MORLET_DEFINITION.alpha(self.Q) / self.T
+            
+        
+        bw_lim_w = self.bw_lim_w if self.bw_lim_w else ws/2
+        
+        print(self.bw_lim_w, ws/2)
 
         #base std dev at 1 rad/s
         sigma_w = 1 / MORLET_DEFINITION.alpha(self.Q) * (2**(1/self.Q) - 1)
@@ -94,7 +101,7 @@ class MorletSampler1D:
             
 
         #build linear filters for all filters with BWs less than the lpf (phi)
-        while sigma_phi_w > sigma_lambda_w and lambda_ < ws/2:
+        while sigma_phi_w > sigma_lambda_w and lambda_ < bw_lim_w:
             filters += [MorletFilter1D(
                     sample_morlet(t, lambda_, 1/sigma_phi_w*lambda_, dir = self.polarity).astype(NUMPY_COMPLEX) / self.fs_in,
                     lambda_,
@@ -107,7 +114,7 @@ class MorletSampler1D:
             sigma_lambda_w = lambda_*sigma_w
 
         #build exponential filters for all filters until the limit is reached
-        while lambda_ < ws/2:
+        while lambda_ < bw_lim_w:
             d_lambda, d_phi = self._get_ds_factor(sigma_lambda_w)
             filters += [MorletFilter1D(
                     sample_morlet(t, lambda_, 1/sigma_w, dir = self.polarity).astype(NUMPY_COMPLEX)  / self.fs_in,
@@ -120,12 +127,13 @@ class MorletSampler1D:
             lambda_ *= 2**(1/self.Q)
             sigma_lambda_w = lambda_*sigma_w
             
-        if self.include_lpf_in_psi:
-            if len(filters) == 1:
-                print("Psi only includes the LPF.")
-        else:
-            if len(filters) == 0:
-                print("Psi is empty - the entire bandwidth has been exhausted.")            
+        if self.include_lpf_in_psi and len(filters) == 1:
+            print("Psi only includes the LPF.")
+                
+        if len(filters) == 0:
+            print("Psi is empty - the entire bandwidth has been exhausted.")  
+            self.is_empty = True 
+                        
         
 
         #initialise psi
@@ -164,6 +172,7 @@ class MorletSampler1D:
             self.psi.reverse() #reverse the filter order to maintain small-to-large order  
             for f in self.psi:
                 f.lambda_ = -f.lambda_ #make the lambdas negative
+                f.f_c = -f.f_c #make the freq negative
             
     def _get_ds_factor(self, sigma_w):
         bw_f = sigma_w * MORLET_DEFINITION.beta / 2 / PI
@@ -177,16 +186,18 @@ class MorletSampler1D:
         
 
 class MorletSampler1DFull: #for both positive and negative frequency filters, intended to be used in multiple dimensions
-    def __init__(self, Q, T, fs_in, include_lpf = True, fstart = None, allow_seperate_ds = True) -> None:
-        self.fb_pos = MorletSampler1D(Q, T, fs_in, pol=+1, include_lpf=include_lpf, fstart = fstart, allow_seperate_ds = allow_seperate_ds) #include lpf in positive fb
-        self.fb_neg = MorletSampler1D(Q, T, fs_in, pol=-1, fstart = fstart, allow_seperate_ds = allow_seperate_ds)
+    def __init__(self, Q, T, fs_in, include_lpf = True, fstart = None, allow_seperate_ds = True, bw_lim_w = None) -> None:
+        self.fb_pos = MorletSampler1D(Q, T, fs_in, pol=+1, include_lpf=include_lpf, fstart = fstart, allow_seperate_ds = allow_seperate_ds, bw_lim_w=bw_lim_w) #include lpf in positive fb
+        self.fb_neg = MorletSampler1D(Q, T, fs_in, pol=-1, fstart = fstart, allow_seperate_ds = allow_seperate_ds, bw_lim_w = bw_lim_w)
 
         #properties from MorletSampler1D for convenience
+        self.bw_lim_w = bw_lim_w
         self.Q = Q
         self.T = T
         self.fs_in = fs_in
         self.d_tot = self.fb_neg.d_tot
-        self.fs_out = self.fs_in / self.d_tot        
+        self.fs_out = self.fs_in / self.d_tot    
+        self.is_empty = self.fb_pos.is_empty and self.fb_neg.is_empty    
         
         #phi and psi filters
         self.psi = self.fb_neg.psi + self.fb_pos.psi        

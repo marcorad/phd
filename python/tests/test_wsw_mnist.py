@@ -6,7 +6,7 @@ sys.path.append('../python')
 
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
-config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 3)
+config.MORLET_DEFINITION = config.MorletDefinition(2, 2, 2, 3, 2)
 config.set_precision('single')
 config.ENABLE_DS = True
 config.ENABLE_FREQ_DS = False
@@ -25,7 +25,7 @@ Q = [[1, 1], [1, 1]]
 T = [optimise_T(32, 1, eps=0.0)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], [28, 28], include_on_axis_wavelets=True, prune=False)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], [28, 28], include_on_axis_wavelets=True)
 
 
 # plt.subplot(Np, Np, 1)
@@ -72,8 +72,8 @@ print(X_test.shape)
 
 t0 = time()
 
-S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=1024, normalise=False)
-S_test  = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=1024,  normalise=False)
+S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=64, normalise=False)
+S_test  = ws.scatteringTransform(torch.from_numpy(X_test) , batch_dim=0, batch_size=64,  normalise=False)
 print(S_train.shape)
 
 torch.cuda.synchronize()

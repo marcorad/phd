@@ -23,7 +23,7 @@ class SeperableScatteringLayer:
     def __init__(self, Q: Union[List[float], float] , T: Union[List[float], float], 
                  fs_in: Union[List[float], float], dims: Union[List[int], int], N: Union[List[int], int],
                  include_on_axis_wavelets = True, fstart: Union[List[float], None] = None,
-                 allow_seperate_ds = True) -> None:
+                 allow_seperate_ds = True, bw_lim_w = None) -> None:
         
         if type(Q) != list: #convert to list if 1D
             Q  = [Q]
@@ -41,6 +41,8 @@ class SeperableScatteringLayer:
         self.N = N  
         self.allow_seperate_ds = allow_seperate_ds     
         self.fstart = fstart    
+        self.is_empty = False
+        self.bw_lim_w = bw_lim_w
 
         self._init_samplers()
         self._init_conv()
@@ -48,34 +50,44 @@ class SeperableScatteringLayer:
     def _init_samplers(self):
         #first dimension is only half of the frequency plane, since we expect input to be real
         self.samplers = [MorletSampler1D(self.Q[0], self.T[0], self.fs_in[0], include_lpf=self.include_on_axis_wavelets, 
-                                         fstart= self.fstart[0] if self.fstart else None, allow_seperate_ds=self.allow_seperate_ds)]
+                                         fstart= self.fstart[0] if self.fstart else None, allow_seperate_ds=self.allow_seperate_ds,
+                                         bw_lim_w=self.bw_lim_w[0] if self.bw_lim_w else None)]
         self.fzero_idx = [0]
         for i in range(1, self.ndim):
             samp = MorletSampler1DFull(self.Q[i], self.T[i], self.fs_in[i], include_lpf=self.include_on_axis_wavelets, 
-                                       fstart = self.fstart[i] if self.fstart else None, allow_seperate_ds=self.allow_seperate_ds)
+                                       fstart = self.fstart[i] if self.fstart else None, allow_seperate_ds=self.allow_seperate_ds,
+                                       bw_lim_w=self.bw_lim_w[i] if self.bw_lim_w else None)
             self.samplers += [samp]
         
     def _init_conv(self):
         self.conv_psi: Dict[Tuple, SeperableConv] = {}        
         self.conv_phi: Dict[Tuple, SeperableConv] = {}
         filter_idx = []
-        self.psi = {} #for convenience, the filters for all lambda combinations
+        self.psi: Dict[Tuple, List[MorletFilter1D]] = {} #for convenience, the filters for all lambda combinations
         self.paths: List[Tuple] = [] #for convenience, the lambda paths across all axes
         for s in self.samplers:
             filter_idx.append([i for i in range(len(s.psi))])
         #generate the cross-product of all the filters
-        filter_combinations = product(*filter_idx)
+        filter_combinations = list(product(*filter_idx))
         for f_idx in filter_combinations:
             filters: List[MorletFilter1D] = []
             for i, s in enumerate(self.samplers):
-                f: MorletFilter1D = s.psi[f_idx[i]]
+                k = f_idx[i]
+                f: MorletFilter1D = s.psi[k]
                 filters.append(f)
             lambdas = tuple([f.lambda_ for f in filters])
             psi = []
             phi = []
             N_phi = []
-            if all([l == 0 for l in lambdas]): continue #skip the (0,0,...) origin filter
-            if lambdas[0] == 0 and len(lambdas) > 1 and any([l < 0 for l in lambdas[1:]]): continue #skip on-axis filters with negative components
+            
+            #skip the (0,0,...) origin filter
+            if all([l == 0 for l in lambdas]): 
+                continue 
+            #skip on-axis filters with negative components
+            if lambdas[0] == 0 and len(lambdas) > 1 and any([l < 0 for l in lambdas[1:]]): 
+                continue           
+            
+            
             #get the requied filter of each axis and its lpf-related data
             for i, f in enumerate(filters):
                 psi.append(torch.from_numpy(f.psi))
@@ -89,16 +101,16 @@ class SeperableScatteringLayer:
             self.conv_phi[lambdas] = SeperableConv(phi, N_phi, ds_phi, self.conv_dims)
             self.psi[lambdas] = filters
         self.paths = list(self.conv_psi.keys())
+        print(f'Filterbank has {len(self.paths)} filters.')
 
     def _conv_psi(self, x: Tensor) -> Dict[Tuple, Tensor]:
         u: Dict[Tuple, Tensor] = {}  
         p0 = self.paths[0]
         conv = self.conv_psi[p0]
         x = conv.add_padding(x, PAD_MODE)
-        X = conv.fft(x)  
         for p in self.paths:
             conv = self.conv_psi[p]
-            y = conv.convolve(X, fun_before_ds=torch.abs, compute_fft=False).squeeze(dim=[-i for i in range(1, self.ndim+1)])
+            y = conv.convolve(x, fun_before_ds=torch.abs).squeeze(dim=[-i for i in range(1, self.ndim+1)])
             y_unpad = conv.remove_padding(y)
             del y
             u[p] = y_unpad
@@ -113,7 +125,7 @@ class SeperableScatteringLayer:
             s_curr = conv.convolve(u_curr, fun_before_ds=torch.real).squeeze(dim=[-i for i in range(1, self.ndim + 1)])
             s_curr_unpad = conv.remove_padding(s_curr)
             del s_curr
-            s[p] = s_curr_unpad.cpu()
+            s[p] = s_curr_unpad
         return s
     
     def US(self, x: Tensor) -> Tuple[Dict[Tuple, Tensor], Dict[Tuple, Tensor]]:
@@ -150,6 +162,6 @@ class SeperableScatteringLayerS0:
     def S0(self, x: Tensor):
         x = self.conv.add_padding(x, pad_mode=PAD_MODE)
         s0p = self.conv.convolve(x, fun_before_ds=torch.real)
-        s0 = self.conv.remove_padding(s0p).squeeze([-n for n in range(1, self.ndim)])
+        s0 = self.conv.remove_padding(s0p).squeeze([-n for n in range(1, self.ndim+1)])
         del s0p
         return s0

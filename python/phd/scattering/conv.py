@@ -87,7 +87,7 @@ class SeperableConv:
         H = H.expand(*x.shape[0:2], -1, -1) #(?, Ns, Nh, Nfilt)
         y = self._mulacc(x, H) #(?, Ns, Nfilt)
         y = self._apply_fun(y, fun_before_ds)
-        return y.reshape(*other_dims_shape, -1, Nfilt)     
+        return y.reshape(*other_dims_shape, -1, Nfilt)  
     
 
     def _compute_fft_conv_time_ds(self, Y: Tensor, filter: Filter, filter_idx = None, fun = None) -> Tensor:        
@@ -109,6 +109,7 @@ class SeperableConv:
 
         #reshape using views for optimal multiplications
         Y = Y.view(-1, filter.padded_length, 1) #now of shape (?, Npadded, 1)
+        Y = torch.fft.fft(Y, dim=-2)
         #downsample in frequency domain
         Y = Y.expand(-1, -1, Nfilt) #now of shape (?, Npadded, Nfilt)
         k = Y.shape[0]
@@ -126,33 +127,24 @@ class SeperableConv:
         #TODO: Add padding for when freqDS is enabled
         for f in self.filters:
             x = x.swapaxes(f.conv_dim, -1)
-            x = torch.nn.functional.pad(x, [0, 2*f.signal_pad], mode=pad_mode) 
+            x = torch.nn.functional.pad(x, [f.signal_pad, f.signal_pad], mode=pad_mode) 
             x = x.swapaxes(f.conv_dim, -1)
         return x
     
     def remove_padding(self, x: Tensor,  filtered = True):
         for f in self.filters:
-            start = ceil(f.Nh / f.ds / 2) - 1 if filtered else f.signal_pad
+            start = ceil(f.Nh / f.ds) - 1 if filtered else f.signal_pad
             length = ceil(f.Nx / f.ds) if filtered else f.Nx    
             # if f.Nx % 2 == 1: start -= 1        
             x = torch.narrow(x, start = start, length=length, dim=f.conv_dim)
-        return x
+        return x   
     
-    def fft(self, x: Tensor):
-        Y = x
-        dims = [f.conv_dim for f in self.filters]
-        Y: Tensor = torch.fft.fftn(Y, dim=dims).contiguous()
-        return Y
         
-    def convolve(self, x: Tensor, filter_idx = None, fun_before_ds = None, compute_fft = True) -> Tensor:  
+    def convolve(self, x: Tensor, filter_idx = None, fun_before_ds = None) -> Tensor:  
         Y = x
-        if compute_fft:
-            #compute x fft
-            Y = self.fft(Y)
-        #compute the fft and convolution of each axis with downsampling
         for i, f in enumerate(self.filters):
             d = f.conv_dim
-            Y = Y.swapaxes(d, -1)
+            Y = Y.swapaxes(d, -1).contiguous()
             Y = self._compute_fft_conv_time_ds(Y, f, filter_idx[d] if filter_idx else None, fun_before_ds)
             Y = Y.swapaxes(d, -2) #we added another dimension
         #now return the ifft

@@ -24,8 +24,8 @@ d3 = 32
 
 # x = torch.randn((d1, d2, d3), dtype=config.TORCH_REAL)
 x = torch.zeros((d1, d2, d3), dtype=config.TORCH_REAL)
-# x[:, d2//2, d3//2] = 1.0
-# x[:, d2//4, d3//4] = 1.0
+x[:, d2//2, d3//2] = 1.0
+x[:, d2//4, d3//4] = 1.0
 # x[:, d2//8, d3//8] = 1.0
 x[:, 0, 0] = 1.0
 x[:, d2-1, d3-1] = -1.0
