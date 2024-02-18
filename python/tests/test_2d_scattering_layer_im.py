@@ -50,25 +50,25 @@ wsl = SeperableScatteringLayer(Q, T, fs, [0, 1], Nx, include_on_axis_wavelets=Fa
 
 
 t0 = time()
-idx, _ = wsl.select_filters()
-U, S = wsl.US(im_torch, idx)
+# idx, _ = wsl.select_filters()
+U, S = wsl.US(im_torch.cuda())
 torch.cuda.synchronize()
 t1 = time()
 print(f"Took {t1 - t0} s")
 
 
 
-print(U.shape)
-print(S.shape)
+# print(U.shape)
+# print(S.shape)
 
 Np = 7
 
 plt.subplot(Np, Np, 1)
 plt.imshow(im, cmap='gray')
 
-for i in range(min(U.shape[-1], Np*Np-1)):
+for i in range(min(S.shape[-1], Np*Np-1)):
     plt.subplot(Np, Np, i + 2)
-    im_filt = U.cpu()[..., i]
+    im_filt = S.cpu()[..., i]
     im_filt /= torch.max(im_filt)
     plt.imshow(im_filt, cmap='gray')
     # lambdas = wsl.filter_lambda_pairs[i]

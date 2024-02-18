@@ -4,14 +4,14 @@ import torch
 from time import time
 
 # Set the parameters of the scattering transform.
-J = 3
-M, N = 128, 128
+J = 4
+M, N = 256, 256
 
 # Generate a sample signal.
 x = torch.from_numpy(np.random.randn(256, M, N).astype(np.float32))
 
 # Define a Scattering2D object.
-S = Scattering2D(J, (M, N))
+S = Scattering2D(J, (M, N), L=6)
 
 # Calculate the scattering transform.
 t0 = time()
@@ -52,10 +52,10 @@ Q = [[1, 1], [1, 1]]
 T = [optimise_T(64, 1, eps=0.05)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [1, 2], (M,N), True, prune=True)
+ws = SeperableWaveletScattering(Q, T, fs, [1, 2], (M,N), include_on_axis_wavelets=True)
 
 t0 = time()
-Sx = ws.scatteringTransform(x, prune=False)
+Sx = ws.scatteringTransform(x)
 torch.cuda.synchronize()
 t1 = time()
 

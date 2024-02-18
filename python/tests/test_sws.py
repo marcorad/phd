@@ -40,24 +40,24 @@ Q = [[1, 1]] * 2
 T = [optimise_T(64, 1)]*2
 print(T)
 
-ws = SeperableWaveletScattering(Q, T, fs, [0, 1], Nx, include_on_axis_wavelets=True, prune=False)
+ws = SeperableWaveletScattering(Q, T, fs, [0, 1], Nx, include_on_axis_wavelets=True)
 
 
-for l in ws.sws_layers:
-    print("SCAT LAYER")
-    print(l.get_psi_output_fs())
-    print(l.get_psi_output_N())
+# for l in ws.sws_layers:
+#     print("SCAT LAYER")
+#     print(l.get_psi_output_fs())
+#     print(l.get_psi_output_N())
 
-import pprint
-pp = pprint.PrettyPrinter(depth=10)
-pp.pprint(ws.paths)
+# import pprint
+# pp = pprint.PrettyPrinter(depth=10)
+# pp.pprint(ws.paths)
 
-pp.pprint(ws.path_lambdas)
+# pp.pprint(ws.path_lambdas)
 
-print("Number of paths: ", len(ws.paths.keys()))
-print(any([k == None for k in ws.paths.items()]))
+# print("Number of paths: ", len(ws.paths.keys()))
+# print(any([k == None for k in ws.paths.items()]))
 
-print("expected features ", len(ws.flattened_lambdas))
+# print("expected features ", len(ws.flattened_lambdas))
 
 # plt.subplot(Np, Np, 1)
 # plt.imshow(x.cpu())

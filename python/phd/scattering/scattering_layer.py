@@ -97,7 +97,8 @@ class SeperableScatteringLayer:
             ds = [f.ds_lambda for f in filters]
             ds_phi = [f.ds_phi for f in filters]
             #create a conv object specifically for each filter
-            self.conv_psi[lambdas] = SeperableConv(psi, self.N, ds, self.conv_dims)
+            ds_max = [s.psi_ds_max for s in self.samplers]
+            self.conv_psi[lambdas] = SeperableConv(psi, self.N, ds, self.conv_dims, ds_max)
             self.conv_phi[lambdas] = SeperableConv(phi, N_phi, ds_phi, self.conv_dims)
             self.psi[lambdas] = filters
         self.paths = list(self.conv_psi.keys())
@@ -107,13 +108,11 @@ class SeperableScatteringLayer:
         u: Dict[Tuple, Tensor] = {}  
         p0 = self.paths[0]
         conv = self.conv_psi[p0]
-        x = conv.add_padding(x, PAD_MODE)
+        x = conv.fft(x)
         for p in self.paths:
             conv = self.conv_psi[p]
-            y = conv.convolve(x, fun_before_ds=torch.abs).squeeze(dim=[-i for i in range(1, self.ndim+1)])
-            y_unpad = conv.remove_padding(y)
-            del y
-            u[p] = y_unpad
+            y = conv.convolve(x, fun_before_ds=torch.abs)           
+            u[p] = y
         return u
 
     def _conv_phi(self, u: Dict[Tuple, Tensor]) -> Dict[Tuple, Tensor]:   
@@ -121,11 +120,9 @@ class SeperableScatteringLayer:
         for p in self.paths:     
             conv = self.conv_phi[p]
             u_curr = u[p]
-            u_curr = conv.add_padding(u_curr, PAD_MODE)
-            s_curr = conv.convolve(u_curr, fun_before_ds=torch.real).squeeze(dim=[-i for i in range(1, self.ndim + 1)])
-            s_curr_unpad = conv.remove_padding(s_curr)
-            del s_curr
-            s[p] = s_curr_unpad
+            u_curr = conv.fft(u_curr)
+            s_curr = conv.convolve(u_curr, fun_before_ds=torch.real)
+            s[p] = s_curr
         return s
     
     def US(self, x: Tensor) -> Tuple[Dict[Tuple, Tensor], Dict[Tuple, Tensor]]:
@@ -151,17 +148,14 @@ class SeperableScatteringLayerS0:
             self.t_psi = t
 
             phi = sample_gauss(t, 1/sigma_phi_w).astype(NUMPY_REAL)/self.fs_in[i]
-            phi = phi[np.newaxis, :] #rehape to (1, L) 
             d_tot = max(int(np.floor(fs_in[i] * T[i] / 2 / MORLET_DEFINITION.beta)), 1) if ENABLE_DS else 1 #total allowed downsampling 
             self.d_tot += [d_tot]
             self.phi += [torch.from_numpy(phi)]
 
-        self.conv = SeperableConv(self.phi, N, self.d_tot, self.conv_dims, enable_freq_ds=ENABLE_FREQ_DS)
+        self.conv = SeperableConv(self.phi, N, self.d_tot, self.conv_dims)
 
         
     def S0(self, x: Tensor):
-        x = self.conv.add_padding(x, pad_mode=PAD_MODE)
-        s0p = self.conv.convolve(x, fun_before_ds=torch.real)
-        s0 = self.conv.remove_padding(s0p).squeeze([-n for n in range(1, self.ndim+1)])
-        del s0p
+        x = self.conv.fft(x)
+        s0 = self.conv.convolve(x, fun_before_ds=torch.real)      
         return s0

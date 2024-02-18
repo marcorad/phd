@@ -72,8 +72,8 @@ print(X_test.shape)
 
 t0 = time()
 
-S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=64, normalise=False)
-S_test  = ws.scatteringTransform(torch.from_numpy(X_test) , batch_dim=0, batch_size=64,  normalise=False)
+S_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=256, normalise=False)
+S_test  = ws.scatteringTransform(torch.from_numpy(X_test) , batch_dim=0, batch_size=256,  normalise=False)
 print(S_train.shape)
 
 torch.cuda.synchronize()

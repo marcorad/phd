@@ -167,13 +167,12 @@ class JointTFScattering:
         Tt = T[0]
         Ttf = T[1]
 
-        self.ws_t = SeperableWaveletScattering([[Qtime]], [Tt], [fs], [dim], 
-                    [N], include_on_axis_wavelets=False, prune=False, fstart=[fstart])
+        self.ws_t = SeperableScatteringLayer(Qtime, Tt, [fs], dim[0], N, include_on_axis_wavelets=False, fstart=fstart, allow_seperate_ds=False)
         
         self.ws_tf = SeperableWaveletScattering(
             Qtf, [Tt, Ttf], [self.ws_t.sws_layers[0].samplers[0].fs_psi_out, 1], 
-            N=[self.ws_t.sws_layers[0].conv_psi.output_length[0], len(self.ws_t.sws_layers[0].samplers[0].lambdas)],
-            dims=[dim, dim+1], include_on_axis_wavelets=True, prune=True)
+            N=[self.ws_t.conv_psi.values()[0].output_length[0], len(self.ws_t.samplers[0].lambdas)],
+            dims=[dim, dim+1], include_on_axis_wavelets=True)
 
     def scatteringTransform(self, x):
         return self.ws_tf.scatteringTransform(self.ws_t.scatteringTransform(x))

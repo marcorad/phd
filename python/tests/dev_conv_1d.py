@@ -1,18 +1,11 @@
 import torch
-import torch.nn as nn
 from torch import Tensor
 from math import log2, ceil, floor
 from typing import List, Dict
 
 
-#https://en.wikipedia.org/wiki/Overlap%E2%80%93save_method
-
-def print_mb(x: Tensor):
-    print(x.element_size()*x.numel()/1024/1024)    
-
-
 class Filter:
-    def __init__(self, filter_weights: Tensor, N: int, ds: int, conv_dim: int, ds_max = None) -> None:        
+    def __init__(self, filter_weights: Tensor, N: int, ds: int, conv_dim: int) -> None:        
         self.ds = ds
         self.Nx = N
         self.Nh = filter_weights.shape[0]
@@ -20,17 +13,13 @@ class Filter:
         assert conv_dim >= 0, "No negative indexing allowed for convolutions!"
         self.signal_pad = self.Nh//2     
         self.padded_length = self.Nx + self.signal_pad * 2
-        
-        if ds_max == None: ds_max = ds
-        
-        N_ds = ceil(self.padded_length / ds_max)
-        
-        self.freq_ds_pad = ds_max*N_ds - self.padded_length
-        self.pad_filters = self.Nx - 1 + self.freq_ds_pad
-        self.raw_filter_weights = filter_weights      
+        self.pad_filters = self.padded_length - self.Nh
+        self.raw_filter_weights = filter_weights
         
         
-        filter_weights_pad = torch.nn.functional.pad(filter_weights, [0, self.pad_filters], mode='constant', value=0.0)  
+        self.freq_ds_pad = self.ds - (self.padded_length % self.ds)
+        
+        filter_weights_pad = torch.nn.functional.pad(filter_weights, [0, self.pad_filters + self.freq_ds_pad], mode='constant', value=0.0)  
         self.H = filter_weights_pad.cuda() #(Nh,)    
         self.conv_dim = conv_dim  
         self.Nx_out = int(ceil(self.Nx / self.ds))
@@ -44,11 +33,10 @@ class Filter:
 
 class SeperableConv:    
    
-    def __init__(self, filter_weights: List[Tensor], N: List[int], ds: List[int], conv_dim: List[int], ds_max = None):
+    def __init__(self, filter_weights: List[Tensor], N: List[int], ds: List[int], conv_dim: List[int]):
         self.filters: List[Filter] = []
-        if ds_max == None: ds_max = [None for _ in range(len(filter_weights))]
-        for h, n, d, c, dm in zip(filter_weights, N, ds, conv_dim, ds_max):
-            self.filters.append(Filter(h, n, d, c, dm))
+        for h, n, d, c in zip(filter_weights, N, ds, conv_dim):
+            self.filters.append(Filter(h, n, d, c))
         self.output_length = []
         for f in self.filters:
             length = ceil(f.Nx / f.ds)
@@ -76,7 +64,7 @@ class SeperableConv:
         H = filter.H        
 
         #reshape using views for optimal multiplications
-        Y = Y.reshape(-1, Y.shape[-1]) #now of shape (?, Npadded)
+        Y = Y.view(-1, filter.padded_length + filter.freq_ds_pad) #now of shape (?, Npadded)                
         
         k = Y.shape[0]
         H = H.expand(k, -1) #(?, Npadded)
@@ -106,4 +94,68 @@ class SeperableConv:
             Y = Y.swapaxes(d, -1) 
         Y = self._apply_fun(Y, fun_before_ds) 
         return Y
+   
+import sys
+
+sys.path.append('../python')
+
+from phd.scattering.morlet import sample_gauss
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+
+#1D test
+Nx = 32
+fs = 1
+sigma = 2
+Nh = 8
+t = np.arange(-Nh, Nh+1, dtype=np.float32)/fs    
+    
+h = sample_gauss(t, sigma)
+
+x1 = np.zeros((Nx,), dtype=np.float32)
+x1[Nx//2] = 1.0
+
+# plt.subplot(211)
+# plt.plot(t, h)
+# plt.subplot(212)
+# plt.plot(x1)
+# plt.show()
+
+conv = SeperableConv([torch.from_numpy(h)], [Nx], [8], [0])
+Y = conv.fft(torch.from_numpy(x1).cuda())
+
+y = conv.convolve(Y, torch.real).cpu().numpy()
+plt.plot(y)
+plt.show()
+
+#2D test
+Nx = 32
+fs = 1
+sigma = 2
+Nh = 8
+t = np.arange(-Nh, Nh+1, dtype=np.float32)/fs    
+    
+h = sample_gauss(t, sigma)
+
+x1 = np.zeros((Nx,Nx), dtype=np.float32)
+x1[Nx//2, Nx//2] = 1.0
+
+# plt.subplot(211)
+# plt.plot(t, h)
+# plt.subplot(212)
+# plt.plot(x1)
+# plt.show()
+
+h_torch = torch.from_numpy(h)
+
+conv = SeperableConv([h_torch, h_torch], [Nx, Nx], [2, 2], [0, 1])
+Y = conv.fft(torch.from_numpy(x1).cuda())
+
+y = conv.convolve(Y, torch.real).cpu().numpy()
+plt.imshow(y)
+plt.show()
+
     

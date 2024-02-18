@@ -12,7 +12,7 @@ from .config import *
 from .morlet_sampler import *
 
 from itertools import product
-from math import ceil, floor
+from math import ceil, floor, lcm
 
 from tqdm import tqdm
 
@@ -82,8 +82,7 @@ class MorletSampler1D:
 
         #get the time support of the lpf
         nmax = int(np.floor(MORLET_DEFINITION.k * PI * self.fs_in / sigma_phi_w))
-        t = np.arange(start=-nmax, stop=nmax+1) / self.fs_in
-        t = t[None, :] #(1, 2*nmax)
+        t = np.arange(start=-nmax, stop=nmax+1) / self.fs_in        
         self.t_psi = t
         
         filters: List[MorletFilter1D] = []
@@ -157,8 +156,7 @@ class MorletSampler1D:
             fs_psi_out = self.fs_in / ds
             nmax = int(np.floor(MORLET_DEFINITION.k * PI * fs_psi_out / sigma_phi_w))
             t = np.arange(start=-nmax, stop=nmax+1) / fs_psi_out
-            phi = sample_gauss(t, 1/sigma_phi_w).astype(NUMPY_REAL) / fs_psi_out
-            phi = phi[np.newaxis, :] #rehape to (1, L)        
+            phi = sample_gauss(t, 1/sigma_phi_w).astype(NUMPY_REAL) / fs_psi_out                  
             t_phi = t
             self.phi[ds] = phi
             self.t_phi[ds] = t_phi
@@ -173,6 +171,9 @@ class MorletSampler1D:
             for f in self.psi:
                 f.lambda_ = -f.lambda_ #make the lambdas negative
                 f.f_c = -f.f_c #make the freq negative
+                
+        #get the lest common multiple of all the downsampling factors for uniform padding across filters
+        self.psi_ds_max = lcm(*[f.ds_lambda for f in self.psi])
             
     def _get_ds_factor(self, sigma_w):
         bw_f = sigma_w * MORLET_DEFINITION.beta / 2 / PI
@@ -206,3 +207,5 @@ class MorletSampler1DFull: #for both positive and negative frequency filters, in
             self.phi[k] = v
         for k, v in self.fb_pos.phi.items():
             self.phi[k] = v
+            
+        self.psi_ds_max = lcm(self.fb_pos.psi_ds_max, self.fb_neg.psi_ds_max)
