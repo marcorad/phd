@@ -64,10 +64,14 @@ class SeperableConv:
     def _freq_subsample(self, X: Tensor, ds: int):
         if X.shape[0] > 1:
             X = X.view(X.shape[0], ds, -1)
-            return X.mean(axis=1, keepdim=False)   
+            Xmu = X.mean(axis=1, keepdim=False)   
+            del X
+            return Xmu
         else:
             X = X.view(ds, -1)
-            return X.mean(axis=0, keepdim=False)         
+            Xmu = X.mean(axis=0, keepdim=False)       
+            del X
+            return Xmu  
     
 
     def _compute_fft_conv(self, Y: Tensor, filter: Filter, fun = None) -> Tensor:    

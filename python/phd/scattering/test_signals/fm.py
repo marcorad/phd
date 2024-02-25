@@ -1,14 +1,13 @@
 import torch
 from torch import pi
-from ..scattering_1d import TORCH_DATA_TYPE
+from ..config import TORCH_REAL
 
-def _fm(fs, N, flo, fm, df, Nbatch, func):
-    
+def _fm(fs, N, flo, fm, df, Nbatch, func):    
     n = torch.arange(N)
     t = n / fs
     dw = torch.cumsum(2*pi*flo + df*2*pi*(func(t*fm)), 0) / fs
-    x = torch.zeros((Nbatch, 1, N), dtype=TORCH_DATA_TYPE)
-    x[:, 0, :] = torch.sin(dw)
+    x = torch.zeros((Nbatch, N), dtype=TORCH_REAL)
+    x[:, :] = torch.sin(dw)
     return x
     
 def _tri(t):

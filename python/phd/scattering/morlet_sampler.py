@@ -145,6 +145,7 @@ class MorletSampler1D:
             for f in self.psi:
                 f.ds_lambda = max_ds_lambda
                 f.ds_phi = max_ds_phi
+                f.__post_init__()
                 
         #get all the lpf sample rates 
         ds_lambdas = set([f.ds_lambda for f in self.psi])

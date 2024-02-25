@@ -19,7 +19,7 @@ def remove_silence(x: np.ndarray, labels, shuffle=True):
         np.random.shuffle(shuf_i)
         x = x[shuf_i, :, :]
         labels = np.array(labels)[shuf_i].tolist()
-    eps = 1e-6
+    eps = 0.1e-6
     E = np.sqrt(np.mean(x * x, axis=2))
     # print(np.min(E), np.percentile(E, [5, 25, 50, 75, 95]))
     # print(np.max(E))
@@ -43,12 +43,13 @@ def get_split_idx(n_win, test_size):
     return int(np.sum(n_win[0:i])), i
 
 fname_feats = 'data/ws-esc50-2048-30-8-2-1.pkl'
-fname_feats = 'data/ws-esc50-[09404081632653061, 320]-50-4-[1, 1]-[1, 1].pkl'
+fname_feats = 'data/ws-esc50-[047020408163265304, 160]-20-8-[[1, 1], [1, 1]].pkl'
 
 with open(fname_feats, 'rb') as file:
     x: Tensor = pkl.load(file)
 
 x = x.numpy()
+print(x.shape)
 
 print(x.shape)
 _, labels = load_esc50()
