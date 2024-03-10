@@ -42,8 +42,10 @@ from phd.dataprocessing.medmnist3d import load_train_test
 
 # print(s.shape)
 
-X_train, y_train, _, _ = load_train_test('synapse', True)
-x = X_train[100, :, :, :]
+X_train, y_train, _, _ = load_train_test('fracture', True)
+idx = 120
+x = X_train[idx, :, :, :]
+print(y_train[idx])
 
 for i in range(28):
     plt.subplot(6, 6, i+1)

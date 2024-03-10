@@ -112,7 +112,7 @@ class SeperableWaveletScattering:
     def _concat_s(self, S):
         s_list = []
         for s_all in S.values():
-            if type(s_all) == Dict:
+            if type(s_all) == dict:
                 for s in s_all.values():
                     s_list.append(s.unsqueeze(-1))
             elif type(s_all) == Tensor:

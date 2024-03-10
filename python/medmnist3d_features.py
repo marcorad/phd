@@ -5,7 +5,7 @@ import sys
 sys.path.append('../python')
 import phd.scattering.config as config
 # config.MORLET_DEFINITION = config.MorletDefinition(2,4,2,2,2)
-config.MORLET_DEFINITION = config.MorletDefinition(2,4,2,2,2)
+config.MORLET_DEFINITION = config.MorletDefinition(2,3,2,2,2)
 config.set_precision('single')
 config.ENABLE_DS = True
 from phd.scattering.sep_ws import optimise_T, SeperableWaveletScattering
@@ -14,13 +14,13 @@ from phd.dataprocessing.medmnist3d import load_train_test, DATASETS
 
 import torch
 
-Q = [[0.9]*3]
-T = [optimise_T(48,1)]*3
+Q = [[3]*3]
+T = [optimise_T(16,1)]*3
 print(T)
 fs = [1, 1, 1]
 dims = [1, 2, 3]
 N = [28, 28, 28]
-DCT = True
+DCT = False
 
 ws = SeperableWaveletScattering(Q, T, fs, dims, N)
 
