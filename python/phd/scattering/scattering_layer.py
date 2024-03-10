@@ -84,8 +84,8 @@ class SeperableScatteringLayer:
             if all([l == 0 for l in lambdas]): 
                 continue 
             #skip on-axis filters with negative components
-            if lambdas[0] == 0 and len(lambdas) > 1 and any([l < 0 for l in lambdas[1:]]): 
-                continue           
+            # if lambdas[0] == 0 and len(lambdas) > 1 and any([l < 0 for l in lambdas[1:]]): 
+            #     continue           
             
             
             #get the requied filter of each axis and its lpf-related data
@@ -102,7 +102,7 @@ class SeperableScatteringLayer:
             self.conv_phi[lambdas] = SeperableConv(phi, N_phi, ds_phi, self.conv_dims)
             self.psi[lambdas] = filters
         self.paths = list(self.conv_psi.keys())
-        print(f'Filterbank has {len(self.paths)} filters.')
+        # print(f'Filterbank has {len(self.paths)} filters.')
 
     def _conv_psi(self, x: Tensor) -> Dict[Tuple, Tensor]:
         u: Dict[Tuple, Tensor] = {}  
@@ -128,7 +128,14 @@ class SeperableScatteringLayer:
     def US(self, x: Tensor) -> Tuple[Dict[Tuple, Tensor], Dict[Tuple, Tensor]]:
         u = self._conv_psi(x)
         s = self._conv_phi(u)
-        return u, s
+        return u, s  
+      
+    
+    
+            
+        
+            
+        
     
 
 class SeperableScatteringLayerS0:

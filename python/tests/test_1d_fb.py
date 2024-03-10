@@ -15,7 +15,7 @@ import numpy as np
 fs = 1
 T = optimise_T(64, fs)
 
-Q = 1
+Q = 0.5
 
 fb = MorletSampler1D(Q, T, fs)
 

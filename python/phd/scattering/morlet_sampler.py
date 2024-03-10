@@ -72,7 +72,7 @@ class MorletSampler1D:
         
         bw_lim_w = self.bw_lim_w if self.bw_lim_w else ws/2
         
-        print(self.bw_lim_w, ws/2)
+        # print(self.bw_lim_w, ws/2)
 
         #base std dev at 1 rad/s
         sigma_w = 1 / MORLET_DEFINITION.alpha(self.Q) * (2**(1/self.Q) - 1)
@@ -127,10 +127,11 @@ class MorletSampler1D:
             sigma_lambda_w = lambda_*sigma_w
             
         if self.include_lpf_in_psi and len(filters) == 1:
-            print("Psi only includes the LPF.")
+            # print("Psi only includes the LPF.")
+            pass
                 
         if len(filters) == 0:
-            print("Psi is empty - the entire bandwidth has been exhausted.")  
+            # print("Psi is empty - the entire bandwidth has been exhausted.")  
             self.is_empty = True 
                         
         
@@ -177,14 +178,20 @@ class MorletSampler1D:
         self.psi_ds_max = lcm(*[f.ds_lambda for f in self.psi])
             
     def _get_ds_factor(self, sigma_w):
+        EPS = 1e-6
         bw_f = sigma_w * MORLET_DEFINITION.beta / 2 / PI
-        d_lambda = max(int(np.floor(self.fs_in/2/bw_f)),1) if ENABLE_DS else 1
+        d_lambda = max(int(np.floor((self.fs_in + EPS)/2/bw_f)),1) if ENABLE_DS else 1
         #find the largest d_lambda such that it divides d_total
         while self.d_tot % d_lambda != 0:
             d_lambda -= 1
         #compute the required phi filter downsampling                
         d_phi = self.d_tot // d_lambda if ENABLE_DS else 1 #downsampling of phi filter        
         return d_lambda, d_phi
+    
+    def get_psi_filter_matrix(self):
+        assert(self.allow_seperate_ds == False, "Seperate DS must be turned off!")
+        return np.concatenate([f.psi[:, None] for f in self.psi], axis=1)
+        
         
 
 class MorletSampler1DFull: #for both positive and negative frequency filters, intended to be used in multiple dimensions

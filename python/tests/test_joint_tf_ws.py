@@ -14,18 +14,18 @@ from time import time
 
 
 
-fs = 1000
-N = fs*1
+fs = 14700
+N = fs*5
 
-Tt = 0.5
-Ttf = 8
+Tt = optimise_T(0.25, fs)
+Ttf = optimise_T(16, 1)
 Qt = 4
-Qtf = [[1,1], [1,1]]
+Qtf = [[2,1], [1,1]]
 
 t = np.arange(N)/fs
 x = fm_sin(fs, N, 200, 1, 100)
 
-jtfws = JointTFScattering(Qt, Qtf, Tt, Ttf, fs, 1, N, fstart=50)
+jtfws = JointTFScattering(Qt, Qtf, Tt, Ttf, fs, 1, N, fstart=20)
 
 
 
