@@ -24,6 +24,12 @@ from phd.dataprocessing.medmnist3d import load_train_test
 # config.ENABLE_DS = True
 # from phd.scattering.sep_ws import optimise_T, SeperableWaveletScattering
 
+from scipy.spatial.transform.rotation import Rotation as R
+from scipy.ndimage import affine_transform
+
+r = [180, 0, 0]
+rmat = R.from_euler('xyz', r, degrees=True).as_matrix() #random rotation of +-rot_lim     
+
 
 # import torch
 
@@ -45,10 +51,20 @@ from phd.dataprocessing.medmnist3d import load_train_test
 X_train, y_train, _, _ = load_train_test('fracture', True)
 idx = 120
 x = X_train[idx, :, :, :]
+o = np.array([14, 14, 14])
+print(o.shape)
+o = o - o.dot(rmat.T) 
+x_r = affine_transform(x, rmat, offset=o, mode='reflect', order=5) #rotate about center
 print(y_train[idx])
 
+plt.figure()
 for i in range(28):
     plt.subplot(6, 6, i+1)
     plt.imshow(x[i, :, :])
+
+plt.figure()  
+for i in range(28):
+    plt.subplot(6, 6, i+1)
+    plt.imshow(x_r[i, :, :])
     
 plt.show(block=True)

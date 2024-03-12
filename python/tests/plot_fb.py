@@ -3,14 +3,14 @@ import sys
 sys.path.append('../python')
 
 from phd.scattering import config
-config.MORLET_DEFINITION = config.MorletDefinition(2,3,2,2,2)
+config.MORLET_DEFINITION = config.MorletDefinition(2,3,2,2,3)
 config.set_precision('single')
 from phd.scattering.sep_ws import optimise_T
 
 from phd.scattering.morlet_sampler import MorletSampler1D
 
-Q = 3
-T = 16
+Q = 2
+T = 32
 fs = 1
 print(optimise_T(T, fs))
 

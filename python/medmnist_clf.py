@@ -31,11 +31,29 @@ class DeepClassifier(nn.Module):
         self.non_linearity = nn.ReLU()
         
     def forward(self, x):
-        y = self.bn_in(self.non_linearity(self.lin_in(x)))
+        y = self.non_linearity(self.bn_in(self.lin_in(x)))
         for l, b in zip(self.lin_hid, self.bn):
             y = self.non_linearity(b(l(y)))         
         y = self.soft_max(self.lin_out(y))
         return y
+    
+class Deep3DConvFront2x2(nn.Module):
+    def __init__(self, input_shape, out_channels, hidden_sizes, num_classes) -> None:
+        super().__init__()
+        self.cnn_front = nn.Conv3d(in_channels=input_shape[0], out_channels=out_channels, kernel_size=2, stride=1)
+        self.bn = nn.BatchNorm3d(out_channels)
+        self.max_pool = nn.MaxPool3d(kernel_size=2, stride=1)
+        self.flatten = nn.Flatten(start_dim=1)
+        self.flat_out = (input_shape[1] - 2)*(input_shape[2] - 2)*(input_shape[3] - 2) * out_channels
+        self.skip_flat_out = input_shape[0]*input_shape[1]*input_shape[2]*input_shape[3]
+        self.clf = DeepClassifier(self.skip_flat_out + self.flat_out, hidden_sizes, num_classes)
+        
+    def forward(self, x):
+        y = self.cnn_front(x)
+        y = self.bn(y)
+        y = self.max_pool(y)
+        y = torch.cat((self.flatten(x), self.flatten(y)), dim=1)
+        return self.clf(y)
     
 class BalancedDataLoader:
     def __init__(self, X: torch.Tensor, y: torch.Tensor, n, sigma = 0.0, to_one_hot = False) -> None:
@@ -131,7 +149,7 @@ class LinearTrainer:
             with torch.set_grad_enabled(True):
                 for x_batch, y_batch in self.loader:
                     x_batch = x_batch.cuda()
-                    x_batch *= torch.rand(x_batch.shape[0], 1)/2 + 0.5
+                    # x_batch *= torch.randn_like(x_batch)*0.05 + 1
                     y_batch = y_batch.cuda()
                     y_pred = self.model(x_batch)
                     if n_classes == 2: 
@@ -165,7 +183,7 @@ class LinearTrainer:
                     loss_avg = test_loss
                     prev_loss_avg = test_loss
                 else:
-                    p = 0.8
+                    p = 0.9
                     prev_loss_avg = loss_avg
                     loss_avg = loss_avg * (1-p) + p*test_loss             
                 if prev_loss_avg < loss_avg: return   
@@ -173,7 +191,7 @@ class LinearTrainer:
                 if n_classes > 2:     
                     y_true = torch.argmax(y_val, dim=1)
                     y_pred = torch.argmax(y_pred, dim=1)
-                else:
+                else:                    
                     y_pred = y_pred > 0.5
                     y_true = y_val  > 0.5  
                 
@@ -192,8 +210,9 @@ class LinearTrainer:
             y_true = torch.argmax(y_test, dim=1) if self.n_classes > 2 else y_test.cuda()
             y_pred = torch.argmax(y_pred, dim=1) if self.n_classes > 2 else y_pred[:,0].cuda()
             if self.n_classes == 2:
-                y_true = y_true > 0.5
-                y_pred = y_pred > 0.5
+                thresh = 0.5
+                y_true = y_true > thresh
+                y_pred = y_pred > thresh
         return torch.sum(y_true == y_pred) / y_true.shape[0], auc
     
     def num_trainable_parameters(self):
@@ -215,7 +234,7 @@ for d in DATASETS:
         f"{d}\n"
         "---------\n"
     )
-    fname = f'data/ws-{d}-mnist3d-Q=[[3, 3, 3]]-T=[16.0, 16.0, 16.0]-DCT=False.pkl'
+    fname = f'data/ws-{d}-mnist3d-Q=[[1, 1, 1]]-T=[16.0, 16.0, 16.0]-DCT=False-AUG=False.pkl'
     with open(fname, 'rb') as file:
         X_train, y_train, X_test, y_test, X_val, y_val = pkl.load(file)
         y_train = torch.from_numpy(y_train.astype(np.float32))
@@ -224,7 +243,11 @@ for d in DATASETS:
         
     X_train = torch.reshape(X_train, (X_train.shape[0], -1))    
     X_test = torch.reshape(X_test, (X_test.shape[0], -1))  
-    X_val = torch.reshape(X_val, (X_val.shape[0], -1))      
+    X_val = torch.reshape(X_val, (X_val.shape[0], -1))   
+    # X_train = torch.swapaxes(X_train, 1, -1)   
+    # X_test = torch.swapaxes(X_test, 1, -1)  
+    # X_val = torch.swapaxes(X_val, 1, -1)    
+    
     # X_train = torch.mean(X_train, dim=(1,2,3))    
     # X_test = torch.mean(X_test, dim=(1,2,3))  
     # X_val = torch.mean(X_val, dim=(1,2,3))  
@@ -265,7 +288,7 @@ for d in DATASETS:
     # )
     
     print(X_train.shape)
-    net = DeepClassifier(X_train.shape[1], [2048, 4096, 1024, 512], n_classes)
+    net = DeepClassifier(X_train.shape[1],[4096, 2048, 1024, 512], n_classes)
     trainer = LinearTrainer(net)
     print(trainer.num_trainable_parameters())
     trainer.train(X_train, y_train, X_val, y_val, n_epochs=100, lr=10e-5)
