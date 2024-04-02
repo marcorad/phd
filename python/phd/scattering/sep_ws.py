@@ -44,7 +44,7 @@ def optimise_T(T_nom, fs, eps = 0.1):
 
 class SeperableWaveletScattering:
     
-    def __init__(self, Q, T, fs, dims: List[int], N: List[int], include_on_axis_wavelets=True, fstart = None) -> None:
+    def __init__(self, Q, T, fs, dims: List[int], N: List[int], include_on_axis_wavelets=True, fstart = None, allow_separate_ds = True) -> None:
         
         #normalise for numerical stability (some combinations my combinations may cause precision errors that propogate)
         T = [f*t for f, t in zip(fs, T)]
@@ -59,11 +59,14 @@ class SeperableWaveletScattering:
         self.N = N
         self.include_on_axis_wavelets = include_on_axis_wavelets
         self.fstart = fstart
-        self.s0_layer = SeperableScatteringLayerS0(T, fs, dims, N)        
+        self.s0_layer = SeperableScatteringLayerS0(T, fs, dims, N)     
+        self.allow_separate_ds = allow_separate_ds   
         
         #recursively init all the required filters
         self.sws_layers: Dict[Tuple, SeperableScatteringLayer] = {}
-        self.sws_layers[((0,), (0,))] = SeperableScatteringLayer(self.Q[0], self.T, self.fs, self.dims, self.N, include_on_axis_wavelets=self.include_on_axis_wavelets, fstart=self.fstart)        
+        self.sws_layers[((0,), (0,))] = SeperableScatteringLayer(self.Q[0], self.T, self.fs, self.dims, self.N, 
+                                                                 include_on_axis_wavelets=self.include_on_axis_wavelets, fstart=self.fstart, 
+                                                                 allow_seperate_ds=self.allow_separate_ds)        
         self.n_paths = len(self.sws_layers[((0,), (0,))].paths)
         self._init_sws_layers((0,), 1, self.sws_layers[((0,), (0,))])    
         # print(f'SWS configuration has {self.n_paths} paths.')
@@ -85,7 +88,9 @@ class SeperableWaveletScattering:
             curr_path = prev_path + (path_idx,)
             key = (curr_path, tuple(lambdas))
             # print(f'Initialising SWS @ {key}, freq={fc}, N={N}, fs={fs}')            
-            sws = SeperableScatteringLayer(self.Q[depth], self.T, fs, self.dims, N, include_on_axis_wavelets=self.include_on_axis_wavelets, bw_lim_w=bw_lim_w)
+            sws = SeperableScatteringLayer(self.Q[depth], self.T, fs, self.dims, N, 
+                                           include_on_axis_wavelets=self.include_on_axis_wavelets, 
+                                           bw_lim_w=bw_lim_w, allow_seperate_ds=self.allow_separate_ds)
             if(len(sws.paths) > 0): #only add this layer if there are filters inside it
                 assert(key not in self.sws_layers.keys())
                 self.sws_layers[key] = sws
@@ -120,7 +125,7 @@ class SeperableWaveletScattering:
         s = torch.concat(s_list, dim=-1) 
         return s
     
-    def _compute_dct(self, ws: Dict[Tuple, Tensor]) -> Tensor:   
+    def _compute_log_dct(self, ws: Dict[Tuple, Tensor]) -> Tensor:   
         ndim = len(self.dims)     
         lambdas = [set() for _ in range(ndim)] #each dimension has a set of lambdas
         for lds in list(ws.keys()):
@@ -134,7 +139,10 @@ class SeperableWaveletScattering:
         for k, v in ws.items():
             idx = [idx_dict[n][l] for n, l in enumerate(k)] #get the indices associated with a specific lambda  
             y[..., *idx] = v #copy them into the output
-                
+            
+        #log value
+        EPS = 1e-12
+        y = torch.log(torch.abs(y) + EPS)        
             
         #create type-II fft boundary reflection
         for i in range(ndim):
@@ -155,11 +163,11 @@ class SeperableWaveletScattering:
             y = torch.real(y * w)
         return y.reshape(*ws0.shape, -1) #return type-II DCT flattened
     
-    def _dct(self, S):
+    def _log_dct(self, S):
         S_dct = {}
         for p, s in S.items():
             if p[0] != -1:
-                S_dct[p] = self._compute_dct(s)
+                S_dct[p] = self._compute_log_dct(s)
             else:
                 S_dct[p] = s
         return S_dct
@@ -175,11 +183,11 @@ class SeperableWaveletScattering:
         self._US_rec(U, S, (0,), 1, discard_U=discard_U)    
         return U, S
     
-    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, discard_U = True, dct=False) -> Tuple[Union[None, List[Tensor]], Tensor] | Tensor:
+    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, discard_U = True, log_dct=False) -> Tuple[Union[None, List[Tensor]], Tensor] | Tensor:
         x = x.cuda()
         if batch_dim == None:
             U, S = self._US(x, discard_U) 
-            if dct: S = self._dct(S)
+            if log_dct: S = self._log_dct(S)
             S = self._concat_s(S) 
             if discard_U: return S
             else: return U, S 
@@ -194,7 +202,7 @@ class SeperableWaveletScattering:
                     xb = torch.narrow(x, batch_dim, start=i, length=l)
                     u, s = self._US(xb, True)                    
                     del u
-                    if dct: s = self._dct(s)
+                    if log_dct: s = self._log_dct(s)
                     s = self._concat_s(s)
                     torch.cuda.empty_cache()                             
                     S_batch += [s.cpu()]
@@ -220,28 +228,32 @@ class JointTFScattering:
         self.fs = [fs]
         self.dim = [dim]
         self.N = [N]   
-        self.ws_t = SeperableScatteringLayer(Qtime, Ttime, fs, dim, N, include_on_axis_wavelets=False, fstart=[fstart], allow_seperate_ds=False)
+        self.ws_t = SeperableWaveletScattering([self.Qtime], self.Ttime, self.fs, self.dim, 
+                                               self.N, include_on_axis_wavelets=False, fstart=[fstart], 
+                                               allow_separate_ds=False)
+        self.ws_t_layer_key = ((0,), (0,))
+        self.ws_t_layer = self.ws_t.sws_layers[self.ws_t_layer_key]
         
-        fs_psi_time_out = self.ws_t.samplers[0].psi[0].fs_out    
-        Nt = list(self.ws_t.conv_psi.values())[0].output_length[0]
+        fs_psi_time_out = self.ws_t_layer.samplers[0].psi[0].fs_out * fs #must multiply since it is normalised in SeperableWaveletScattering object    
+        Nt = list(self.ws_t_layer.conv_psi.values())[0].output_length[0]
         # print([v.output_length for v in list(self.ws_t.conv_psi.values())])
-        Nf = len(self.ws_t.samplers[0].psi)       
+        Nf = len(self.ws_t_layer.samplers[0].psi)       
         
         
         self.ws_tf = SeperableWaveletScattering(
-            Qtf, [Ttime[0], Ttf], [fs_psi_time_out, 1], 
+            Qtf, [Ttime, Ttf], [fs_psi_time_out, 1], 
             N=[Nt, Nf],
-            dims=[dim[0], dim+1], include_on_axis_wavelets=True)
+            dims=[dim, dim+1], include_on_axis_wavelets=True)
         
-        print(list(self.ws_tf.sws_layers.keys()))
-        for k, v in self.ws_tf.sws_layers.items():
-            if len(k[0]) > 1:
-                for p, sp in zip(v.conv_phi.items(), v.conv_psi.items()):
-                    cphi = p[1]
-                    cpsi = sp[1]
-                    print(cphi.output_length, [f.Nx for f in cphi.filters], [f.Nh for f in cphi.filters], [f.ds for f in cphi.filters], [f.ds for f in cpsi.filters])
+        # print(list(self.ws_tf.sws_layers.keys()))
+        # for k, v in self.ws_tf.sws_layers.items():
+        #     if len(k[0]) > 1:
+        #         for p, sp in zip(v.conv_phi.items(), v.conv_psi.items()):
+        #             cphi = p[1]
+        #             cpsi = sp[1]
+                    # print(cphi.output_length, [f.Nx for f in cphi.filters], [f.Nh for f in cphi.filters], [f.ds for f in cphi.filters], [f.ds for f in cpsi.filters])
 
-    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None):
+    def scatteringTransform(self, x: Tensor, batch_size = None, batch_dim = None, log_dct = False):
         n_samples = x.shape[batch_dim] if batch_dim != None else 1
         i = 0
         Sbatch = []
@@ -252,10 +264,9 @@ class JointTFScattering:
             xb = torch.narrow_copy(x, batch_dim, start=i, length=l) if batch_dim != None else x
             xb = xb.cuda()
             # print(f'MEMORY USAGE: {torch.cuda.memory_allocated()/1024/1024/1024} GB')
-            ut, st = self.ws_t.US(xb)
-            ut = torch.concat([u.unsqueeze(-1) for u in ut.values()], dim=-1)
-            stf = self.ws_tf.scatteringTransform(ut)
-            st = torch.concat([s.unsqueeze(-1) for s in st.values()], dim=-1)
+            ut, st = self.ws_t.scatteringTransform(xb, discard_U=False, log_dct=log_dct)
+            ut = torch.concat([u.unsqueeze(-1) for u in ut[(0,)].values()], dim=-1)
+            stf = self.ws_tf.scatteringTransform(ut, log_dct=log_dct)
             stf = torch.reshape(stf, stf.shape[0:-2] + (-1,))
             Sbatch.append(torch.concat((st, stf), dim=-1).cpu())  
             if batch_dim == None: break 
@@ -267,6 +278,6 @@ class JointTFScattering:
         return torch.concat(Sbatch, dim=batch_dim) if batch_dim != None else Sbatch[0]
     
     def get_total_ds(self) -> List[float]:
-        sampl = self.ws_t.samplers
+        sampl = self.ws_t_layer.samplers
         return [s.d_tot for s in sampl]
         

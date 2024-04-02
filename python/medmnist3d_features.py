@@ -57,12 +57,12 @@ def augment_train(X, y, tot_examples_in_each_class, keep_prop = True):
     
 
 Q = [[1]*3]
-T = [optimise_T(64,1)]*3
+T = [optimise_T(32,1)]*3
 print(T)
 fs = [1, 1, 1]
 dims = [1, 2, 3]
 N = [28, 28, 28]
-DCT = False
+DCT = True
 AUG = False
 
 ws = SeperableWaveletScattering(Q, T, fs, dims, N)
@@ -89,10 +89,10 @@ for d in DATASETS:
     X_val = X_val.astype(config.NUMPY_REAL)/256
     X_val = normalise(X_val)
     
-    s_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=8, dct=DCT)
+    s_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=8, log_dct=DCT)
     print(s_train.shape)
-    s_test = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=8, dct=DCT)
-    s_val = ws.scatteringTransform(torch.from_numpy(X_val), batch_dim=0, batch_size=8, dct=DCT)
+    s_test = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=8, log_dct=DCT)
+    s_val = ws.scatteringTransform(torch.from_numpy(X_val), batch_dim=0, batch_size=8, log_dct=DCT)
 
     fname = f'ws-{d}-mnist3d-{Q=}-{T=}-{DCT=}-{AUG=}.pkl'
 

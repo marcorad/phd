@@ -162,9 +162,9 @@ class LinearTrainer:
                     else:
                         loss = loss_fn(y_pred, y_batch.to(torch.float32))
                     
-                    optim.zero_grad()
                     loss.backward()
                     optim.step()
+                    optim.zero_grad()
                     
             #print accuracy
             self.model.eval()
@@ -234,7 +234,7 @@ for d in DATASETS:
         f"{d}\n"
         "---------\n"
     )
-    fname = f'data/ws-{d}-mnist3d-Q=[[1, 1, 1]]-T=[16.0, 16.0, 16.0]-DCT=False-AUG=False.pkl'
+    fname = f'data/ws-{d}-mnist3d-Q=[[1, 1, 1]]-T=[32.0, 32.0, 32.0]-DCT=False-AUG=False.pkl'
     with open(fname, 'rb') as file:
         X_train, y_train, X_test, y_test, X_val, y_val = pkl.load(file)
         y_train = torch.from_numpy(y_train.astype(np.float32))
@@ -243,7 +243,11 @@ for d in DATASETS:
         
     X_train = torch.reshape(X_train, (X_train.shape[0], -1))    
     X_test = torch.reshape(X_test, (X_test.shape[0], -1))  
-    X_val = torch.reshape(X_val, (X_val.shape[0], -1))   
+    X_val = torch.reshape(X_val, (X_val.shape[0], -1)) 
+     
+    # X_train = torch.log(abs(X_train) + 1e-12)
+    # X_test = torch.log(abs(X_test) + 1e-12)
+    # X_val = torch.log(abs(X_val) + 1e-12)
     # X_train = torch.swapaxes(X_train, 1, -1)   
     # X_test = torch.swapaxes(X_test, 1, -1)  
     # X_val = torch.swapaxes(X_val, 1, -1)    

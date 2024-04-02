@@ -63,18 +63,19 @@ for iq, Q in enumerate(Q_CONFIGS):
 
     #extract features with SWS
     t0 = time()
-    S_train_sep = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=1024)
-    S_test_sep  = ws.scatteringTransform(torch.from_numpy(X_test) , batch_dim=0, batch_size=1024)
+    S_train_sep = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=2048)
+    S_test_sep  = ws.scatteringTransform(torch.from_numpy(X_test) , batch_dim=0, batch_size=2048)
     torch.cuda.synchronize()
     t1 = time()
     print("Sep Scattering took {:.2f} ms".format((t1 - t0)*1000))
     print(S_train_sep.shape)
     
     ws_2d = Scattering2D(J=3, shape=(28, 28), max_order=iq+1)
+    ws_2d.cuda()
     
     t0 = time()
-    S_train_2d: torch.Tensor = ws_2d.scattering(torch.from_numpy(X_train))
-    S_test_2d: torch.Tensor  = ws_2d.scattering(torch.from_numpy(X_test))    
+    S_train_2d: torch.Tensor = ws_2d.scattering(torch.from_numpy(X_train).cuda())
+    S_test_2d: torch.Tensor  = ws_2d.scattering(torch.from_numpy(X_test).cuda())    
     torch.cuda.synchronize()
     t1 = time()
     print("2D Scattering took {:.2f} ms".format((t1 - t0)*1000))

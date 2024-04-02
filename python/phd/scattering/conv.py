@@ -72,9 +72,19 @@ class SeperableConv:
             Xmu = X.mean(axis=0, keepdim=False)       
             del X
             return Xmu  
+        
+    def _fft_cost(self, N, M ,d):
+        P = N + M - 1
+        return P * log2(P) + P/d * log2(P/d)
+    
+    def _straight_cost(self, N, M, d):
+        return N * M / d
     
 
-    def _compute_fft_conv(self, Y: Tensor, filter: Filter, fun = None) -> Tensor:    
+    def _compute_fft_conv(self, Y: Tensor, filter: Filter, fun = None) -> Tensor:   
+        
+        N, M, d = filter.Nx, filter.Nh, filter.ds
+        # print('FFT more expensive: ', self._fft_cost(N, M, d) > self._straight_cost(N, M, d))
         
         other_dims_shape = Y.shape[0:-1]
         H = filter.H        

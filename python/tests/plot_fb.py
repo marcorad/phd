@@ -9,8 +9,8 @@ from phd.scattering.sep_ws import optimise_T
 
 from phd.scattering.morlet_sampler import MorletSampler1D
 
-Q = 2
-T = 32
+Q = 1
+T = 16
 fs = 1
 print(optimise_T(T, fs))
 
