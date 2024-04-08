@@ -4,7 +4,7 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 import pickle as pkl
 from sklearn import metrics
 import torch
-from phd.dataprocessing.medmnist3d import DATASETS
+from sepws.dataprocessing.medmnist3d import DATASETS
 
 import torch
 

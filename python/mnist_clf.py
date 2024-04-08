@@ -4,13 +4,13 @@ import sys
 
 sys.path.append('../python')
 
-import phd.scattering.config as config
+import sepws.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
 config.MORLET_DEFINITION = config.MorletDefinition(2, 3, 2, 2, 2)
 config.set_precision('single')
 config.ENABLE_DS = True
 
-from phd.scattering.sep_ws import SeperableWaveletScattering, optimise_T
+from sepws.scattering.sep_ws import SeperableWaveletScattering, optimise_T
 import matplotlib.pyplot as plt
 import numpy as np
 import torch

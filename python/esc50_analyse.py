@@ -1,11 +1,11 @@
-from phd.scattering import config
+from sepws.scattering import config
 config.ENABLE_DS = True
 config.ENABLE_FREQ_DS = False
 
-from phd.dataprocessing.esc50 import load_esc50, read_meta
+from sepws.dataprocessing.esc50 import load_esc50, read_meta
 
 
-from phd.scattering.sep_ws import SeperableWaveletScattering, optimise_T
+from sepws.scattering.sep_ws import SeperableWaveletScattering, optimise_T
 
 import pandas as pd
 import torch

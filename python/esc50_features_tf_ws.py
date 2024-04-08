@@ -1,11 +1,11 @@
-from phd.dataprocessing.esc50 import load_esc50
+from sepws.dataprocessing.esc50 import load_esc50
 
-from phd.scattering import config
+from sepws.scattering import config
 config.PAD_MODE = 'constant'
 config.set_precision('single')
 config.MORLET_DEFINITION = config.MorletDefinition(2,3,2,2,3)
 
-from phd.scattering.sep_ws import JointTFScattering, optimise_T, SeperableWaveletScattering
+from sepws.scattering.sep_ws import JointTFScattering, optimise_T, SeperableWaveletScattering
 
 import pandas as pd
 import torch

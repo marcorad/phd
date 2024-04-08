@@ -2,19 +2,19 @@ import sys
 
 sys.path.append('../python')
 
-import phd.scattering.config as config
+import sepws.scattering.config as config
 # config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
 # config.MORLET_DEFINITION = config.MORLET_DEF_PERFORMANCE
 config.set_precision('single')
 config.ENABLE_DS = True
 
-from phd.timeseries.sws_transform import time_series_sws_tranform
-from phd.scattering.sep_ws import optimise_T, SeperableWaveletScattering
+from sepws.timeseries.sws_transform import time_series_sws_tranform
+from sepws.scattering.sep_ws import optimise_T, SeperableWaveletScattering
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from time import time
-from phd.dataprocessing import ucf
+from sepws.dataprocessing import ucf
 
 
 torch.cuda.empty_cache()

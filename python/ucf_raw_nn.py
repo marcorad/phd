@@ -6,11 +6,11 @@ import numpy as np
 
 sys.path.append('../python')
 
-from phd.nn.lstm import ModelTrainer, CNNLSTM, CNN
+from sepws.nn.lstm import ModelTrainer, CNNLSTM, CNN
 
-from phd.timeseries.util import time_series_mean, time_series_std, time_series_normalise, time_series_select_feat_variance_thresh, time_series_select_features
+from sepws.timeseries.util import time_series_mean, time_series_std, time_series_normalise, time_series_select_feat_variance_thresh, time_series_select_features
 
-from phd.dataprocessing.ucf import read_train_test
+from sepws.dataprocessing.ucf import read_train_test
 
 X_train, y_train, X_test, y_test = read_train_test()
 

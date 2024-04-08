@@ -3,14 +3,14 @@ import numpy as np
 
 import sys
 sys.path.append('../python')
-import phd.scattering.config as config
+import sepws.scattering.config as config
 # config.MORLET_DEFINITION = config.MorletDefinition(2,4,2,2,2)
 config.MORLET_DEFINITION = config.MorletDefinition(2,3,2,2,2)
 config.set_precision('single')
 config.ENABLE_DS = True
-from phd.scattering.sep_ws import optimise_T, SeperableWaveletScattering
+from sepws.scattering.sep_ws import optimise_T, SeperableWaveletScattering
 
-from phd.dataprocessing.medmnist3d import load_train_test, DATASETS
+from sepws.dataprocessing.medmnist3d import load_train_test, DATASETS
 from scipy.spatial.transform import Rotation as R
 from scipy.ndimage import affine_transform
 

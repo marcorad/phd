@@ -1,10 +1,10 @@
-from phd.dataprocessing.esc50 import load_esc50
+from sepws.dataprocessing.esc50 import load_esc50
 
-from phd.scattering import config
+from sepws.scattering import config
 config.ENABLE_FREQ_DS = False
 config.PAD_MODE = 'reflect'
 
-from phd.scattering.sep_ws import SeperableWaveletScattering, optimise_T
+from sepws.scattering.sep_ws import SeperableWaveletScattering, optimise_T
 
 import pandas as pd
 import torch

@@ -1,4 +1,4 @@
-from phd.dataprocessing.ucf import save_train_test, read_train_test
+from sepws.dataprocessing.ucf import save_train_test, read_train_test
 
 # save_train_test()
 

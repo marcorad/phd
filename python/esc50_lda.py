@@ -1,6 +1,6 @@
 import pickle as pkl
 
-from phd.dataprocessing.esc50 import load_esc50
+from sepws.dataprocessing.esc50 import load_esc50
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
