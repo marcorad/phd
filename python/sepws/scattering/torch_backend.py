@@ -1,16 +1,20 @@
 import torch
 import torch.nn.functional as F
 from torch import Tensor
+from typing import List
     
 class TorchBackend:
     def __init__(self) -> None:
         pass
+    
+    def stack(self, x: List[Tensor]):
+        return torch.stack(x, dim=1)
         
     def pad(self, x, sizes):
         """
         Pads the last n dimensions with reflection padded given a 2n size array in reverse dimension order (dim -1 before, dim -1 after, dim -2 before, dim -2 after, ...).
         """
-        return F.pad(x, sizes, mode='reflection')    
+        return F.pad(x, sizes, mode='reflect')    
     
     def fft1d(self, x, dim):
         """
@@ -49,9 +53,9 @@ class TorchBackend:
             A Tensor which has been downsampled by a factor d in the specified dimension. The returned tensor is still in the frequency domain.
         """        
         if dim == len(X.shape) - 1:
-            return X.view(*X.shape[0:dim], d, X.shape[dim]//d).mean(dim=d, keepdim=False)
+            return X.view(*tuple(X.shape[0:dim]), d, X.shape[dim]//d).mean(dim=dim, keepdim=False)
         else:
-            return X.view(*X.shape[0:dim], d, X.shape[dim]//d, X.shape[dim+1:]).mean(dim=d, keepdim=False)
+            return X.view(*tuple(X.shape[0:dim]), d, X.shape[dim]//d, *X.shape[dim+1:]).mean(dim=dim, keepdim=False)
         
     def mul1d(self, x: Tensor, y: Tensor, dim: int):
         """

@@ -5,7 +5,10 @@ import numpy as np
 from numpy.fft import fftshift
 
 from sepws.scattering.filterbank import _filterbank_1d, calculate_padding_1d
+from sepws.scattering.config import cfg
 
+cfg.set_beta(1.0, 2.5)
+cfg.set_alpha(1.0, 3.0)
 
 N = 28 #MNIST size
 d = 8
@@ -13,8 +16,8 @@ l, r, Nt = calculate_padding_1d(N, d)
 print(l, r, Nt, Nt % d, Nt // d - 2)
 
 
-oversample = 10
-fb, ds = _filterbank_1d(Nt * oversample, d, 2,startfreq=None, include_negative_lambdas=True, input_ds_factors=[1, 2, 4])
+oversample = 8
+fb, ds = _filterbank_1d(Nt * oversample, d, 1.0,startfreq=None, include_negative_lambdas=True, input_ds_factors=[1, 2, 4])
 
 import matplotlib.pyplot as plt
 

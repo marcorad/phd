@@ -5,6 +5,10 @@ import numpy as np
 from numpy.fft import fftshift
 
 from sepws.scattering.filterbank import _separable_filterbank, calculate_padding_1d
+from sepws.scattering.config import cfg
+
+cfg.set_beta(1.0, 2.0)
+cfg.set_alpha(1.0, 2.5)
 
 
 N = 28 #MNIST size
@@ -25,7 +29,7 @@ d_in = 1
 phi = fb[0][d_in]['phi'][:, None] * fb[0][d_in]['phi'][None, :]
 phi = fftshift(phi)
 
-L = [0.8**2]
+L = [0.71**2]
 extent = (-0.5, 0.5, -0.5, 0.5)
 plt.contour(phi, levels = L, linestyles='dashed', extent=extent)
 

@@ -18,6 +18,11 @@ def calculate_padding_1d(N: int, d: int):
 def calculate_sigma_psi_w(Q):
     alpha = cfg.get_alpha(Q)
     return 1 / alpha * (2**(1/Q) - 1)
+
+def calculate_sigma_phi_w(d, Q):
+    sigma_phi = d * cfg.get_beta(Q) / np.pi # phi time std
+    sigma_phi_w = 1 / sigma_phi # phi freq std
+    return sigma_phi_w
     
 
 def _filterbank_1d(N: int, d: int, Q: float, startfreq: float = None, include_negative_lambdas = True, input_ds_factors: List[int] = None) -> Dict: 
@@ -119,8 +124,19 @@ def _filterbank_1d(N: int, d: int, Q: float, startfreq: float = None, include_ne
                 fb[d_o] = {
                     'phi': gauss,
                     'psi': None, #no psi is required for this level
-                    'ds': d // d_o
-                }
+                    'ds': {0: d // d_o}
+                }                
+        
+                
+        #some wavelets also directly use the LPF, so add the direct LPF
+        if d not in fb.keys(): 
+            gauss = gauss_filter_freq(N//d, sigma_phi / d)
+            fb[d] = {
+                'phi': gauss,
+                'psi': None,
+                'ds': {0: 1}
+            }
+        compounded_output_ds_factors.add(d)
     
     return fb, list(compounded_output_ds_factors)
 
@@ -158,7 +174,7 @@ def _separable_filterbank(N: List[int], d: List[int], Q: List[float], startfreq:
         DS.append(ds)
     return FB, DS
 
-def scattering_filterbanks(N: List[int], d: List[int], Q: List[List[float]], startfreq: List[float] = None):
+def scattering_filterbanks(N: List[int], d: List[int], Q: List[List[float]], startfreq: List[float] = None, allow_ds = True):
     """Generate multi-dimensional separable filterbanks for a maximum level of scattering defined by the length of Q.
 
     Args:
@@ -166,6 +182,7 @@ def scattering_filterbanks(N: List[int], d: List[int], Q: List[List[float]], sta
         d (List[int]): List of invariance scales for each dimension
         Q (List[List[float]]): List of filter per octaves for each level and each dimension, e.g. [[2, 2], [1, 1]] for a 2-level transform with for Q = (2, 2) for level 1 and Q = (1, 1) for level 2.
         startfreq (List[float], optional): List of normalised start frequencies in [0, 0.5] (frequency/sampling_frequency) for each dimension. When None, the first filter is placed according to filterbank parameters. Defaults to None.
+        allow_ds (bool, optional): Allows downsampling to occur. Note that padding operation will not operate properly when False. Defaults to True.
 
     Returns:
         List: A list containing a filterbank dictionary for each scattering level and dimension.
@@ -180,6 +197,7 @@ def scattering_filterbanks(N: List[int], d: List[int], Q: List[List[float]], sta
     ds = [[1] for _ in range(len(d))] #first filterbank has no input downsampling
     for j, q in enumerate(Q):
         fb, ds = _separable_filterbank(N, d, q, startfreq if j == 0 else None, ds)
+        if not allow_ds: ds = [[1] for _ in range(len(d))] 
         FB.append(fb)
     return FB
 

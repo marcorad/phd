@@ -11,17 +11,17 @@ class Config:
     ALPHA_LUT: Dict[float, float] = {}
     
     def set_beta(self, Q:float, beta: float):
-        self.BETA_LUT[Q] = beta
+        self.BETA_LUT[float(Q)] = beta
         
     def set_alpha(self, Q: float, alpha: float):
-        self.ALPHA_LUT[Q] = alpha
+        self.ALPHA_LUT[float(Q)] = alpha
         
     def get_beta(self, Q: float) -> float:
-        if Q in self.BETA_LUT.keys(): return self.BETA_LUT[Q]
+        if float(Q) in self.BETA_LUT.keys(): return self.BETA_LUT[float(Q)]
         return self.BETA_DEFAULT
     
     def get_alpha(self, Q: float) -> float:
-        if Q in self.ALPHA_LUT.keys(): return self.ALPHA_LUT[Q]
+        if float(Q) in self.ALPHA_LUT.keys(): return self.ALPHA_LUT[float(Q)]
         return self.ALPHA_DEFAULT
     
     def cuda(self):
