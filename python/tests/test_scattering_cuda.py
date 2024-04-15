@@ -10,7 +10,7 @@ from sepws.scattering.config import cfg
 
 cfg.cuda()
 cfg.set_beta(1, 2.5)
-cfg.set_alpha(1, 3.0)
+cfg.set_alpha(1, 2.5)
 
 
 import matplotlib.pyplot as plt

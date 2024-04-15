@@ -50,6 +50,7 @@ class SeparableScattering:
         return [1 for _ in range(self.Ndim)]
     
     def _should_prune(self, lambda_filt: List[float], lambda_demod: List[float], level: int):
+        bws = []
         for i in range(self.Ndim):
             sigma_psi_w = calculate_sigma_psi_w(self.Q[level][i])
             sigma_phi_w = calculate_sigma_phi_w(self.d[i], self.Q[level][i])
@@ -67,12 +68,13 @@ class SeparableScattering:
             # these intervals must overlap, 
             # * is the centre of the spectrum, d is the significant bandwidth of the demodulated filter (via modulus), and f is the morlet filter under consideration which has a center x
             EPS = 1e-9 #for floating point error
-            # if abs(lambda_filt[i]) - beta * sigma_psi_w_filt > beta * sigma_psi_w_demod + EPS: return True            
-            if abs(lambda_filt[i]) > beta * sigma_psi_w_demod + EPS: return True            
+            if abs(lambda_filt[i]) > beta * sigma_psi_w_demod + EPS: return True 
+            # if abs(lambda_filt[i]) > abs(lambda_demod[i]): return True 
+            bws.append(abs(lambda_filt[i]) - sigma_psi_w_filt > sigma_psi_w_demod)           
         return False
     
-    def scattering(self, x: Tensor):
-        S, _, _, _ = self._scattering(x, False, False)
+    def scattering(self, x: Tensor, normalise = False):
+        S, _, _, _ = self._scattering(x, False, False, normalise)        
         return self.backend.stack(S)
     
     def _calculate_paths(self):   #TODO: use for pre-calculating separable filters     
@@ -120,7 +122,7 @@ class SeparableScattering:
                 })                                                        
         return paths
         
-    def _scattering(self, x: Tensor, returnU = False, returnSpath = False):        
+    def _scattering(self, x: Tensor, returnU = False, returnSpath = False, normalise=False):        
         #function aliases for clarity        
         unpad = lambda x: self.backend.unpad(x) if self.allow_ds else x #disable unpadding when DS occurs
         pad = lambda x, s: self.backend.pad(x, s)
@@ -146,11 +148,12 @@ class SeparableScattering:
         #first level
         Lambda_1 = get_Lambda_set(self.fb, 0, [1]*self.Ndim)
         for lambda1 in Lambda_1:            
-            u_1 = modulus(ifft(mulds(X, 0, l0_compounded_ds, lambda1)))
+            u_1 = modulus(ifft(mulds(X, 0, l0_compounded_ds, lambda1))) #TODO: this can be faster?
             U_1 = fft(u_1)
             l1_compounded_ds = self._get_compounded_downsample_factor(0, l0_compounded_ds, lambda1)
-            s_1 = ifft(mulds(U_1, 0, l1_compounded_ds, lambda_zero)).real
+            s_1 = ifft(mulds(U_1, 0, l1_compounded_ds, lambda_zero)).real #TODO: this can be faster?
             s_1 = unpad(s_1)
+            if normalise: s_1 = s_1 / s_0
             S.append(s_1)            
             
             if returnU:     Up[lambda1] = u_1
@@ -166,6 +169,7 @@ class SeparableScattering:
                 U_2 = fft(u_2)
                 l2_compounded_ds = self._get_compounded_downsample_factor(1, l1_compounded_ds, lambda2)
                 s_2 = unpad(ifft(mulds(U_2, 1, l2_compounded_ds, lambda_zero)).real)
+                if normalise: s_2 = s_2 / s_1
                 S.append(s_2)   
                 
                 if returnU:     Up[(lambda1, lambda2)] = u_2
@@ -181,6 +185,7 @@ class SeparableScattering:
                     U_3 = fft(u_3)
                     l3_compounded_ds = self._get_compounded_downsample_factor(2, l2_compounded_ds, lambda3)
                     s_3 = unpad(ifft(mulds(U_3, 2, l3_compounded_ds, lambda_zero)).real)
+                    if normalise: s_3 = s_3 / s_2
                     S.append(s_3) 
                     
                     if returnU:     Up[(lambda1, lambda2, lambda3)] = u_3

@@ -291,6 +291,13 @@ def get_Lambda_set(fb: List, level: int, input_ds: List[int]):
     lambdas = [[0] + list(fb[level][dim][input_ds[dim]]['psi'].keys()) for dim in range(Ndims)] # list of all lambdas in each dimension, including the 0 filter
     Lambda = list(product(*lambdas)) #the cross product set, which still includes the 0 filter
     Lambda = Lambda[1:] #remove the 0 filter
+    # lambdas = [list(fb[level][dim][input_ds[dim]]['psi'].keys()) for dim in range(Ndims)] # list of all lambdas in each dimension, including the 0 filter
+    # Lambda = list(product(*lambdas)) #the cross product set, which still includes the 0 filter
+    
+    # Lambda_final = []
+    # for L in Lambda:
+    #     if any([l == 0 for l in L]) and any([l < 0 for l in L]): continue
+    #     Lambda_final.append(L)
     return Lambda
 
     

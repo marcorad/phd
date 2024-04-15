@@ -1,3 +1,25 @@
+
+import sys
+
+
+sys.path.append('../python')
+
+import sepws.scattering.config as config
+# config.MORLET_DEFINITION = config.MORLET_DEF_DEFAULT
+
+
+from sepws.scattering.separable_scattering import SeparableScattering
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+from time import time
+
+from sepws.scattering.config import cfg
+
+cfg.cuda()
+cfg.set_beta(1, 2.5)
+cfg.set_alpha(1, 2.5)
+
 import numpy as np
 from sklearn.svm import SVC
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
@@ -219,95 +241,112 @@ class LinearTrainer:
         model_parameters = filter(lambda p: p.requires_grad, self.model.parameters())
         params = sum([np.prod(p.size()) for p in model_parameters])
         return params
-        
-        
-                
 
 
-EN_LDA_DR = False
+from sklearn.preprocessing import normalize
 
-results = {}
-
-for d in DATASETS:
-    print(
-        "---------\n"
-        f"{d}\n"
-        "---------\n"
-    )
-    fname = f'data/ws-{d}-mnist3d-Q=[[2, 2, 2]].pkl'
-    with open(fname, 'rb') as file:
-        X_train, y_train, X_test, y_test, X_val, y_val = pkl.load(file)
-        y_train = torch.from_numpy(y_train.astype(np.float32))
-        y_test = torch.from_numpy(y_test.astype(np.float32))
-        y_val = torch.from_numpy(y_val.astype(np.float32))
-        
-    X_train = torch.reshape(X_train, (X_train.shape[0], -1))    
-    X_test = torch.reshape(X_test, (X_test.shape[0], -1))  
-    X_val = torch.reshape(X_val, (X_val.shape[0], -1)) 
-     
-    # X_train = torch.log(abs(X_train) + 1e-12)
-    # X_test = torch.log(abs(X_test) + 1e-12)
-    # X_val = torch.log(abs(X_val) + 1e-12)
-    # X_train = torch.swapaxes(X_train, 1, -1)   
-    # X_test = torch.swapaxes(X_test, 1, -1)  
-    # X_val = torch.swapaxes(X_val, 1, -1)    
-    
-    # X_train = torch.mean(X_train, dim=(1,2,3))    
-    # X_test = torch.mean(X_test, dim=(1,2,3))  
-    # X_val = torch.mean(X_val, dim=(1,2,3))  
-    n_classes = len(torch.unique(y_train)) 
-    print(f'{n_classes=}') 
-    
+torch.cuda.empty_cache()
+from kymatio.torch import Scattering2D
 
 
-    # X_train = X_train / torch.max(X_train, dim=1, keepdim=True)[0]
-    # X_test = X_test / torch.max(X_test, dim=1, keepdim=True)[0]
-    # X_val = X_val / torch.max(X_val, dim=1, keepdim=True)[0]
-
-    mu = torch.mean(X_train, axis=0)
-    std = torch.std(X_train, axis=0)
-    print(torch.any(std < 1e-12))
-
-    # X_train = (X_train - mu)/std
-    # X_test = (X_test - mu)/std
-    # X_val = (X_val - mu)/std
-    
-        
-    # if EN_LDA_DR:
-    #     lda = LDA(priors=[1/n_classes for _ in range(n_classes)])
-    #     X_train = lda.fit_transform(X_train, y_train)
-    #     X_test = lda.transform(X_test)
-        
-    # clf = SVC(verbose=False, probability=True)
-
-    # clf.fit(X_train, y_train)
-    # y_pred = clf.predict(X_test)
-    # y_prob = clf.predict_proba(X_test) if n_classes > 2 else clf.predict_proba(X_test)[:, 1]
 
 
-    # print(
-    #     f"Classification report for classifier {clf}:\n"
-    #     f"{metrics.classification_report(y_test, y_pred, digits=3)}\n"
-    #     f"AUC={metrics.roc_auc_score(y_test, y_prob, multi_class='ovo')}"
-    # )
-    
-    print(X_train.shape)
-    net = DeepClassifier(X_train.shape[1],[1024, 512, 256], n_classes)
+
+
+
+d = [4]*2
+print(d)
+
+ws = SeparableScattering([28, 28], d, [[1, 1]])
+
+
+from sklearn import datasets, metrics, svm
+from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
+from sklearn.model_selection import train_test_split
+
+from mnist import MNIST
+mndata = MNIST('../../python-mnist/data')
+X_train, y_train = mndata.load_training()
+X_test, y_test = mndata.load_testing()
+X_train = torch.from_numpy(np.array(X_train).reshape((-1, 28, 28))).type(cfg.REAL_DTYPE)
+y_train = np.array(y_train)
+X_test = torch.from_numpy(np.array(X_test).reshape((-1, 28, 28))).type(cfg.REAL_DTYPE)
+y_test = np.array(y_test)
+
+torch.cuda.empty_cache()
+
+#extract features with SWS
+norm = False
+t0 = time()
+S_train_sep = ws.scattering(X_train.to(cfg.DEVICE), normalise=norm).cpu()
+S_test_sep  = ws.scattering(X_test.to(cfg.DEVICE), normalise=norm).cpu()
+torch.cuda.synchronize()
+t1 = time()
+print("Sep Scattering took {:.2f} ms".format((t1 - t0)*1000))
+print(S_train_sep.shape)
+
+ws_2d = Scattering2D(J=2, shape=(28, 28), max_order=1)
+ws_2d.cuda()
+
+t0 = time()
+S_train_2d: torch.Tensor = ws_2d.scattering(X_train.cuda())
+S_test_2d: torch.Tensor  = ws_2d.scattering(X_test.cuda())   
+torch.cuda.synchronize()
+t1 = time()
+print("2D Scattering took {:.2f} ms".format((t1 - t0)*1000))
+S_train_2d = S_train_2d.swapaxes(1, -1)
+S_test_2d = S_test_2d.swapaxes(1, -1)
+print(S_train_2d.shape)
+print('2D DEVICE', S_test_2d.device)
+
+Nval = 5000
+
+# #flatten
+S_train_sep = S_train_sep.reshape(S_train_sep.shape[0], np.prod(S_train_sep.shape[1:]))
+S_val_sep = S_train_sep[0:Nval, ...]
+S_train_sep = S_train_sep[Nval:, ...]
+S_test_sep = S_test_sep.reshape(S_test_sep.shape[0], np.prod(S_test_sep.shape[1:]))
+
+S_train_2d = S_train_2d.reshape(S_train_2d.shape[0], np.prod(S_train_2d.shape[1:]))
+S_val_2d = S_train_2d[0:Nval, ...]
+S_train_2d = S_train_2d[Nval:, ...]
+S_test_2d = S_test_2d.reshape(S_test_2d.shape[0], np.prod(S_test_2d.shape[1:]))
+
+y_val = torch.from_numpy(y_train[0:Nval])
+y_train = torch.from_numpy(y_train[Nval:])
+y_test = torch.from_numpy(y_test)
+
+print(S_train_sep.shape)
+print(S_train_2d.shape)
+
+sep_err = []
+_2d_err = []
+
+for i in range(50):
+
+    net = DeepClassifier(S_train_sep.shape[1],[256, 128, 64], 10)
     trainer = LinearTrainer(net)
     print(trainer.num_trainable_parameters())
-    trainer.train(X_train, y_train, X_val, y_val, n_epochs=100, lr=1e-5)
-    acc, auc = trainer.test_acc(X_test, y_test)
-    results[d] = {'acc': acc.item(), 'auc': auc, 'n_classes': n_classes}
-    print(f'Test Accuracy: {acc: .3f}, AUC: {auc: .3f}')
-  
-  
-import pprint    
-pprint.pprint(results)
-print('Average results')
-avg_auc = 0
-avg_acc = 0
-for k, v in results.items():
-    avg_auc += v['auc'] / len(results.keys())
-    avg_acc += v['acc'] / len(results.keys())
+    trainer.train(S_train_sep, y_train, S_val_sep, y_val, n_epochs=100, lr=3e-5)
+    acc, _ = trainer.test_acc(S_test_sep, y_test)
+    err_prc = (1-acc)*100
+    sep_err.append(err_prc.item())
+    print(f'SEP Test Err: {err_prc: .2f}')
+
+
+    net = DeepClassifier(S_train_2d.shape[1],[256, 128, 64], 10)
+    trainer = LinearTrainer(net)
+    print(trainer.num_trainable_parameters())
+    trainer.train(S_train_2d, y_train, S_val_2d, y_val, n_epochs=100, lr=3e-5)
+    acc, _ = trainer.test_acc(S_test_2d, y_test)
+    err_prc = (1-acc)*100   
+    _2d_err.append(err_prc.item())
+    print(f'2D Test Err: {err_prc: .2f}')
     
-print(f'{avg_auc=}, {avg_acc=}')
+print(sep_err)
+print(_2d_err)
+
+print('SEP ERR: ', np.mean(sep_err), np.std(sep_err))
+print('2D ERR: ', np.mean(_2d_err), np.std(_2d_err))
+

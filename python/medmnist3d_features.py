@@ -3,12 +3,10 @@ import numpy as np
 
 import sys
 sys.path.append('../python')
-import sepws.scattering.config as config
-# config.MORLET_DEFINITION = config.MorletDefinition(2,4,2,2,2)
-config.MORLET_DEFINITION = config.MorletDefinition(2,3,2,2,2)
-config.set_precision('single')
-config.ENABLE_DS = True
-from sepws.scattering.sep_ws import optimise_T, SeperableWaveletScattering
+from sepws.scattering.config import cfg
+cfg.cuda()
+
+from sepws.scattering.separable_scattering import SeparableScattering
 
 from sepws.dataprocessing.medmnist3d import load_train_test, DATASETS
 from scipy.spatial.transform import Rotation as R
@@ -56,16 +54,12 @@ def augment_train(X, y, tot_examples_in_each_class, keep_prop = True):
         
     
 
-Q = [[1]*3]
-T = [optimise_T(32,1)]*3
-print(T)
-fs = [1, 1, 1]
-dims = [1, 2, 3]
+Q = [[2]*3]
+d = [4]*3
 N = [28, 28, 28]
-DCT = True
 AUG = False
 
-ws = SeperableWaveletScattering(Q, T, fs, dims, N)
+ws = SeparableScattering(N, d, Q)
 
 
 
@@ -79,22 +73,23 @@ for d in DATASETS:
         # X /= p.astype(config.NUMPY_REAL)
         return X
     
-    X_train = X_train.astype(config.NUMPY_REAL)/256
+    X_train = X_train.astype(np.float32)/256
     X_train = normalise(X_train)
     if AUG: X_train, y_train = augment_train(X_train, y_train, 200 if d == 'organ' else 2000)
     
-    X_test = X_test.astype(config.NUMPY_REAL)/256
+    X_test = X_test.astype(np.float32)/256
     X_test = normalise(X_test)
     
-    X_val = X_val.astype(config.NUMPY_REAL)/256
+    X_val = X_val.astype(np.float32)/256
     X_val = normalise(X_val)
-    
-    s_train = ws.scatteringTransform(torch.from_numpy(X_train), batch_dim=0, batch_size=8, log_dct=DCT)
+    torch.cuda.empty_cache()
+    norm = False
+    s_train = ws.scattering(torch.from_numpy(X_train).type(cfg.REAL_DTYPE).cuda(), norm)
     print(s_train.shape)
-    s_test = ws.scatteringTransform(torch.from_numpy(X_test), batch_dim=0, batch_size=8, log_dct=DCT)
-    s_val = ws.scatteringTransform(torch.from_numpy(X_val), batch_dim=0, batch_size=8, log_dct=DCT)
+    s_test = ws.scattering(torch.from_numpy(X_test).type(cfg.REAL_DTYPE).cuda(), norm)
+    s_val = ws.scattering(torch.from_numpy(X_val).type(cfg.REAL_DTYPE).cuda(), norm)
 
-    fname = f'ws-{d}-mnist3d-{Q=}-{T=}-{DCT=}-{AUG=}.pkl'
+    fname = f'ws-{d}-mnist3d-{Q=}.pkl'
 
     import pickle as pkl
     with open('data/' + fname, 'wb') as file:

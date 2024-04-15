@@ -22,7 +22,7 @@ from skimage.color import rgb2gray
 I = rgb2gray(testim.coffee())
 
 N = list(I.shape)
-d = [32,32]
+d = [16,16]
 Q = [[1,1]]
 
 x = torch.zeros((1, N[0], N[1])).type(torch.float32).to(cfg.DEVICE)
@@ -70,7 +70,17 @@ print(len(s), sum, (x**2).sum())
 
 plt.figure()
 
-pl = s
+pl = list(sp.values())
+titl = list(sp.keys())
+
+titlr = []
+
+for t in titl:
+    print(t)
+    if type(t[0]) != tuple:
+        titlr.append([round(l, 2) for l in t])
+    else:
+        titlr.append([[round(l, 2) for l in k] for k in t])
 
 Ns = min(len(pl), 300)
 K = ceil(Ns**0.5)
@@ -79,6 +89,6 @@ for i in range(Ns):
     plt.subplot(K, K, i+1)
     # plt.imshow(pl[i][0, 4:33, 4:33])#, vmin=0, vmax=torch.concat(s).max())
     plt.imshow(pl[i][0, ...])#, vmin=0, vmax=torch.concat(s).max())
-    # plt.title(",".join([f'{}' for l in p[i]]))
+    plt.title(titlr[i])
     
 plt.show(block=True)
