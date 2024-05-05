@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 7 items.
+The style file: ieeetr.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+Database file #1: refs.bib
+Warning--entry type for "MATLAB" isn't style-file defined
+--line 147 of file refs.bib
+Warning--empty journal in jointtfscattering1
+Warning--empty journal in jointtfscattering2
+You've used 21 entries,
+            1876 wiz_defined-function locations,
+            602 strings with 7530 characters,
+and the built_in function-call counts, 6044 in all, are:
+= -- 542
+> -- 331
+< -- 0
++ -- 118
+- -- 97
+* -- 460
+:= -- 885
+add.period$ -- 22
+call.type$ -- 21
+change.case$ -- 20
+chr.to.int$ -- 0
+cite$ -- 23
+duplicate$ -- 272
+empty$ -- 543
+format.name$ -- 97
+if$ -- 1436
+int.to.chr$ -- 0
+int.to.str$ -- 21
+missing$ -- 17
+newline$ -- 67
+num.names$ -- 23
+pop$ -- 84
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 208
+stack$ -- 0
+substring$ -- 372
+swap$ -- 112
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 51
+width$ -- 23
+write$ -- 196
+(There were 3 warnings)

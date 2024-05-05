@@ -1,0 +1,150 @@
+\documentclass[11pt,oneside,openany,a4paper, %... Global layout
+afrikaans,UKenglish, %... Global language options
+PhD, a5block %... stb-thesis options
+]{stb-thesis}
+
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{color}
+\usepackage{parskip}%......... Paragraph spacing + zero indent
+\usepackage{amssymb} % only if necessary
+\usepackage{bm} %.. Bold math characters (after fonts)
+\usepackage{hyperref}
+
+\usepackage[numbers]{stb-bib}%........................... Bibliography
+%.......... Auhor-year style
+\addto{\captionsafrikaans}{\renewcommand{\bibname}{Lys van Verwysings}}
+\addto{\captionsUKenglish}{\renewcommand{\bibname}{List of References}}
+
+% \iftrue
+% \usepackage[backref=page]{hyperref}%.... Hyperlinks & backreferences
+% \else
+% \usepackage[pageref]{backref}%........... Citation backreferences
+% \fi
+% \renewcommand*{\backrefalt}[4]{%s
+% \ifcase #1 (Not cited.)%
+% \or (Cited on page~#2.)%
+% \else (Cited on pages~#2.)%
+% \fi}
+
+\newcommand\articleinfo[5]{%
+\noindent\rule{\textwidth}{0.5pt}
+\begin{center}\small\textit{#1}\par
+    \begin{spacing}{0.1}
+    \small Accepted in #2 on #3\par
+    \small doi: #4\noindent
+\end{spacing}\noindent
+\end{center}\noindent
+\noindent\rule{\textwidth}{0.25pt}%
+\section*{\centering \textsc{Abstract}}
+\begin{spacing}{1.0}    
+    \small  #5 \noindent
+\end{spacing}
+\noindent\rule{\textwidth}{0.5pt}\pagebreak
+}
+
+\usepackage{paper1}
+\usepackage{paper2}
+\usepackage{paper3}
+
+% Subappendices
+\usepackage{appendix}
+% Start of subappendices environment
+\AtBeginEnvironment{subappendices}{%
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+}
+
+% End of subappendices environment
+\AtEndEnvironment{subappendices}{%
+\counterwithout{figure}{section}
+\counterwithout{table}{section}
+}
+
+
+\graphicspath{{./content/paper2/fig/}{./content/paper1/fig/}}
+
+\usepackage{iftex}
+\ifxetex
+\usepackage[math-style=TeX, bold-style=TeX]{unicode-math}
+\setmainfont{Cambria}%........................ (Windows)
+\setsansfont[Scale=MatchLowercase]{Calibri}
+\setmonofont[Scale=MatchLowercase]{Consolas}
+\setmathfont{Cambria Math}
+\defaultfontfeatures{Ligatures=TeX}
+\let\bm\symbfit%.............................. Bold math
+\else
+\usepackage{textcomp}%........................ Additional text symbols
+\usepackage[T1]{fontenc}%..................... Type 1 outline fonts
+\usepackage{bm}%.............................. Bold math fonts
+\fi
+
+\begin{document}
+\title{\textbf{Wavelet Scattering Tranforms Applied to Whale Vocalisations}}
+\author{M.W. Rademan}{Marco Wiehann Rademan}
+\faculty{Electrical and Electronic Engineering}
+\degree{PhD}{Doctor of Philosophy}
+\supervisor{D.J.J. Versfeld}
+\cosupervisor{J.A. Du Preez}
+% \date{August}{2024} 
+\SetCopyrightOff
+\address{\AorE{Departement Siviele Ingenieurswese,\\ Stellenbosch Universiteit,\\
+Privaatsak X1, 7602 Matieland, Suid Afrika.
+}{%
+Department of Civil Engineering,\\ Stellenbosch University,\\
+Private Bag X1, 7602 Matieland, South Africa.}}
+
+
+% \frontmatter
+\begin{singlespace}
+\TitlePage%..................... Single spaced title page
+\end{singlespace}
+
+
+\begin{singlespace}
+\DeclarationDate{\today}
+\DeclarationPage
+\end{singlespace}
+% \DeclarationPage
+
+\begin{abstract}
+    
+    
+\end{abstract}
+
+\begin{abstract}[afrikaans]
+    
+    
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\chapter*{Nomenclature}
+\label{chap:nomenclature}
+\addcontentsline{toc}{chapter}{\nameref{chap:nomenclature}}
+
+
+
+% \begin{singlespace}
+\input{content/introduction}
+
+\input{content/p1_intro}
+\input{content/paper1/main}
+
+\input{content/p2_intro}
+\input{content/paper2/main}
+
+\input{content/p3_intro}
+\input{content/paper3/main}
+% \end{singlespace}
+
+\bibliographystyle{stb-bib-eng-a}
+\bibliography{references}
+
+\end{document}

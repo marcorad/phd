@@ -1,0 +1,67 @@
+\babel@toc {english}{}\relax 
+\babel@toc {afrikaans}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{List of Figures}{7}{section*.6}%
+\contentsline {chapter}{List of Tables}{10}{section*.11}%
+\contentsline {chapter}{\nameref {chap:nomenclature}}{11}{chapter*.14}%
+\contentsline {chapter}{\numberline {1}Introduction}{12}{chapter.1}%
+\contentsline {chapter}{\numberline {2}The Relevance of Time-Frequency Analyses}{13}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Wavelet Transforms as a Fourier Alternative}{14}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{16}{section.3.1}%
+\contentsline {section}{\numberline {3.2}False Bay Data}{19}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Spectral Entropy}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}STFT}{20}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}CWT}{22}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Signal detection}{25}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}K-means}{25}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Soft Output}{26}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Median Filtering}{27}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Simulation}{29}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Purpose}{29}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Setup}{29}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Measuring Soft-Output Accuracy}{30}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Results}{31}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}A Note on L2 Normalization}{34}{subsection.3.5.5}%
+\contentsline {section}{\numberline {3.6}Application to the False Bay Data}{34}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Discussion}{37}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Conclusion}{39}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Acknowledgements}{39}{section.3.9}%
+\contentsline {section}{Appendices}{39}{section*.34}%
+\contentsline {section}{\numberline {3.A}K-means Implementation}{39}{section.1.3.A}%
+\contentsline {chapter}{\numberline {4}Feature Extraction with Wavelet Transforms}{42}{appendix.4}%
+\contentsline {chapter}{\numberline {5}Introducing Wavelet Scattering}{43}{appendix.5}%
+\contentsline {section}{\numberline {5.1}Introduction}{44}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Data}{47}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Wavelet Scattering}{50}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Filter Bank Construction}{50}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Scattering Transform}{52}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Improved Spectral Entropy Detector}{55}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Spectral Entropy}{55}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Improving SE Robustness}{55}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}GMM Automatic Threshold Selection}{56}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Problems with the Posterior}{58}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Method}{58}{subsection.5.4.5}%
+\contentsline {subsection}{\numberline {5.4.6}Results}{60}{subsection.5.4.6}%
+\contentsline {subsection}{\numberline {5.4.7}Discussion}{61}{subsection.5.4.7}%
+\contentsline {section}{\numberline {5.5}Classification}{62}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Feature Extraction}{62}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Linear Disciminant Analysis}{63}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Results}{64}{subsection.5.5.3}%
+\contentsline {subsection}{\numberline {5.5.4}Discussion}{65}{subsection.5.5.4}%
+\contentsline {section}{\numberline {5.6}Conclusion}{69}{section.5.6}%
+\contentsline {section}{Appendices}{71}{section*.66}%
+\contentsline {section}{\numberline {5.A}Conditions of Monotonicity of the GMM Posterior}{71}{section.2.5.A}%
+\contentsline {chapter}{\numberline {6}Wavelet Scattering in Higher Dimensions}{73}{appendix.6}%
+\contentsline {chapter}{\numberline {7}Separable Wavelet Scattering}{74}{appendix.7}%
+\contentsline {section}{\numberline {7.1}Introduction}{75}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Separable Morlet Filterbank}{76}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Morlet}{76}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}1D Filterbank Construction}{77}{subsection.7.2.2}%
+\contentsline {section}{\numberline {7.3}Separable Scattering Transform}{79}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Transform}{79}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Downsampling Strategy}{80}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}Convolutions}{82}{subsection.7.3.3}%
+\contentsline {section}{\numberline {7.4}Results}{83}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}MNIST}{83}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}MedMNIST3D}{84}{subsection.7.4.2}%
+\contentsline {chapter}{Bibliography}{85}{section*.76}%

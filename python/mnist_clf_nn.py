@@ -286,7 +286,7 @@ t1 = time()
 print("Sep Scattering took {:.2f} ms".format((t1 - t0)*1000))
 print(S_train_sep.shape)
 
-ws_2d = Scattering2D(J=2, shape=(28, 28), max_order=1)
+ws_2d = Scattering2D(J=3, shape=(28, 28), max_order=2)
 ws_2d.cuda()
 
 t0 = time()
@@ -323,11 +323,11 @@ print(S_train_2d.shape)
 sep_err = []
 _2d_err = []
 
-for i in range(50):
+for i in range(1):
 
     net = DeepClassifier(S_train_sep.shape[1],[256, 128, 64], 10)
     trainer = LinearTrainer(net)
-    print(trainer.num_trainable_parameters())
+    print("SEP PARAMETERS", trainer.num_trainable_parameters())
     trainer.train(S_train_sep, y_train, S_val_sep, y_val, n_epochs=100, lr=3e-5)
     acc, _ = trainer.test_acc(S_test_sep, y_test)
     err_prc = (1-acc)*100
@@ -337,7 +337,7 @@ for i in range(50):
 
     net = DeepClassifier(S_train_2d.shape[1],[256, 128, 64], 10)
     trainer = LinearTrainer(net)
-    print(trainer.num_trainable_parameters())
+    print("2D PARAMETERS", trainer.num_trainable_parameters())
     trainer.train(S_train_2d, y_train, S_val_2d, y_val, n_epochs=100, lr=3e-5)
     acc, _ = trainer.test_acc(S_test_2d, y_test)
     err_prc = (1-acc)*100   

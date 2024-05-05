@@ -1,0 +1,102 @@
+\begin{thebibliography}{10}
+
+\bibitem{2dscattering}
+J.~Bruna and S.~Mallat, ``Invariant scattering convolution networks,'' {\em
+  IEEE transactions on pattern analysis and machine intelligence}, vol.~35,
+  no.~8, pp.~1872--1886, 2013.
+
+\bibitem{1dscattering1}
+J.~And{\'e}n and S.~Mallat, ``Multiscale scattering for audio
+  classification.,'' in {\em ISMIR}, pp.~657--662, Miami, Florida, 2011.
+
+\bibitem{1dscattering2}
+J.~And{\'e}n and S.~Mallat, ``Deep scattering spectrum,'' {\em IEEE
+  Transactions on Signal Processing}, vol.~62, no.~16, pp.~4114--4128, 2014.
+
+\bibitem{3dscattering}
+Y.~Y. Tang, Y.~Lu, and H.~Yuan, ``Hyperspectral image classification based on
+  three-dimensional scattering wavelet transform,'' {\em IEEE Transactions on
+  Geoscience and Remote Sensing}, vol.~53, pp.~2467--2480, 5 2015.
+
+\bibitem{harmonicscattering}
+M.~Eickenberg, G.~Exarchakis, M.~Hirn, and S.~Mallat, ``Solid harmonic wavelet
+  scattering: Predicting quantum molecular energy from invariant descriptors of
+  3d electronic densities,'' in {\em Advances in Neural Information Processing
+  Systems} (I.~Guyon, U.~V. Luxburg, S.~Bengio, H.~Wallach, R.~Fergus,
+  S.~Vishwanathan, and R.~Garnett, eds.), vol.~30, Curran Associates, Inc.,
+  2017.
+
+\bibitem{groupinvariantscattering}
+S.~Mallat, ``Group invariant scattering,'' {\em Communications on Pure and
+  Applied Mathematics}, vol.~65, no.~10, pp.~1331--1398, 2012.
+
+\bibitem{jointtfscattering1}
+J.~Andén, V.~Lostanlen, and S.~Mallat, ``Joint time-frequency scattering for
+  audio classification,'' 12 2015.
+
+\bibitem{jointtfscattering2}
+J.~Andén, V.~Lostanlen, and S.~Mallat, ``Joint time-frequency scattering,'' 7
+  2018.
+
+\bibitem{sincnet}
+M.~Ravanelli and Y.~Bengio, ``Speaker recognition from raw waveform with
+  sincnet,'' in {\em 2018 IEEE spoken language technology workshop (SLT)},
+  pp.~1021--1028, IEEE, 2018.
+
+\bibitem{separablecnn}
+Y.~Mao, Z.~He, Z.~Ma, X.~Tang, and Z.~Wang, ``Efficient convolution neural
+  networks for object tracking using separable convolution and filter
+  pruning,'' {\em IEEE Access}, vol.~7, pp.~106466--106474, 2019.
+
+\bibitem{learnablewavelettransform}
+G.~Michau, G.~Frusque, and O.~Fink, ``Fully learnable deep wavelet transform
+  for unsupervised monitoring of high-frequency time series,'' {\em Proceedings
+  of the National Academy of Sciences of the United States of America},
+  vol.~119, 2 2022.
+
+\bibitem{kymatio}
+M.~Andreux, T.~Angles, G.~Exarchakis, R.~Leonarduzzi, G.~Rochette, L.~Thiry,
+  J.~Zarka, S.~Mallat, J.~Andén, E.~Belilovsky, J.~Bruna, V.~Lostanlen,
+  M.~Chaudhary, M.~J. Hirn, E.~Oyallon, S.~Zhang, C.~Cella, and M.~Eickenberg,
+  ``Kymatio: Scattering transforms in python,'' {\em Journal of Machine
+  Learning Research}, vol.~21, no.~60, pp.~1--6, 2020.
+
+\bibitem{MATLAB}
+{MathWorks Inc.}, ``{MATLAB Wavelet Toolbox (R2024a)},'' 2022.
+
+\bibitem{mnist}
+Y.~LeCun, C.~Cortes, C.~Burges, {\em et~al.}, ``Mnist handwritten digit
+  database,'' 2010.
+
+\bibitem{medmnist}
+J.~Yang, R.~Shi, D.~Wei, Z.~Liu, L.~Zhao, B.~Ke, H.~Pfister, and B.~Ni,
+  ``Medmnist v2-a large-scale lightweight benchmark for 2d and 3d biomedical
+  image classification,'' {\em Scientific Data}, vol.~10, no.~1, p.~41, 2023.
+
+\bibitem{waveletsandsubbandcoding}
+J.~Kovacevic and M.~Vetterli, {\em Wavelets and Subband Coding}.
+\newblock Prentice-Hall signal processing series, Prentice Hall PTR, 1995.
+
+\bibitem{pytorch}
+A.~Paszke, S.~Gross, F.~Massa, A.~Lerer, J.~Bradbury, G.~Chanan, T.~Killeen,
+  Z.~Lin, N.~Gimelshein, L.~Antiga, A.~Desmaison, A.~Kopf, E.~Yang, Z.~DeVito,
+  M.~Raison, A.~Tejani, S.~Chilamkurthy, B.~Steiner, L.~Fang, J.~Bai, and
+  S.~Chintala, ``Pytorch: An imperative style, high-performance deep learning
+  library,'' in {\em Advances in Neural Information Processing Systems 32},
+  pp.~8024--8035, Curran Associates, Inc., 2019.
+
+\bibitem{lda}
+R.~A. Fisher, ``The use of multiple measurements in taxonomic problems,'' {\em
+  Annals of Eugenics}, vol.~7, no.~2, pp.~179--188, 1936.
+
+\bibitem{batchnorm}
+S.~Ioffe and C.~Szegedy, ``Batch normalization: Accelerating deep network
+  training by reducing internal covariate shift,'' 2015.
+
+\bibitem{relu}
+A.~F. Agarap, ``Deep learning using rectified linear units (relu),'' 2019.
+
+\bibitem{adam}
+D.~P. Kingma and J.~Ba, ``Adam: A method for stochastic optimization,'' 2017.
+
+\end{thebibliography}

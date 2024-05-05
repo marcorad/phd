@@ -13,7 +13,8 @@ def calculate_padding_1d(N: int, d: int):
     left = d//2
     c = d - (N % d)
     right = left + c
-    return left, right, N + left + right
+    N_pad = N + left + right
+    return (N_pad - N)//2, (N_pad - N)//2, N_pad
 
 def calculate_sigma_psi_w(Q):
     alpha = cfg.get_alpha(Q)
@@ -291,8 +292,8 @@ def get_Lambda_set(fb: List, level: int, input_ds: List[int]):
     lambdas = [[0] + list(fb[level][dim][input_ds[dim]]['psi'].keys()) for dim in range(Ndims)] # list of all lambdas in each dimension, including the 0 filter
     Lambda = list(product(*lambdas)) #the cross product set, which still includes the 0 filter
     Lambda = Lambda[1:] #remove the 0 filter
-    # lambdas = [list(fb[level][dim][input_ds[dim]]['psi'].keys()) for dim in range(Ndims)] # list of all lambdas in each dimension, including the 0 filter
-    # Lambda = list(product(*lambdas)) #the cross product set, which still includes the 0 filter
+    # lambdas = [list(fb[level][dim][input_ds[dim]]['psi'].keys()) for dim in range(Ndims)] 
+    # Lambda = list(product(*lambdas)) 
     
     # Lambda_final = []
     # for L in Lambda:

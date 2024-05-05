@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+The style file: stb-bib-eng-a.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: references.bib
+Warning--entry type for "MATLAB" isn't style-file defined
+--line 981 of file references.bib
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Warning--empty journal in ws_joint_tf
+Warning--empty journal in jointtfscattering1
+Warning--empty journal in jointtfscattering2
+Warning--empty journal in ws
+Warning--empty journal in logit
+Warning--can't use both volume and number fields in origkmeans
+Warning--empty chapter and pages in kmeansoverview
+Warning--missing publisher in kmeansoverview
+Warning--empty booktitle in se_dolphin
+Warning--empty journal in jacques1
+You've used 92 entries,
+            3324 wiz_defined-function locations,
+            1188 strings with 24181 characters,
+and the built_in function-call counts, 92176 in all, are:
+= -- 7189
+> -- 2784
+< -- 178
++ -- 1106
+- -- 973
+* -- 9359
+:= -- 11133
+add.period$ -- 316
+call.type$ -- 92
+change.case$ -- 779
+chr.to.int$ -- 89
+cite$ -- 102
+duplicate$ -- 9030
+empty$ -- 8161
+format.name$ -- 1931
+if$ -- 18729
+int.to.chr$ -- 10
+int.to.str$ -- 1
+missing$ -- 1074
+newline$ -- 549
+num.names$ -- 370
+pop$ -- 2403
+preamble$ -- 1
+purify$ -- 688
+quote$ -- 0
+skip$ -- 2253
+stack$ -- 0
+substring$ -- 5189
+swap$ -- 4609
+text.length$ -- 134
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 816
+warning$ -- 10
+while$ -- 815
+width$ -- 0
+write$ -- 1303
+(There were 11 warnings)

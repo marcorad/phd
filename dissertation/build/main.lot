@@ -1,0 +1,17 @@
+\babel@toc {english}{}\relax 
+\babel@toc {afrikaans}{}\relax 
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Comparing the STPR of the STFT and CWT at varying SNR's and MF Window Lengths}}{33}{table.caption.28}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Comparing the STNR of the STFT and CWT at varying SNR's and MF Window Lengths}}{33}{table.caption.29}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1}{\ignorespaces Estimated erroneous (false positives) proportion of annotations per class that could be considered noise. This table does not reflect on whether annotations are of the correct class (i.e., misclassifications). The total proportion of false positives are calculated according to the number of annotations per class.}}{49}{table.caption.52}%
+\contentsline {table}{\numberline {2}{\ignorespaces The number of missed calls as a result of a non-converging \ac {gmm} fit.}}{60}{table.caption.62}%
+\contentsline {table}{\numberline {3}{\ignorespaces Average model classification accuracies for varying train-test splits with chi-squared feature selection. An 80\% training split without chi-square feature selection is included as a baseline. 20 trials are performed, whereas 5\% splits use 100 trials. The median accuracy is displayed.}}{65}{table.caption.65}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1}{\ignorespaces MedMNIST classification results of compared to baseline \ac {nn} approaches (\citep {medmnist})}}{82}{table.caption.72}%
+\contentsline {table}{\numberline {2}{\ignorespaces MNIST classification error rate (\%) of separable and \ac {2d} scattering coefficients using a \ac {nn} classifier}}{83}{table.caption.73}%
