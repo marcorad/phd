@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.4.30)  5 MAY 2024 14:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.4.30)  6 MAY 2024 10:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -655,6 +655,17 @@ Package: appendix 2020/02/08 v1.2c extra appendix facilities
 \c@@pps=\count335
 \c@@ppsavesec=\count336
 \c@@ppsaveapp=\count337
+) (/home/marco/.miktex/texmfs/install/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2023/10/27 v2.16 Sectioning titles
+\ttl@box=\box69
+\beforetitleunit=\skip67
+\aftertitleunit=\skip68
+\ttl@plus=\dimen282
+\ttl@minus=\dimen283
+\ttl@toksa=\toks42
+\titlewidth=\dimen284
+\titlewidthlast=\dimen285
+\titlewidthfirst=\dimen286
 ) (/usr/local/share/miktex-texmf/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 ) (/usr/local/share/miktex-texmf/tex/latex/base/fontenc.sty
@@ -662,7 +673,7 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (/usr/local/share/miktex-texmf/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count338
-\l__pdf_internal_box=\box69
+\l__pdf_internal_box=\box70
 ) (/home/marco/Repos/phd/dissertation/build/main.aux
 
 LaTeX Warning: Label `eqn:specdist' multiply defined.
@@ -673,39 +684,39 @@ LaTeX Warning: Label `eqn:entropy' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
  (/usr/local/share/miktex-texmf/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count339
-\scratchdimen=\dimen282
-\scratchbox=\box70
+\scratchdimen=\dimen287
+\scratchbox=\box71
 \nofMPsegments=\count340
 \nofMParguments=\count341
-\everyMPshowfont=\toks42
+\everyMPshowfont=\toks43
 \MPscratchCnt=\count342
-\MPscratchDim=\dimen283
+\MPscratchDim=\dimen288
 \MPnumerator=\count343
 \makeMPintoPDFobject=\count344
-\everyMPtoPDFconversion=\toks43
+\everyMPtoPDFconversion=\toks44
 )
-Package hyperref Info: Link coloring OFF on input line 87.
+Package hyperref Info: Link coloring OFF on input line 89.
  (/home/marco/Repos/phd/dissertation/build/main.out) (/home/marco/Repos/phd/dissertation/build/main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
@@ -713,18 +724,18 @@ Package hyperref Info: Link coloring OFF on input line 87.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 105.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 107.
  (/usr/local/share/miktex-texmf/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 105.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 107.
  (/usr/local/share/miktex-texmf/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<stb-thesis-frntp.pdf, id=262, 597.50786pt x 845.04686pt>
+<stb-thesis-frntp.pdf, id=264, 597.50786pt x 845.04686pt>
 File: stb-thesis-frntp.pdf Graphic file (type pdf)
 <use stb-thesis-frntp.pdf>
-Package pdftex.def Info: stb-thesis-frntp.pdf  used on input line 105.
+Package pdftex.def Info: stb-thesis-frntp.pdf  used on input line 107.
 (pdftex.def)             Requested size: 598.08076pt x 845.93451pt.
  [1
 
@@ -733,7 +744,7 @@ Package pdftex.def Info: stb-thesis-frntp.pdf  used on input line 105.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.116 
+l.118 
        [1
 
 ] [2
@@ -748,7 +759,7 @@ l.116
 
  [6] (/home/marco/Repos/phd/dissertation/build/main.lof [7
 
-] [8]
+]
 Package acronym Info: Label `acro:se' newly defined as it shall be overridden
 although it is yet undefined on input line 30.
 Package acronym Info: Label `acro:bled' newly defined as it shall be overridden
@@ -759,32 +770,39 @@ although it is yet undefined on input line 30.
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [9] (/home/marco/Repos/phd/dissertation/build/main.lot
+ [8] [9] (/home/marco/Repos/phd/dissertation/build/main.lot
 Package acronym Info: Label `acro:nn' newly defined as it shall be overridden
-although it is yet undefined on input line 16.
+although it is yet undefined on input line 18.
 Package acronym Info: Label `acro:2d' newly defined as it shall be overridden
-although it is yet undefined on input line 17.
+although it is yet undefined on input line 19.
 )
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
  [10
 
-] (content/introduction.tex [11
+] (content/nomenclature.tex [11
+
+] [12] [13
 
 ]
+Overfull \vbox (26.2602pt too high) has occurred while \output is active []
+
+ [14]) (content/introduction.tex [15]
 Chapter 1.
-) (content/p1_intro.tex [12
+) (content/p1_intro.tex [16
 
 ]
 Chapter 2.
-) (content/paper1/main.tex [13
+) (content/paper1/main.tex [17
 
 ]
 Chapter 3.
-[14
+[18
 
-] [15] [16] [17] [18]
+] [19
+
+] [20] [21]
 Package epstopdf Info: Source file: <./content/paper1/fig/fbdata1.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 119676 bytes
@@ -794,12 +812,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/fbdata1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/fbdata1-eps-converted-to.pdf ./content/paper1/fig/fbdata1.eps>
 (epstopdf)             \includegraphics on input line 166.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/fbdata1-eps-converted-to.pdf, id=623, 264.99pt x 233.87375pt>
+<./content/paper1/fig/fbdata1-eps-converted-to.pdf, id=645, 264.99pt x 233.87375pt>
 File: ./content/paper1/fig/fbdata1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/fbdata1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/fbdata1-eps-converted-to.pdf  used on input line 166.
 (pdftex.def)             Requested size: 253.20258pt x 223.47418pt.
- [19 <./content/paper1/fig/fbdata1-eps-converted-to.pdf>]
+ [22 <./content/paper1/fig/fbdata1-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/real_data_hist.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 24432 bytes
@@ -809,12 +827,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/real_data_hist.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/real_data_hist-eps-converted-to.pdf ./content/paper1/fig/real_data_hist.eps>
 (epstopdf)             \includegraphics on input line 190.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/real_data_hist-eps-converted-to.pdf, id=635, 344.28625pt x 164.615pt>
+<./content/paper1/fig/real_data_hist-eps-converted-to.pdf, id=657, 344.28625pt x 164.615pt>
 File: ./content/paper1/fig/real_data_hist-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/real_data_hist-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/real_data_hist-eps-converted-to.pdf  used on input line 190.
 (pdftex.def)             Requested size: 295.39871pt x 141.2396pt.
- [20 <./content/paper1/fig/real_data_hist-eps-converted-to.pdf>]
+ [23 <./content/paper1/fig/real_data_hist-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/entropy1.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 449605 bytes
@@ -824,12 +842,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/entropy1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/entropy1-eps-converted-to.pdf ./content/paper1/fig/entropy1.eps>
 (epstopdf)             \includegraphics on input line 227.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/entropy1-eps-converted-to.pdf, id=646, 302.12875pt x 206.7725pt>
+<./content/paper1/fig/entropy1-eps-converted-to.pdf, id=668, 302.12875pt x 206.7725pt>
 File: ./content/paper1/fig/entropy1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/entropy1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/entropy1-eps-converted-to.pdf  used on input line 227.
 (pdftex.def)             Requested size: 253.20258pt x 173.287pt.
- [21] [22 <./content/paper1/fig/entropy1-eps-converted-to.pdf>] [23]
+ [24] [25 <./content/paper1/fig/entropy1-eps-converted-to.pdf>] [26]
 Package epstopdf Info: Source file: <./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 640995 bytes
@@ -839,12 +857,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf ./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)             \includegraphics on input line 301.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf, id=685, 408.52625pt x 169.63374pt>
+<./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf, id=707, 408.52625pt x 169.63374pt>
 File: ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf  used on input line 301.
 (pdftex.def)             Requested size: 295.39871pt x 122.66681pt.
- [24 <./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf>] [25] [26]
+ [27 <./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf>] [28] [29]
 Package epstopdf Info: Source file: <./content/paper1/fig/sigmoid.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 23181 bytes
@@ -854,12 +872,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/sigmoid.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/sigmoid-eps-converted-to.pdf ./content/paper1/fig/sigmoid.eps>
 (epstopdf)             \includegraphics on input line 374.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/sigmoid-eps-converted-to.pdf, id=733, 342.27875pt x 251.94125pt>
+<./content/paper1/fig/sigmoid-eps-converted-to.pdf, id=754, 342.27875pt x 251.94125pt>
 File: ./content/paper1/fig/sigmoid-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/sigmoid-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/sigmoid-eps-converted-to.pdf  used on input line 374.
 (pdftex.def)             Requested size: 253.20258pt x 186.37978pt.
- [27 <./content/paper1/fig/sigmoid-eps-converted-to.pdf>]
+ [30 <./content/paper1/fig/sigmoid-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/entropymf.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 441925 bytes
@@ -869,7 +887,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/entropymf.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/entropymf-eps-converted-to.pdf ./content/paper1/fig/entropymf.eps>
 (epstopdf)             \includegraphics on input line 397.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/entropymf-eps-converted-to.pdf, id=748, 307.1475pt x 239.89626pt>
+<./content/paper1/fig/entropymf-eps-converted-to.pdf, id=770, 307.1475pt x 239.89626pt>
 File: ./content/paper1/fig/entropymf-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/entropymf-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/entropymf-eps-converted-to.pdf  used on input line 397.
@@ -883,7 +901,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/kmeans1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/kmeans1-eps-converted-to.pdf ./content/paper1/fig/kmeans1.eps>
 (epstopdf)             \includegraphics on input line 406.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/kmeans1-eps-converted-to.pdf, id=750, 335.2525pt x 242.9075pt>
+<./content/paper1/fig/kmeans1-eps-converted-to.pdf, id=772, 335.2525pt x 242.9075pt>
 File: ./content/paper1/fig/kmeans1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/kmeans1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/kmeans1-eps-converted-to.pdf  used on input line 406.
@@ -892,7 +910,7 @@ Package pdftex.def Info: ./content/paper1/fig/kmeans1-eps-converted-to.pdf  used
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[28 <./content/paper1/fig/entropymf-eps-converted-to.pdf>] [29 <./content/paper1/fig/kmeans1-eps-converted-to.pdf>]
+[31 <./content/paper1/fig/entropymf-eps-converted-to.pdf>] [32 <./content/paper1/fig/kmeans1-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/testsigstft.eps>
 (epstopdf)                    date: 2024-05-05 12:54:45
 (epstopdf)                    size: 91485 bytes
@@ -902,12 +920,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/testsigstft.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/testsigstft-eps-converted-to.pdf ./content/paper1/fig/testsigstft.eps>
 (epstopdf)             \includegraphics on input line 433.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/testsigstft-eps-converted-to.pdf, id=774, 332.24126pt x 158.5925pt>
+<./content/paper1/fig/testsigstft-eps-converted-to.pdf, id=796, 332.24126pt x 158.5925pt>
 File: ./content/paper1/fig/testsigstft-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/testsigstft-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/testsigstft-eps-converted-to.pdf  used on input line 433.
 (pdftex.def)             Requested size: 253.20258pt x 120.86548pt.
- [30 <./content/paper1/fig/testsigstft-eps-converted-to.pdf>]
+ [33 <./content/paper1/fig/testsigstft-eps-converted-to.pdf>]
 Overfull \hbox (3.84665pt too wide) in paragraph at lines 457--458
 []\T1/cmr/m/n/10.95 This is equiv-a-lent to cal-cu-lat-ing the con-ven-tional TPR and TNR dis-cov-ery rates if $\OML/cmm/m/it/10.95 c[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 H\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 m\OT1/cmr/m/n/10.95 ])$
  []
@@ -921,7 +939,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_snr_mf-eps-converted-to.pdf ./content/paper1/fig/res_snr_mf.eps>
 (epstopdf)             \includegraphics on input line 466.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_snr_mf-eps-converted-to.pdf, id=787, 360.34625pt x 278.03876pt>
+<./content/paper1/fig/res_snr_mf-eps-converted-to.pdf, id=808, 360.34625pt x 278.03876pt>
 File: ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf  used on input line 466.
@@ -935,7 +953,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_mf_snr.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_mf_snr-eps-converted-to.pdf ./content/paper1/fig/res_mf_snr.eps>
 (epstopdf)             \includegraphics on input line 476.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_mf_snr-eps-converted-to.pdf, id=791, 362.35374pt x 279.0425pt>
+<./content/paper1/fig/res_mf_snr-eps-converted-to.pdf, id=812, 362.35374pt x 279.0425pt>
 File: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf  used on input line 476.
@@ -943,7 +961,7 @@ Package pdftex.def Info: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf  u
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[31 <./content/paper1/fig/res_snr_mf-eps-converted-to.pdf>]
+[34 <./content/paper1/fig/res_snr_mf-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_classmeans.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 30632 bytes
@@ -953,7 +971,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_classmeans.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_classmeans-eps-converted-to.pdf ./content/paper1/fig/res_classmeans.eps>
 (epstopdf)             \includegraphics on input line 487.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_classmeans-eps-converted-to.pdf, id=807, 366.36874pt x 165.61874pt>
+<./content/paper1/fig/res_classmeans-eps-converted-to.pdf, id=828, 366.36874pt x 165.61874pt>
 File: ./content/paper1/fig/res_classmeans-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_classmeans-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_classmeans-eps-converted-to.pdf  used on input line 487.
@@ -965,7 +983,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[32 <./content/paper1/fig/res_mf_snr-eps-converted-to.pdf> <./content/paper1/fig/res_classmeans-eps-converted-to.pdf>] [33]
+[35 <./content/paper1/fig/res_mf_snr-eps-converted-to.pdf> <./content/paper1/fig/res_classmeans-eps-converted-to.pdf>] [36]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 34081 bytes
@@ -975,12 +993,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf ./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)             \includegraphics on input line 545.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf, id=835, 363.3575pt x 279.0425pt>
+<./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf, id=857, 363.3575pt x 279.0425pt>
 File: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf  used on input line 545.
 (pdftex.def)             Requested size: 253.20258pt x 194.4513pt.
- [34 <./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf>]
+ [37 <./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_snippet1.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 154814 bytes
@@ -990,12 +1008,12 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_snippet1.
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf ./content/paper1/fig/res_realdata_snippet1.eps>
 (epstopdf)             \includegraphics on input line 560.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf, id=849, 538.01pt x 232.87pt>
+<./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf, id=871, 538.01pt x 232.87pt>
 File: ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf  used on input line 560.
 (pdftex.def)             Requested size: 422.0pt x 182.65765pt.
- [35 <./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>]
+ [38 <./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 26593 bytes
@@ -1005,7 +1023,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf ./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)             \includegraphics on input line 586.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf, id=865, 297.11pt x 235.88126pt>
+<./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf, id=887, 297.11pt x 235.88126pt>
 File: ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf  used on input line 586.
@@ -1019,7 +1037,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_thresh.ep
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf ./content/paper1/fig/res_realdata_thresh.eps>
 (epstopdf)             \includegraphics on input line 593.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf, id=866, 342.27875pt x 285.065pt>
+<./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf, id=888, 342.27875pt x 285.065pt>
 File: ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf  used on input line 593.
@@ -1028,13 +1046,13 @@ Package pdftex.def Info: ./content/paper1/fig/res_realdata_thresh-eps-converted-
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[36 <./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf>] [37 <./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>] [38] [39] [40]) (content/p2_intro.tex [41]
+[39 <./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf>] [40 <./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>] [41] [42] [43]) (content/p2_intro.tex [44]
 Chapter 4.
-) (content/paper2/main.tex [42
+) (content/paper2/main.tex [45
 
 ]
 Chapter 5.
-[43
+[46
 
 ]
 Package acronym Info: Label `acro:pam' newly defined as it shall be overridden
@@ -1057,7 +1075,9 @@ Package acronym Info: Label `acro:ws' newly defined as it shall be overridden
 although it is yet undefined on input line 21.
 Package acronym Info: Label `acro:cnn' newly defined as it shall be overridden
 although it is yet undefined on input line 21.
- [44]
+ [47
+
+]
 Package acronym Info: Label `acro:svm' newly defined as it shall be overridden
 although it is yet undefined on input line 23.
 Package acronym Info: Label `acro:sota' newly defined as it shall be overridden
@@ -1066,54 +1086,52 @@ Package acronym Info: Label `acro:lstm' newly defined as it shall be overridden
 although it is yet undefined on input line 27.
 Package acronym Info: Label `acro:snr' newly defined as it shall be overridden
 although it is yet undefined on input line 27.
- [45]
-<./content/paper2/fig/system_diagram_v2.png, id=1034, 751.80875pt x 675.52374pt>
+ [48]
+<./content/paper2/fig/system_diagram_v2.png, id=1054, 751.80875pt x 675.52374pt>
 File: ./content/paper2/fig/system_diagram_v2.png Graphic file (type png)
 <use ./content/paper2/fig/system_diagram_v2.png>
 Package pdftex.def Info: ./content/paper2/fig/system_diagram_v2.png  used on input line 33.
 (pdftex.def)             Requested size: 379.79742pt x 341.26564pt.
- [46 <./content/paper2/fig/system_diagram_v2.png>]
-
-LaTeX Warning: Reference `tab:numannotations' on page 47 undefined on input line 48.
-
-<./content/paper2/fig/Bm_Ant-A_11.jpg, id=1047, 878.28125pt x 658.46pt>
+ [49 <./content/paper2/fig/system_diagram_v2.png>]
+<./content/paper2/fig/Bm_Ant-A_11.jpg, id=1068, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-A_11.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-A_11.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-A_11.jpg  used on input line 54.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_Ant-B_54.jpg, id=1048, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-B_54.jpg, id=1069, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-B_54.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-B_54.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-B_54.jpg  used on input line 59.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_Ant-Z_98.jpg, id=1049, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-Z_98.jpg, id=1070, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-Z_98.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-Z_98.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-Z_98.jpg  used on input line 64.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_D_173.jpg, id=1050, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_D_173.jpg, id=1071, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_D_173.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_D_173.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_D_173.jpg  used on input line 69.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
 
-LaTeX Warning: Reference `tab:numannotations' on page 47 undefined on input line 93.
 
-[47
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[50
 
 ]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[48 <./content/paper2/fig/Bm_Ant-A_11.jpg> <./content/paper2/fig/Bm_Ant-B_54.jpg> <./content/paper2/fig/Bm_Ant-Z_98.jpg> <./content/paper2/fig/Bm_D_173.jpg>] [49] [50
+[51 <./content/paper2/fig/Bm_Ant-A_11.jpg> <./content/paper2/fig/Bm_Ant-B_54.jpg> <./content/paper2/fig/Bm_Ant-Z_98.jpg> <./content/paper2/fig/Bm_D_173.jpg>] [52] [53
 
 ]
 Package acronym Info: Label `acro:fft' newly defined as it shall be overridden
 although it is yet undefined on input line 165.
 Package acronym Info: Label `acro:gpu' newly defined as it shall be overridden
 although it is yet undefined on input line 165.
- [51]
-<./content/paper2/fig/scattering.png, id=1088, 3126.68124pt x 1324.95pt>
+ [54]
+<./content/paper2/fig/scattering.png, id=1109, 3126.68124pt x 1324.95pt>
 File: ./content/paper2/fig/scattering.png Graphic file (type png)
 <use ./content/paper2/fig/scattering.png>
 Package pdftex.def Info: ./content/paper2/fig/scattering.png  used on input line 191.
@@ -1122,8 +1140,8 @@ Package pdftex.def Info: ./content/paper2/fig/scattering.png  used on input line
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[52]
-<./content/paper2/fig/fb.jpg, id=1107, 830.10126pt x 291.0875pt>
+[55]
+<./content/paper2/fig/fb.jpg, id=1128, 830.10126pt x 291.0875pt>
 File: ./content/paper2/fig/fb.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/fb.jpg>
 Package pdftex.def Info: ./content/paper2/fig/fb.jpg  used on input line 217.
@@ -1132,15 +1150,15 @@ Package pdftex.def Info: ./content/paper2/fig/fb.jpg  used on input line 217.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[53 <./content/paper2/fig/scattering.png>] [54 <./content/paper2/fig/fb.jpg>]
+[56 <./content/paper2/fig/scattering.png>] [57 <./content/paper2/fig/fb.jpg>]
 Package acronym Info: Label `acro:psd' newly defined as it shall be overridden
 although it is yet undefined on input line 252.
- [55
+ [58
 
-] [56]
+] [59]
 Package acronym Info: Label `acro:em' newly defined as it shall be overridden
 although it is yet undefined on input line 312.
- [57]
+ [60]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 395.
@@ -1154,14 +1172,14 @@ Package epstopdf Info: Source file: <./content/paper2/fig/detector_example_2.eps
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/detector_example_2-eps-converted-to.pdf ./content/paper2/fig/detector_example_2.eps>
 (epstopdf)             \includegraphics on input line 397.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/detector_example_2-eps-converted-to.pdf, id=1155, 561.09625pt x 230.8625pt>
+<./content/paper2/fig/detector_example_2-eps-converted-to.pdf, id=1176, 561.09625pt x 230.8625pt>
 File: ./content/paper2/fig/detector_example_2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/detector_example_2-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/detector_example_2-eps-converted-to.pdf  used on input line 397.
 (pdftex.def)             Requested size: 422.0pt x 173.62904pt.
 Package acronym Info: Label `acro:roc' newly defined as it shall be overridden
 although it is yet undefined on input line 459.
-[58] [59 <./content/paper2/fig/detector_example_2-eps-converted-to.pdf>]
+[61] [62 <./content/paper2/fig/detector_example_2-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper2/fig/roc.eps>
 (epstopdf)                    date: 2024-05-05 12:20:34
 (epstopdf)                    size: 28320 bytes
@@ -1171,7 +1189,7 @@ Package epstopdf Info: Source file: <./content/paper2/fig/roc.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/roc-eps-converted-to.pdf ./content/paper2/fig/roc.eps>
 (epstopdf)             \includegraphics on input line 506.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/roc-eps-converted-to.pdf, id=1180, 263.98625pt x 210.7875pt>
+<./content/paper2/fig/roc-eps-converted-to.pdf, id=1201, 263.98625pt x 210.7875pt>
 File: ./content/paper2/fig/roc-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/roc-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/roc-eps-converted-to.pdf  used on input line 506.
@@ -1185,74 +1203,76 @@ Package epstopdf Info: Source file: <./content/paper2/fig/calls.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/calls-eps-converted-to.pdf ./content/paper2/fig/calls.eps>
 (epstopdf)             \includegraphics on input line 512.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/calls-eps-converted-to.pdf, id=1181, 263.98625pt x 210.7875pt>
+<./content/paper2/fig/calls-eps-converted-to.pdf, id=1202, 263.98625pt x 210.7875pt>
 File: ./content/paper2/fig/calls-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/calls-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/calls-eps-converted-to.pdf  used on input line 512.
 (pdftex.def)             Requested size: 189.89871pt x 151.62857pt.
- [60 <./content/paper2/fig/roc-eps-converted-to.pdf> <./content/paper2/fig/calls-eps-converted-to.pdf>]
-
-LaTeX Warning: Reference `tab:numannotations' on page 61 undefined on input line 541.
-
-[61]
+ [63 <./content/paper2/fig/roc-eps-converted-to.pdf> <./content/paper2/fig/calls-eps-converted-to.pdf>] [64]
 Package acronym Info: Label `acro:lda' newly defined as it shall be overridden
 although it is yet undefined on input line 546.
 
 
-LaTeX Warning: Reference `tab:numdetections' on page 62 undefined on input line 549.
+LaTeX Warning: Reference `tab:numdetections' on page 65 undefined on input line 549.
 
+[65
+
+]
 Package acronym Info: Label `acro:cls' newly defined as it shall be overridden
 although it is yet undefined on input line 566.
-[62
-
-] [63] [64]
+ [66] [67]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 687.
 
-[65{/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+[68{/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [69] [70] [71] [72
 
-LaTeX Warning: Reference `tab:numannotations' on page 66 undefined on input line 778.
+] [73] [74
 
-[66] [67] [68] [69
+] [75]
+Overfull \hbox (2.99307pt too wide) in paragraph at lines 869--891
+[][] 
+ []
 
-] [70] [71
+) (content/p3_intro.tex [76
 
-]) (content/p3_intro.tex [72]
+]
 Chapter 6.
-) (content/paper3/main.tex [73
+) (content/paper3/main.tex [77
 
 ]
 Chapter 7.
-[74
+[78
 
 ]
 Package acronym Info: Label `acro:1d' newly defined as it shall be overridden
 although it is yet undefined on input line 16.
 Package acronym Info: Label `acro:fir' newly defined as it shall be overridden
 although it is yet undefined on input line 22.
- [75]
+ [79
+
+]
 Package acronym Info: Label `acro:lpf' newly defined as it shall be overridden
 although it is yet undefined on input line 58.
- [76]
+ [80]
 Package acronym Info: Label `acro:std' newly defined as it shall be overridden
 although it is yet undefined on input line 74.
- [77]
+ [81]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 100.
- [78]
+ [82]
 Overfull \hbox (1.8991pt too wide) in paragraph at lines 170--172
 \T1/cmr/m/n/10.95 The [][] $\OML/cmm/m/it/10.95 ^^^$ \T1/cmr/m/n/10.95 re-mains con-stant through-out the trans-form. Note that the mod-u-lus/magnitude
  []
 
-[79] [80]
+[83] [84]
 Overfull \hbox (234.61838pt too wide) in paragraph at lines 246--260
  [][] 
  []
 
-[81] [82] [83]
+[85] [86] [87]
 Package acronym Info: Label `acro:auc' newly defined as it shall be overridden
 although it is yet undefined on input line 347.
-) (/home/marco/Repos/phd/dissertation/build/main.bbl [84] (/usr/local/share/miktex-texmf/tex/latex/stellenbosch-2/stb-bib.eng)
+) (/home/marco/Repos/phd/dissertation/build/main.bbl [88] (/usr/local/share/miktex-texmf/tex/latex/stellenbosch-2/stb-bib.eng)
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 25.
  (/usr/local/share/miktex-texmf/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
@@ -1271,19 +1291,19 @@ Underfull \hbox (badness 1342) in paragraph at lines 92--98
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1807 . 08869http : / / dx . doi . org / 10 . 1109 /
  []
 
-[85
 
-]
 Underfull \hbox (badness 3989) in paragraph at lines 108--113
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1304 . 6763http : / / dx . doi . org / 10 . 1109 /
  []
 
-[86]
+[89
+
+]
 Underfull \hbox (badness 10000) in paragraph at lines 198--201
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / ravensoundsoftware . com / knowledge-[]base /
  []
 
-
+[90]
 Underfull \hbox (badness 4156) in paragraph at lines 244--251
 []\T1/cmr/m/n/10.95 Fisher, R.A. (1936).  The use of mul-ti-ple mea-sure-ments in tax-o-nomic
  []
@@ -1298,32 +1318,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 244--251
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / onlinelibrary . wiley . com / doi / abs / 10 . 1111 / j .
  []
 
-[87]
+
 Underfull \hbox (badness 10000) in paragraph at lines 295--305
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-
+[91]
 Underfull \hbox (badness 10000) in paragraph at lines 370--378
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[88]
+[92]
 Underfull \hbox (badness 10000) in paragraph at lines 402--410
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[89]
+[93]
 Underfull \hbox (badness 10000) in paragraph at lines 571--579
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[90]
+
 Underfull \hbox (badness 10000) in paragraph at lines 584--593
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-
+[94]
 Underfull \hbox (badness 10000) in paragraph at lines 597--605
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
@@ -1343,12 +1363,12 @@ Overfull \hbox (12.31778pt too wide) in paragraph at lines 665--683
 \T1/cmtt/m/n/10.95 9015-[]pytorch-[]an-[]imperative-[]style-[]high-[]performance-[]deep-[]learning-[]library .
  []
 
-[91]
+[95]
 Underfull \hbox (badness 10000) in paragraph at lines 749--755
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / linkinghub . elsevier . com / retrieve / pii /
  []
 
-[92]
+[96]
 Underfull \hbox (badness 10000) in paragraph at lines 787--795
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
@@ -1358,22 +1378,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 814--822
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[93]
+
 Underfull \hbox (badness 10000) in paragraph at lines 863--870
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-
+[97]
 Underfull \hbox (badness 10000) in paragraph at lines 920--928
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[94]
+
 Underfull \hbox (badness 10000) in paragraph at lines 941--949
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / pubs . aip . org / jel / article / 3 / 9 / 096002 / 2911548 /
  []
 
-) [95] (/home/marco/Repos/phd/dissertation/build/main.aux)
+[98]) [99] (/home/marco/Repos/phd/dissertation/build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
@@ -1386,24 +1406,24 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E2CD3DB8B967D5C1DB20C3BCCE515372;9422.
+(rerunfilecheck)             Checksum: 3AC18E76750BC01A198B99B7948F458C;9639.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 42 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 28102 strings out of 474425
- 517696 string characters out of 5748835
+ 28393 strings out of 474425
+ 521714 string characters out of 5748835
  1955493 words of memory out of 5000000
- 49466 multiletter control sequences out of 15000+600000
- 596944 words of font info for 135 fonts, out of 8000000 for 9000
+ 49751 multiletter control sequences out of 15000+600000
+ 594624 words of font info for 132 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,14n,107p,1543b,1059s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1728.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx2074.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx2488.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0600.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0800.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sftt1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfxc1440.pfb>
-Output written on /home/marco/Repos/phd/dissertation/build/main.pdf (96 pages, 3481476 bytes).
+ 99i,14n,107p,1543b,1174s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1728.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0600.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0800.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sftt1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfxc1440.pfb>
+Output written on /home/marco/Repos/phd/dissertation/build/main.pdf (100 pages, 3481899 bytes).
 PDF statistics:
- 1812 PDF objects out of 2073 (max. 8388607)
- 402 named destinations out of 1000 (max. 500000)
- 655 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1837 PDF objects out of 2073 (max. 8388607)
+ 404 named destinations out of 1000 (max. 500000)
+ 663 words of extra memory for PDF output out of 10000 (max. 10000000)
 

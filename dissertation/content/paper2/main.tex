@@ -1,6 +1,6 @@
 \chapter{Introducing Wavelet Scattering}
 
-\articleinfo{M.W. Rademan, D.J.J Verself, J.A. Du Preez}{Journal of the Acoustical Society of America (JASA)}{15 May 2024}{doi}{Current literature trends for whale classification in passive acoustic monitoring systems are mainly concerned with high accuracies obtained via deep learning approaches. This requires preparation of large and accurate annotated datasets, which are often not available when surveying new regions, nor are they wholly accurate when they are. In contrast to classification, many efforts are still being made in improving generalised detectors for the purpose of disregarding noise. As such, there is a disparity between detectors and classification models. 
+\articleinfo{M.W. Rademan, D.J.J Verseld, J.A. Du Preez}{the Journal of the Acoustical Society of America (JASA)}{15 May 2024}{doi}{Current literature trends for whale classification in passive acoustic monitoring systems are mainly concerned with high accuracies obtained via deep learning approaches. This requires preparation of large and accurate annotated datasets, which are often not available when surveying new regions, nor are they wholly accurate when they are. In contrast to classification, many efforts are still being made in improving generalised detectors for the purpose of disregarding noise. As such, there is a disparity between detectors and classification models. 
 
 This paper aims to bridge the gap between detection and classification, while exploring the application of wavelet scattering features not yet popularised in the field of passive acoustic monitoring. This paper improves on the classical spectral entropy detector regarding noise adaptivity and uses wavelet scattering for entropy calculation. The same scattering decomposition is further fed to a classification stage: a linear classifier using scattering features provided by windows identified by the entropy detector.
 
@@ -72,23 +72,23 @@ Annotations are provided that give the time-frequency bounding boxes of blue and
         \label{fig:Bm_Ex}
 \end{figure}
 
-% \begin{table}[h!]
-% \caption{Total number of annotations in the Casey 2017 dataset.}
-% \label{tab:numannotations}
+\begin{table}[h!]
+\caption{Total number of annotations in the Casey 2017 dataset.}
+\label{tab:numannotations}
 % \begin{ruledtabular}  
 % \renewcommand{\arraystretch}{0.8}
-% \begin{tabular}{lrr} 
-% \textbf{Vocalisation}      & \textbf{Number of annotations} & \textbf{Estimated False positives (\%)} \\ \hline
-% Bm\_Ant\_A & 1741  & 5 - 10               \\
-% Bm\_Ant\_B & 558  & 5 - 10                 \\
-% Bm\_Ant\_Z & 119    & 1 - 2               \\
-% Bm\_D      & 553     & 8 - 15              \\
-% Bp\_20Hz & 78        & 1 - 3             \\
-% Bp\_20Plus & 214     & 1 - 3               \\ 
-% Total & 3263 & 5 - 10\\ 
-% \end{tabular}
+\begin{tabular}{lrr} 
+\textbf{Vocalisation}      & \textbf{Number of annotations} & \textbf{Estimated False positives (\%)} \\ \hline
+Bm\_Ant\_A & 1741  & 5 - 10               \\
+Bm\_Ant\_B & 558  & 5 - 10                 \\
+Bm\_Ant\_Z & 119    & 1 - 2               \\
+Bm\_D      & 553     & 8 - 15              \\
+Bp\_20Hz & 78        & 1 - 3             \\
+Bp\_20Plus & 214     & 1 - 3               \\ 
+Total & 3263 & 5 - 10\\ 
+\end{tabular}
 % \end{ruledtabular}
-% \end{table}
+\end{table}
 
 We estimate the number of false positives by investigating a subset of annotations (at least 100 when possible) and determining which are more probable to be noise than a vocalisation according to their $\mathcal{S}_1$ coefficients as portrayed by Figures \ref{fig:Bm_Ex} and \ref{fig:det_example_1}. This task is difficult to perform with absolute precision, so we provide a lower and upper bound for these estimates such that they are a fair reflection of the uncertainty. The number of missed detections require more investigation and expertise and is out of scope for this study. The false positive proportions are indicated in Table \ref{tab:numannotations}, with the total proportion of false positives calculated by considering the proportion of annotations per class.
 
@@ -857,68 +857,68 @@ This paper provides the groundwork required to implement \ac{ws}-based classific
     
     Case 3 is always true under the restrictions stated for this problem, implying that case 3 will always result in a monotonically decreasing function. To evaluate whether a given \ac{gmm} model with $x \in [x_{min}, x_{max}]$ satisfies monotonicity conditions, we substitute $x$ for $x_{max}$ and $x_{min}$ for cases 1 and 2 respectively.
     
-    % \clearpage
+    \clearpage
     
-    % \section{Summary of parameter values}
+    \section{Summary of parameter values}
     
-    % \begin{table}[h]
-        % \caption{Summary of parameter values used in this study. Chosen values are indicated in boldface text, whereas non-bold parameters result from the chosen parameters.}
-        % \label{tab:parameters}
+    \begin{table}[h]
+        \caption{Summary of parameter values used in this study. Chosen values are indicated in boldface text, whereas non-bold parameters result from the chosen parameters.}
+        \label{tab:parameters}
         % \begin{ruledtabular}    
-            % \renewcommand{\arraystretch}{0.8}% Tighter
-            % \begin{tabular}{>{\centering\arraybackslash}l>{\centering\arraybackslash}l>{\centering\arraybackslash}l}  \small
-                % \textbf{Parameter}      & \textbf{Description} & \textbf{Value} \\ \hline
-                % $T$ & \ac{ws} invariance scale & \textbf{1.5 seconds} \\
-                % $Q_1$ & Wavelets per octave in $\mathcal{S}_1$ & \textbf{16} \\
-                % $Q_2$ & Wavelets per octave in $\mathcal{S}_2$ & \textbf{4} \\
-                % $f_\text{min}$ & Minimum filterbank frequency in $\mathcal{S}_1$ & \textbf{15 Hz}\\
-                % $f_\text{max}$ & Maximum filterbank frequency in $\mathcal{S}_1$ & \textbf{120 Hz}\\
-                % $|\Lambda_1|$ & Resulting number of filters in $\mathcal{S}_1$ & 48 \\
-                % $|\Lambda_2|$ & Resulting number of filters in $\mathcal{S}_2$ & 14 \\
-                % $V$ & Wavelet scattering upsample factor & \textbf{2} \\
-                % $r$ & Downsampling factor of $\mathcal{U}_1$ due to maximum bandwidth & 8 \\
-                % $d$ & Downsampling factor of $\mathcal{S}_1$ & 5 \\
-                % $f_{ss}$ & Resulting scattering transform sample frequency & 6.25 Hz \\
-                % $B$ & Median filter length for noise coefficient suppression & \textbf{9} \\
-                % $D$ & Median filter length for transient coefficient suppression  & \textbf{5 seconds} \\
-                % $F$ & Average filter length for noise coefficient estimation  & \textbf{60 seconds} \\
-                % $R$ & Median filter length for stabilizing entropy  & \textbf{1.5 seconds} \\
-                % $G$ & Maximum filter length for boundary extension  & \textbf{6 seconds} \\
-                % $p_t$ & Probability threshold for the whitened \ac{se} \ac{gmm} detector & \textbf{0.3} \\ 
-                % $k$ & Dimensions in the classification feature vector $v$ & 521\\ 
-                % \end{tabular}
+            \renewcommand{\arraystretch}{0.8}% Tighter
+            \begin{tabular}{lll}  \small
+                \textbf{Parameter}      & \textbf{Description} & \textbf{Value} \\ \hline
+                $T$ & \ac{ws} invariance scale & \textbf{1.5 seconds} \\
+                $Q_1$ & Wavelets per octave in $\mathcal{S}_1$ & \textbf{16} \\
+                $Q_2$ & Wavelets per octave in $\mathcal{S}_2$ & \textbf{4} \\
+                $f_\text{min}$ & Minimum filterbank frequency in $\mathcal{S}_1$ & \textbf{15 Hz}\\
+                $f_\text{max}$ & Maximum filterbank frequency in $\mathcal{S}_1$ & \textbf{120 Hz}\\
+                $|\Lambda_1|$ & Resulting number of filters in $\mathcal{S}_1$ & 48 \\
+                $|\Lambda_2|$ & Resulting number of filters in $\mathcal{S}_2$ & 14 \\
+                $V$ & Wavelet scattering upsample factor & \textbf{2} \\
+                $r$ & Downsampling factor of $\mathcal{U}_1$ due to maximum bandwidth & 8 \\
+                $d$ & Downsampling factor of $\mathcal{S}_1$ & 5 \\
+                $f_{ss}$ & Resulting scattering transform sample frequency & 6.25 Hz \\
+                $B$ & Median filter length for noise coefficient suppression & \textbf{9} \\
+                $D$ & Median filter length for transient coefficient suppression  & \textbf{5 seconds} \\
+                $F$ & Average filter length for noise coefficient estimation  & \textbf{60 seconds} \\
+                $R$ & Median filter length for stabilizing entropy  & \textbf{1.5 seconds} \\
+                $G$ & Maximum filter length for boundary extension  & \textbf{6 seconds} \\
+                $p_t$ & Probability threshold for the whitened \ac{se} \ac{gmm} detector & \textbf{0.3} \\ 
+                $k$ & Dimensions in the classification feature vector $v$ & 521\\ 
+                \end{tabular}
                 % \end{ruledtabular}
-                % \end{table}
+                \end{table}
                 
                 % \clearpage
                 % \section{Examples of misannotated vocalisations}
                 % \label{app:ann}
                 % \begin{figure}[h]
-                    %      \centering
-                    %      \begin{subfigure}[]{0.45\textwidth}
-                        %          \centering
-                        %          \includegraphics[width=\textwidth]{Bm_Ant-B_30.jpg}
-                        %          \label{fig:BmA_ex}
-                        %      \end{subfigure}
-                        %      \hfill
-                        %      \begin{subfigure}[]{0.45\textwidth}
-                            %          \centering
-                            %          \includegraphics[width=\textwidth]{Bm_Ant-B_37.jpg}
-                            %          \label{fig:BmB_ex}
-                            %      \end{subfigure}
-                            %      \hfill
-                            %      \begin{subfigure}[]{0.45\textwidth}
-                                %          \centering
-                                %          \includegraphics[width=\textwidth]{Bm_Ant-Z_27.jpg}
-                                %          \label{fig:BmZ_ex}
-                                %      \end{subfigure}
-                                %      \hfill
-                                %      \begin{subfigure}[]{0.45\textwidth}
-                                    %          \centering
-                                    %          \includegraphics[width=\textwidth]{Bm_D_33.jpg}
-                                    %          \label{fig:BmD_ex}
-                                    %      \end{subfigure}
-                                    %         \caption{(a) \textit{Bm\_Ant\_A} labeled as \textit{Bm\_Ant\_B}, although the noise could be misinterpreted the ``tail" required for the B-type vocalisation. (b) Low SNR makes it difficult to distinguish between A-type and B-type calls. This example is labeled as \textit{Bm\_Ant\_B}. (c) A vocalisation more akin to the A-type may be easily mislabeled as \textit{Bm\_Ant\_Z} due to low-frequency noise. (d) The \textit{Bm\_D} class contains many low SNR annotations, some of which are likely patterns in the noise that have been misinterpreted as a vocalisation. Many of the misannotations in (a)-(d) become more apparent when using a constant Q transform such as the WST instead of a conventional \ac{stft}.}
-                                    %         \label{fig:Bm_misannotations}
-                                    % \end{figure}
+                %          \centering
+                %          \begin{subfigure}[]{0.45\textwidth}
+                %                  \centering
+                %                  \includegraphics[width=\textwidth]{Bm_Ant-B_30.jpg}
+                %                  \label{fig:BmA_ex}
+                %              \end{subfigure}
+                %              \hfill
+                %              \begin{subfigure}[]{0.45\textwidth}
+                %                      \centering
+                %                      \includegraphics[width=\textwidth]{Bm_Ant-B_37.jpg}
+                %                      \label{fig:BmB_ex}
+                %                  \end{subfigure}
+                %                  \hfill
+                %                  \begin{subfigure}[]{0.45\textwidth}
+                %                          \centering
+                %                          \includegraphics[width=\textwidth]{Bm_Ant-Z_27.jpg}
+                %                          \label{fig:BmZ_ex}
+                %                      \end{subfigure}
+                %                      \hfill
+                %                      \begin{subfigure}[]{0.45\textwidth}
+                %                              \centering
+                %                              \includegraphics[width=\textwidth]{Bm_D_33.jpg}
+                %                              \label{fig:BmD_ex}
+                %                          \end{subfigure}
+                %                             \caption{(a) \textit{Bm\_Ant\_A} labeled as \textit{Bm\_Ant\_B}, although the noise could be misinterpreted the ``tail" required for the B-type vocalisation. (b) Low SNR makes it difficult to distinguish between A-type and B-type calls. This example is labeled as \textit{Bm\_Ant\_B}. (c) A vocalisation more akin to the A-type may be easily mislabeled as \textit{Bm\_Ant\_Z} due to low-frequency noise. (d) The \textit{Bm\_D} class contains many low SNR annotations, some of which are likely patterns in the noise that have been misinterpreted as a vocalisation. Many of the misannotations in (a)-(d) become more apparent when using a constant Q transform such as the WST instead of a conventional \ac{stft}.}
+                %                             \label{fig:Bm_misannotations}
+                %                     \end{figure}
 \end{subappendices}

@@ -43,7 +43,7 @@ PhD, a5block %... stb-thesis options
 \begin{spacing}{1.0}    
     \small  #5 \noindent
 \end{spacing}
-\noindent\rule{\textwidth}{0.5pt}\pagebreak
+\clearpage
 }
 
 \usepackage{paper1}
@@ -56,15 +56,17 @@ PhD, a5block %... stb-thesis options
 \AtBeginEnvironment{subappendices}{%
 \section*{Appendices}
 \addcontentsline{toc}{section}{Appendices}
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
 }
 
 % End of subappendices environment
 \AtEndEnvironment{subappendices}{%
-\counterwithout{figure}{section}
-\counterwithout{table}{section}
 }
+
+% Chapter format
+\usepackage{titlesec}
+\titleformat{\chapter}
+  {\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 
 
 \graphicspath{{./content/paper2/fig/}{./content/paper1/fig/}}
@@ -128,7 +130,7 @@ Private Bag X1, 7602 Matieland, South Africa.}}
 \chapter*{Nomenclature}
 \label{chap:nomenclature}
 \addcontentsline{toc}{chapter}{\nameref{chap:nomenclature}}
-
+\input{content/nomenclature.tex}
 
 
 % \begin{singlespace}
