@@ -1,4 +1,4 @@
-\begin{thebibliography}{92}
+\begin{thebibliography}{83}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname bibnamefont\endcsname\relax
   \def\bibnamefont#1{#1}\fi
@@ -21,23 +21,15 @@
 
 \bibitem[{\citenamefont{Agarap}(2019)}]{relu}
 \bibnamefont{Agarap}, \bibfnamefont{A.F.} (2019).
-\newblock Deep learning using rectified linear units (relu).
+\newblock {Deep Learning using Rectified Linear Units (ReLU)}.
 \newblock \eprint{1803.08375}.
 
 \bibitem[{\citenamefont{And{\'e}n} \protect\BIBand{}
   \citenamefont{Mallat}(2011)}]{1dscattering1}
 \bibnamefont{And{\'e}n}, \bibfnamefont{J.} \protect\BIBand{}
   \bibnamefont{Mallat}, \bibfnamefont{S.} (2011).
-\newblock Multiscale scattering for audio classification.
+\newblock {Multiscale Scattering for Audio Classification.}
 \newblock \capitalize\bblin{}: \emph{ISMIR}, \bblpp{} 657--662. Miami, Florida.
-
-\bibitem[{\citenamefont{And{\'e}n} \protect\BIBand{}
-  \citenamefont{Mallat}(2014)}]{1dscattering2}
-\bibnamefont{And{\'e}n}, \bibfnamefont{J.} \protect\BIBand{}
-  \bibnamefont{Mallat}, \bibfnamefont{S.} (2014).
-\newblock Deep scattering spectrum.
-\newblock \emph{IEEE Transactions on Signal Processing}, \bblvol{}~62,
-  \bblno{}~16, \bblpp{} 4114--4128.
 
 \bibitem[{\citenamefont{Andreux} \emph{\bbletal{}}(2020)\citenamefont{Andreux},
   \citenamefont{Angles}, \citenamefont{Exarchakis}, \citenamefont{Leonarduzzi},
@@ -59,30 +51,18 @@
   \bibnamefont{Zhang}, \bibfnamefont{S.}, \bibnamefont{Cella},
   \bibfnamefont{C.} \protect\BIBand{} \bibnamefont{Eickenberg},
   \bibfnamefont{M.} (2020).
-\newblock Kymatio: Scattering transforms in python.
+\newblock {Kymatio: Scattering Transforms in Python}.
 \newblock \emph{Journal of Machine Learning Research}, \bblvol{}~21,
   \bblno{}~60, \bblpp{} 1--6.
 \newline\bblurlpre\url{http://jmlr.org/papers/v21/19-047.html}
 
-\bibitem[{\citenamefont{Andén}
-  \emph{\bbletal{}}(2015{\natexlab{\emph{a}}})\citenamefont{Andén},
+\bibitem[{\citenamefont{Andén} \emph{\bbletal{}}(2015)\citenamefont{Andén},
   \citenamefont{Lostanlen} \protect\BIBand{}
   \citenamefont{Mallat}}]{ws_joint_tf}
 \bibnamefont{Andén}, \bibfnamefont{J.}, \bibnamefont{Lostanlen},
   \bibfnamefont{V.} \protect\BIBand{} \bibnamefont{Mallat}, \bibfnamefont{S.}
-  (2015 12{\natexlab{\emph{a}}}).
-\newblock {Joint Time-Frequency Scattering for Audio Classification}.
-\newline\bblurlpre\url{http://arxiv.org/abs/1512.02125
-  http://dx.doi.org/10.1109/MLSP.2015.7324385}
-
-\bibitem[{\citenamefont{Andén}
-  \emph{\bbletal{}}(2015{\natexlab{\emph{b}}})\citenamefont{Andén},
-  \citenamefont{Lostanlen} \protect\BIBand{}
-  \citenamefont{Mallat}}]{jointtfscattering1}
-\bibnamefont{Andén}, \bibfnamefont{J.}, \bibnamefont{Lostanlen},
-  \bibfnamefont{V.} \protect\BIBand{} \bibnamefont{Mallat}, \bibfnamefont{S.}
-  (2015 12{\natexlab{\emph{b}}}).
-\newblock Joint time-frequency scattering for audio classification.
+  (2015 12).
+\newblock {{Joint Time-Frequency Scattering for Audio Classification}}.
 \newline\bblurlpre\url{http://arxiv.org/abs/1512.02125
   http://dx.doi.org/10.1109/MLSP.2015.7324385}
 
@@ -92,7 +72,7 @@
 \bibnamefont{Andén}, \bibfnamefont{J.}, \bibnamefont{Lostanlen},
   \bibfnamefont{V.} \protect\BIBand{} \bibnamefont{Mallat}, \bibfnamefont{S.}
   (2018 7).
-\newblock Joint time-frequency scattering.
+\newblock {Joint Time-Frequency Scattering}.
 \newline\bblurlpre\url{http://arxiv.org/abs/1807.08869
   http://dx.doi.org/10.1109/TSP.2019.2918992}
 
@@ -100,14 +80,14 @@
   \citenamefont{Mallat}(2011)}]{ws_audio}
 \bibnamefont{Andén}, \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Mallat},
   \bibfnamefont{S.} (2011).
-\newblock {Multiscale Scattering for Audio Classification}.
+\newblock {{Multiscale Scattering for Audio Classification}}.
 \newline\bblurlpre\url{http://www.cmap.}
 
 \bibitem[{\citenamefont{Andén} \protect\BIBand{}
   \citenamefont{Mallat}(2013)}]{ws}
 \bibnamefont{Andén}, \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Mallat},
   \bibfnamefont{S.} (2013 4).
-\newblock {Deep Scattering Spectrum}.
+\newblock {{Deep Scattering Spectrum}}.
 \newline\bblurlpre\url{http://arxiv.org/abs/1304.6763
   http://dx.doi.org/10.1109/TSP.2014.2326991}
 
@@ -115,8 +95,8 @@
   Broek}(2022)}]{fcwt}
 \bibnamefont{Arts}, \bibfnamefont{L.P.A.} \protect\BIBand{}
   \bibnamefont{van~den Broek}, \bibfnamefont{E.L.} (2022 Jan).
-\newblock The fast continuous wavelet transformation (fcwt) for real-time,
-  high-quality, noise-resistant time--frequency analysis.
+\newblock {The fast continuous wavelet transformation (fCWT) for real-time,
+  high-quality, noise-resistant time--frequency analysis}.
 \newblock \emph{Nature Computational Science}, \bblvol{}~2, \bblno{}~1,
   \bblpp{} 47--58.
 \newblock ISSN 2662-8457.
@@ -130,7 +110,7 @@
   \bibnamefont{Herman}, \bibfnamefont{L.M.}, \bibnamefont{Deakos},
   \bibfnamefont{M.H.} \protect\BIBand{} \bibnamefont{Andrews},
   \bibfnamefont{K.} (2006).
-\newblock Acoustic properties of humpback whale songs.
+\newblock {Acoustic properties of humpback whale songs}.
 \newblock \emph{The Journal of the Acoustical Society of America}, \bblvol{}
   120, \bblno{}~2, \bblpp{} 1103--1110.
 \newblock \eprint{https://doi.org/10.1121/1.2211547}.
@@ -145,8 +125,8 @@
   \bibnamefont{Samaran}, \bibfnamefont{F.}, \bibnamefont{Giorli},
   \bibfnamefont{G.}, \bibnamefont{Saunders}, \bibfnamefont{B.J.}
   \protect\BIBand{} \bibnamefont{Erbe}, \bibfnamefont{C.} (2022 5).
-\newblock {Seasonal Distribution of the Fin Whale (Balaenoptera physalus) in
-  Antarctic and Australian Waters Based on Passive Acoustics}.
+\newblock {{Seasonal Distribution of the Fin Whale (Balaenoptera physalus) in
+  Antarctic and Australian Waters Based on Passive Acoustics}}.
 \newblock \emph{Frontiers in Marine Science}, \bblvol{}~9.
 \newblock ISSN 22967745.
 
@@ -156,8 +136,8 @@
 \bibnamefont{Branch}, \bibfnamefont{T.A.}, \bibnamefont{Matsuoka},
   \bibfnamefont{K.} \protect\BIBand{} \bibnamefont{Miyashita},
   \bibfnamefont{T.} (2004).
-\newblock {Evidence for increases in Antarctic blue whales based on Bayesian
-  modelling}.
+\newblock {{Evidence for increases in Antarctic blue whales based on Bayesian
+  modelling}}.
 \newblock \emph{Marine Mammal Science}, \bblvol{}~20, \bblpp{} 726--754.
 \newblock ISSN 08240469.
 
@@ -165,7 +145,7 @@
   \citenamefont{Mallat}(2013)}]{2dscattering}
 \bibnamefont{Bruna}, \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Mallat},
   \bibfnamefont{S.} (2013).
-\newblock Invariant scattering convolution networks.
+\newblock {Invariant scattering convolution networks}.
 \newblock \emph{IEEE transactions on pattern analysis and machine
   intelligence}, \bblvol{}~35, \bblno{}~8, \bblpp{} 1872--1886.
 
@@ -173,8 +153,8 @@
   \citenamefont{Surace}(2022{\natexlab{\emph{a}}})}]{cwtentropy1}
 \bibnamefont{Civera}, \bibfnamefont{M.} \protect\BIBand{} \bibnamefont{Surace},
   \bibfnamefont{C.} (2022{\natexlab{\emph{a}}}).
-\newblock An application of instantaneous spectral entropy for the condition
-  monitoring of wind turbines.
+\newblock {An Application of Instantaneous Spectral Entropy for the Condition
+  Monitoring of Wind Turbines}.
 \newblock \emph{Applied Sciences}, \bblvol{}~12, \bblno{}~3.
 \newblock ISSN 2076-3417.
 \newline\bblurlpre\url{https://www.mdpi.com/2076-3417/12/3/1059}
@@ -183,25 +163,25 @@
   \citenamefont{Surace}(2022{\natexlab{\emph{b}}})}]{cwtentropy2}
 \bibnamefont{Civera}, \bibfnamefont{M.} \protect\BIBand{} \bibnamefont{Surace},
   \bibfnamefont{C.} (2022{\natexlab{\emph{b}}}).
-\newblock Instantaneous spectral entropy: An application for the online
-  monitoring of multi-storey frame structures.
+\newblock {Instantaneous Spectral Entropy: An Application for the Online
+  Monitoring of Multi-Storey Frame Structures}.
 \newblock \emph{Buildings}, \bblvol{}~12, \bblno{}~3.
 \newblock ISSN 2075-5309.
 \newline\bblurlpre\url{https://www.mdpi.com/2075-5309/12/3/310}
 
 \bibitem[{\citenamefont{Conrad}(2004)}]{maxentropy}
 \bibnamefont{Conrad}, \bibfnamefont{K.} (2004).
-\newblock Probability distributions and maximum entropy.
+\newblock {Probability distributions and maximum entropy}.
 \newblock \emph{Entropy}, \bblvol{}~6, \bblno{} 452, \bblp{}~10.
 
 \bibitem[{\citenamefont{{Cornell University}}(n.d.)}]{raven}
 \bibnamefont{{Cornell University}} (nd).
-\newblock Band-limited energy detector (bled) diagnostics.
+\newblock {Band-limited energy detector (BLED) diagnostics}.
 \newline\bblurlpre\url{https://ravensoundsoftware.com/knowledge-base/diagnostics-for-band-limited-energy-detector/}
 
 \bibitem[{\citenamefont{Cramer}(2002)}]{logit}
 \bibnamefont{Cramer}, \bibfnamefont{J.S.} (2002).
-\newblock The origins of logistic regression.
+\newblock {The origins of logistic regression}.
 
 \bibitem[{\citenamefont{Eickenberg}
   \emph{\bbletal{}}(2017)\citenamefont{Eickenberg}, \citenamefont{Exarchakis},
@@ -210,8 +190,8 @@
 \bibnamefont{Eickenberg}, \bibfnamefont{M.}, \bibnamefont{Exarchakis},
   \bibfnamefont{G.}, \bibnamefont{Hirn}, \bibfnamefont{M.} \protect\BIBand{}
   \bibnamefont{Mallat}, \bibfnamefont{S.} (2017).
-\newblock Solid harmonic wavelet scattering: Predicting quantum molecular
-  energy from invariant descriptors of 3d electronic densities.
+\newblock {Solid Harmonic Wavelet Scattering: Predicting Quantum Molecular
+  Energy from Invariant Descriptors of 3D Electronic Densities}.
 \newblock \capitalize\bblin{}: \bibnamefont{Guyon}, \bibfnamefont{I.},
   \bibnamefont{Luxburg}, \bibfnamefont{U.V.}, \bibnamefont{Bengio},
   \bibfnamefont{S.}, \bibnamefont{Wallach}, \bibfnamefont{H.},
@@ -222,27 +202,18 @@
 \newline\bblurlpre\url{https://proceedings.neurips.cc/paper_files/paper/2017/file/72b386224056bf940cd5b01341f65e9d-Paper.pdf}
 
 \bibitem[{\citenamefont{Erbe} \protect\BIBand{}
-  \citenamefont{King}(2008{\natexlab{\emph{a}}})}]{entropyJASA}
+  \citenamefont{King}(2008)}]{entropyJASA}
 \bibnamefont{Erbe}, \bibfnamefont{C.} \protect\BIBand{} \bibnamefont{King},
-  \bibfnamefont{A.R.} (2008{\natexlab{\emph{a}}}).
-\newblock Automatic detection of marine mammals using information entropy.
+  \bibfnamefont{A.R.} (2008).
+\newblock {Automatic detection of marine mammals using information entropy}.
 \newblock \emph{The Journal of the Acoustical Society of America}, \bblvol{}
   124, \bblno{}~5, \bblpp{} 2833--2840.
 \newblock \eprint{https://doi.org/10.1121/1.2982368}.
 \newline\bblurlpre\url{https://doi.org/10.1121/1.2982368}
 
-\bibitem[{\citenamefont{Erbe} \protect\BIBand{}
-  \citenamefont{King}(2008{\natexlab{\emph{b}}})}]{se_erbe_king}
-\bibnamefont{Erbe}, \bibfnamefont{C.} \protect\BIBand{} \bibnamefont{King},
-  \bibfnamefont{A.R.} (2008 11{\natexlab{\emph{b}}}).
-\newblock {Automatic detection of marine mammals using information entropy}.
-\newblock \emph{The Journal of the Acoustical Society of America}, \bblvol{}
-  124, \bblpp{} 2833--2840.
-\newblock ISSN 0001-4966.
-
 \bibitem[{\citenamefont{Fisher}(1936)}]{lda}
 \bibnamefont{Fisher}, \bibfnamefont{R.A.} (1936).
-\newblock The use of multiple measurements in taxonomic problems.
+\newblock {THE USE OF MULTIPLE MEASUREMENTS IN TAXONOMIC PROBLEMS}.
 \newblock \emph{Annals of Eugenics}, \bblvol{}~7, \bblno{}~2, \bblpp{}
   179--188.
 \newblock
@@ -253,7 +224,7 @@
   \citenamefont{Mercado}(2000)}]{whalemodel}
 \bibnamefont{Frazer}, \bibfnamefont{L.} \protect\BIBand{}
   \bibnamefont{Mercado}, \bibfnamefont{E.} (2000).
-\newblock A sonar model for humpback whale song.
+\newblock {A sonar model for humpback whale song}.
 \newblock \emph{IEEE Journal of Oceanic Engineering}, \bblvol{}~25, \bblno{}~1,
   \bblpp{} 160--182.
 
@@ -263,8 +234,8 @@
 \bibnamefont{Ganapathi}, \bibfnamefont{S.}, \bibnamefont{Kumar},
   \bibfnamefont{S.M.} \protect\BIBand{} \bibnamefont{Deivasigamani},
   \bibfnamefont{M.} (2016).
-\newblock Noise reduction in underwater acoustic signals for tropical and
-  subtropical coastal waters.
+\newblock {Noise reduction in underwater acoustic signals for tropical and
+  subtropical coastal waters}.
 \newblock \capitalize\bblin{}: \emph{2016 IEEE/OES China Ocean Acoustics
   (COA)}, \bblpp{} 1--6.
 
@@ -275,8 +246,8 @@
   \bibfnamefont{R.M.}, \bibnamefont{Shelly}, \bibfnamefont{S.},
   \bibnamefont{Philipose}, \bibfnamefont{S.S.} \protect\BIBand{}
   \bibnamefont{Varghese}, \bibfnamefont{A.M.} (2018).
-\newblock A survey on various median filtering techniques for removal of
-  impulse noise from digital image.
+\newblock {A Survey on Various Median Filtering Techniques For Removal of
+  Impulse Noise From Digital Image}.
 \newblock \capitalize\bblin{}: \emph{2018 Conference on Emerging Devices and
   Smart Systems (ICEDSS)}, \bblpp{} 235--238.
 
@@ -284,8 +255,8 @@
   \citenamefont{Szegedy}(2015)}]{batchnorm}
 \bibnamefont{Ioffe}, \bibfnamefont{S.} \protect\BIBand{} \bibnamefont{Szegedy},
   \bibfnamefont{C.} (2015).
-\newblock Batch normalization: Accelerating deep network training by reducing
-  internal covariate shift.
+\newblock {Batch Normalization: Accelerating Deep Network Training by Reducing
+  Internal Covariate Shift}.
 \newblock \eprint{1502.03167}.
 
 \bibitem[{\citenamefont{jia Jiang} \emph{\bbletal{}}(2019)\citenamefont{jia
@@ -297,8 +268,8 @@
   \bibnamefont{quan Wang}, \bibfnamefont{X.}, \bibnamefont{Liu},
   \bibfnamefont{W.}, \bibnamefont{bo~Sun}, \bibfnamefont{Z.} \protect\BIBand{}
   \bibnamefont{yue Li}, \bibfnamefont{C.} (2019).
-\newblock Whistle detection and classification for whales based on
-  convolutional neural networks.
+\newblock {Whistle detection and classification for whales based on
+  convolutional neural networks}.
 \newblock \emph{Applied Acoustics}, \bblvol{} 150, \bblpp{} 169--178.
 \newblock ISSN 0003-682X.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S0003682X18311241}
@@ -309,8 +280,8 @@
 \bibnamefont{Jiang}, \bibfnamefont{J.}, \bibnamefont{Guo}, \bibfnamefont{J.},
   \bibnamefont{Fan}, \bibfnamefont{W.} \protect\BIBand{} \bibnamefont{Chen},
   \bibfnamefont{Q.} (2010).
-\newblock An improved adaptive wavelet denoising method based on neighboring
-  coefficients.
+\newblock {An improved adaptive wavelet denoising method based on neighboring
+  coefficients}.
 \newblock \capitalize\bblin{}: \emph{2010 8th World Congress on Intelligent
   Control and Automation}, \bblpp{} 2894--2898.
 
@@ -318,15 +289,15 @@
   \citenamefont{Cheng}(2010)}]{entropysubband}
 \bibnamefont{Jin}, \bibfnamefont{L.} \protect\BIBand{} \bibnamefont{Cheng},
   \bibfnamefont{J.} (2010).
-\newblock An improved speech endpoint detection based on spectral subtraction
-  and adaptive sub-band spectral entropy.
+\newblock {An Improved Speech Endpoint Detection Based on Spectral Subtraction
+  and Adaptive Sub-band Spectral Entropy}.
 \newblock \capitalize\bblin{}: \emph{2010 International Conference on
   Intelligent Computation Technology and Automation}, \bblvol{}~1, \bblpp{}
   591--594.
 
 \bibitem[{\citenamefont{Justusson}(1981)}]{mf1}
 \bibnamefont{Justusson}, \bibfnamefont{B.} (1981).
-\newblock Median filtering: Statistical properties.
+\newblock {Median filtering: Statistical properties}.
 \newblock \emph{Two-Dimensional Digital Signal Prcessing II}, \bblpp{}
   161--196.
 
@@ -336,8 +307,8 @@
 \bibnamefont{Khemani}, \bibfnamefont{V.}, \bibnamefont{Azarian},
   \bibfnamefont{M.H.} \protect\BIBand{} \bibnamefont{Pecht},
   \bibfnamefont{M.G.} (2022 2).
-\newblock {Learnable Wavelet Scattering Networks: Applications to Fault
-  Diagnosis of Analog Circuits and Rotating Machinery}.
+\newblock {{Learnable Wavelet Scattering Networks: Applications to Fault
+  Diagnosis of Analog Circuits and Rotating Machinery}}.
 \newblock \emph{Electronics (Switzerland)}, \bblvol{}~11.
 \newblock ISSN 20799292.
 
@@ -345,14 +316,14 @@
   \citenamefont{Ba}(2017)}]{adam}
 \bibnamefont{Kingma}, \bibfnamefont{D.P.} \protect\BIBand{} \bibnamefont{Ba},
   \bibfnamefont{J.} (2017).
-\newblock Adam: A method for stochastic optimization.
+\newblock {Adam: A Method for Stochastic Optimization}.
 \newblock \eprint{1412.6980}.
 
 \bibitem[{\citenamefont{Kovacevic} \protect\BIBand{}
   \citenamefont{Vetterli}(1995)}]{waveletsandsubbandcoding}
 \bibnamefont{Kovacevic}, \bibfnamefont{J.} \protect\BIBand{}
   \bibnamefont{Vetterli}, \bibfnamefont{M.} (1995).
-\newblock \emph{Wavelets and Subband Coding}.
+\newblock \emph{{Wavelets and Subband Coding}}.
 \newblock Prentice-Hall signal processing series. Prentice Hall PTR.
 \newblock ISBN 9780130970800.
 \newline\bblurlpre\url{https://books.google.co.za/books?id=4Qt_QgAACAAJ}
@@ -362,7 +333,7 @@
 \bibnamefont{LeCun}, \bibfnamefont{Y.}, \bibnamefont{Cortes},
   \bibfnamefont{C.}, \bibnamefont{Burges}, \bibfnamefont{C.} \emph{\bbletal{}}
   (2010).
-\newblock Mnist handwritten digit database.
+\newblock {MNIST handwritten digit database}.
 
 \bibitem[{\citenamefont{Li} \emph{\bbletal{}}(2020)\citenamefont{Li},
   \citenamefont{Sidorovskaia} \protect\BIBand{}
@@ -370,8 +341,8 @@
 \bibnamefont{Li}, \bibfnamefont{K.}, \bibnamefont{Sidorovskaia},
   \bibfnamefont{N.A.} \protect\BIBand{} \bibnamefont{Tiemann},
   \bibfnamefont{C.O.} (2020).
-\newblock Model-based unsupervised clustering for distinguishing cuvier's and
-  gervais' beaked whales in acoustic data.
+\newblock {Model-based unsupervised clustering for distinguishing Cuvier's and
+  Gervais' beaked whales in acoustic data}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~58, \bblp{} 101094.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954120300443}
@@ -380,7 +351,7 @@
   \citenamefont{Olhede}(2012)}]{morsewavelets2}
 \bibnamefont{Lilly}, \bibfnamefont{J.M.} \protect\BIBand{}
   \bibnamefont{Olhede}, \bibfnamefont{S.C.} (2012).
-\newblock Generalized morse wavelets as a superfamily of analytic wavelets.
+\newblock {Generalized Morse wavelets as a superfamily of analytic wavelets}.
 \newblock \emph{IEEE Transactions on Signal Processing}, \bblvol{}~60,
   \bblno{}~11, \bblpp{} 6036--6041.
 
@@ -391,59 +362,45 @@
   \bibnamefont{Zhang}, \bibfnamefont{Q.}, \bibnamefont{Zhang},
   \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Zeng}, \bibfnamefont{X.}
   (2020).
-\newblock {Wavelet Scattering Transform for ECG Beat Classification}.
+\newblock {{Wavelet Scattering Transform for ECG Beat Classification}}.
 \newblock \emph{Computational and Mathematical Methods in Medicine}, \bblvol{}
   2020.
 \newblock ISSN 17486718.
 
-\bibitem[{\citenamefont{Lu}
-  \emph{\bbletal{}}(2021{\natexlab{\emph{a}}})\citenamefont{Lu},
+\bibitem[{\citenamefont{Lu} \emph{\bbletal{}}(2021)\citenamefont{Lu},
   \citenamefont{Han} \protect\BIBand{} \citenamefont{Yu}}]{MLalexnet}
 \bibnamefont{Lu}, \bibfnamefont{T.}, \bibnamefont{Han}, \bibfnamefont{B.}
-  \protect\BIBand{} \bibnamefont{Yu}, \bibfnamefont{F.}
-  (2021{\natexlab{\emph{a}}}).
-\newblock Detection and classification of marine mammal sounds using alexnet
-  with transfer learning.
+  \protect\BIBand{} \bibnamefont{Yu}, \bibfnamefont{F.} (2021).
+\newblock {Detection and classification of marine mammal sounds using AlexNet
+  with transfer learning}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~62, \bblp{} 101277.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954121000686}
 
-\bibitem[{\citenamefont{Lu}
-  \emph{\bbletal{}}(2021{\natexlab{\emph{b}}})\citenamefont{Lu},
-  \citenamefont{Han} \protect\BIBand{}
-  \citenamefont{Yu}}]{alexnet_killer_whales}
-\bibnamefont{Lu}, \bibfnamefont{T.}, \bibnamefont{Han}, \bibfnamefont{B.}
-  \protect\BIBand{} \bibnamefont{Yu}, \bibfnamefont{F.} (2021
-  5{\natexlab{\emph{b}}}).
-\newblock {Detection and classification of marine mammal sounds using AlexNet
-  with transfer learning}.
-\newblock \emph{Ecological Informatics}, \bblvol{}~62.
-\newblock ISSN 15749541.
-
 \bibitem[{\citenamefont{MacQueen}(1967)}]{kmeans}
 \bibnamefont{MacQueen}, \bibfnamefont{J.} (1967).
-\newblock Classification and analysis of multivariate observations.
+\newblock {Classification and analysis of multivariate observations}.
 \newblock \capitalize\bblin{}: \emph{5th Berkeley Symp. Math. Statist.
   Probability}, \bblpp{} 281--297.
 
 \bibitem[{\citenamefont{MacQueen} \emph{\bbletal{}}(1967)}]{origkmeans}
 \bibnamefont{MacQueen}, \bibfnamefont{J.} \emph{\bbletal{}} (1967).
-\newblock Some methods for classification and analysis of multivariate
-  observations.
+\newblock {Some methods for classification and analysis of multivariate
+  observations}.
 \newblock \capitalize\bblin{}: \emph{Proceedings of the fifth Berkeley
   symposium on mathematical statistics and probability}, \bblvol{}~1, \bblpp{}
   281--297. Oakland, CA, USA.
 
 \bibitem[{\citenamefont{Mallat}(2008)}]{waveletbook}
 \bibnamefont{Mallat}, \bibfnamefont{S.} (2008).
-\newblock \emph{A Wavelet Tour of Signal Processing, Third Edition: The Sparse
-  Way}.
+\newblock \emph{{A Wavelet Tour of Signal Processing, Third Edition: The Sparse
+  Way}}.
 \newblock \bblthirdo{} \bbledn{}. Academic Press, Inc., USA.
 \newblock ISBN 0123743702.
 
 \bibitem[{\citenamefont{Mallat}(2012)}]{groupinvariantscattering}
 \bibnamefont{Mallat}, \bibfnamefont{S.} (2012).
-\newblock Group invariant scattering.
+\newblock {Group invariant scattering}.
 \newblock \emph{Communications on Pure and Applied Mathematics}, \bblvol{}~65,
   \bblno{}~10, \bblpp{} 1331--1398.
 
@@ -453,42 +410,28 @@
 \bibnamefont{Mao}, \bibfnamefont{Y.}, \bibnamefont{He}, \bibfnamefont{Z.},
   \bibnamefont{Ma}, \bibfnamefont{Z.}, \bibnamefont{Tang}, \bibfnamefont{X.}
   \protect\BIBand{} \bibnamefont{Wang}, \bibfnamefont{Z.} (2019).
-\newblock Efficient convolution neural networks for object tracking using
-  separable convolution and filter pruning.
+\newblock {Efficient convolution neural networks for object tracking using
+  separable convolution and filter pruning}.
 \newblock \emph{IEEE Access}, \bblvol{}~7, \bblpp{} 106466--106474.
 
 \bibitem[{\citenamefont{{MathWorks Inc.}}(2022)}]{MATLAB}
 \bibnamefont{{MathWorks Inc.}} (2022).
-\newblock {MATLAB Wavelet Toolbox (R2024a)}.
+\newblock {{MATLAB Wavelet Toolbox (R2024a)}}.
 \newline\bblurlpre\url{https://www.mathworks.com/help/wavelet/}
 
 \bibitem[{\citenamefont{MATLAB}(n.d.)}]{cwtmatlab}
 \bibnamefont{MATLAB} (nd).
-\newblock Continuous 1-d wavelet transform.
+\newblock {Continuous 1-D wavelet transform}.
 \newline\bblurlpre\url{https://www.mathworks.com/help/wavelet/ref/cwt.html}
 
-\bibitem[{\citenamefont{Michau}
-  \emph{\bbletal{}}(2022{\natexlab{\emph{a}}})\citenamefont{Michau},
+\bibitem[{\citenamefont{Michau} \emph{\bbletal{}}(2022)\citenamefont{Michau},
   \citenamefont{Frusque} \protect\BIBand{}
   \citenamefont{Fink}}]{scattering_birdsong}
 \bibnamefont{Michau}, \bibfnamefont{G.}, \bibnamefont{Frusque},
   \bibfnamefont{G.} \protect\BIBand{} \bibnamefont{Fink}, \bibfnamefont{O.}
-  (2022 2{\natexlab{\emph{a}}}).
-\newblock Fully learnable deep wavelet transform for unsupervised monitoring of
-  high-frequency time series.
-\newblock \emph{Proceedings of the National Academy of Sciences of the United
-  States of America}, \bblvol{} 119.
-\newblock ISSN 10916490.
-
-\bibitem[{\citenamefont{Michau}
-  \emph{\bbletal{}}(2022{\natexlab{\emph{b}}})\citenamefont{Michau},
-  \citenamefont{Frusque} \protect\BIBand{}
-  \citenamefont{Fink}}]{learnablewavelettransform}
-\bibnamefont{Michau}, \bibfnamefont{G.}, \bibnamefont{Frusque},
-  \bibfnamefont{G.} \protect\BIBand{} \bibnamefont{Fink}, \bibfnamefont{O.}
-  (2022 2{\natexlab{\emph{b}}}).
-\newblock Fully learnable deep wavelet transform for unsupervised monitoring of
-  high-frequency time series.
+  (2022 2).
+\newblock {Fully learnable deep wavelet transform for unsupervised monitoring
+  of high-frequency time series}.
 \newblock \emph{Proceedings of the National Academy of Sciences of the United
   States of America}, \bblvol{} 119.
 \newblock ISSN 10916490.
@@ -504,8 +447,8 @@
   \bibfnamefont{A.}, \bibnamefont{Stafford}, \bibfnamefont{K.M.},
   \bibnamefont{Bell}, \bibfnamefont{E.} \protect\BIBand{} \bibnamefont{Double},
   \bibfnamefont{M.C.} (2021 12{\natexlab{\emph{a}}}).
-\newblock Source level of antarctic blue and fin whale sounds recorded on
-  sonobuoys deployed in the deep-ocean off antarctica.
+\newblock {Source Level of Antarctic Blue and Fin Whale Sounds Recorded on
+  Sonobuoys Deployed in the Deep-Ocean Off Antarctica}.
 \newblock \emph{Frontiers in Marine Science}, \bblvol{}~8.
 \newblock ISSN 22967745.
 \newblock Casey2019 DS.
@@ -529,9 +472,9 @@
   \bibnamefont{Shabangu}, \bibfnamefont{F.W.}, \bibnamefont{Dziak},
   \bibfnamefont{R.P.}, \bibnamefont{Lee}, \bibfnamefont{W.S.} \protect\BIBand{}
   \bibnamefont{Hong}, \bibfnamefont{J.K.} (2021 12{\natexlab{\emph{b}}}).
-\newblock An open access dataset for developing automated detectors of
-  antarctic baleen whale sounds and performance evaluation of two commonly used
-  detectors.
+\newblock {An open access dataset for developing automated detectors of
+  Antarctic baleen whale sounds and performance evaluation of two commonly used
+  detectors}.
 \newblock \emph{Scientific Reports}, \bblvol{}~11.
 \newblock ISSN 20452322.
 
@@ -539,9 +482,9 @@
   \citenamefont{McHugh}(2011)}]{rightdetection}
 \bibnamefont{Mohammad}, \bibfnamefont{B.} \protect\BIBand{}
   \bibnamefont{McHugh}, \bibfnamefont{R.} (2011).
-\newblock Automatic detection and characterization of dispersive north atlantic
-  right whale upcalls recorded in a shallow-water environment using a
-  region-based active contour model.
+\newblock {Automatic Detection and Characterization of Dispersive North
+  Atlantic Right Whale Upcalls Recorded in a Shallow-Water Environment Using a
+  Region-Based Active Contour Model}.
 \newblock \emph{IEEE Journal of Oceanic Engineering}, \bblvol{}~36, \bblno{}~3,
   \bblpp{} 431--440.
 
@@ -549,9 +492,9 @@
   \citenamefont{Ratilal}(2022)}]{cnn_multiple_whale_classes}
 \bibnamefont{Mohebbi-Kalkhoran}, \bibfnamefont{H.} \protect\BIBand{}
   \bibnamefont{Ratilal}, \bibfnamefont{P.} (2022).
-\newblock {Automatic detection and classification of baleen and toothed whale
+\newblock {{Automatic detection and classification of baleen and toothed whale
   calls via machine learning approaches over instantaneous wide areas in the
-  Gulf of Maine received on a coherent hydrophone array}.
+  Gulf of Maine received on a coherent hydrophone array}}.
 \newblock \emph{The Journal of the Acoustical Society of America}, \bblvol{}
   152.
 \newblock ISSN 0001-4966.
@@ -560,8 +503,8 @@
   \citenamefont{Pathak} \protect\BIBand{} \citenamefont{Saha}}]{ecg_ws_svm}
 \bibnamefont{Nahak}, \bibfnamefont{S.}, \bibnamefont{Pathak}, \bibfnamefont{A.}
   \protect\BIBand{} \bibnamefont{Saha}, \bibfnamefont{G.} (2023 8).
-\newblock {Fragment-level classification of ECG arrhythmia using wavelet
-  scattering transform}.
+\newblock {{Fragment-level classification of ECG arrhythmia using wavelet
+  scattering transform}}.
 \newblock \emph{Expert Systems with Applications}, \bblvol{} 224.
 \newblock ISSN 09574174.
 
@@ -571,22 +514,20 @@
 \bibnamefont{Nourani}, \bibfnamefont{V.}, \bibnamefont{Tootoonchi},
   \bibfnamefont{R.} \protect\BIBand{} \bibnamefont{Andaryani},
   \bibfnamefont{S.} (2021).
-\newblock Investigation of climate, land cover and lake level pattern changes
-  and interactions using remotely sensed data and wavelet analysis.
+\newblock {Investigation of climate, land cover and lake level pattern changes
+  and interactions using remotely sensed data and wavelet analysis}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~64, \bblp{} 101330.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954121001217}
 
 \bibitem[{\citenamefont{Ogundile}
-  \emph{\bbletal{}}(2020{\natexlab{\emph{a}}})\citenamefont{Ogundile},
-  \citenamefont{Usman}, \citenamefont{Babalola} \protect\BIBand{}
-  \citenamefont{Versfeld}}]{hmm2}
+  \emph{\bbletal{}}(2020)\citenamefont{Ogundile}, \citenamefont{Usman},
+  \citenamefont{Babalola} \protect\BIBand{} \citenamefont{Versfeld}}]{hmm2}
 \bibnamefont{Ogundile}, \bibfnamefont{O.}, \bibnamefont{Usman},
   \bibfnamefont{A.}, \bibnamefont{Babalola}, \bibfnamefont{O.}
-  \protect\BIBand{} \bibnamefont{Versfeld}, \bibfnamefont{D.}
-  (2020{\natexlab{\emph{a}}}).
-\newblock A hidden markov model with selective time domain feature extraction
-  to detect inshore bryde's whale short pulse calls.
+  \protect\BIBand{} \bibnamefont{Versfeld}, \bibfnamefont{D.} (2020).
+\newblock {A hidden Markov model with selective time domain feature extraction
+  to detect inshore Bryde's whale short pulse calls}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~57, \bblp{} 101087.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954120300376}
@@ -597,30 +538,17 @@
 \bibnamefont{Ogundile}, \bibfnamefont{O.}, \bibnamefont{Usman},
   \bibfnamefont{A.}, \bibnamefont{Babalola}, \bibfnamefont{O.}
   \protect\BIBand{} \bibnamefont{Versfeld}, \bibfnamefont{D.} (2021).
-\newblock Dynamic mode decomposition: A feature extraction technique based
-  hidden markov model for detection of mysticetes' vocalisations.
+\newblock {Dynamic mode decomposition: A feature extraction technique based
+  hidden Markov model for detection of Mysticetes' vocalisations}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~63, \bblp{} 101306.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954121000972}
-
-\bibitem[{\citenamefont{Ogundile}
-  \emph{\bbletal{}}(2020{\natexlab{\emph{b}}})\citenamefont{Ogundile},
-  \citenamefont{Usman}, \citenamefont{Babalola} \protect\BIBand{}
-  \citenamefont{Versfeld}}]{mfcc_hmm_brydes}
-\bibnamefont{Ogundile}, \bibfnamefont{O.O.}, \bibnamefont{Usman},
-  \bibfnamefont{A.M.}, \bibnamefont{Babalola}, \bibfnamefont{O.P.}
-  \protect\BIBand{} \bibnamefont{Versfeld}, \bibfnamefont{D.J.} (2020
-  5{\natexlab{\emph{b}}}).
-\newblock {A hidden Markov model with selective time domain feature extraction
-  to detect inshore Bryde's whale short pulse calls}.
-\newblock \emph{Ecological Informatics}, \bblvol{}~57.
-\newblock ISSN 15749541.
 
 \bibitem[{\citenamefont{Olhede} \protect\BIBand{}
   \citenamefont{Walden}(2002)}]{morsewavelets}
 \bibnamefont{Olhede}, \bibfnamefont{S.} \protect\BIBand{} \bibnamefont{Walden},
   \bibfnamefont{A.} (2002).
-\newblock Generalized morse wavelets.
+\newblock {Generalized Morse wavelets}.
 \newblock \emph{IEEE Transactions on Signal Processing}, \bblvol{}~50,
   \bblno{}~11, \bblpp{} 2661--2670.
 
@@ -633,12 +561,12 @@
   \bibnamefont{Pazos-Rangel}, \bibfnamefont{R.}, \bibnamefont{Zavala-Diaz},
   \bibfnamefont{J.C.} \protect\BIBand{} \bibnamefont{Martínez-Rebollar},
   \bibfnamefont{A.} (2019 04).
-\newblock \emph{The K-Means Algorithm Evolution}.
+\newblock \emph{{The K-Means Algorithm Evolution}}.
 \newblock ISBN 978-1-83880-333-9.
 
 \bibitem[{\citenamefont{{PAMGuard}}(n.d.)}]{PAMGuard}
 \bibnamefont{{PAMGuard}} (nd).
-\newblock Pamguard core plug-in modules.
+\newblock {PAMGuard core plug-in modules}.
 \newline\bblurlpre\url{https://www.pamguard.org/11_PluginModules.html}
 
 \bibitem[{\citenamefont{Parihar} \emph{\bbletal{}}(2021)\citenamefont{Parihar},
@@ -648,8 +576,8 @@
   \bibfnamefont{R.}, \bibnamefont{Akula}, \bibfnamefont{A.},
   \bibnamefont{Kumar}, \bibfnamefont{S.} \protect\BIBand{}
   \bibnamefont{Sardana}, \bibfnamefont{H.} (2021).
-\newblock Seismic signal analysis for the characterisation of elephant
-  movements in a forest environment.
+\newblock {Seismic signal analysis for the characterisation of elephant
+  movements in a forest environment}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~64, \bblp{} 101329.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954121001205}
@@ -676,7 +604,8 @@
   \bibnamefont{Steiner}, \bibfnamefont{B.}, \bibnamefont{Fang},
   \bibfnamefont{L.}, \bibnamefont{Bai}, \bibfnamefont{J.} \protect\BIBand{}
   \bibnamefont{Chintala}, \bibfnamefont{S.} (2019).
-\newblock Pytorch: An imperative style, high-performance deep learning library.
+\newblock {PyTorch: An Imperative Style, High-Performance Deep Learning
+  Library}.
 \newblock \capitalize\bblin{}: \emph{Advances in Neural Information Processing
   Systems 32}, \bblpp{} 8024--8035. Curran Associates, Inc.
 \newline\bblurlpre\url{http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf}
@@ -685,43 +614,30 @@
   \citenamefont{Percival}(1979)}]{entropyorig}
 \bibnamefont{Powell}, \bibfnamefont{G.E.} \protect\BIBand{}
   \bibnamefont{Percival}, \bibfnamefont{I.C.} (1979 nov).
-\newblock A spectral entropy method for distinguishing regular and irregular
-  motion of hamiltonian systems.
+\newblock {A spectral entropy method for distinguishing regular and irregular
+  motion of Hamiltonian systems}.
 \newblock \emph{Journal of Physics A: Mathematical and General}, \bblvol{}~12,
   \bblno{}~11, \bblpp{} 2053--2071.
 \newline\bblurlpre\url{https://doi.org/10.1088/0305-4470/12/11/017}
 
-\bibitem[{\citenamefont{Qiao}
-  \emph{\bbletal{}}(2019{\natexlab{\emph{a}}})\citenamefont{Qiao},
+\bibitem[{\citenamefont{Qiao} \emph{\bbletal{}}(2019)\citenamefont{Qiao},
   \citenamefont{Ma}, \citenamefont{Liu}, \citenamefont{Zheng},
   \citenamefont{Babar} \protect\BIBand{} \citenamefont{Yin}}]{entropyOCEANS}
 \bibnamefont{Qiao}, \bibfnamefont{G.}, \bibnamefont{Ma}, \bibfnamefont{T.},
   \bibnamefont{Liu}, \bibfnamefont{S.}, \bibnamefont{Zheng}, \bibfnamefont{N.},
   \bibnamefont{Babar}, \bibfnamefont{Z.} \protect\BIBand{} \bibnamefont{Yin},
-  \bibfnamefont{Y.} (2019{\natexlab{\emph{a}}}).
-\newblock Spectral entropy based dolphin whistle detection algorithm and its
-  possible application for biologically inspired communication.
-\newblock \capitalize\bblin{}: \emph{OCEANS 2019 - Marseille}, \bblpp{} 1--6.
-
-\bibitem[{\citenamefont{Qiao}
-  \emph{\bbletal{}}(2019{\natexlab{\emph{b}}})\citenamefont{Qiao},
-  \citenamefont{Ma}, \citenamefont{Liu}, \citenamefont{Zheng},
-  \citenamefont{Babar} \protect\BIBand{} \citenamefont{Yin}}]{se_dolphin}
-\bibnamefont{Qiao}, \bibfnamefont{G.}, \bibnamefont{Ma}, \bibfnamefont{T.},
-  \bibnamefont{Liu}, \bibfnamefont{S.}, \bibnamefont{Zheng}, \bibfnamefont{N.},
-  \bibnamefont{Babar}, \bibfnamefont{Z.} \protect\BIBand{} \bibnamefont{Yin},
-  \bibfnamefont{Y.} (2019{\natexlab{\emph{b}}}).
+  \bibfnamefont{Y.} (2019).
 \newblock {Spectral Entropy Based Dolphin Whistle Detection Algorithm and Its
   Possible Application for Biologically Inspired Communication}.
-\newblock \bblvol{} 2019-June.
+\newblock \capitalize\bblin{}: \emph{OCEANS 2019 - Marseille}, \bblpp{} 1--6.
 
 \bibitem[{\citenamefont{Rademan} \emph{\bbletal{}}(2023)\citenamefont{Rademan},
   \citenamefont{Versfeld} \protect\BIBand{} \citenamefont{du~Preez}}]{mypaper}
 \bibnamefont{Rademan}, \bibfnamefont{M.W.}, \bibnamefont{Versfeld},
   \bibfnamefont{D.J.} \protect\BIBand{} \bibnamefont{du~Preez},
   \bibfnamefont{J.A.} (2023 5).
-\newblock {Soft-output signal detection for cetacean vocalizations using
-  spectral entropy, k-means clustering and the continuous wavelet transform}.
+\newblock {{Soft-output signal detection for cetacean vocalizations using
+  spectral entropy, k-means clustering and the continuous wavelet transform}}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~74.
 \newblock ISSN 15749541.
 
@@ -729,7 +645,7 @@
   \citenamefont{Bengio}(2018)}]{sincnet}
 \bibnamefont{Ravanelli}, \bibfnamefont{M.} \protect\BIBand{}
   \bibnamefont{Bengio}, \bibfnamefont{Y.} (2018).
-\newblock Speaker recognition from raw waveform with sincnet.
+\newblock {Speaker recognition from raw waveform with sincnet}.
 \newblock \capitalize\bblin{}: \emph{2018 IEEE spoken language technology
   workshop (SLT)}, \bblpp{} 1021--1028. IEEE.
 
@@ -738,8 +654,8 @@
 \bibnamefont{Reddy}, \bibfnamefont{M.K.}, \bibnamefont{Keerthana},
   \bibfnamefont{Y.M.} \protect\BIBand{} \bibnamefont{Alku}, \bibfnamefont{P.}
   (2022).
-\newblock {End-to-end Pathological Speech Detection using Wavelet Scattering
-  Network}.
+\newblock {{End-to-end Pathological Speech Detection using Wavelet Scattering
+  Network}}.
 \newblock \emph{IEEE Signal Processing Letters}.
 \newblock ISSN 15582361.
 
@@ -748,7 +664,7 @@
   \citenamefont{Esteban}}]{cnn_fin_whale}
 \bibnamefont{Ruiz}, \bibfnamefont{M.R.}, \bibnamefont{Rossi}, \bibfnamefont{C.}
   \protect\BIBand{} \bibnamefont{Esteban}, \bibfnamefont{J.} (2023 11).
-\newblock {Fin whale pulse detection with deep neural networks}.
+\newblock {{Fin whale pulse detection with deep neural networks}}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~77, \bblp{} 102243.
 \newblock ISSN 15749541.
 \newline\bblurlpre\url{https://linkinghub.elsevier.com/retrieve/pii/S1574954123002728}
@@ -762,13 +678,13 @@
   \bibnamefont{Vijayan}, \bibfnamefont{N.T.}, \bibnamefont{Subramanian},
   \bibfnamefont{M.} \protect\BIBand{} \bibnamefont{Gauns}, \bibfnamefont{M.U.}
   (2023 5).
-\newblock Applications of machine learning in chemical and biological
-  oceanography.
+\newblock {Applications of Machine Learning in Chemical and Biological
+  Oceanography}.
 
 \bibitem[{\citenamefont{Sattar}(2023)}]{otherScattering}
 \bibnamefont{Sattar}, \bibfnamefont{F.} (2023 3).
-\newblock A new acoustical autonomous method for identifying endangered whale
-  calls: A case study of blue whale and fin whale.
+\newblock {A New Acoustical Autonomous Method for Identifying Endangered Whale
+  Calls: A Case Study of Blue Whale and Fin Whale}.
 \newblock \emph{Sensors}, \bblvol{}~23.
 \newblock ISSN 14248220.
 
@@ -776,8 +692,8 @@
   \citenamefont{Parcerisas}(2022)}]{blue_fin_detection}
 \bibnamefont{Schall}, \bibfnamefont{E.} \protect\BIBand{}
   \bibnamefont{Parcerisas}, \bibfnamefont{C.} (2022 12).
-\newblock {A Robust Method to Automatically Detect Fin Whale Acoustic Presence
-  in Large and Diverse Passive Acoustic Datasets}.
+\newblock {{A Robust Method to Automatically Detect Fin Whale Acoustic Presence
+  in Large and Diverse Passive Acoustic Datasets}}.
 \newblock \emph{Journal of Marine Science and Engineering}, \bblvol{}~10.
 \newblock ISSN 20771312.
 
@@ -787,15 +703,15 @@
 \bibnamefont{Serra}, \bibfnamefont{O.}, \bibnamefont{Martins},
   \bibfnamefont{F.} \protect\BIBand{} \bibnamefont{Padovese}, \bibfnamefont{L.}
   (2020).
-\newblock Active contour-based detection of estuarine dolphin whistles in
-  spectrogram images.
+\newblock {Active contour-based detection of estuarine dolphin whistles in
+  spectrogram images}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~55, \bblp{} 101036.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954119303462}
 
 \bibitem[{\citenamefont{Shannon}(2001)}]{shannon}
 \bibnamefont{Shannon}, \bibfnamefont{C.E.} (2001).
-\newblock A mathematical theory of communication.
+\newblock {A mathematical theory of communication}.
 \newblock \emph{ACM SIGMOBILE mobile computing and communications review},
   \bblvol{}~5, \bblno{}~1, \bblpp{} 3--55.
 
@@ -803,8 +719,8 @@
   \citenamefont{Lachiri}(2018)}]{ws_audio2}
 \bibnamefont{Souli}, \bibfnamefont{S.} \protect\BIBand{} \bibnamefont{Lachiri},
   \bibfnamefont{Z.} (2018 1).
-\newblock {Audio sounds classification using scattering features and support
-  vectors machines for medical surveillance}.
+\newblock {{Audio sounds classification using scattering features and support
+  vectors machines for medical surveillance}}.
 \newblock \emph{Applied Acoustics}, \bblvol{} 130, \bblpp{} 270--282.
 \newblock ISSN 1872910X.
 
@@ -814,8 +730,8 @@
 \bibnamefont{Sun}, \bibfnamefont{X.}, \bibnamefont{Liu}, \bibfnamefont{P.},
   \bibnamefont{He}, \bibfnamefont{Z.}, \bibnamefont{Han}, \bibfnamefont{Y.}
   \protect\BIBand{} \bibnamefont{Su}, \bibfnamefont{B.} (2022).
-\newblock Automatic classification of electrocardiogram signals based on
-  transfer learning and continuous wavelet transform.
+\newblock {Automatic classification of electrocardiogram signals based on
+  transfer learning and continuous wavelet transform}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~69, \bblp{} 101628.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954122000772}
@@ -824,8 +740,8 @@
   \citenamefont{Lu} \protect\BIBand{} \citenamefont{Yuan}}]{3dscattering}
 \bibnamefont{Tang}, \bibfnamefont{Y.Y.}, \bibnamefont{Lu}, \bibfnamefont{Y.}
   \protect\BIBand{} \bibnamefont{Yuan}, \bibfnamefont{H.} (2015 5).
-\newblock Hyperspectral image classification based on three-dimensional
-  scattering wavelet transform.
+\newblock {Hyperspectral image classification based on three-dimensional
+  scattering wavelet transform}.
 \newblock \emph{IEEE Transactions on Geoscience and Remote Sensing},
   \bblvol{}~53, \bblpp{} 2467--2480.
 \newblock ISSN 01962892.
@@ -834,16 +750,16 @@
   \citenamefont{Kumar}(2017)}]{chi2_fs}
 \bibnamefont{Thaseen}, \bibfnamefont{I.S.} \protect\BIBand{}
   \bibnamefont{Kumar}, \bibfnamefont{C.A.} (2017).
-\newblock {Intrusion detection model using fusion of chi-square feature
-  selection and multi class SVM}.
+\newblock {{Intrusion detection model using fusion of chi-square feature
+  selection and multi class SVM}}.
 \newblock \emph{{Journal of King Saud University-Computer and Information
   Sciences}}, \bblvol{}~29, \bblno{}~4, \bblpp{} 462--472.
 
 \bibitem[{\citenamefont{Trawicki}(2023)}]{MFCC_HMM_birds}
 \bibnamefont{Trawicki}, \bibfnamefont{M.B.} (2023).
-\newblock {Automatic age recognition, call-type classification, and speaker
+\newblock {{Automatic age recognition, call-type classification, and speaker
   identification of Zebra Finches (Taeniopygia guttata) using hidden Markov
-  models (HMMs)}.
+  models (HMMs)}}.
 \newblock \emph{International Journal of Speech Technology}.
 \newblock ISSN 15728110.
 
@@ -853,29 +769,20 @@
 \bibnamefont{Urazghildiiev}, \bibfnamefont{I.R.}, \bibnamefont{Clark},
   \bibfnamefont{C.W.}, \bibnamefont{Krein}, \bibfnamefont{T.P.}
   \protect\BIBand{} \bibnamefont{Parks}, \bibfnamefont{S.E.} (2009).
-\newblock Detection and recognition of north atlantic right whale contact calls
-  in the presence of ambient noise.
+\newblock {Detection and Recognition of North Atlantic Right Whale Contact
+  Calls in the Presence of Ambient Noise}.
 \newblock \emph{IEEE Journal of Oceanic Engineering}, \bblvol{}~34, \bblno{}~3,
   \bblpp{} 358--368.
 
 \bibitem[{\citenamefont{Usman} \protect\BIBand{}
-  \citenamefont{Versfeld}(2022{\natexlab{\emph{a}}})}]{hmm1}
+  \citenamefont{Versfeld}(2022)}]{hmm1}
 \bibnamefont{Usman}, \bibfnamefont{A.} \protect\BIBand{}
-  \bibnamefont{Versfeld}, \bibfnamefont{D.} (2022{\natexlab{\emph{a}}}).
-\newblock Detection of baleen whale species using kernel dynamic mode
-  decomposition-based feature extraction with a hidden markov model.
+  \bibnamefont{Versfeld}, \bibfnamefont{D.} (2022).
+\newblock {Detection of baleen whale species using kernel dynamic mode
+  decomposition-based feature extraction with a hidden Markov model}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~71, \bblp{} 101766.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954122002163}
-
-\bibitem[{\citenamefont{Usman} \protect\BIBand{}
-  \citenamefont{Versfeld}(2022{\natexlab{\emph{b}}})}]{dmd_hmm}
-\bibnamefont{Usman}, \bibfnamefont{A.M.} \protect\BIBand{}
-  \bibnamefont{Versfeld}, \bibfnamefont{D.J.} (2022 11{\natexlab{\emph{b}}}).
-\newblock {Detection of baleen whale species using kernel dynamic mode
-  decomposition-based feature extraction with a hidden Markov model}.
-\newblock \emph{Ecological Informatics}, \bblvol{}~71.
-\newblock ISSN 15749541.
 
 \bibitem[{\citenamefont{Van~Opzeeland}
   \emph{\bbletal{}}(2014)\citenamefont{Van~Opzeeland}, \citenamefont{Samaran},
@@ -886,8 +793,8 @@
   \bibnamefont{Findlay}, \bibfnamefont{K.}, \bibnamefont{Gedamke},
   \bibfnamefont{J.}, \bibnamefont{Harris}, \bibfnamefont{D.} \protect\BIBand{}
   \bibnamefont{Miller}, \bibfnamefont{B.S.} (2014).
-\newblock {Towards collective circum-Antarctic passive acoustic monitoring: The
-  Southern Ocean hydrophone network (SOHN)}.
+\newblock {{Towards collective circum-Antarctic passive acoustic monitoring:
+  The Southern Ocean hydrophone network (SOHN)}}.
 \newblock \emph{Polarforschung}, \bblvol{}~83, \bblno{}~2, \bblpp{} 47--61.
 
 \bibitem[{\citenamefont{Van~Trees}
@@ -896,8 +803,8 @@
 \bibnamefont{Van~Trees}, \bibfnamefont{H.}, \bibnamefont{Tian},
   \bibfnamefont{Z.} \protect\BIBand{} \bibnamefont{Bell}, \bibfnamefont{K.}
   (2013).
-\newblock \emph{Detection Estimation and Modulation Theory, Part I: Detection,
-  Estimation, and Filtering Theory}.
+\newblock \emph{{Detection Estimation and Modulation Theory, Part I: Detection,
+  Estimation, and Filtering Theory}}.
 \newblock Detection Estimation and Modulation Theory. Wiley.
 \newblock ISBN 9781118539705.
 \newline\bblurlpre\url{https://books.google.co.za/books?id=dnvaxqHDkbQC}
@@ -910,7 +817,7 @@
   \bibfnamefont{E.H.}, \bibnamefont{Howe}, \bibfnamefont{B.M.},
   \bibnamefont{Oleson}, \bibfnamefont{E.M.} \protect\BIBand{}
   \bibnamefont{Barkley}, \bibfnamefont{Y.} (2017).
-\newblock A seaglider-integrated digital monitor for bioacoustic sensing.
+\newblock {A Seaglider-Integrated Digital Monitor for Bioacoustic Sensing}.
 \newblock \emph{IEEE Journal of Oceanic Engineering}, \bblvol{}~42, \bblno{}~4,
   \bblpp{} 800--807.
 
@@ -920,29 +827,19 @@
 \bibnamefont{{van Wyk}}, \bibfnamefont{J.}, \bibnamefont{{du Preez}},
   \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Versfeld}, \bibfnamefont{J.}
   (2022).
-\newblock Temporal separation of whale vocalizations from background oceanic
-  noise using a power calculation.
+\newblock {Temporal separation of whale vocalizations from background oceanic
+  noise using a power calculation}.
 \newblock \emph{Ecological Informatics}, \bblvol{}~69, \bblp{} 101627.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954122000760}
-
-\bibitem[{\citenamefont{van Wyk} \emph{\bbletal{}}(2021)\citenamefont{van Wyk},
-  \citenamefont{Versfeld} \protect\BIBand{} \citenamefont{du~Preez}}]{jacques1}
-\bibnamefont{van Wyk}, \bibfnamefont{J.}, \bibnamefont{Versfeld},
-  \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{du~Preez}, \bibfnamefont{J.}
-  (2021 10).
-\newblock Temporal separation of whale vocalizations from background oceanic
-  noise using a power calculation.
-\newline\bblurlpre\url{http://arxiv.org/abs/2110.10010
-  http://dx.doi.org/10.1016/j.ecoinf.2022.101627}
 
 \bibitem[{\citenamefont{van Wyk} \emph{\bbletal{}}(2023)\citenamefont{van Wyk},
   \citenamefont{Versfeld} \protect\BIBand{} \citenamefont{du~Preez}}]{jacques2}
 \bibnamefont{van Wyk}, \bibfnamefont{J.}, \bibnamefont{Versfeld},
   \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{du~Preez}, \bibfnamefont{J.}
   (2023 9).
-\newblock Detection of cetacean and fish sounds using normalized summation of
-  harmonics and spectrogram masking.
+\newblock {Detection of cetacean and fish sounds using normalized summation of
+  harmonics and spectrogram masking}.
 \newblock \emph{JASA Express Letters}, \bblvol{}~3.
 \newblock ISSN 2691-1191.
 \newline\bblurlpre\url{https://pubs.aip.org/jel/article/3/9/096002/2911548/Detection-of-cetacean-and-fish-sounds-using}
@@ -953,8 +850,8 @@
 \bibnamefont{Vickers}, \bibfnamefont{W.}, \bibnamefont{Milner},
   \bibfnamefont{B.}, \bibnamefont{Risch}, \bibfnamefont{D.} \protect\BIBand{}
   \bibnamefont{Lee}, \bibfnamefont{R.} (2021 6).
-\newblock {Robust North Atlantic right whale detection using deep learning
-  models for denoising}.
+\newblock {{Robust North Atlantic right whale detection using deep learning
+  models for denoising}}.
 \newblock \emph{The Journal of the Acoustical Society of America}, \bblvol{}
   149, \bblpp{} 3797--3812.
 \newblock ISSN 0001-4966.
@@ -964,7 +861,7 @@
   \citenamefont{Brown}}]{frequencyestimation}
 \bibnamefont{Wu}, \bibfnamefont{M.}, \bibnamefont{Wang}, \bibfnamefont{D.}
   \protect\BIBand{} \bibnamefont{Brown}, \bibfnamefont{G.} (2003).
-\newblock A multipitch tracking algorithm for noisy speech.
+\newblock {A multipitch tracking algorithm for noisy speech}.
 \newblock \emph{IEEE Transactions on Speech and Audio Processing},
   \bblvol{}~11, \bblno{}~3, \bblpp{} 229--241.
 
@@ -977,8 +874,8 @@
   \bibnamefont{Zhao}, \bibfnamefont{L.}, \bibnamefont{Ke}, \bibfnamefont{B.},
   \bibnamefont{Pfister}, \bibfnamefont{H.} \protect\BIBand{} \bibnamefont{Ni},
   \bibfnamefont{B.} (2023).
-\newblock Medmnist v2-a large-scale lightweight benchmark for 2d and 3d
-  biomedical image classification.
+\newblock {MedMNIST v2-A large-scale lightweight benchmark for 2D and 3D
+  biomedical image classification}.
 \newblock \emph{Scientific Data}, \bblvol{}~10, \bblno{}~1, \bblp{}~41.
 
 \end{thebibliography}

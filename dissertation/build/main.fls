@@ -709,10 +709,10 @@ INPUT ./content/paper2/fig/calls-eps-converted-to.pdf
 INPUT ./content/paper2/fig/calls-eps-converted-to.pdf
 INPUT ./content/paper2/fig/calls-eps-converted-to.pdf
 INPUT ./content/paper2/fig/calls-eps-converted-to.pdf
-INPUT /usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/tcrm1095.tfm
-INPUT /home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc
-INPUT /usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecrm0500.tfm
 INPUT /usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecti0900.tfm
+INPUT /usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/tcrm1095.tfm
+INPUT /usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecrm0500.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT /usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecbx1000.tfm
 INPUT ./content/p3_intro.tex
 INPUT ./content/p3_intro.tex

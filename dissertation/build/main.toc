@@ -65,4 +65,4 @@
 \contentsline {section}{\numberline {7.4}Results}{87}{section.7.4}%
 \contentsline {subsection}{\numberline {7.4.1}MNIST}{87}{subsection.7.4.1}%
 \contentsline {subsection}{\numberline {7.4.2}MedMNIST3D}{88}{subsection.7.4.2}%
-\contentsline {chapter}{Bibliography}{89}{section*.73}%
+\contentsline {chapter}{Bibliography}{89}{section*.74}%

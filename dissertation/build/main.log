@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.4.30)  6 MAY 2024 10:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.4.30)  6 MAY 2024 11:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -772,9 +772,9 @@ although it is yet undefined on input line 30.
 
  [8] [9] (/home/marco/Repos/phd/dissertation/build/main.lot
 Package acronym Info: Label `acro:nn' newly defined as it shall be overridden
-although it is yet undefined on input line 18.
-Package acronym Info: Label `acro:2d' newly defined as it shall be overridden
 although it is yet undefined on input line 19.
+Package acronym Info: Label `acro:2d' newly defined as it shall be overridden
+although it is yet undefined on input line 20.
 )
 \tf@lot=\write7
 \openout7 = `main.lot'.
@@ -812,7 +812,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/fbdata1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/fbdata1-eps-converted-to.pdf ./content/paper1/fig/fbdata1.eps>
 (epstopdf)             \includegraphics on input line 166.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/fbdata1-eps-converted-to.pdf, id=645, 264.99pt x 233.87375pt>
+<./content/paper1/fig/fbdata1-eps-converted-to.pdf, id=649, 264.99pt x 233.87375pt>
 File: ./content/paper1/fig/fbdata1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/fbdata1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/fbdata1-eps-converted-to.pdf  used on input line 166.
@@ -827,7 +827,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/real_data_hist.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/real_data_hist-eps-converted-to.pdf ./content/paper1/fig/real_data_hist.eps>
 (epstopdf)             \includegraphics on input line 190.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/real_data_hist-eps-converted-to.pdf, id=657, 344.28625pt x 164.615pt>
+<./content/paper1/fig/real_data_hist-eps-converted-to.pdf, id=661, 344.28625pt x 164.615pt>
 File: ./content/paper1/fig/real_data_hist-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/real_data_hist-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/real_data_hist-eps-converted-to.pdf  used on input line 190.
@@ -842,7 +842,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/entropy1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/entropy1-eps-converted-to.pdf ./content/paper1/fig/entropy1.eps>
 (epstopdf)             \includegraphics on input line 227.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/entropy1-eps-converted-to.pdf, id=668, 302.12875pt x 206.7725pt>
+<./content/paper1/fig/entropy1-eps-converted-to.pdf, id=672, 302.12875pt x 206.7725pt>
 File: ./content/paper1/fig/entropy1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/entropy1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/entropy1-eps-converted-to.pdf  used on input line 227.
@@ -857,7 +857,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf ./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)             \includegraphics on input line 301.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf, id=707, 408.52625pt x 169.63374pt>
+<./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf, id=711, 408.52625pt x 169.63374pt>
 File: ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf  used on input line 301.
@@ -872,7 +872,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/sigmoid.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/sigmoid-eps-converted-to.pdf ./content/paper1/fig/sigmoid.eps>
 (epstopdf)             \includegraphics on input line 374.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/sigmoid-eps-converted-to.pdf, id=754, 342.27875pt x 251.94125pt>
+<./content/paper1/fig/sigmoid-eps-converted-to.pdf, id=758, 342.27875pt x 251.94125pt>
 File: ./content/paper1/fig/sigmoid-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/sigmoid-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/sigmoid-eps-converted-to.pdf  used on input line 374.
@@ -887,7 +887,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/entropymf.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/entropymf-eps-converted-to.pdf ./content/paper1/fig/entropymf.eps>
 (epstopdf)             \includegraphics on input line 397.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/entropymf-eps-converted-to.pdf, id=770, 307.1475pt x 239.89626pt>
+<./content/paper1/fig/entropymf-eps-converted-to.pdf, id=774, 307.1475pt x 239.89626pt>
 File: ./content/paper1/fig/entropymf-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/entropymf-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/entropymf-eps-converted-to.pdf  used on input line 397.
@@ -901,7 +901,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/kmeans1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/kmeans1-eps-converted-to.pdf ./content/paper1/fig/kmeans1.eps>
 (epstopdf)             \includegraphics on input line 406.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/kmeans1-eps-converted-to.pdf, id=772, 335.2525pt x 242.9075pt>
+<./content/paper1/fig/kmeans1-eps-converted-to.pdf, id=776, 335.2525pt x 242.9075pt>
 File: ./content/paper1/fig/kmeans1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/kmeans1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/kmeans1-eps-converted-to.pdf  used on input line 406.
@@ -920,7 +920,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/testsigstft.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/testsigstft-eps-converted-to.pdf ./content/paper1/fig/testsigstft.eps>
 (epstopdf)             \includegraphics on input line 433.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/testsigstft-eps-converted-to.pdf, id=796, 332.24126pt x 158.5925pt>
+<./content/paper1/fig/testsigstft-eps-converted-to.pdf, id=800, 332.24126pt x 158.5925pt>
 File: ./content/paper1/fig/testsigstft-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/testsigstft-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/testsigstft-eps-converted-to.pdf  used on input line 433.
@@ -939,7 +939,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_snr_mf-eps-converted-to.pdf ./content/paper1/fig/res_snr_mf.eps>
 (epstopdf)             \includegraphics on input line 466.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_snr_mf-eps-converted-to.pdf, id=808, 360.34625pt x 278.03876pt>
+<./content/paper1/fig/res_snr_mf-eps-converted-to.pdf, id=812, 360.34625pt x 278.03876pt>
 File: ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf  used on input line 466.
@@ -953,7 +953,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_mf_snr.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_mf_snr-eps-converted-to.pdf ./content/paper1/fig/res_mf_snr.eps>
 (epstopdf)             \includegraphics on input line 476.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_mf_snr-eps-converted-to.pdf, id=812, 362.35374pt x 279.0425pt>
+<./content/paper1/fig/res_mf_snr-eps-converted-to.pdf, id=816, 362.35374pt x 279.0425pt>
 File: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf  used on input line 476.
@@ -971,7 +971,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_classmeans.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_classmeans-eps-converted-to.pdf ./content/paper1/fig/res_classmeans.eps>
 (epstopdf)             \includegraphics on input line 487.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_classmeans-eps-converted-to.pdf, id=828, 366.36874pt x 165.61874pt>
+<./content/paper1/fig/res_classmeans-eps-converted-to.pdf, id=832, 366.36874pt x 165.61874pt>
 File: ./content/paper1/fig/res_classmeans-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_classmeans-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_classmeans-eps-converted-to.pdf  used on input line 487.
@@ -993,7 +993,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf ./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)             \includegraphics on input line 545.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf, id=857, 363.3575pt x 279.0425pt>
+<./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf, id=861, 363.3575pt x 279.0425pt>
 File: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf  used on input line 545.
@@ -1008,7 +1008,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_snippet1.
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf ./content/paper1/fig/res_realdata_snippet1.eps>
 (epstopdf)             \includegraphics on input line 560.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf, id=871, 538.01pt x 232.87pt>
+<./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf, id=875, 538.01pt x 232.87pt>
 File: ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf  used on input line 560.
@@ -1023,7 +1023,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf ./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)             \includegraphics on input line 586.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf, id=887, 297.11pt x 235.88126pt>
+<./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf, id=891, 297.11pt x 235.88126pt>
 File: ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf  used on input line 586.
@@ -1037,7 +1037,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_thresh.ep
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf ./content/paper1/fig/res_realdata_thresh.eps>
 (epstopdf)             \includegraphics on input line 593.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf, id=888, 342.27875pt x 285.065pt>
+<./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf, id=892, 342.27875pt x 285.065pt>
 File: ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf  used on input line 593.
@@ -1087,28 +1087,28 @@ although it is yet undefined on input line 27.
 Package acronym Info: Label `acro:snr' newly defined as it shall be overridden
 although it is yet undefined on input line 27.
  [48]
-<./content/paper2/fig/system_diagram_v2.png, id=1054, 751.80875pt x 675.52374pt>
+<./content/paper2/fig/system_diagram_v2.png, id=1053, 751.80875pt x 675.52374pt>
 File: ./content/paper2/fig/system_diagram_v2.png Graphic file (type png)
 <use ./content/paper2/fig/system_diagram_v2.png>
 Package pdftex.def Info: ./content/paper2/fig/system_diagram_v2.png  used on input line 33.
 (pdftex.def)             Requested size: 379.79742pt x 341.26564pt.
  [49 <./content/paper2/fig/system_diagram_v2.png>]
-<./content/paper2/fig/Bm_Ant-A_11.jpg, id=1068, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-A_11.jpg, id=1067, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-A_11.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-A_11.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-A_11.jpg  used on input line 54.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_Ant-B_54.jpg, id=1069, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-B_54.jpg, id=1068, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-B_54.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-B_54.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-B_54.jpg  used on input line 59.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_Ant-Z_98.jpg, id=1070, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-Z_98.jpg, id=1069, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-Z_98.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-Z_98.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-Z_98.jpg  used on input line 64.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_D_173.jpg, id=1071, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_D_173.jpg, id=1070, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_D_173.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_D_173.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_D_173.jpg  used on input line 69.
@@ -1131,7 +1131,7 @@ although it is yet undefined on input line 165.
 Package acronym Info: Label `acro:gpu' newly defined as it shall be overridden
 although it is yet undefined on input line 165.
  [54]
-<./content/paper2/fig/scattering.png, id=1109, 3126.68124pt x 1324.95pt>
+<./content/paper2/fig/scattering.png, id=1108, 3126.68124pt x 1324.95pt>
 File: ./content/paper2/fig/scattering.png Graphic file (type png)
 <use ./content/paper2/fig/scattering.png>
 Package pdftex.def Info: ./content/paper2/fig/scattering.png  used on input line 191.
@@ -1141,7 +1141,7 @@ Package pdftex.def Info: ./content/paper2/fig/scattering.png  used on input line
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [55]
-<./content/paper2/fig/fb.jpg, id=1128, 830.10126pt x 291.0875pt>
+<./content/paper2/fig/fb.jpg, id=1127, 830.10126pt x 291.0875pt>
 File: ./content/paper2/fig/fb.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/fb.jpg>
 Package pdftex.def Info: ./content/paper2/fig/fb.jpg  used on input line 217.
@@ -1172,7 +1172,7 @@ Package epstopdf Info: Source file: <./content/paper2/fig/detector_example_2.eps
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/detector_example_2-eps-converted-to.pdf ./content/paper2/fig/detector_example_2.eps>
 (epstopdf)             \includegraphics on input line 397.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/detector_example_2-eps-converted-to.pdf, id=1176, 561.09625pt x 230.8625pt>
+<./content/paper2/fig/detector_example_2-eps-converted-to.pdf, id=1175, 561.09625pt x 230.8625pt>
 File: ./content/paper2/fig/detector_example_2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/detector_example_2-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/detector_example_2-eps-converted-to.pdf  used on input line 397.
@@ -1189,7 +1189,7 @@ Package epstopdf Info: Source file: <./content/paper2/fig/roc.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/roc-eps-converted-to.pdf ./content/paper2/fig/roc.eps>
 (epstopdf)             \includegraphics on input line 506.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/roc-eps-converted-to.pdf, id=1201, 263.98625pt x 210.7875pt>
+<./content/paper2/fig/roc-eps-converted-to.pdf, id=1200, 263.98625pt x 210.7875pt>
 File: ./content/paper2/fig/roc-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/roc-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/roc-eps-converted-to.pdf  used on input line 506.
@@ -1203,7 +1203,7 @@ Package epstopdf Info: Source file: <./content/paper2/fig/calls.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/calls-eps-converted-to.pdf ./content/paper2/fig/calls.eps>
 (epstopdf)             \includegraphics on input line 512.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/calls-eps-converted-to.pdf, id=1202, 263.98625pt x 210.7875pt>
+<./content/paper2/fig/calls-eps-converted-to.pdf, id=1201, 263.98625pt x 210.7875pt>
 File: ./content/paper2/fig/calls-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/calls-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/calls-eps-converted-to.pdf  used on input line 512.
@@ -1211,11 +1211,7 @@ Package pdftex.def Info: ./content/paper2/fig/calls-eps-converted-to.pdf  used o
  [63 <./content/paper2/fig/roc-eps-converted-to.pdf> <./content/paper2/fig/calls-eps-converted-to.pdf>] [64]
 Package acronym Info: Label `acro:lda' newly defined as it shall be overridden
 although it is yet undefined on input line 546.
-
-
-LaTeX Warning: Reference `tab:numdetections' on page 65 undefined on input line 549.
-
-[65
+ [65
 
 ]
 Package acronym Info: Label `acro:cls' newly defined as it shall be overridden
@@ -1225,7 +1221,7 @@ although it is yet undefined on input line 566.
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 687.
 
-[68{/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [69] [70] [71] [72
+[68] [69{/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [70] [71] [72
 
 ] [73] [74
 
@@ -1277,153 +1273,135 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 25
  (/usr/local/share/miktex-texmf/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-Underfull \hbox (badness 1342) in paragraph at lines 71--77
+Underfull \hbox (badness 1342) in paragraph at lines 62--68
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1512 . 02125http : / / dx . doi . org / 10 . 1109 /
  []
 
 
-Underfull \hbox (badness 1342) in paragraph at lines 82--88
-\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1512 . 02125http : / / dx . doi . org / 10 . 1109 /
- []
-
-
-Underfull \hbox (badness 1342) in paragraph at lines 92--98
+Underfull \hbox (badness 1342) in paragraph at lines 72--78
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1807 . 08869http : / / dx . doi . org / 10 . 1109 /
  []
 
 
-Underfull \hbox (badness 3989) in paragraph at lines 108--113
+Underfull \hbox (badness 3989) in paragraph at lines 88--93
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1304 . 6763http : / / dx . doi . org / 10 . 1109 /
  []
 
 [89
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 198--201
+Underfull \hbox (badness 10000) in paragraph at lines 178--181
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / ravensoundsoftware . com / knowledge-[]base /
  []
 
 [90]
-Underfull \hbox (badness 4156) in paragraph at lines 244--251
-[]\T1/cmr/m/n/10.95 Fisher, R.A. (1936).  The use of mul-ti-ple mea-sure-ments in tax-o-nomic
- []
-
-
-Underfull \hbox (badness 3826) in paragraph at lines 244--251
-\T1/cmr/m/n/10.95 prob-lems.  \T1/cmr/m/it/10.95 An-nals of Eu-gen-ics\T1/cmr/m/n/10.95 , vol. 7, no. 2, pp. 179--188.  []$\T1/cmtt/m/n/10.95 https :
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 244--251
+Underfull \hbox (badness 10000) in paragraph at lines 215--222
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / onlinelibrary . wiley . com / doi / abs / 10 . 1111 / j .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 295--305
+Underfull \hbox (badness 10000) in paragraph at lines 266--276
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
 [91]
-Underfull \hbox (badness 10000) in paragraph at lines 370--378
-\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
- []
-
-[92]
-Underfull \hbox (badness 10000) in paragraph at lines 402--410
-\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
- []
-
-[93]
-Underfull \hbox (badness 10000) in paragraph at lines 571--579
+Underfull \hbox (badness 10000) in paragraph at lines 341--349
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 584--593
+Underfull \hbox (badness 10000) in paragraph at lines 372--379
+\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
+ []
+
+[92] [93]
+Underfull \hbox (badness 10000) in paragraph at lines 514--522
+\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 526--534
+\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 538--546
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
 [94]
-Underfull \hbox (badness 10000) in paragraph at lines 597--605
+Underfull \hbox (badness 10000) in paragraph at lines 575--584
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 647--656
-\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 665--683
+Underfull \hbox (badness 10000) in paragraph at lines 593--612
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / papers . neurips . cc / paper /
  []
 
 
-Overfull \hbox (12.31778pt too wide) in paragraph at lines 665--683
+Overfull \hbox (12.31778pt too wide) in paragraph at lines 593--612
 \T1/cmtt/m/n/10.95 9015-[]pytorch-[]an-[]imperative-[]style-[]high-[]performance-[]deep-[]learning-[]library .
  []
 
 [95]
-Underfull \hbox (badness 10000) in paragraph at lines 749--755
+Underfull \hbox (badness 10000) in paragraph at lines 665--671
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / linkinghub . elsevier . com / retrieve / pii /
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 703--711
+\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 730--738
+\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
+ []
+
 [96]
-Underfull \hbox (badness 10000) in paragraph at lines 787--795
+Underfull \hbox (badness 10000) in paragraph at lines 779--786
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 814--822
+Underfull \hbox (badness 10000) in paragraph at lines 827--835
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 863--870
-\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
- []
-
-[97]
-Underfull \hbox (badness 10000) in paragraph at lines 920--928
-\T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 941--949
+Underfull \hbox (badness 10000) in paragraph at lines 838--846
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / pubs . aip . org / jel / article / 3 / 9 / 096002 / 2911548 /
  []
 
-[98]) [99] (/home/marco/Repos/phd/dissertation/build/main.aux)
+[97]) [98] (/home/marco/Repos/phd/dissertation/build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 3AC18E76750BC01A198B99B7948F458C;9639.
+(rerunfilecheck)             Checksum: 59E22D1226A319DAB6BDFB57E8DEDD06;9639.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 42 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 28393 strings out of 474425
- 521714 string characters out of 5748835
+ 28357 strings out of 474425
+ 520946 string characters out of 5748835
  1955493 words of memory out of 5000000
- 49751 multiletter control sequences out of 15000+600000
+ 49724 multiletter control sequences out of 15000+600000
  594624 words of font info for 132 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,14n,107p,1543b,1174s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,14n,107p,1543b,1153s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1728.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0600.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0800.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sftt1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfxc1440.pfb>
-Output written on /home/marco/Repos/phd/dissertation/build/main.pdf (100 pages, 3481899 bytes).
+Output written on /home/marco/Repos/phd/dissertation/build/main.pdf (99 pages, 3478340 bytes).
 PDF statistics:
- 1837 PDF objects out of 2073 (max. 8388607)
- 404 named destinations out of 1000 (max. 500000)
+ 1821 PDF objects out of 2073 (max. 8388607)
+ 395 named destinations out of 1000 (max. 500000)
  663 words of extra memory for PDF output out of 10000 (max. 10000000)
 

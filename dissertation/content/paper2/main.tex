@@ -8,21 +8,21 @@ The proposed method works well for small datasets and aims to form the foundatio
 
 
 \section{Introduction}
-Underwater \ac{pam} systems are an effective non-invasive tool to monitor marine activity, with many research endeavours to automate cetacean monitoring and detection over the last decades. \Ac{ml} is a particularly prevalent approach to detecting and classifying cetacean calls from \ac{pam} audio \citep{MLreview}, although some recent publications remain focused on traditional approaches that seem to oppose \ac{ml} trends \citep{jacques1, jacques2}. The disparity between the approaches are often due to a lack of data or a high uncertainty of the data quality \citep{casey2019}, which are detrimental to \ac{nn} and deep learning models. 
+Underwater \ac{pam} systems are an effective non-invasive tool to monitor marine activity, with many research endeavours to automate cetacean monitoring and detection over the last decades. \Ac{ml} is a particularly prevalent approach to detecting and classifying cetacean calls from \ac{pam} audio \citep{MLreview}, although some recent publications remain focused on traditional approaches that seem to oppose \ac{ml} trends \citep{internalsignaldetection, jacques2}. The disparity between the approaches are often due to a lack of data or a high uncertainty of the data quality \citep{casey2019}, which are detrimental to \ac{nn} and deep learning models. 
 
 Although the dataset and the species of interest for classification is not the focus of this paper, we apply the proposed method to a dataset containing annotated Antarctic blue whales (\textit{Balaenoptera musculus intermedia}) and fin whale calls (\textit{B. physalus}). Blue and fin whales are considered globally endangered species of whale following whaling activities in the 1900s \citep{blue_whale, fin_whale}. This launched an effort of gathering many hours of \ac{pam} data in the southern Antarctic ocean \citep{sorp_sohn} for the purpose of evaluating detectors and classifiers, which has been made publicly available \citep{casey2017}.
 
 
-Large annotated datasets may not necessarily be accessible to automate detection and classification in conservation studies, which motivates the further improvement of ``white-box" strategies as opposed to using \acp{nn}. For \ac{poi} detection purposes, \ac{bled}, the \ac{se} detector and the spectrogram correlator \citep{casey2017} are mostly used in practise, often with software such as PAMGuard \citep{PAMGuard}. These detectors require the user to choose many different hyperparameters for the purpose of adaptivity to noise conditions and signal level. They do not necessarily classify signals, and instead pinpoint \acp{poi}, which suffer from many false positive detections. On the other hand, very accurate \ac{nn} approaches exist for a variety of species \citep{alexnet_killer_whales, cnn_multiple_whale_classes, narw_cn_denoising, cnn_fin_whale}, but require large datasets and careful data preparation.
+Large annotated datasets may not necessarily be accessible to automate detection and classification in conservation studies, which motivates the further improvement of ``white-box" strategies as opposed to using \acp{nn}. For \ac{poi} detection purposes, \ac{bled}, the \ac{se} detector and the spectrogram correlator \citep{casey2017} are mostly used in practise, often with software such as PAMGuard \citep{PAMGuard}. These detectors require the user to choose many different hyperparameters for the purpose of adaptivity to noise conditions and signal level. They do not necessarily classify signals, and instead pinpoint \acp{poi}, which suffer from many false positive detections. On the other hand, very accurate \ac{nn} approaches exist for a variety of species \citep{MLalexnet, cnn_multiple_whale_classes, narw_cn_denoising, cnn_fin_whale}, but require large datasets and careful data preparation.
 
 
-Non-\ac{nn} approaches have also obtained very accurate results, most of which utilise \acp{mfcc} as features \citep{MFCC_HMM_birds, mfcc_hmm_brydes}. A \ac{hmm} is deployed in the aforementioned studies, thereby allowing the modelling of time-dependent sound characteristics without requiring a \ac{nn}.
+Non-\ac{nn} approaches have also obtained very accurate results, most of which utilise \acp{mfcc} as features \citep{MFCC_HMM_birds, hmm2}. A \ac{hmm} is deployed in the aforementioned studies, thereby allowing the modelling of time-dependent sound characteristics without requiring a \ac{nn}.
 
 At the center of the recent work revolving around \ac{pam} classification and detection lies a form of \ac{tf}-decomposition, whether it be for feature extraction or improved detection. Both \ac{mfcc} features and sound detectors (\ac{bled}, \ac{se}) typically use the \ac{stft} as a base for \ac{tf}-decomposition. However, \acp{cwt} may be be used a drop-in replacement for the \ac{stft}, as is shown by the recent work of \citet{mypaper}. \Ac{ws} is an extended form of the \ac{cwt} and may be used to extract features that provide more information than \acp{mfcc}, while also sharing many similarities with the structure of \acp{cnn} \citep{ws}. In fact, \ac{ws} may be considered as a manual definition of a \ac{cnn} front-end, while the time-decimated \ac{cwt} amplitude coefficients (equivalent to first level scattering) mimic \ac{mfcc} features.
 
 \Ac{ws} has not yet been well established in the field of \ac{pam}, but has seen use in many medical \citep{ws_ecg, ecg_ws_svm}, fault diagnosis \citep{ws_fault_diag} and other audio \citep{ws_speech, ws_audio2, ws_audio} applications. A recent study by Michau et. al. has shown exceptionally accurate results in birdsong classification via \ac{ws} features with a \ac{svm} classifier \citep{scattering_birdsong}.
 
-Automated classification is often the end goal of many \ac{pam} systems, but identifying \acp{poi} without classification is a necessary step to assist in the annotation and sound exploration process, especially when surveying new and unknown oceanic regions. As such, generalised detection is often performed with \acp{bled} and \ac{se} detectors \citep{se_dolphin}. \Ac{se} detectors have consistently shown better performance than energy detectors \citep{se_erbe_king}. The previous approach by \citet{mypaper} modifies \ac{se} detectors to stabilize the entropy measure and provide pseudo-probabilistic output, thereby improving endpoint detection accuracy and the interpretability of the detector's output. \ac{se} detectors naturally motivate extension by including feature extraction and classification using the same \ac{tf}-decomposition used for \ac{se} calculation, ultimately reducing computational resources.
+Automated classification is often the end goal of many \ac{pam} systems, but identifying \acp{poi} without classification is a necessary step to assist in the annotation and sound exploration process, especially when surveying new and unknown oceanic regions. As such, generalised detection is often performed with \acp{bled} and \ac{se} detectors \citep{entropyOCEANS}. \Ac{se} detectors have consistently shown better performance than energy detectors \citep{entropyJASA}. The previous approach by \citet{mypaper} modifies \ac{se} detectors to stabilize the entropy measure and provide pseudo-probabilistic output, thereby improving endpoint detection accuracy and the interpretability of the detector's output. \ac{se} detectors naturally motivate extension by including feature extraction and classification using the same \ac{tf}-decomposition used for \ac{se} calculation, ultimately reducing computational resources.
 
 A closely related study performed indicates \ac{sota} results in blue and fin whale call detection within given audio segments using a \ac{lstm} \ac{nn} with scattering features \citep{otherScattering}. Our work differs vastly from that of Sattar as it aims to incorporate detectors as well as a non-\ac{nn} model for use in small datasets. Our work classifies on a per-call basis, which is more comparable to other \ac{ml} techniques. We evaluate different blue whale calls and fin whale calls separately and our method distinguishes itself by focusing on the applicability to very small datasets. We evaluate the proposed method in the context of a fully annotated dataset and show it is effective for a variety of call types. Our evaluation method does not include dataset cleaning, thereby allowing for results that reflect on the full spectrum of \ac{snr}, annotation errors, very large noise variations ($>60$ dB) and various vocalisation types. Although we do not compensate for analyst errors as done by \citet{casey2019}, the accuracy of the ``ground truth" labels is discussed at length in this study.
 
@@ -475,7 +475,7 @@ Two methods of evaluation are employed. We perform a sample-by-sample evaluation
 \subsection{Results}
 \label{sec:detector_results}
 
-Figure \ref{fig:det_roc} shows the \ac{roc} curve for detection on a sample-by-sample basis. Incremental performance improvement is demonstrated by adding a \ac{gmm} and enhancing the detector with whitening. In Figure \ref{fig:det_calls}, we show that the proposed detector is able to detect the majority calls while detecting fewer noise.  As illustrated in many previous studies, \ac{se} greatly outperforms a traditional \ac{bled} detector \citep{se_erbe_king}. Whitening is also shown to greatly improve the capabilities of the \ac{bled} detector.
+Figure \ref{fig:det_roc} shows the \ac{roc} curve for detection on a sample-by-sample basis. Incremental performance improvement is demonstrated by adding a \ac{gmm} and enhancing the detector with whitening. In Figure \ref{fig:det_calls}, we show that the proposed detector is able to detect the majority calls while detecting fewer noise.  As illustrated in many previous studies, \ac{se} greatly outperforms a traditional \ac{bled} detector \citep{entropyJASA}. Whitening is also shown to greatly improve the capabilities of the \ac{bled} detector.
 
 % \begin{figure}[h]
 %     \centering
@@ -536,7 +536,7 @@ Whitened SE GMM             & 43 (1.2\%)                    \\ \hline
 
 Results for \ac{stft}-based \ac{bled} has been reported for the Casey Islands 2017 dataset in \citep{casey2017} using the PAMGuard Ishmael energy sum detector. These results are not directly comparable to this paper, since the detectors have additional parameters controlling false positives, such as time length and distance between detections and adaptive thresholding. These detections are measured on a per run-length basis, i.e., over the total run of the detector exceeding a threshold, instead of a per-sample basis. Therefore, this form of measurement may not accurately represent endpoint detection capabilities. 
 
-As seen in Figures \ref{fig:det_roc} and \ref{fig:det_calls}, the proposed \ac{se} detector outperforms the previous method \citep{mypaper}. Typical \ac{bled} with a fixed threshold performs very poorly due to varying noise conditions. \ac{bled} has repeatedly been shown to not be a reliable \ac{poi} detector \citep{jacques1, se_erbe_king}. 
+As seen in Figures \ref{fig:det_roc} and \ref{fig:det_calls}, the proposed \ac{se} detector outperforms the previous method \citep{mypaper}. Typical \ac{bled} with a fixed threshold performs very poorly due to varying noise conditions. \ac{bled} has repeatedly been shown to not be a reliable \ac{poi} detector \citep{internalsignaldetection, entropyJASA}. 
 
 Interestingly, adding whitening to \ac{bled} results in similar performance to the method proposed by \citet{mypaper}. Spectral whitening and \ac{gmm} fitting shows incremental improvements to the k-means based \ac{se} detector. The final proposed detector outperforms the other detectors both in terms of endpoint accuracy (figure \ref{fig:det_roc}) and the number of calls versus noise detected (figure \ref{fig:det_calls}). This paper later discusses the implication of annotation inaccuracies in section \ref{sec:classification_discussion}. As such, the indicated results may not be entirely accurate, and could be better than indicated. From the false positives estimated in Table \ref{tab:numannotations}, all of the detectors likely detect 5-10\% more calls for realistic thresholds than indicated.
 
@@ -634,24 +634,24 @@ Classification accuracy is measured using the observations not included in the t
 
 
 
-% \begin{table}[h!]
-% \caption{Number of labeled detections for all vocalisations of interest. The detections are produced by the whitened \ac{gmm} \ac{se} detector. A significant number of detections are discarded in the training data due to overlapping.}
-% \label{tab:numdetections}
+\begin{table}[h!]
+\caption{Number of labeled detections for all vocalisations of interest. The detections are produced by the whitened \ac{gmm} \ac{se} detector. A significant number of detections are discarded in the training data due to overlapping.}
+\label{tab:numdetections}
 % \begin{ruledtabular}
 % \renewcommand{\arraystretch}{0.8}
-% \begin{tabular}{lc} 
-% \textbf{Vocalisation}      & \textbf{Number of detections}  \\ \hline
-% Bm\_Ant\_A & 1514              \\
-% Bm\_Ant\_B & 474              \\
-% Bm\_Ant\_Z & 91               \\
-% Bm\_D      & 328               \\
-% Bp & 50                \\
-% Noise      & 25638          \\
-% Overlapping & 150 \footnotemark[1]      \\ 
-% \end{tabular}
+\begin{tabular}{lc} 
+\textbf{Vocalisation}      & \textbf{Number of detections}  \\ \hline
+Bm\_Ant\_A & 1514              \\
+Bm\_Ant\_B & 474              \\
+Bm\_Ant\_Z & 91               \\
+Bm\_D      & 328               \\
+Bp & 50                \\
+Noise      & 25638          \\
+Overlapping & 150 \footnotemark[1]      \\ 
+\end{tabular}
 % \end{ruledtabular}
-% \footnotetext[1]{Overlapping detections contain at least 2 overlapping annotations of different classes. This implies that more than 300 vocalisations are discarded as a result of overlap, thereby drastically reducing training data for the \textit{Bm\_D} and \textit{Bp\_20Plus} classes, which have a higher tendency for overlap.}
-% \end{table}
+\footnotetext[1]{Overlapping detections contain at least 2 overlapping annotations of different classes. This implies that more than 300 vocalisations are discarded as a result of overlap, thereby drastically reducing training data for the \textit{Bm\_D} and \textit{Bp\_20Plus} classes, which have a higher tendency for overlap.}
+\end{table}
 
 
 % \begin{table}[]
@@ -789,7 +789,7 @@ For the \textit{Bm\_Ant\_A}, \textit{Bm\_Ant\_B} and \textit{Bm\_D} classes, our
 
 Since we use independent models for classification, some calls will be detected by multiple models, especially for similar calls such as the \textit{Bm\_Ant} classes. It is not possible to implement multiclass classification in this paper due to large proportion of analyst misclassifications in the \textit{Bm\_Ant} classes. However, the posterior class probability may be used determine the correct class when multiple models have made a non-noise prediction in further studies. 
 
-Our disposal of the time dimension by using the maximum naturally lends our classification model being replaced with a \ac{hmm} to incorporate time-dependent relationships similar to that of \citet{mfcc_hmm_brydes} and \citet{dmd_hmm}. However, instead of classifying on a frame-by-frame basis such as in \citet{otherScattering, ws_audio, ws_ecg}, we utilise the scattering coefficients to first detect a variable-length segment of audio which may contain whale vocalisations, thereby reducing the amount of data in the noise class. This provides a distinct advantage over other methods, in that it already incorporates the extracted feature coefficients in detection prior to classification. As such, large portions of noise are discarded, the amount of which is tuned by the probability threshold of the proposed \ac{se} detector. This contrasts to \citet{casey2019}, which contains over 3 million noise class samples for 5000 vocalisation samples using the sliding window approach. This corresponds to a ratio of 1:600 for vocalisation to noise classes, whereas our method, which includes a detector, reduces this ratio to approximately 1:7 (all classes), at the cost of rejecting very low \ac{snr} vocalisations.
+Our disposal of the time dimension by using the maximum naturally lends our classification model being replaced with a \ac{hmm} to incorporate time-dependent relationships similar to that of \citet{hmm2} and \citet{hmm1}. However, instead of classifying on a frame-by-frame basis such as in \citet{otherScattering, ws_audio, ws_ecg}, we utilise the scattering coefficients to first detect a variable-length segment of audio which may contain whale vocalisations, thereby reducing the amount of data in the noise class. This provides a distinct advantage over other methods, in that it already incorporates the extracted feature coefficients in detection prior to classification. As such, large portions of noise are discarded, the amount of which is tuned by the probability threshold of the proposed \ac{se} detector. This contrasts to \citet{casey2019}, which contains over 3 million noise class samples for 5000 vocalisation samples using the sliding window approach. This corresponds to a ratio of 1:600 for vocalisation to noise classes, whereas our method, which includes a detector, reduces this ratio to approximately 1:7 (all classes), at the cost of rejecting very low \ac{snr} vocalisations.
 
 Despite the problems posed by the dataset used for evaluation, this study is the first to show the effectiveness of non-neural network models combined with scattering features. A detector is also utilised to remove noise segments, which assists in reducing class imbalance and reduces training time. The proposed method is particularly effective for a very small and unbalanced dataset, while allowing for a variety of calls to be detected.
 

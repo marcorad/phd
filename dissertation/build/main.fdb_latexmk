@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex build/main"] 1714983074.53752 "build/main.aux" "build/main.bbl" "build/main" 1714983961.23498 0
-  "./references.bib" 1714979613.69179 100699 5d0646f61f14d259904d76b1fa8d42a7 ""
+["bibtex build/main"] 1714986997.18419 "build/main.aux" "build/main.bbl" "build/main" 1714987093.68102 0
+  "./references_consolodated.bib" 1714987056.16839 34799 5c6b9a8a3f863886725f96d426f22bcc ""
   "/usr/local/share/miktex-texmf/bibtex/bst/stellenbosch-2/stb-bib-eng-a.bst" 1714461856.15688 33267 9de34ff75a1b912c7930aaa59ccd74fa ""
-  "build/main.aux" 1714983960.85667 50046 4340071cf42b9a13cf9d84482cf23047 "pdflatex"
+  "build/main.aux" 1714987093.31703 49871 1c1c7681dc57dbd6a0aaba9996b3d36d "pdflatex"
   (generated)
   "build/main.bbl"
   "build/main.blg"
   (rewritten before read)
-["pdflatex"] 1714983959.72424 "/home/marco/Repos/phd/dissertation/main.tex" "build/main.pdf" "main" 1714983961.23515 0
+["pdflatex"] 1714987092.26477 "/home/marco/Repos/phd/dissertation/main.tex" "build/main.pdf" "main" 1714987093.6812 0
   "/home/marco/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map" 1714977758.98806 279613 fe62a258ff6d99cc2243c3a2d16aa767 ""
   "/home/marco/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt" 1714462122.70756 24228882 01dacaba79b438b48743001a0ae98a80 ""
   "/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1712587227.29502 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -69,7 +69,7 @@
   "/home/marco/.miktex/texmfs/install/tex/latex/titlesec/titlesec.sty" 1714977758.78906 48766 0b93839be28e9744a24c45075c75b2e2 ""
   "/home/marco/.miktex/texmfs/install/tex/latex/was/upgreek.sty" 1714900277.75233 5794 9054e31be15d93f1e6bd28cca2b6643f ""
   "/home/marco/.miktex/texmfs/install/tex/latex/xstring/xstring.sty" 1714900275.18235 123 a302f2c651a95033260db60e51527ae8 ""
-  "/home/marco/Repos/phd/dissertation/main.tex" 1714980174.17914 3900 94c4ce326e46692a4f7436528bc4273c ""
+  "/home/marco/Repos/phd/dissertation/main.tex" 1714987091.96304 3963 d6e6d1ec9e5a3f0bb606504f1e1fbccc ""
   "/usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1710920373.85131 3200 328792ff19833a39406f06fa0555a6dc ""
   "/usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1710920373.85131 3228 aacd2ac2d814480e4422ad7e830fd2d4 ""
   "/usr/local/share/miktex-texmf/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1710920373.85131 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
@@ -285,12 +285,12 @@
   "/usr/local/share/miktex-texmf/tex/latex/tools/calc.sty" 1710920375.74031 10214 547fd4d29642cb7c80bf54b49d447f01 ""
   "/usr/local/share/miktex-texmf/tex/latex/url/url.sty" 1710920383.3503 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/local/share/miktex-texmf/tex/latex/xcolor/xcolor.sty" 1710920383.3973 55487 80a65caedd3722f4c20a14a69e785d8f ""
-  "build/main.aux" 1714983960.85667 50046 4340071cf42b9a13cf9d84482cf23047 "pdflatex"
-  "build/main.bbl" 1714983074.62252 51079 bb106e5e62a0f11e21ad84db820259a3 "bibtex build/main"
-  "build/main.lof" 1714983960.85967 6500 fa5a1ad98c028f622cdfd520be248da6 "pdflatex"
-  "build/main.lot" 1714983960.85967 2198 228ae4a320c519412d87a67eb6069329 "pdflatex"
-  "build/main.out" 1714983960.85967 9639 3ac18e76750bc01a198b99b7948f458c "pdflatex"
-  "build/main.toc" 1714983960.85967 5395 d407ca71c892a55d2e73d60003c1afc8 "pdflatex"
+  "build/main.aux" 1714987093.31703 49871 1c1c7681dc57dbd6a0aaba9996b3d36d "pdflatex"
+  "build/main.bbl" 1714986997.27896 46085 911f209d3f1536955b0f3bf3b4f21e02 "bibtex build/main"
+  "build/main.lof" 1714987093.32003 6500 fa5a1ad98c028f622cdfd520be248da6 "pdflatex"
+  "build/main.lot" 1714987093.32003 2504 e764bf19724b037d2ff292e14e189687 "pdflatex"
+  "build/main.out" 1714987093.32003 9639 59e22d1226a319dab6bdfb57e8dedd06 "pdflatex"
+  "build/main.toc" 1714987093.32003 5395 7a1972e96baced8f68511ca6ff833939 "pdflatex"
   "content/introduction.tex" 1714905941.9355 22 5d62e65bafe1b4ec405376d6c8131047 ""
   "content/nomenclature.tex" 1714983944.43983 4760 c1183e8e57557db50df2013294ec51d4 ""
   "content/p1_intro.tex" 1714977677.20599 55 d36ef8ca8e4b31ea96d2672bf0879341 ""
@@ -322,11 +322,11 @@
   "content/paper2/fig/roc.eps" 1714904434.86284 28320 d910781d03cc67158d56d9c461559b9e ""
   "content/paper2/fig/scattering.png" 1714903118.59367 235827 0e19fe5eb9a86b52d52279dc06849285 ""
   "content/paper2/fig/system_diagram_v2.png" 1714903118.60467 79633 bd473daf2d24d58841f0f1c540ade7b8 ""
-  "content/paper2/main.tex" 1714983959.41869 87890 123ac34c14bfbe6460ec857a4c8c724c ""
-  "content/paper3/main.tex" 1714908088.01559 38273 b3a199bac4c4cf7863f9272da08ca118 ""
-  "main.tex" 1714980174.17914 3900 94c4ce326e46692a4f7436528bc4273c ""
+  "content/paper2/main.tex" 1714987058.33637 87853 21507140edd06d028876388f0f5c11be ""
+  "content/paper3/main.tex" 1714986572.11608 38249 cfef80b8a078563930a921a9baaf9940 ""
+  "main.tex" 1714987091.96304 3963 d6e6d1ec9e5a3f0bb606504f1e1fbccc ""
   "paper1.sty" 1714911930.14307 805 671737927b7b676323b27246ba1c1896 ""
-  "paper2.sty" 1714980642.97221 1855 229b344c0431f2e2754445c6e3562ffe ""
+  "paper2.sty" 1714987057.13238 1855 229b344c0431f2e2754445c6e3562ffe ""
   "paper3.sty" 1714901104.00221 1146 9622a99b5bc313ccc7ed274a83e71caa ""
   (generated)
   "build/main.aux"

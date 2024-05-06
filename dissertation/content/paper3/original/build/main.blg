@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 7 items.
+The style file: ieeetr.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+Database file #1: refs.bib
+Warning--entry type for "MATLAB" isn't style-file defined
+--line 147 of file refs.bib
+Warning--I didn't find a database entry for "ws"
+Warning--I didn't find a database entry for "ws_joint_tf"
+Warning--I didn't find a database entry for "scattering_birdsong"
+Warning--empty journal in jointtfscattering2
+You've used 18 entries,
+            1876 wiz_defined-function locations,
+            589 strings with 7115 characters,
+and the built_in function-call counts, 5352 in all, are:
+= -- 475
+> -- 301
+< -- 0
++ -- 107
+- -- 89
+* -- 405
+:= -- 783
+add.period$ -- 19
+call.type$ -- 18
+change.case$ -- 17
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 237
+empty$ -- 480
+format.name$ -- 89
+if$ -- 1273
+int.to.chr$ -- 0
+int.to.str$ -- 18
+missing$ -- 14
+newline$ -- 58
+num.names$ -- 20
+pop$ -- 76
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 186
+stack$ -- 0
+substring$ -- 332
+swap$ -- 100
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 45
+width$ -- 20
+write$ -- 169
+(There were 5 warnings)

@@ -3,61 +3,56 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 Reallocating 'name_of_file' (item size: 1) to 14 items.
 The style file: stb-bib-eng-a.bst
-Reallocating 'name_of_file' (item size: 1) to 11 items.
-Database file #1: references.bib
-Warning--entry type for "MATLAB" isn't style-file defined
---line 981 of file references.bib
+Reallocating 'name_of_file' (item size: 1) to 24 items.
+Database file #1: references_consolodated.bib
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Warning--empty journal in ws_joint_tf
-Warning--empty journal in jointtfscattering1
 Warning--empty journal in jointtfscattering2
 Warning--empty journal in ws
 Warning--empty journal in logit
 Warning--can't use both volume and number fields in origkmeans
 Warning--empty chapter and pages in kmeansoverview
 Warning--missing publisher in kmeansoverview
-Warning--empty booktitle in se_dolphin
-Warning--empty journal in jacques1
-You've used 92 entries,
+You've used 83 entries,
             3324 wiz_defined-function locations,
-            1188 strings with 24181 characters,
-and the built_in function-call counts, 92176 in all, are:
-= -- 7189
-> -- 2784
-< -- 178
-+ -- 1106
-- -- 973
-* -- 9359
-:= -- 11133
-add.period$ -- 316
-call.type$ -- 92
-change.case$ -- 779
-chr.to.int$ -- 89
-cite$ -- 102
-duplicate$ -- 9030
-empty$ -- 8161
-format.name$ -- 1931
-if$ -- 18729
-int.to.chr$ -- 10
+            1163 strings with 23248 characters,
+and the built_in function-call counts, 83812 in all, are:
+= -- 6551
+> -- 2542
+< -- 165
++ -- 974
+- -- 889
+* -- 8463
+:= -- 10119
+add.period$ -- 286
+call.type$ -- 83
+change.case$ -- 706
+chr.to.int$ -- 87
+cite$ -- 90
+duplicate$ -- 8198
+empty$ -- 7420
+format.name$ -- 1758
+if$ -- 17079
+int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 1074
-newline$ -- 549
-num.names$ -- 370
-pop$ -- 2403
+missing$ -- 972
+newline$ -- 499
+num.names$ -- 334
+pop$ -- 2180
 preamble$ -- 1
-purify$ -- 688
+purify$ -- 624
 quote$ -- 0
-skip$ -- 2253
+skip$ -- 2091
 stack$ -- 0
-substring$ -- 5189
-swap$ -- 4609
-text.length$ -- 134
+substring$ -- 4720
+swap$ -- 4184
+text.length$ -- 124
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 816
-warning$ -- 10
-while$ -- 815
+type$ -- 735
+warning$ -- 7
+while$ -- 746
 width$ -- 0
-write$ -- 1303
-(There were 11 warnings)
+write$ -- 1181
+(There were 7 warnings)

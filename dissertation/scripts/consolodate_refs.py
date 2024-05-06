@@ -21,10 +21,11 @@ for entry in entries:
     else:
         entry_consol[k] = entry
 print('------------')        
-#remove abracts
+#remove abracts and add title brackets
 for k, v in entry_consol.items():
     if 'abstract' in v.keys():
         del v["abstract"]
+    v['title'] = "{" + v['title'] + "}"
         
 import pprint
 
@@ -36,6 +37,6 @@ entry_sorted = sorted(entry_consol.values(), key=lambda x: x['author'].lower().r
 sorted_lib = bib.bibdatabase.BibDatabase()
 sorted_lib.entries = entry_sorted
 
-with open('references-consolodated.bib', 'w') as file:
+with open('references_consolodated.bib', 'w') as file:
     bib.dump(sorted_lib, file)
     
