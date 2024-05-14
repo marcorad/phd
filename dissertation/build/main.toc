@@ -60,8 +60,7 @@
 \contentsline {section}{\numberline {5.B}Summary of parameter values}{83}{section.2.5.B}%
 \contentsline {chapter}{\numberline {6}Wavelet Scattering in Higher Dimensions}{84}{appendix.6}%
 \contentsline {section}{\numberline {6.1}Types of Scattering Transforms}{84}{section.6.1}%
-\contentsline {section}{\numberline {6.2}A Detailed view of Joint Time-Frequency Scattering}{85}{section.6.2}%
-\contentsline {section}{\numberline {6.3}The Benefits of Generalising Joint Time-Frequency}{85}{section.6.3}%
+\contentsline {section}{\numberline {6.2}Benefits of Separable Filters}{85}{section.6.2}%
 \contentsline {chapter}{\numberline {7}Separable Wavelet Scattering}{86}{appendix.7}%
 \contentsline {section}{\numberline {7.1}Introduction}{88}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Separable Morlet Filterbank}{89}{section.7.2}%
