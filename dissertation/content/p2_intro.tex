@@ -1,1 +1,65 @@
+\acrodef{dct}[DCT]{discrete cosine transform}
+
 \chapter{Feature Extraction with Wavelet Transforms}
+\label{chap:p2i}
+
+\ac{tf} decompositions are often used to extract features for signals. In audio, \acp{mfcc} are features calculated from the \ac{stft} of the signal. A ``\ac{tf}'' decomposition, as referred to in this dissertation, does not necesarrily require a time variable: spatial variables are often used. In this sense, a \ac{cnn} is can also be considered as a ``\ac{tf}'' decomposition, where multi-dimensional index variables (or index vectors) are used for ``time'' and frequency:
+\begin{equation}
+    X[\vect{k}, \vect{m}] = \left( x * \upsilon_{\vect{k}} \right)_{\downarrow \vect{d}}, \ \upsilon_{\vect{k}} \in \Upsilon.
+\end{equation}
+
+In this case, we abuse notation to indicate that the operator $(\cdot)_{\downarrow \vect{d}}$ downsamples by different amounts for each dimension of $\vect{m}$. 
+
+The downsampling factor $\vect{d}$ limits the bandwidth of $X$, which, as discussed in chapter \ref{chap:p1i}, is selected so as to retain all information carried by the filters in $\Upsilon$. Although not notated, different filters (different $\vect{k}$) may have different values of $\vect{d}$. Notation to support such a case is neglected for clarity, but is later expanded upon in chapter \ref{chap:p3}.
+
+\section{The Importance of Invariance}
+
+The decomposition $X$ is often further processed by additional filters $\Phi_i[\vect{k}, \vect{m}]$, where $i$ is the index of the post-processing filter:
+\begin{equation}
+    \tilde{X_i}[\vect{k}, \vect{m}] = X * \Phi_i.
+\end{equation}
+The filters $\Phi_i$ are not necesarrily multi-dimensional, and may only operate along a single dimension of $X$. If $\Phi_i$ is an averaging (low-pass) filter, some additional stability can be observed in $\tilde{X_i}$ compared with $X$. This allows for the introduction of invariances to various deformations applied to $X$, which can be greatly beneficial for some applications. In a sense, cascased structures of $X$ and $\tilde{X_i}$ are defined in a \ac{cnn} for which the network learns the required invariances.
+
+It is widely known that enforcing invariance in feature extraction and \ac{ml} pipelines increase performance. Enforcing invariance in \acp{nn} has been shown to improve the network, while also improving the interpretability of the network. For example, when classifying images, invariance to scale, shear, rotation and translation deformations, depending on image properties, may be useful when extracting features. Specifically, deformations of a specified order should approximately map to the same point in feature space:
+\begin{equation}
+    \Gamma\left(\delta\left(x\left[\vect{n}\right]\right)\right) \approx \Gamma\left(x\left[\vect{n}\right]\right),
+\end{equation}
+where $\Gamma$ is the feature extraction operator, and $\delta$ is the deformation operator applied to $x$.
+
+Invariance filters ($\Phi_i$) can also have additional properties that makes it favourable for audio applications. For example, many applications ``blur'' (low-pass) the \ac{stft} magnitude or power spectrum, which can reduce the impact of noise fluctuations, and can also serve to suppress small frequency fluctuations across adjascent frequency bins (if the blurring kernel $\Phi_i$ filters across frequency as well). The blurring operation can improve the performance of signal detectors and classifiers. However, as a cost, time localisation and/or frequency localisation is reduced.
+
+A new problem is introduced when enforcing invariances via the $\Phi_i$ filters - information is lost via averaging. Various techniques can be used to further retain information, while also retaining invariance. Wavelet scattering is such a method. In a sense, multilayer \acp{cnn} topologies with skip connections can be though of as a method to recover lost information in the deeper layers.
+
+\section{MFCCs Reframed as Shift-Invariant Features}
+
+Since \acp{mfcc} are the most widely used feature extraction method for audio signals, save for \ac{cnn} frontends which also act as a feature extractor when operating on the \ac{stft}. For this reframing, we ignore the \ac{dct} applied to the filtered values, since this linear transformation only serves to decorrelate the filter coefficients.
+
+The magnitude spectrum used in \ac{mfcc} calculation is expressed as a \ac{tf} decomposition as defined by equations (\ref*{eqn:gentf}) and (\ref*{eqn:stftfilter}):
+\begin{equation}
+    X[l, m] = |\upsilon_l * x|_{\downarrow d},
+\end{equation}
+where $\upsilon_l$ is the $l$'th \ac{stft} filter.
+
+The Mel spectrogram \ac{tf} decomposition $X_\text{Mel}$ is then calculated as
+\begin{equation}
+    X_\text{Mel}[k, m] = \log\left(X[l, m] * \Phi_k[l]\right) \bigg|_{l = 0},
+\end{equation}
+where $\Phi_k$ is the $k$'th MFFC triangular filter operating along the STFT index $l$. The evaluation at $l=0$ indicates that this operation is a multiplication and summation only. 
+
+We can view this process as a \ac{tf} decompistion with STFT filters $\upsilon_l \in \Upsilon$, which is modified with the Mel-scale triangular filters $\Phi_k$. $\upsilon_l$ provides time-shift invariance due to the STFT window, whereas $\Phi_k$ selectively averages frequency content of the STFT, thereby providing some frequency-shift invariance.
+
+
+\section{Wavelets as a MFCC Generalisation}
+
+We can construct a wavelet filterbank which, similar to MFCCs, introduces time and frequency-shift invariance in a similar manner to the Mel spectrogram. This process is constructed in the opposite order (frequency-shift, then time-shift invariance) to the Mel spectrogram. However, its properties remain similar \cite{ws}.
+
+We construct wavelet band-pass filters $\upsilon_k \in \Upsilon$ which is spaced in frequency such that the desired invariance properties is obtained (as discussed in section \ref*{sec:p1i:wavelets}). We then utilise a single low-pass filter $\Phi[\vect{m}]$ which then provides invariance in the time and/or spatial dimensions:
+\begin{gather}
+    \label{eqn:general_scalogram}
+    X[\vect{k}, \vect{m}] = \left|x * \upsilon_{\vect{k}}\right|_{\downarrow \vect{d}}, \ \upsilon_{\vect{k}} \in \Upsilon; \\
+    \label{eqn:general_scattering}
+    \tilde{X}[\vect{k}, \vect{m}] = X[\vect{k}, \vect{m}] * \Phi[\vect{m}]
+\end{gather}
+
+The notation in equations (\ref*{eqn:general_scalogram}) and (\ref*{eqn:general_scattering}) conforms the general \ac{tf} description of chapter \ref*{chap:p1i}, although the specific wavelet scattering operators in chapters \ref*{chap:p2} to \ref*{chap:p3} follow a different standard. These operators are known as wavelet scattering, which formalise the notation of ``averaging a \ac{tf}-decomposition'' in terms of digital signal processing. Chapters \ref*{chap:p2} to \ref*{chap:p3} discuss the specifics, flavours and implementation of scattering operators at length.
+

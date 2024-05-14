@@ -1,2 +1,22 @@
 \chapter{Wavelet Scattering in Higher Dimensions}
+\label{chap:p3i}
+
+In chapter \ref*{chap:p2i}, we reviewed a generalised definition of a multi-dimensional TF decomposition $X$, which is processed by a set of invariance-enforcing filters $\Phi_i$. Wavelet scattering in 1 dimension utilising a single invariance-enforcing filter, $\phi$, as discussed in chapter \ref*{chap:p2}.
+
+Wavelet scattering filterbanks have been extended to multiple dimensions using various different wavelets and filterbank construction techniques. This chapter provides an overview of the existing filterbanks and filters and their properties. We then identify a gap in the literature, which gives rise to a generalisation of cascasded 1D scattering transforms -- separable wavelet scattering.
+
+\section{Types of Scattering Transforms}
+Existing scattering transforms are listed below convenience:
+\begin{enumerate}
+    \item 1D scattering \citep{1dscattering1, ws}. This is the first-introduced scattering transform, which serves as a generalisation of MFCCs. It improves on MFCCs by recovering the information lost due to invariance filter (averaging) operations. Morlet wavelets are used, with cascaded scattering levels having its own number of filter per octave.
+    \item 2D scattering \citep{2dscattering}. Gabor filters modified to 0-mean, are used to construct the filterbank. The filterbank consists of exponentially placed filters in one axis, which is then rotated by equally spaced angles to cover the frequency plane. This filterbank only has a single filter per octave ($Q=1$). In particular, in polar coordinates, filters are placed exponentially along $r$, but linearly along $\theta$.
+    \item 3D scattering -- harmonic scattering \citep{harmonicscattering}. The spherical harmonics are used as filters which consitute an orthogonal basis in 3 dimensions. These filters have ``lobes'' that extend in a multitude of dimensions, depending on the harmonic, in the frequency domain.
+    \item 3D scattering -- extension of 2D scattering \citep{3dscattering}. The filterbank is constructed similarly to 2D scattering, where Gabor filters are spaced with linearly varying angles (in spherical coordinates) in 3 dimensions.
+    \item Joint time-frequency \citep{ws_joint_tf,jointtfscattering2} -- extending 1D to 2D. A first level of scattering in performed in 1D to produce a scalogram ($X[k, m]$). 2D scattering is then performed on subsequent levels, directly on the scalogram. The 2D wavelets are separable - a product of 1D wavelets. This allows 1D scattering on audio to have features that are also dependent on adjascent frequency bins. It is conceptually similar to a \ac{cnn} operating on a \ac{stft} spectrogram.
+\end{enumerate}
+
+\section{A Detailed view of Joint Time-Frequency Scattering}
+
+\section{The Benefits of Generalising Joint Time-Frequency}
+
 
