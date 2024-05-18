@@ -51,7 +51,7 @@ We can view this process as a \ac{tf} decompistion with STFT filters $\upsilon_l
 
 \section{Wavelets as a MFCC Generalisation}
 
-We can construct a wavelet filterbank which, similar to MFCCs, introduces time and frequency-shift invariance in a similar manner to the Mel spectrogram. This process is constructed in the opposite order (frequency-shift, then time-shift invariance) to the Mel spectrogram. However, its properties remain similar \cite{ws}.
+We can construct a wavelet filterbank which introduces time and frequency-shift invariance in a similar manner to the Mel spectrogram. This process is constructed in the opposite order (frequency-shift, then time-shift invariance) to the Mel spectrogram. However, its properties remain similar \cite{ws}.
 
 We construct wavelet band-pass filters $\upsilon_k \in \Upsilon$ which is spaced in frequency such that the desired invariance properties is obtained (as discussed in section \ref*{sec:p1i:wavelets}). We then utilise a single low-pass filter $\Phi[\vect{m}]$ which then provides invariance in the time and/or spatial dimensions:
 \begin{gather}
@@ -61,5 +61,5 @@ We construct wavelet band-pass filters $\upsilon_k \in \Upsilon$ which is spaced
     \tilde{X}[\vect{k}, \vect{m}] = X[\vect{k}, \vect{m}] * \Phi[\vect{m}]
 \end{gather}
 
-The notation in equations (\ref*{eqn:general_scalogram}) and (\ref*{eqn:general_scattering}) conforms the general \ac{tf} description of chapter \ref*{chap:p1i}, although the specific wavelet scattering operators in chapters \ref*{chap:p2} to \ref*{chap:p3} follow a different standard. These operators are known as wavelet scattering, which formalise the notation of ``averaging a \ac{tf}-decomposition'' in terms of digital signal processing. Chapters \ref*{chap:p2} to \ref*{chap:p3} discuss the specifics, flavours and implementation of scattering operators at length.
+The notation in equations (\ref*{eqn:general_scalogram}) and (\ref*{eqn:general_scattering}) conforms the general \ac{tf} description of chapter \ref*{chap:p1i}, although the specific wavelet scattering operators in chapters \ref*{chap:p2} to \ref*{chap:p3} follow a different standard. These operators are known as wavelet scattering, which formalise the notion of ``averaging a \ac{tf}-decomposition'' in terms of signal processing theory. Chapters \ref*{chap:p2} to \ref*{chap:p3} discuss the specifics, flavours and implementation of scattering operators at length.
 

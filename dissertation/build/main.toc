@@ -5,37 +5,40 @@
 \contentsline {chapter}{List of Tables}{10}{section*.11}%
 \contentsline {chapter}{\nameref {chap:nomenclature}}{11}{chapter*.14}%
 \contentsline {chapter}{\numberline {1}Introduction}{16}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Time-Frequency Analyses}{17}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Fourier Transforms}{17}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Constructing Filters}{18}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Wavelet Filters}{20}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Wavelet Transforms as a Fourier Alternative}{21}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Introduction}{23}{section.3.1}%
-\contentsline {section}{\numberline {3.2}False Bay Data}{26}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Spectral Entropy}{27}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}STFT}{27}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}CWT}{29}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Signal detection}{32}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}K-means}{32}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Soft Output}{33}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Median Filtering}{34}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Simulation}{36}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Purpose}{36}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Setup}{36}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Measuring Soft-Output Accuracy}{37}{subsection.3.5.3}%
-\contentsline {subsection}{\numberline {3.5.4}Results}{38}{subsection.3.5.4}%
-\contentsline {subsection}{\numberline {3.5.5}A Note on L2 Normalization}{41}{subsection.3.5.5}%
-\contentsline {section}{\numberline {3.6}Application to the False Bay Data}{41}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Discussion}{44}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Conclusion}{46}{section.3.8}%
-\contentsline {section}{\numberline {3.9}Acknowledgements}{46}{section.3.9}%
-\contentsline {section}{Appendices}{47}{section.3.9}%
-\contentsline {section}{\numberline {3.A}K-means Implementation}{47}{section.1.3.A}%
-\contentsline {chapter}{\numberline {4}Feature Extraction with Wavelet Transforms}{49}{appendix.4}%
-\contentsline {section}{\numberline {4.1}The Importance of Invariance}{49}{section.4.1}%
-\contentsline {section}{\numberline {4.2}MFCCs Reframed as Shift-Invariant Features}{50}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Wavelets as a MFCC Generalisation}{51}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Introducing Wavelet Scattering}{52}{appendix.5}%
+\contentsline {section}{\numberline {1.1}Problem Statement}{17}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Layout}{18}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Journal Papers and Contributions}{18}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Time-Frequency Analyses}{19}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Fourier Transforms}{19}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Constructing Filters}{20}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Wavelet Filters}{22}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Wavelet Transforms as a Fourier Alternative}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{24}{section.3.1}%
+\contentsline {section}{\numberline {3.2}False Bay Data}{27}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Spectral Entropy}{28}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}STFT}{28}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}CWT}{30}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Signal detection}{33}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}K-means}{33}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Soft Output}{34}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Median Filtering}{35}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Simulation}{37}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Purpose}{37}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Setup}{37}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Measuring Soft-Output Accuracy}{38}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Results}{39}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}A Note on L2 Normalization}{42}{subsection.3.5.5}%
+\contentsline {section}{\numberline {3.6}Application to the False Bay Data}{42}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Discussion}{45}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Conclusion}{47}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Acknowledgements}{47}{section.3.9}%
+\contentsline {section}{Appendices}{48}{section.3.9}%
+\contentsline {section}{\numberline {3.A}K-means Implementation}{48}{section.1.3.A}%
+\contentsline {chapter}{\numberline {4}Feature Extraction with Wavelet Transforms}{50}{appendix.4}%
+\contentsline {section}{\numberline {4.1}The Importance of Invariance}{50}{section.4.1}%
+\contentsline {section}{\numberline {4.2}MFCCs Reframed as Shift-Invariant Features}{51}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Wavelets as a MFCC Generalisation}{52}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Introducing Wavelet Scattering}{53}{appendix.5}%
 \contentsline {section}{\numberline {5.1}Introduction}{54}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Data}{57}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Wavelet Scattering}{60}{section.5.3}%
@@ -61,7 +64,7 @@
 \contentsline {chapter}{\numberline {6}Wavelet Scattering in Higher Dimensions}{84}{appendix.6}%
 \contentsline {section}{\numberline {6.1}Types of Scattering Transforms}{84}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Benefits of Separable Filters}{85}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Separable Wavelet Scattering}{86}{appendix.7}%
+\contentsline {chapter}{\numberline {7}Separable Wavelet Scattering}{87}{appendix.7}%
 \contentsline {section}{\numberline {7.1}Introduction}{88}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Separable Morlet Filterbank}{89}{section.7.2}%
 \contentsline {subsection}{\numberline {7.2.1}Morlet}{89}{subsection.7.2.1}%
@@ -70,8 +73,8 @@
 \contentsline {subsection}{\numberline {7.3.1}Transform}{92}{subsection.7.3.1}%
 \contentsline {subsection}{\numberline {7.3.2}Downsampling Strategy}{93}{subsection.7.3.2}%
 \contentsline {subsection}{\numberline {7.3.3}Convolutions}{95}{subsection.7.3.3}%
-\contentsline {section}{\numberline {7.4}Results}{96}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}MNIST}{96}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}MedMNIST3D}{97}{subsection.7.4.2}%
-\contentsline {chapter}{\numberline {8}Conclusion}{98}{appendix.8}%
-\contentsline {chapter}{Bibliography}{99}{section*.79}%
+\contentsline {section}{\numberline {7.4}Results}{95}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}MNIST}{95}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}MedMNIST3D}{96}{subsection.7.4.2}%
+\contentsline {chapter}{\numberline {8}Conclusion}{99}{appendix.8}%
+\contentsline {chapter}{Bibliography}{100}{section*.80}%

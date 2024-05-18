@@ -1,1 +1,44 @@
 \chapter{Introduction}
+
+\Ac{ml} models have become mainstay in software products and automation pipelines. Often, when there is processing power available, a \ac{ml} model will be deployed to increase efficiency, accuracy and limit human interaction. Various models, whether they are statistical, Bayesian or probabilistic, decision trees or \ac{nn}, are configured to assist or perform various tasks across many industries.
+
+Modern research is very focussed on advancing \ac{ml} integration, improving model performance and investigating new techniques. A large branch of this research is particularly focussed on data-driven approaches using \acp{nn}. The collection of data therefore becomes an important part of model training and deployment. \Acp{nn} present some challenges and concerns, since they require vast amounts of data, and their operation is often unpredictable and not well understood. They are typically treated as ``black box'' functions, which researchers improve and design through trial and error via hyper-parameter optimisation and architecture exploration.
+
+In the field of \ac{pam}, which focuses on monitoring wildlife using non-invasive acoustic sensors, the majority of recent \ac{sota} models are \ac{nn}-based. However, metrics of real-life deployment and practical model evaluation are often ignored, since the acoustical landscape of natural environments can be surprisingly varied. For example, one cannot expect a \ac{nn} model which was not trained on data that contains rainfall noise, to effectively operate when it starts raining. 
+
+Long moments of silence, weather patterns and migrating animals contribute to an ever-changing soundscape which can cause many false positives in naively trained and deployed models. Systems which aim to track specific species are often faced with this ``needle in a haystack'' problem, in which the sounds you are looking for are rare compared to the lifetime of the deployed sensors. As such, human intervention with recorded audio is a must-have when trying to reliably track species via audio signals, which can be a very laborious task indeed.
+
+As such, designing models and systems which are robust to all the aforementioned factors are critical in automating wildlife conservation studies based on non-invasive audio sensors. This leads to the natural question of the suitability of \acp{nn} in this field and to what extent they can be used to be effective.
+
+At the core of many audio-based systems lies a \ac{tf}-decomposition, typically \acp{mfcc} or the \ac{stft}. This dissertation focuses on \ac{tf} decompositions, and how they can be leveraged in order to reduce the usage or even entirely replace \acp{nn} in \ac{pam} systems. At the end of this investigative journey, we naturally arrive an entirely new generalisation of a feature extraction method based on \ac{ct} wavelets, which can be utilised as a drop-in replacement for a \ac{cnn} front-end. The integration and investigation of wavelet-based processing in \ac{pam} systems are relatively scarce, even though it is very prevalent in other fields, which we aim to remedy in the publications presented in this dissertation.
+
+\section{Problem Statement}
+
+In summary, some of the many challenges posed by \ac{pam} systems are:
+\begin{enumerate}
+    \item Long periods of silence or noise, leading to unbalanced data classes which can have a tendency for creating many false positives in models if not trained correctly.
+    \item Constantly evolving noise landscape, with the interference of other bioacoustical sounds which we are often not interested in classifying.
+    \item Large audio databases and recordings, which motivates the use of fast algorithms and processing techniques.
+    \item Poor \ac{snr}, often less than 0 dB.
+    \item Incomplete or mislabeled training data, due to poor \ac{snr} and human error.
+    \item Small datasets, which only cover a portion of environment variability, making it unsuitable for a general model.
+    \item Non-white, non-stationary background noise, which makes classification and signal detection non-trivial tasks.
+    \item Poorly understood species behaviour in terms of their bioacoustics and movements.
+\end{enumerate}
+
+All the above factors seem demotivate the use of \acp{nn} for the following reasons: principle of operation can be unpredictable and not well understood; can take long to compute; requires reliable training data or special techniques to mitigate problematic data. Although it is possible to address these challenges, it is worth exploring non-\ac{nn} methods. 
+
+As a reponse to the challenges posed by \ac{pam} systems, we focus specifically on alternative aproaches to \acp{nn}, by considering the modification of traditional classifiers and detectors with wavelet-based \ac{tf}-decompositions.
+
+\section{Layout}
+
+As this is a dissertation by publication, each paper can be read as a stand-alone item, with all the necessary literature and knowledge capture within. As such, this dissertation is structured with additional contextual chapters (chapters \ref*{chap:p1i}, \ref*{chap:p2i}, \ref*{chap:p3i}) prior to each publication (chapters \ref*{chap:p1}, \ref*{chap:p2}, \ref*{chap:p3}).
+
+Each contextual chapter is in itself an introduction to the literature and concepts presented by the paper in the following paper. Contextual chapters serve to unify the content of the published papers and show the natural progression of the analysis and application of \ac{tf} decompositions. All relevant literature is therefore gradually introduced, due to each paper conceptually expanding on the previous paper's ideas and contributions.
+
+Although this dissertation is mostly focussed on the application to \ac{pam} systems, the theory and findings it presents are general. As such, the contextual chapters are generalised mathematical descriptions of the concepts present in each paper, whereas the papers 1 and 2 (chapters \ref*{chap:p1}, \ref*{chap:p2}) are focussed on applying it to \ac{pam} systems. The final paper (chapter \ref*{chap:p3}) shows a generalised result from all the knowledge and investigations presented in prior papers.
+
+Each paper is presented as-is, with no modifications, save for unifying mathematical notation and the renumbering of items.
+
+
+\section{Journal Papers and Contributions}

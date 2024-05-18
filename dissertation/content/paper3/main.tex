@@ -4,7 +4,7 @@
 
 
 
-\articleinfo{M.W. Rademan, D.J.J Verself, J.A. Du Preez}{IEEE Signal Processing Letters}{15 May 2024}{doi}{Wavelet scattering is a widely used feature extraction method due to it efficacy in extracting invariant features, 
+\articleinfo{M.W. Rademan, D.J.J Versfeld, J.A. Du Preez}{IEEE Signal Processing Letters}{15 May 2024}{doi}{Wavelet scattering is a widely used feature extraction method due to it efficacy in extracting invariant features, 
 while retaining any lost high frequency information resulting from averaging to obtain the desired amount of invariance. 
 By generalising a 1-dimensional scattering transform, we extend its definition to an arbitrary number of independent dimensions. 
 We show that, in a modern deep learning setting, separable wavelet scattering performs similarly to its non-separable counterparts 
@@ -241,24 +241,8 @@ such that $d = d_1 \cdot d_3 \cdot d_4, \ d_1, d_3, d_4 \in \mathbb{N}^+, d_3 \l
 
 % Since the filterbank configuration is known, all required combinations of downsampled filters and their downsampling factors can be precomputed.
 
-\begin{table*}[t!]
-\centering
-\caption{MedMNIST classification results of compared to baseline \ac{nn} approaches (\citep{medmnist})} \label{tab:medmnist}
-\begin{tabular}{|l|rr|rr|rr|rr|rr|rr|}
-\hline
-\multirow{2}{*}{Methods}                & \multicolumn{2}{c}{Organ ($c=11$)}                  & \multicolumn{2}{c}{Nodule ($c=2$)}                 & \multicolumn{2}{c}{Fracture ($c=3$)}               & \multicolumn{2}{c}{Adrenal ($c=2$)}                & \multicolumn{2}{c}{Vessel ($c=2$)}                 & \multicolumn{2}{c|}{Synapse ($c=2$)}                \\
-                         & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l|}{ACC} \\ \hline
-ResNet-1810+2.5D        & 0.977                   & 0.788                   & 0.838                   & 0.835                   & 0.587                   & 0.451                   & 0.718                   & 0.772                   & 0.748                   & 0.846                   & 0.634                   & 0.696                   \\
-ResNet-1810+3D          & 0.996                   & 0.907                   & 0.863                   & 0.844                   & 0.712                   & 0.508                   & 0.827                   & 0.721                   & 0.874                   & 0.877                   & 0.82                    & 0.745                   \\
-ResNet-1810+ACS41       & 0.994                   & 0.900                     & 0.873                   & 0.847                   & 0.714                   & 0.497                   & 0.839                   & 0.754                   & 0.930                    & 0.928                   & 0.705                   & 0.722                   \\
-ResNet-5010+2.5D        & 0.974                   & 0.769                   & 0.835                   & 0.848                   & 0.552                   & 0.397                   & 0.732                   & 0.763                   & 0.751                   & 0.877                   & 0.669                   & 0.735                   \\
-ResNet-5010+3D          & 0.994                   & 0.883                   & 0.875                   & 0.847                   & 0.725                   & 0.494                   & 0.828                   & 0.745                   & 0.907                   & 0.918                   & \textbf{0.851}          & \textbf{0.795}          \\
-ResNet-5010+ACS41       & 0.994                   & 0.889                   & 0.886                   & 0.841                   & \textbf{0.750}           & \textbf{0.517}          & 0.828                   & 0.758                   & 0.912                   & 0.858                   & 0.719                   & 0.709                   \\
-auto-sklearn11          & 0.977                   & 0.814                   & \textbf{0.914}          & \textbf{0.874}          & 0.628                   & 0.453                   & 0.828                   & \textbf{0.802}          & 0.910                   & \textbf{0.915}          & 0.631                   & 0.730                    \\
-AutoKeras12             & 0.979                   & 0.804                   & 0.844                   & 0.834                   & 0.642                   & 0.458                   & 0.804                   & 0.705                   & 0.773                   & 0.894                   & 0.538                   & 0.724                   \\ \hline
-Separable WS + NN (Ours)  & \textbf{0.998}          & \textbf{0.941}          & 0.858                   & 0.797                   & 0.614                   & 0.458                   & \textbf{0.875}          & 0.792                   & \textbf{0.962}          & 0.895                   & 0.715                   & 0.525    \\ \hline              
-\end{tabular}
-\end{table*}
+
+
 
 \subsection{Convolutions}
 Optimal \ac{fft} convolutions can be achieved by performing downsampling in the frequency domain instead of the time domain. It is straightforward to verify that $|x * \uppsi|_{\downarrow r} = \left|(x * \uppsi)_{\downarrow r}\right|$, since the modulus is an element-wise operation, for some downsampling factor $r$. Given the signal and filter Fourier transforms $\hat{x}$ and $\hat{\uppsi}$, we then have
@@ -346,4 +330,25 @@ The MedMNIST3D datasets are a subset of the MedMNIST dataset group \citep{medmni
 We use \ac{nn} classifier with an input layer containing 1024 neurons, followed by two hidden layers with 512 and 256 neurons respectively. Input and hidden layers layers are each followed by a batch norm layer \citep{batchnorm} and a ReLU non-linearity \citep{relu}. For datasets with two classes, the output layer is a single neuron followed by a sigmoid activation function. For datasets with more than two classes, the output layer has a size equal to the number of classes, followed by a softmax activation. Binary cross-entropy loss are used for datasets with two classes, otherwise cross-entropy loss is used. The Adam optimiser \citep{adam} with a learning rate of $1 \cdot 10^{-5}$ is used. All other configuration parameters are identical to the model used for the MNIST dataset.
 
 A single level of scattering coefficients are computed, with $Q = (2, 2, 2)$ and $d = (4, 4, 4)$. Many MedMNIST3D datasets tend to be unbalanced, implying that \ac{auc} is a more reliable metric to measure model performance. The results are shown in table \ref{tab:medmnist}, in which \ac{sota} \ac{auc} performance is achieved for the Organ, Adrenal and Vessel datasets. Table \ref{tab:medmnist} indicates the number of classes ($c$) for each of the datasets, with accuracy (ACC) also shown for reference. The performance of our method on non-\ac{sota} results are comparable to the other baseline \ac{nn} approaches presented in \citep{medmnist}. It is likely that better results can be achieved by the proposed method if the filters are made learnable and/or scattering parameters are uniquely optimised for each dataset.
+
+\begin{table*}[t!]
+    \centering
+    \caption{MedMNIST classification results of compared to baseline \ac{nn} approaches (\citep{medmnist})} \label{tab:medmnist}
+    \begin{adjustbox}{angle=90}
+\begin{tabular}{|l|rr|rr|rr|rr|rr|rr|}
+\hline
+\multirow{2}{*}{Methods}                & \multicolumn{2}{c}{Organ ($c=11$)}                  & \multicolumn{2}{c}{Nodule ($c=2$)}                 & \multicolumn{2}{c}{Fracture ($c=3$)}               & \multicolumn{2}{c}{Adrenal ($c=2$)}                & \multicolumn{2}{c}{Vessel ($c=2$)}                 & \multicolumn{2}{c|}{Synapse ($c=2$)}                \\
+                         & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l}{ACC} & \multicolumn{1}{l}{AUC} & \multicolumn{1}{l|}{ACC} \\ \hline
+ResNet-1810+2.5D        & 0.977                   & 0.788                   & 0.838                   & 0.835                   & 0.587                   & 0.451                   & 0.718                   & 0.772                   & 0.748                   & 0.846                   & 0.634                   & 0.696                   \\
+ResNet-1810+3D          & 0.996                   & 0.907                   & 0.863                   & 0.844                   & 0.712                   & 0.508                   & 0.827                   & 0.721                   & 0.874                   & 0.877                   & 0.82                    & 0.745                   \\
+ResNet-1810+ACS41       & 0.994                   & 0.900                     & 0.873                   & 0.847                   & 0.714                   & 0.497                   & 0.839                   & 0.754                   & 0.930                    & 0.928                   & 0.705                   & 0.722                   \\
+ResNet-5010+2.5D        & 0.974                   & 0.769                   & 0.835                   & 0.848                   & 0.552                   & 0.397                   & 0.732                   & 0.763                   & 0.751                   & 0.877                   & 0.669                   & 0.735                   \\
+ResNet-5010+3D          & 0.994                   & 0.883                   & 0.875                   & 0.847                   & 0.725                   & 0.494                   & 0.828                   & 0.745                   & 0.907                   & 0.918                   & \textbf{0.851}          & \textbf{0.795}          \\
+ResNet-5010+ACS41       & 0.994                   & 0.889                   & 0.886                   & 0.841                   & \textbf{0.750}           & \textbf{0.517}          & 0.828                   & 0.758                   & 0.912                   & 0.858                   & 0.719                   & 0.709                   \\
+auto-sklearn11          & 0.977                   & 0.814                   & \textbf{0.914}          & \textbf{0.874}          & 0.628                   & 0.453                   & 0.828                   & \textbf{0.802}          & 0.910                   & \textbf{0.915}          & 0.631                   & 0.730                    \\
+AutoKeras12             & 0.979                   & 0.804                   & 0.844                   & 0.834                   & 0.642                   & 0.458                   & 0.804                   & 0.705                   & 0.773                   & 0.894                   & 0.538                   & 0.724                   \\ \hline
+Separable WS + NN (Ours)  & \textbf{0.998}          & \textbf{0.941}          & 0.858                   & 0.797                   & 0.614                   & 0.458                   & \textbf{0.875}          & 0.792                   & \textbf{0.962}          & 0.895                   & 0.715                   & 0.525    \\ \hline              
+\end{tabular}
+\end{adjustbox}
+\end{table*}
 

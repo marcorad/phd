@@ -53,14 +53,12 @@ Fourier transforms as decribed above are invertible operators, since they are or
 \section{Constructing Filters}
 \label{sec:p1i:tfa}
 
-The most popular \ac{tf} analysis is the \ac{stft}.
-
-In terms of equation (\ref{eqn:gentf}), a \ac{stft} is computed with 
+The most popular \ac{tf} analysis is the \ac{stft}. In terms of equation (\ref{eqn:gentf}), a \ac{stft} is computed with 
 \begin{equation}
     \label{eqn:stftfilter}
     \upsilon_k[n] =  w[n] e^{j \frac{2\pi k n}{N}},
 \end{equation}
-where $w$ is a window function defined by the user. Various \acp{fft} are use to compute this transform, so the properties of $w$ is typically specified by the \ac{fft} length, and the window type (Hann, Hamming, Blackman, etc.). The hop-length (or downsample factor) $d$ is an additional parameter specified by the user.
+where $w$ is a window function defined by the user. Various \acp{fft} are use to compute this transform, so the properties of $w$ is typically specified by the \ac{fft} length, and the window type (Hann, Hamming, Blackman, etc.). The hop-length (or downsample factor) $d$ is an additional parameter specified by the user. It is possible to choose $w$ and $d$ such that the \ac{stft} becomes an invertible operator -- the original signal can be entirely recovered.
 
 The frequency domain content $\hat{w}$ entirely specifies the filter behaviour of $\upsilon_k$, since the factor $e^{j \frac{2\pi k n}{N}}$ only serves to specify the centre frequency of $\upsilon_k$. The resulting filter dictionary $\Upsilon$ is therefore comprised of constant-bandwidth analytic (complex) filters, linearly spaced in the frequency domain. As such, depending on the definition of filter bandwidth, there exists an optimal $d$ which captures all of the necessary information of $|X[k, m]|$ such that no aliasing occurs across the index dimension $m$. This type of optimality is discussed, at length, for wavelet filterbanks in chapter \ref{chap:p3}.
 
@@ -68,7 +66,7 @@ The linearly-spaced filters and constant-bandwidth does not necessarily reflect 
 
 Formally, given a signal with a fundamental frequency most accurately captured in the frequency bin $k_0$, any change in frequency by a factor $a$ will move the fundamental frequency content to the bin $a k_0$. This has dire consequences for lower frequency signals - the frequency resolution of lower frequency signals is significantly poorer compared to the frequency resolution of its own harmonics. As such, a small frequency shift of a lower frequency signal with ample harmonic content which cause large index shifts for its harmonics, i.e., the $b$'th harmonic will be shifted to index $a b k_0$.
 
-Suppose that we design $\Upsilon$ to contain $Q$ filters per octave. A frequency change by a factor $a$ shifts the frequency index of the fundamental to $(Q\log_2 (a) + 1) k_0$. Similarly, the $b$'th harmonic's frequency index is shifted to $(Q\log_2 (a) + 1) (Q\log_2 (b) + 1) k_0$. For example, if $a=2$, the fundamental's frequency index is shifted to $k_0 + Q$ (as opposed to $2 k_0$ for the \ac{stft}). This property is referred to a frequency-shift invariance, since small frequency deformations of the order $Q$ do not significantly change the frequency index structure of the \ac{tf} decomposition. The \ac{stft} is much more sensitive to such deformations across its entire structure for harmonically rich signals.
+Suppose that we design $\Upsilon$ to contain $Q$ filters per octave. A frequency change by a factor $a$ shifts the frequency index of the fundamental to $(Q\log_2 (a) + 1) k_0$. Similarly, the $b$'th harmonic's frequency index is shifted to $(Q\log_2 (a) + 1) (Q\log_2 (b) + 1) k_0$. For example, if $a=2$, the fundamental's frequency index is shifted to $k_0 + Q$ (as opposed to $2 k_0$ for the \ac{stft}). This property is referred to a frequency-shift invariance, since small frequency deformations of the order $Q^{-1}$ do not significantly change the frequency index structure of the \ac{tf} decomposition. The \ac{stft} is much more sensitive to such deformations across its entire structure for harmonically rich signals.
 
 An exponential filterbank design has increased stability to small frequency fluctuations, which can make it more useful for feature-extraction methods in a \ac{ml} pipeline, since feature vectors are more stable against frequency deformations. The exponential filterbank is, in fact, the way wavelet filters are typically constructed. Additionally, the \ac{mfcc} filterbank attributes much of its sucess (compared to raw \ac{stft} magnitude coefficients) due to its exponentially placed filters.
 
@@ -85,7 +83,7 @@ The mother wavelet is a \ac{bpf} with the following properties:
 \end{enumerate}
 
 
-$uppsi$ can the be scaled by a factor $\lambda$ such that
+$\uppsi$ can the be scaled by a factor $\lambda$ such that
 \begin{equation}
     \upsilon_k(t) = \lambda_k \uppsi(\lambda_k t).
 \end{equation}
