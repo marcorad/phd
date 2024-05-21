@@ -37,7 +37,7 @@ In this paper, we introduce a method which combines an improved traditional \ac{
     \label{fig:system}
 \end{figure}
 
-\clearpage
+
 
 \section{Data}
 \label{sec:data}
@@ -113,7 +113,7 @@ Total & 5 - 10\\
 \end{table}
 
 
-\clearpage
+
 
 \section{Wavelet Scattering}
 \subsection{Filter Bank Construction}
@@ -221,7 +221,7 @@ The second filter banks in equations (\ref{eqn:scattering:s1}, \ref{eqn:scatteri
     \label{fig:fb}
 \end{figure}
 
-\clearpage
+
 \section{Improved Spectral Entropy Detector}
 The \ac{se} detector described by \citet{mypaper} is improved in this section. Rademan shows empirically that the \ac{cwt} yields improved results compared to the \ac{stft} for practical \acp{snr}. As such, we utilise the first level scattering coefficients $\mathcal{S}_{1}$, since it is equivalent to a down sampled version of the \ac{cwt}. We improve on the detector posed by Rademan by introducing true probabilistic output and spectral noise whitening.
 
@@ -542,7 +542,7 @@ As seen in Figures \ref{fig:det_roc} and \ref{fig:det_calls}, the proposed \ac{s
 
 Interestingly, adding whitening to \ac{bled} results in similar performance to the method proposed by \citet{mypaper}. Spectral whitening and \ac{gmm} fitting shows incremental improvements to the k-means based \ac{se} detector. The final proposed detector outperforms the other detectors both in terms of endpoint accuracy (figure \ref{fig:det_roc}) and the number of calls versus noise detected (figure \ref{fig:det_calls}). This paper later discusses the implication of annotation inaccuracies in section \ref{sec:classification_discussion}. As such, the indicated results may not be entirely accurate, and could be better than indicated. From the false positives estimated in Table \ref{tab:numannotations}, all of the detectors likely detect 5-10\% more calls for realistic thresholds than indicated.
 
-\clearpage
+
 \section{Classification}
 \label{sec:cls}
 We combine the output of the \ac{se} detector with \ac{ws} features and utilise \ac{lda} to classify the detected calls. Our method shares many similarities with studies that also employ \ac{ws} without a \ac{nn}, but differs in allowing for variable window sizes produced by a detector \citep{ws_audio, ws_ecg}.
@@ -641,6 +641,7 @@ Classification accuracy is measured using the observations not included in the t
 \label{tab:numdetections}
 % \begin{ruledtabular}
 % \renewcommand{\arraystretch}{0.8}
+\centering
 \begin{tabular}{lc} 
 \textbf{Vocalisation}      & \textbf{Number of detections}  \\ \hline
 Bm\_Ant\_A & 1514              \\
@@ -795,7 +796,6 @@ Our disposal of the time dimension by using the maximum naturally lends our clas
 
 Despite the problems posed by the dataset used for evaluation, this study is the first to show the effectiveness of non-neural network models combined with scattering features. A detector is also utilised to remove noise segments, which assists in reducing class imbalance and reduces training time. The proposed method is particularly effective for a very small and unbalanced dataset, while allowing for a variety of calls to be detected.
 
-\clearpage
 \section{Conclusion}
 
 In this study, we introduce \ac{ws} into the field of \ac{pam} for whale detection and classification and suggest further improvements of the traditional \ac{se} detector. We combine the detector with \ac{ws} and demonstrate the practicality of the proposed technique on a real, large dataset for blue and fin whale calls. We evaluate classification accuracy for many types of calls, demonstrating the applicability of the proposed technique on many whale species.
@@ -859,8 +859,7 @@ This paper provides the groundwork required to implement \ac{ws}-based classific
     
     Case 3 is always true under the restrictions stated for this problem, implying that case 3 will always result in a monotonically decreasing function. To evaluate whether a given \ac{gmm} model with $x \in [x_{min}, x_{max}]$ satisfies monotonicity conditions, we substitute $x$ for $x_{max}$ and $x_{min}$ for cases 1 and 2 respectively.
     
-    \clearpage
-    
+      
     \section{Summary of parameter values}
     
     \begin{table}[h]

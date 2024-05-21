@@ -10,49 +10,50 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Warning--empty journal in ws_joint_tf
 Warning--empty journal in jointtfscattering2
 Warning--empty journal in ws
+Warning--empty journal in pamguide
 Warning--empty journal in logit
 Warning--can't use both volume and number fields in origkmeans
 Warning--empty chapter and pages in kmeansoverview
 Warning--missing publisher in kmeansoverview
-You've used 83 entries,
+You've used 91 entries,
             3324 wiz_defined-function locations,
-            1163 strings with 23248 characters,
-and the built_in function-call counts, 83812 in all, are:
-= -- 6551
-> -- 2542
-< -- 165
-+ -- 974
-- -- 889
-* -- 8463
-:= -- 10119
-add.period$ -- 286
-call.type$ -- 83
-change.case$ -- 706
-chr.to.int$ -- 87
-cite$ -- 90
-duplicate$ -- 8198
-empty$ -- 7420
-format.name$ -- 1758
-if$ -- 17079
+            1204 strings with 24823 characters,
+and the built_in function-call counts, 93214 in all, are:
+= -- 7263
+> -- 2878
+< -- 180
++ -- 1104
+- -- 1009
+* -- 9477
+:= -- 11224
+add.period$ -- 309
+call.type$ -- 91
+change.case$ -- 786
+chr.to.int$ -- 95
+cite$ -- 99
+duplicate$ -- 9111
+empty$ -- 8219
+format.name$ -- 1982
+if$ -- 18976
 int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 972
-newline$ -- 499
-num.names$ -- 334
-pop$ -- 2180
+missing$ -- 1077
+newline$ -- 538
+num.names$ -- 366
+pop$ -- 2420
 preamble$ -- 1
-purify$ -- 624
+purify$ -- 696
 quote$ -- 0
-skip$ -- 2091
+skip$ -- 2324
 stack$ -- 0
-substring$ -- 4720
-swap$ -- 4184
-text.length$ -- 124
+substring$ -- 5244
+swap$ -- 4674
+text.length$ -- 139
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 735
-warning$ -- 7
-while$ -- 746
+type$ -- 807
+warning$ -- 8
+while$ -- 832
 width$ -- 0
-write$ -- 1181
-(There were 7 warnings)
+write$ -- 1281
+(There were 8 warnings)

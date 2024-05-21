@@ -1,1 +1,13 @@
 \chapter{Conclusion}
+
+In this dissertation, we investigate the viability of wavelet transforms as alternative \ac{tf} decompositions in for detecting and classifying whale calls. 
+
+In chapter \ref*{chap:p1}, we show that the \ac{cwt} can be used for \ac{se} detectors, which can, under certain conditions, yield marginally better performance in terms of time-localisation compared to the \ac{stft}. Median filtering of the \ac{se} statistic and k-means clustering further improve the interpretability and accuracy of the \ac{se} detector. We show that this detector is much better than \acp{bled}, which are the most commonly used signal detectors in \ac{pam}.
+
+Chapter \ref*{chap:p2} further expands on the ideas of chapter \ref*{chap:p1}, by including additional time-shift invariance to the \ac{tf} decomposition via first-level wavelet scattering coefficients. We additionally model the entropy as a \ac{gmm}, which is a further improvement on k-means. We lay the groundwork for efficient downsampling strategies in for wavelet scattering computations. Since wavelet scattering can be used a features, we combine the detector output with a classifier to investigate the practicality of such a system. We provide critical discussions on the dataset that is used, and highlight the real-world problems faced in evaluation \ac{pam} detections and classification systems.
+
+From the foundation established in chapter \ref*{chap:p2} and inspired by joint-\ac{tf} scattering, we generalise the notation of using separable wavelet filters in a multi-dimensional scattering transform in chapter \ref*{chap:p3}. We show that, in a modern \ac{ml}-setting, it can be equally effective compared to other wavelet scattering filterbanks, yet provides significant advantages due to filter separability, which includes greater configuration freedoms and computational advantages. 
+
+Further work includes deploying separable wavelet scattering and the improved \ac{se} detector from chapter \ref*{chap:p2} in a \ac{pam} detection and classification system, while evaluating its performance compared to \ac{nn}-based approaches.
+
+The papers presented in this dissertation naturally introduce wavelet scattering to both signal detection and classification for \ac{pam} systems thereby addressing some of the shortcomings of \acp{nn}. We develop a new type of scattering which is particularly well suited to the requirements of \ac{pam}.

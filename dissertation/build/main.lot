@@ -10,12 +10,12 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {5.1}{\ignorespaces Total number of annotations in the Casey 2017 dataset.}}{58}{table.caption.57}%
 \contentsline {table}{\numberline {5.2}{\ignorespaces Estimated erroneous (false positives) proportion of annotations per class that could be considered noise. This table does not reflect on whether annotations are of the correct class (i.e., misclassifications). The total proportion of false positives are calculated according to the number of annotations per class.}}{59}{table.caption.58}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces The number of missed calls as a result of a non-converging \ac {gmm} fit.}}{70}{table.caption.67}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Number of labeled detections for all vocalisations of interest. The detections are produced by the whitened \ac {gmm} \ac {se} detector. A significant number of detections are discarded in the training data due to overlapping.}}{75}{table.caption.70}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Average model classification accuracies for varying train-test splits with chi-squared feature selection. An 80\% training split without chi-square feature selection is included as a baseline. 20 trials are performed, whereas 5\% splits use 100 trials. The median accuracy is displayed.}}{76}{table.caption.71}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Summary of parameter values used in this study. Chosen values are indicated in boldface text, whereas non-bold parameters result from the chosen parameters.}}{83}{table.caption.72}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces The number of missed calls as a result of a non-converging \ac {gmm} fit.}}{68}{table.caption.67}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Number of labeled detections for all vocalisations of interest. The detections are produced by the whitened \ac {gmm} \ac {se} detector. A significant number of detections are discarded in the training data due to overlapping.}}{73}{table.caption.70}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Average model classification accuracies for varying train-test splits with chi-squared feature selection. An 80\% training split without chi-square feature selection is included as a baseline. 20 trials are performed, whereas 5\% splits use 100 trials. The median accuracy is displayed.}}{74}{table.caption.71}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Summary of parameter values used in this study. Chosen values are indicated in boldface text, whereas non-bold parameters result from the chosen parameters.}}{80}{table.caption.72}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces MNIST classification error rate (\%) of separable and \ac {2d} scattering coefficients using a \ac {nn} classifier}}{96}{table.caption.76}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces MedMNIST classification results of compared to baseline \ac {nn} approaches (\citep {medmnist})}}{98}{table.caption.78}%
+\contentsline {table}{\numberline {7.1}{\ignorespaces MNIST classification error rate (\%) of separable and \ac {2d} scattering coefficients using a \ac {nn} classifier}}{93}{table.caption.76}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces MedMNIST classification results of compared to baseline \ac {nn} approaches (\citep {medmnist})}}{95}{table.caption.78}%
 \addvspace {10\p@ }

@@ -1,4 +1,4 @@
-\begin{thebibliography}{83}
+\begin{thebibliography}{91}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname bibnamefont\endcsname\relax
   \def\bibnamefont#1{#1}\fi
@@ -141,6 +141,15 @@
 \newblock \emph{Marine Mammal Science}, \bblvol{}~20, \bblpp{} 726--754.
 \newblock ISSN 08240469.
 
+\bibitem[{\citenamefont{Browning}
+  \emph{\bbletal{}}(2017)\citenamefont{Browning}, \citenamefont{Gibb},
+  \citenamefont{Glover-Kapfer} \protect\BIBand{}
+  \citenamefont{Jones}}]{pamguide}
+\bibnamefont{Browning}, \bibfnamefont{E.}, \bibnamefont{Gibb},
+  \bibfnamefont{R.}, \bibnamefont{Glover-Kapfer}, \bibfnamefont{P.}
+  \protect\BIBand{} \bibnamefont{Jones}, \bibfnamefont{K.E.} (2017).
+\newblock Passive acoustic monitoring in ecology and conservation.
+
 \bibitem[{\citenamefont{Bruna} \protect\BIBand{}
   \citenamefont{Mallat}(2013)}]{2dscattering}
 \bibnamefont{Bruna}, \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Mallat},
@@ -250,6 +259,25 @@
   Impulse Noise From Digital Image}.
 \newblock \capitalize\bblin{}: \emph{2018 Conference on Emerging Devices and
   Smart Systems (ICEDSS)}, \bblpp{} 235--238.
+
+\bibitem[{\citenamefont{Gibb} \emph{\bbletal{}}(2019)\citenamefont{Gibb},
+  \citenamefont{Browning}, \citenamefont{Glover-Kapfer} \protect\BIBand{}
+  \citenamefont{Jones}}]{pamsurvey}
+\bibnamefont{Gibb}, \bibfnamefont{R.}, \bibnamefont{Browning},
+  \bibfnamefont{E.}, \bibnamefont{Glover-Kapfer}, \bibfnamefont{P.}
+  \protect\BIBand{} \bibnamefont{Jones}, \bibfnamefont{K.E.} (2019).
+\newblock Emerging opportunities and challenges for passive acoustics in
+  ecological assessment and monitoring.
+\newblock \emph{Methods in Ecology and Evolution}, \bblvol{}~10, \bblno{}~2,
+  \bblpp{} 169--185.
+
+\bibitem[{\citenamefont{Guth} \emph{\bbletal{}}(2022)\citenamefont{Guth},
+  \citenamefont{Zarka} \protect\BIBand{}
+  \citenamefont{Mallat}}]{nnphasecollapse}
+\bibnamefont{Guth}, \bibfnamefont{F.}, \bibnamefont{Zarka}, \bibfnamefont{J.}
+  \protect\BIBand{} \bibnamefont{Mallat}, \bibfnamefont{S.} (2022).
+\newblock Phase collapse in neural networks.
+\newblock \eprint{2110.05283}.
 
 \bibitem[{\citenamefont{Ioffe} \protect\BIBand{}
   \citenamefont{Szegedy}(2015)}]{batchnorm}
@@ -755,6 +783,17 @@
 \newblock \emph{{Journal of King Saud University-Computer and Information
   Sciences}}, \bblvol{}~29, \bblno{}~4, \bblpp{} 462--472.
 
+\bibitem[{\citenamefont{Tian} \emph{\bbletal{}}(2023)\citenamefont{Tian},
+  \citenamefont{Zheng}, \citenamefont{Zuo}, \citenamefont{Zhang},
+  \citenamefont{Zhang} \protect\BIBand{}
+  \citenamefont{Zhang}}]{waveletimagedenoising}
+\bibnamefont{Tian}, \bibfnamefont{C.}, \bibnamefont{Zheng}, \bibfnamefont{M.},
+  \bibnamefont{Zuo}, \bibfnamefont{W.}, \bibnamefont{Zhang}, \bibfnamefont{B.},
+  \bibnamefont{Zhang}, \bibfnamefont{Y.} \protect\BIBand{} \bibnamefont{Zhang},
+  \bibfnamefont{D.} (2023).
+\newblock Multi-stage image denoising with the wavelet transform.
+\newblock \emph{Pattern Recognition}, \bblvol{} 134, \bblp{} 109050.
+
 \bibitem[{\citenamefont{Trawicki}(2023)}]{MFCC_HMM_birds}
 \bibnamefont{Trawicki}, \bibfnamefont{M.B.} (2023).
 \newblock {{Automatic age recognition, call-type classification, and speaker
@@ -821,10 +860,10 @@
 \newblock \emph{IEEE Journal of Oceanic Engineering}, \bblvol{}~42, \bblno{}~4,
   \bblpp{} 800--807.
 
-\bibitem[{\citenamefont{{van Wyk}} \emph{\bbletal{}}(2022)\citenamefont{{van
-  Wyk}}, \citenamefont{{du Preez}} \protect\BIBand{}
+\bibitem[{\citenamefont{{Van Wyk}} \emph{\bbletal{}}(2022)\citenamefont{{Van
+  Wyk}}, \citenamefont{{Du Preez}} \protect\BIBand{}
   \citenamefont{Versfeld}}]{internalsignaldetection}
-\bibnamefont{{van Wyk}}, \bibfnamefont{J.}, \bibnamefont{{du Preez}},
+\bibnamefont{{Van Wyk}}, \bibfnamefont{J.}, \bibnamefont{{Du Preez}},
   \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Versfeld}, \bibfnamefont{J.}
   (2022).
 \newblock {Temporal separation of whale vocalizations from background oceanic
@@ -832,17 +871,6 @@
 \newblock \emph{Ecological Informatics}, \bblvol{}~69, \bblp{} 101627.
 \newblock ISSN 1574-9541.
 \newline\bblurlpre\url{https://www.sciencedirect.com/science/article/pii/S1574954122000760}
-
-\bibitem[{\citenamefont{van Wyk} \emph{\bbletal{}}(2023)\citenamefont{van Wyk},
-  \citenamefont{Versfeld} \protect\BIBand{} \citenamefont{du~Preez}}]{jacques2}
-\bibnamefont{van Wyk}, \bibfnamefont{J.}, \bibnamefont{Versfeld},
-  \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{du~Preez}, \bibfnamefont{J.}
-  (2023 9).
-\newblock {Detection of cetacean and fish sounds using normalized summation of
-  harmonics and spectrogram masking}.
-\newblock \emph{JASA Express Letters}, \bblvol{}~3.
-\newblock ISSN 2691-1191.
-\newline\bblurlpre\url{https://pubs.aip.org/jel/article/3/9/096002/2911548/Detection-of-cetacean-and-fish-sounds-using}
 
 \bibitem[{\citenamefont{Vickers} \emph{\bbletal{}}(2021)\citenamefont{Vickers},
   \citenamefont{Milner}, \citenamefont{Risch} \protect\BIBand{}
@@ -865,6 +893,30 @@
 \newblock \emph{IEEE Transactions on Speech and Audio Processing},
   \bblvol{}~11, \bblno{}~3, \bblpp{} 229--241.
 
+\bibitem[{\citenamefont{Wyk} \emph{\bbletal{}}(2023)\citenamefont{Wyk},
+  \citenamefont{Versfeld} \protect\BIBand{} \citenamefont{Preez}}]{jacques2}
+\bibnamefont{Wyk}, \bibfnamefont{J.V.}, \bibnamefont{Versfeld},
+  \bibfnamefont{J.} \protect\BIBand{} \bibnamefont{Preez}, \bibfnamefont{J.D.}
+  (2023 9).
+\newblock {Detection of cetacean and fish sounds using normalized summation of
+  harmonics and spectrogram masking}.
+\newblock \emph{JASA Express Letters}, \bblvol{}~3.
+\newblock ISSN 2691-1191.
+\newline\bblurlpre\url{https://pubs.aip.org/jel/article/3/9/096002/2911548/Detection-of-cetacean-and-fish-sounds-using}
+
+\bibitem[{\citenamefont{Yan} \emph{\bbletal{}}(2023)\citenamefont{Yan},
+  \citenamefont{Shang}, \citenamefont{Xu}, \citenamefont{Wen},
+  \citenamefont{Zhao}, \citenamefont{Chen} \protect\BIBand{}
+  \citenamefont{Gao}}]{waveletfault}
+\bibnamefont{Yan}, \bibfnamefont{R.}, \bibnamefont{Shang}, \bibfnamefont{Z.},
+  \bibnamefont{Xu}, \bibfnamefont{H.}, \bibnamefont{Wen}, \bibfnamefont{J.},
+  \bibnamefont{Zhao}, \bibfnamefont{Z.}, \bibnamefont{Chen}, \bibfnamefont{X.}
+  \protect\BIBand{} \bibnamefont{Gao}, \bibfnamefont{R.X.} (2023).
+\newblock Wavelet transform for rotary machine fault diagnosis: 10 years
+  revisited.
+\newblock \emph{Mechanical Systems and Signal Processing}, \bblvol{} 200,
+  \bblp{} 110545.
+
 \bibitem[{\citenamefont{Yang} \emph{\bbletal{}}(2023)\citenamefont{Yang},
   \citenamefont{Shi}, \citenamefont{Wei}, \citenamefont{Liu},
   \citenamefont{Zhao}, \citenamefont{Ke}, \citenamefont{Pfister}
@@ -877,5 +929,38 @@
 \newblock {MedMNIST v2-A large-scale lightweight benchmark for 2D and 3D
   biomedical image classification}.
 \newblock \emph{Scientific Data}, \bblvol{}~10, \bblno{}~1, \bblp{}~41.
+
+\bibitem[{\citenamefont{Yin} \emph{\bbletal{}}(2023)\citenamefont{Yin},
+  \citenamefont{Wang}, \citenamefont{Keim}, \citenamefont{Konsoer},
+  \citenamefont{Yin}, \citenamefont{Liu} \protect\BIBand{}
+  \citenamefont{Zheng}}]{waveletflow}
+\bibnamefont{Yin}, \bibfnamefont{L.}, \bibnamefont{Wang}, \bibfnamefont{L.},
+  \bibnamefont{Keim}, \bibfnamefont{B.D.}, \bibnamefont{Konsoer},
+  \bibfnamefont{K.}, \bibnamefont{Yin}, \bibfnamefont{Z.}, \bibnamefont{Liu},
+  \bibfnamefont{M.} \protect\BIBand{} \bibnamefont{Zheng}, \bibfnamefont{W.}
+  (2023).
+\newblock Spatial and wavelet analysis of precipitation and river discharge
+  during operation of the three gorges dam, china.
+\newblock \emph{Ecological Indicators}, \bblvol{} 154, \bblp{} 110837.
+
+\bibitem[{\citenamefont{Zhang} \emph{\bbletal{}}(2021)\citenamefont{Zhang},
+  \citenamefont{Ti{\v{n}}o}, \citenamefont{Leonardis} \protect\BIBand{}
+  \citenamefont{Tang}}]{nnsurvey}
+\bibnamefont{Zhang}, \bibfnamefont{Y.}, \bibnamefont{Ti{\v{n}}o},
+  \bibfnamefont{P.}, \bibnamefont{Leonardis}, \bibfnamefont{A.}
+  \protect\BIBand{} \bibnamefont{Tang}, \bibfnamefont{K.} (2021).
+\newblock A survey on neural network interpretability.
+\newblock \emph{IEEE Transactions on Emerging Topics in Computational
+  Intelligence}, \bblvol{}~5, \bblno{}~5, \bblpp{} 726--742.
+
+\bibitem[{\citenamefont{Zhang} \emph{\bbletal{}}(2023)\citenamefont{Zhang},
+  \citenamefont{Guo}, \citenamefont{Zhou}, \citenamefont{Zhang}
+  \protect\BIBand{} \citenamefont{Lin}}]{waveletflight}
+\bibnamefont{Zhang}, \bibfnamefont{Z.}, \bibnamefont{Guo}, \bibfnamefont{D.},
+  \bibnamefont{Zhou}, \bibfnamefont{S.}, \bibnamefont{Zhang}, \bibfnamefont{J.}
+  \protect\BIBand{} \bibnamefont{Lin}, \bibfnamefont{Y.} (2023).
+\newblock Flight trajectory prediction enabled by time-frequency wavelet
+  transform.
+\newblock \emph{Nature Communications}, \bblvol{}~14, \bblno{}~1, \bblp{} 5258.
 
 \end{thebibliography}

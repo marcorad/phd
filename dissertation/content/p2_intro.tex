@@ -3,7 +3,7 @@
 \chapter{Feature Extraction with Wavelet Transforms}
 \label{chap:p2i}
 
-\ac{tf} decompositions are often used to extract features for signals. In audio, \acp{mfcc} are features calculated from the \ac{stft} of the signal. A ``\ac{tf}'' decomposition, as referred to in this dissertation, does not necesarrily require a time variable: spatial variables are often used. In this sense, a \ac{cnn} is can also be considered as a ``\ac{tf}'' decomposition, where multi-dimensional index variables (or index vectors) are used for ``time'' and frequency:
+\ac{tf} decompositions are often used to extract features from signals. In audio, \acp{mfcc} are features calculated from the \ac{stft} of the signal. A ``\ac{tf}'' decomposition, as referred to in this dissertation, does not necesarrily require a time variable: spatial variables are often used. In this sense, a \ac{cnn} is can also be considered as a ``\ac{tf}'' decomposition, where multi-dimensional index variables (or index vectors) are used for ``time'' and frequency:
 \begin{equation}
     X[\vect{k}, \vect{m}] = \left( x * \upsilon_{\vect{k}} \right)_{\downarrow \vect{d}}, \ \upsilon_{\vect{k}} \in \Upsilon.
 \end{equation}
