@@ -15,45 +15,46 @@ Warning--empty journal in logit
 Warning--can't use both volume and number fields in origkmeans
 Warning--empty chapter and pages in kmeansoverview
 Warning--missing publisher in kmeansoverview
-You've used 91 entries,
+Warning--empty journal in cnninvariance2
+You've used 100 entries,
             3324 wiz_defined-function locations,
-            1204 strings with 24823 characters,
-and the built_in function-call counts, 93214 in all, are:
-= -- 7263
-> -- 2878
-< -- 180
-+ -- 1104
-- -- 1009
-* -- 9477
-:= -- 11224
-add.period$ -- 309
-call.type$ -- 91
-change.case$ -- 786
-chr.to.int$ -- 95
-cite$ -- 99
-duplicate$ -- 9111
-empty$ -- 8219
-format.name$ -- 1982
-if$ -- 18976
+            1247 strings with 26250 characters,
+and the built_in function-call counts, 101341 in all, are:
+= -- 7912
+> -- 3080
+< -- 199
++ -- 1188
+- -- 1078
+* -- 10221
+:= -- 12204
+add.period$ -- 337
+call.type$ -- 100
+change.case$ -- 852
+chr.to.int$ -- 104
+cite$ -- 109
+duplicate$ -- 9893
+empty$ -- 8965
+format.name$ -- 2130
+if$ -- 20665
 int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 1077
-newline$ -- 538
-num.names$ -- 366
-pop$ -- 2420
+missing$ -- 1177
+newline$ -- 584
+num.names$ -- 402
+pop$ -- 2659
 preamble$ -- 1
-purify$ -- 696
+purify$ -- 755
 quote$ -- 0
-skip$ -- 2324
+skip$ -- 2579
 stack$ -- 0
-substring$ -- 5244
-swap$ -- 4674
-text.length$ -- 139
+substring$ -- 5733
+swap$ -- 5064
+text.length$ -- 151
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 807
-warning$ -- 8
-while$ -- 832
+type$ -- 882
+warning$ -- 9
+while$ -- 906
 width$ -- 0
-write$ -- 1281
-(There were 8 warnings)
+write$ -- 1398
+(There were 9 warnings)

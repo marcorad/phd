@@ -4,30 +4,30 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Block diagram of the proposed soft-output detector.}}{25}{figure.caption.31}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Audio snippet and spectrogram of a humpback song recorded in False Bay. The waveform shown is high-passed at 100 Hz, resampled and normalized. The signal annotations are shown on the spectrogram. The spectrogram is calculated before high-passing the signal.}}{27}{figure.caption.32}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Histograms indicating the combined call length and distance between calls of the two humpback songs, for use in determining median filter window length limits.}}{28}{figure.caption.33}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Spectral entropy (STFT) calculated for different frequency bin ranges.}}{30}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces An example of a CWT filterbank, shown as the L1 and L2 normalized versions , with $\gamma = 10$, $\beta =50$ and 4 voices per octave.}}{32}{figure.caption.35}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Example of the sigmoid function for soft output classification for various gains ($\mu _S=2$, $\mu _{NS}=4$).}}{35}{figure.caption.36}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Median filtered entropy (STFT) with $M=355$.}}{36}{figure.caption.37}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces The resulting class means from the K-means algorithm on median filtered entropy with $M=355$.}}{37}{figure.caption.38}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Spectrogram of the test signal (0 dB SNR).}}{38}{figure.caption.39}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces STFT and CWT soft discovery rates over a range of SNR's and median filter window lengths. The left-hand side of the figure shows the STPR and STNR of the STFT respectively. The CWT soft discovery rates are on the right-hand side.}}{39}{figure.caption.40}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces STFT and CWT soft discovery rates over a range median filter window lengths for low SNRs. The left and right sides of the figure show the results for the STFT and CWT respectively.}}{40}{figure.caption.41}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces STFT and CWT difference in class means ($\mu _{NS} - \mu _S$) over a range of SNRs and median filter window lengths.}}{40}{figure.caption.42}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Comparing L1 and L2 CWT normalization for spectral entropy calculation. The left side of the figure shows the results without MF ($M=1$). The right side of the figure shows with MF ($M=501$). Note the large differences between L1 and L2 normalization for STNR and STPR.}}{42}{figure.caption.45}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces A snippet showing the measures produced by the entropy and the proposed soft-output signal detector.}}{43}{figure.caption.46}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces The ROC curves comparing the proposed technique and the baseline STFT SE. Median filter window lengths of 1, 201 and 501 are shown. The sigmoid gain is set such that $p=0.95$. FPR is plotted on a log scale, which better illustrates the TPR differences for small FPR values.}}{44}{figure.caption.47}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces The thresholds used to produce the ROC curve and the TPR/FPR of the baseline SE and the proposed technique. Median filter window length of 1, 201 and 501 are shown on the right. The baseline entropy is shown on the left. }}{45}{figure.caption.48}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Block diagram of the proposed soft-output detector.}}{27}{figure.caption.32}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Audio snippet and spectrogram of a humpback song recorded in False Bay.}}{29}{figure.caption.33}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Humpback call length and time spread.}}{30}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Spectral entropy (STFT) calculated for different frequency bin ranges.}}{31}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces An example of a CWT filterbank.}}{34}{figure.caption.36}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Example of the sigmoid function.}}{37}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Median filtered entropy.}}{38}{figure.caption.38}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces K-means class means on entropy.}}{38}{figure.caption.39}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Spectrogram of the test signal (0 dB SNR).}}{40}{figure.caption.40}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces STFT and CWT soft discovery rates over SNR.}}{41}{figure.caption.41}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces STFT and CWT soft discovery rates over median filter length.}}{41}{figure.caption.42}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces STFT and CWT difference in class means.}}{42}{figure.caption.43}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Comparing L1 and L2 CWT normalization for spectral entropy calculation.}}{44}{figure.caption.46}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces A snippet showing the measures produced by the proposed entropy detector.}}{44}{figure.caption.47}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces The ROC curves comparing the proposed technique and the baseline STFT SE.}}{46}{figure.caption.48}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces The thresholds used to produce the ROC curve.}}{46}{figure.caption.49}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces The detection and classifying system. The audio database constists of 1-hour long recordings, which are segmented for computational efficiency. The detection system provides input to the feature extraction and classification steps. The classifier and detector are evaluated separately in this study.}}{56}{figure.caption.55}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls. Note the logarithmic frequency scale. \textit {Bm\_Ant\_A} (a) is a constant frequency pulse which occurs around 20 Hz. \textit {Bm\_Ant\_B} (b) and \textit {Bm\_Ant\_Z} (c) are similar to \textit {Bm\_Ant\_A}, but with the addition of frequency modulated tails. \textit {Bm\_D} (d) is a frequency modulated downsweep which typically starts around the 80 Hz and sweeps to 30 Hz.}}{58}{figure.caption.56}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces An illustration of the successive filtering operations performed by a scattering transform. Nodes in colour represent the extracted scattering coefficients, which is down-sampled according to an invariance scale specified by the user.}}{62}{figure.caption.60}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces The filter banks used in this study, with $Q_1 = 16$ and $Q_2 = 4$. The filter bank used to calculate $\mathcal {U}_1$ is shown on the left and the $\mathcal {U}_2$ filter bank on the right. Note that the maximum magnitude of 2 accounts for the analytic nature of the wavelet, thereby capturing the true frequency amplitudes in a signal.}}{63}{figure.caption.61}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces An example of the output of the detector taken from a densely populated vocalisation region of the dataset. The annotation bounding boxes are also indicated (top). In this example, the detector successfully detects all vocalisations. The whitened SE measure is shown (middle) with the posterior probability of signal (bottom).}}{67}{figure.caption.64}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Results of the evaluated detectors. \ac {se} detectors are indicated as a solid line, while \ac {bled} is dashed. (a) The performance of the detectors when compared on a sample-by-sample bases. (b) The performance curve of the detectors expressed as the percentage of detected noise samples versus the percentage of detected calls. The whitened \ac {se} with \ac {gmm} detector significantly outperforms all other detectors.}}{69}{figure.caption.66}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces The detection and classifying system.}}{59}{figure.caption.57}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls.}}{60}{figure.caption.58}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces An illustration of the successive filtering operations performed by a scattering transform.}}{64}{figure.caption.62}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces The filter banks used in this study.}}{65}{figure.caption.63}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces An example of the output of the detector.}}{69}{figure.caption.66}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces ROC curves of the evaluated detectors.}}{71}{figure.caption.68}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

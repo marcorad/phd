@@ -4,45 +4,51 @@
 
 
 
-\articleinfo{M.W. Rademan, D.J.J Versfeld, J.A. Du Preez}{IEEE Signal Processing Letters}{15 May 2024}{doi}{Wavelet scattering is a widely used feature extraction method due to it efficacy in extracting invariant features, 
-while retaining any lost high frequency information resulting from averaging to obtain the desired amount of invariance. 
-By generalising a 1-dimensional scattering transform, we extend its definition to an arbitrary number of independent dimensions. 
-We show that, in a modern deep learning setting, separable wavelet scattering performs similarly to its non-separable counterparts 
-with the MNIST hand-written digit dataset. We additionally demonstrate state-of-the-art results for a subset of the MedMNIST3D datasets.}
+\articleinfo{Seperable Wavelet Scattering}{IEEE Signal Processing Letters}{15 May 2024}{doi}
+
+\section*{CRediT}
+\textbf{M.W. Rademan}: conceptualisation; methodology; software; formal analysis; writing -- original draft.
+
+\textbf{D.J.J. Verseld}: writing -- review and editing; supervision.
+
+\textbf{J.A. Du Preez}: writing -- review and editing; supervision.
+
+\section*{Abstract}
+Wavelet scattering is a widely used feature extraction method due to it efficacy in extracting invariant features. It retains lost high frequency information resulting from the averaging operations required to obtain invariance. Different wavelet scattering transforms exist for a varying number of input dimensions, each having different choices of wavelets and filterbank construction techniques. In this work, we propose a new scattering transform by generalising the one-dimensional case to an arbitrary number of independent dimensions. Additionally, we provide concise implementation definitions for the Morlet wavelet. We show that, in a modern deep learning setting, separable wavelet scattering performs similarly to its non-separable counterparts with the MNIST hand-written digit dataset. We additionally demonstrate state-of-the-art results for a subset of the MedMNIST3D datasets.
 
 
 \section{Introduction}
-\Ac{ws} has seen widespread use in classification applications as a powerful feature extraction method. It is an especially effective method for small datasets, since the feature filters are reminiscent of a \ac{cnn} front-end, while requiring no learning. The resulting features are invariant across all averaged dimensions, and exhibit separable class subspaces, allowing linear classifiers to be used with high efficacy \citep{2dscattering}.
+\Ac{ws} has seen widespread use in classification applications as a powerful feature extraction method. It is an especially effective method for small datasets, since the feature filters are reminiscent of a \ac{cnn} front-end, while requiring no learning. The resulting features are invariant across all averaged dimensions, and exhibit separable class subspaces, allowing linear classifiers to be used with high efficacy \cite{2dscattering}.
 
-Various forms of \ac{ws} exist, with \ac{1d} scattering first proposed by Anden and Mallat \citep{1dscattering1, ws}, which was later extended to 2 \citep{2dscattering} and 3 dimensions \citep{3dscattering, harmonicscattering}. Additional and more specialised forms for \ac{ws} include rotation-invariant scattering \citep{groupinvariantscattering} for the classification of textures and joint-\ac{tf} scattering \citep{ws_joint_tf, jointtfscattering2}. Joint-\ac{tf} scattering utilises a separable \ac{2d} filter that operates on the first level scattering scalogram, denoted by the operator $\mathcal{U}_1$, which is the only apparent usage of separable filters in the current scattering literature. 
+Various forms of \ac{ws} exist, with \ac{1d} scattering first proposed by Anden and Mallat \cite{1dscattering1, ws}, which was later extended to 2 \cite{2dscattering} and 3 dimensions \cite{3dscattering, harmonicscattering}. Additional and more specialised forms for \ac{ws} include rotation-invariant scattering \cite{groupinvariantscattering} for the classification of textures and joint-\ac{tf} scattering \cite{ws_joint_tf, jointtfscattering2}. Joint-\ac{tf} scattering utilises a separable \ac{2d} filter that operates on the first level scattering scalogram, denoted by the operator $\mathcal{U}_1$, which is the only apparent usage of separable filters in the current scattering literature. 
 
-In a deep-learning setting, sensible initialisation of filters prior to learning can significantly improve performance and interpretability \citep{sincnet}. The greatest advantage of separable filters is their computation speed when computing convolutions directly, as is performed in \acp{cnn} \citep{separablecnn}. Additionally, separable filters reduce the number of parameters of a \ac{cnn} if the filters are configured to be learnable. Learnable filters can typically improve performance compared to their fixed-filters counterpart \citep{scattering_birdsong}. 
+In a deep-learning setting, sensible initialisation of filters prior to learning can significantly improve performance and interpretability \cite{sincnet}. The greatest advantage of separable filters is their computation speed when computing convolutions directly, as is performed in \acp{cnn} \cite{separablecnn}. Additionally, separable filters reduce the number of parameters of a \ac{cnn} if the filters are configured to be learnable. Learnable filters can typically improve performance compared to their fixed-filters counterpart \cite{scattering_birdsong}. 
 
-At first glance, a \ac{ws} decomposition seems to be prohibitively expensive, but fast algorithms are possible due to the limited bandwidth of filter output. Fast algorithms utilise downsampling to take advantage of the demodulation of band-limited signals that result from the convolution of analytic wavelets \citep{2dscattering, 3dscattering, 1dscattering1}. Path pruning is also used to ignore filter combinations which have negligible energy. These algorithms are the standard implementation on many platforms, such as the Kymatio python package \citep{kymatio} and MATLAB \citep{MATLAB}.
+At first glance, a \ac{ws} decomposition seems to be prohibitively expensive, but fast algorithms are possible due to the limited bandwidth of the filter output. Fast algorithms utilise downsampling to take advantage of the demodulation of band-limited signals that result from the convolution of analytic wavelets \cite{2dscattering, 3dscattering, 1dscattering1}. Path pruning is also used to ignore filter combinations which have negligible energy. These algorithms are the standard implementation on many platforms, such as the Kymatio python package \cite{kymatio} and MATLAB \cite{MATLAB}.
 
 The Morlet wavelet is the most widely used wavelet filter for a scattering filter bank implementation. Since the Morlet does not have compact support, implementations vary when considering the bandwidth/time support of the Morlet. This affects how Morlet \ac{fir} filters are discretised and truncated, how scattering paths with negligible energy are pruned, and how filters overlap in the frequency domain. 
 
-In this work, we generalise \ac{1d} scattering to an arbitrary number of dimensions, which we refer to as the separable scattering transform. We propose flexible definitions for the Morlet bandwidth and filter overlap, which allows for an exact definition of near-optimal convolution computations with downsampling. Our implementation of separable scattering is \ac{gpu} accelerated, similar to the Kymatio implementations \citep{kymatio}. 
+In this work, we generalise \ac{1d} scattering to an arbitrary number of dimensions, which we refer to as the separable scattering transform. We propose flexible definitions for the Morlet bandwidth and filter overlap, which allows for an exact definition of near-optimal convolution computations with downsampling. Our implementation of separable scattering is \ac{gpu} accelerated, similar to the Kymatio implementations \cite{kymatio}. 
 
-We demonstrate using the MNIST handwritten digit dataset \citep{mnist} that separable wavelet filters still perform adequately in a \ac{nn} classification setting compared to the conventional 2D scattering filters. We demonstrate the arbitrarily scalable dimensionality of the separable scattering transform with three-dimensional medical datasets from MedMNIST3D \citep{medmnist}. Separable scattering coefficients show \ac{sota} results for some of the MedMNIST3D datasets when combined with a simple \ac{nn}, while performing comparably to \ac{cnn} benchmarks on datasets which do not indicate \ac{sota} results.
+We demonstrate using the MNIST handwritten digit dataset \cite{mnist} that separable wavelet filters still perform adequately in a \ac{nn} classification setting compared to the conventional 2D scattering filters. We demonstrate the arbitrarily scalable dimensionality of the separable scattering transform with three-dimensional medical datasets from MedMNIST3D \cite{medmnist}. Separable scattering coefficients show \ac{sota} results for some of the MedMNIST3D datasets when combined with a simple \ac{nn}, while performing comparably to \ac{cnn} benchmarks on datasets which do not indicate \ac{sota} results.
 
 \section{Separable Morlet Filterbank}
 
 % In this section, we consider the continuous Morlet and provide general definitions of bandwidth and time-support for multiple dimensions. We utilise the Gaussian window to construct $n$-dimensional Morlets of varying characteristics.
 
-\subsection{Morlet}
+\subsection{Morlet Wavelet}
 
-We define a \ac{1d} zero-mean Gaussian as
+A \ac{1d} zero-mean Gaussian is given by
 \begin{equation}
     \theta_{\sigma_t}(t) = \frac{1}{\sqrt{2\pi\sigma_t^2}}e^{-\frac{1}{2}\left(\frac{t}{\sigma_t}\right)^2},
 \end{equation}
 which has a Fourier transform transform $\theta_{\sigma_t}(t) \xleftrightarrow{\mathcal{F}} \hat{\theta}_{\sigma_\omega}(\omega)$, where $\sigma_\omega = \frac{1}{\sigma_t}$.
 
-For an arbitrary bandwidth definition, we define the bandwidth-to-$\sigma$ ratio $\beta \in \mathbb{R}^+$, such that the one-sided bandwidth of a zero-mean Gaussian is $\beta \sigma_\omega$. For reference, Kymatio's implementation of 2D scattering indirectly defines $\beta \approx 2.5$ \citep{kymatio}.
+For an arbitrary bandwidth definition, we define the bandwidth-to-$\sigma$ ratio $\beta \in \mathbb{R}^+$, such that the one-sided bandwidth of a zero-mean Gaussian is $\beta \sigma_\omega$. For reference, Kymatio's implementation of 2D scattering indirectly utilises $\beta \approx 2.5$ \cite{kymatio}.
 
 % The $-3$ dB point of a Gaussian \ac{lpf} occurs at $\beta \approx 0.833$, but since the Gaussian \ac{lpf} does not have a very steep cutoff, values of $\beta \in [1, 3]$ may be appropriate to combat aliasing. 
 
-A \ac{1d} Morlet $\uppsi$ has energy concentrated around 1 rad/s, with most of its energy contained in the interval $\omega \in [1 - \frac{1}{Q}, 1 + \frac{1}{Q}]$. $Q \in \mathbb{R}^+$ is defined as the number of wavelets per octave. The mother wavelet is given as
+A \ac{1d} Morlet wavelet $\uppsi$ has energy concentrated around 1 rad/s, with most of its energy contained in the interval $\omega \in [1 - \frac{1}{Q}, 1 + \frac{1}{Q}]$. $Q \in \mathbb{R}^+$ is defined as the number of wavelets per octave. The mother wavelet is given as
 \begin{equation}
     \uppsi(t) = \theta_{\sigma_t}(t)\left(e^{jt} - \theta_0 \right),
 \end{equation}
@@ -53,12 +59,12 @@ For reasons that will become apparent in section \ref{sec:filterbank}, we define
 \label{eqn:dilwav}
     \uppsi_\lambda(t) = \begin{cases}
         \uppsi(\lambda t), \ \lambda \neq 0 \\
-        \phi_j(t), \ \lambda = 0
+        \phi_i(t), \ \lambda = 0
     \end{cases},
 \end{equation}
-where $\phi$ represents the 1D \ac{lpf} utilised in scattering computations for the current dimension ($j$).
+where $\phi$ represents the 1D \ac{lpf} utilised in scattering computations for the current dimension ($i$).
 
-A $n$-dimensional separable wavelet may be constructed similarly, with
+An $n$-dimensional separable wavelet may be constructed similarly, with
 \begin{equation}
     \uppsi_{\vect{\lambda} }(\mathbf{u}) = \prod_{i=0}^{n-1} \uppsi_{\lambda_i}(u_i),
 \end{equation}
@@ -72,13 +78,13 @@ A filterbank is constructed by dilating the mother wavelet with a set of dilatio
 
 \subsection{1D Filterbank Construction}
 \label{sec:filterbank}
- Suppose a 1D Morlet has a centre frequency $\lambda_0$. The following filter is placed at $\lambda_0 2^{\frac{1}{Q}}$. To define the amount of overlap between filters, it is useful express the corresponding filter's frequency \ac{std} $\sigma_\omega$ in terms of the distance between filters in the frequency domain. If the wavelet at $\lambda_0$ requires a decay equivalent to $\alpha \sigma_\omega$ \ac{std}s at the next wavelet at $\lambda_0 2^{\frac{1}{Q}}$. It follows that $\sigma_\omega = \frac{1}{\sigma_t} = \frac{1}{\alpha}\left( 2^\frac{1}{Q} - 1 \right)$.
+ Suppose a 1D Morlet wavelet has a centre frequency $\lambda_0$. The following filter is placed at $\lambda_0 2^{\frac{1}{Q}}$. To define the amount of overlap between filters, it is useful to express the corresponding filter's frequency \ac{std} $\sigma_\omega$ in terms of the distance between filters in the frequency domain. Suppose a wavelet at centre frequency $\lambda_0$ requires a decay equivalent to $\alpha \sigma_\omega$ \ac{std}s at the next wavelet at $\lambda_0 2^{\frac{1}{Q}}$. It follows that $\sigma_\omega = \frac{1}{\sigma_t} = \frac{1}{\alpha}\left( 2^\frac{1}{Q} - 1 \right)$.
 
 We refer to $\alpha$ as the clearance factor. More overlap will result in more redundancy in the frequency representation, but also shorter filter impulse responses. 
 
 % It is possible to set the clearance factor equal to the defined Gaussian bandwidth: $\alpha = \beta$. However, different values of $\alpha$ and $\beta$ allow for the separate definition of filter clearance and bandwidth, allowing the application to tune downsampling and filter time support separately. 
 
-The provided definitions of filter clearance ($\alpha$) and bandwidth ($\beta$) may also be extended to non-separable wavelets, such as the rotational construction employed in \citep{2dscattering}. However, a conversion is required to find the bandwidth in each axis for a specific wavelet for rotationally constructed filterbanks, in order to employ the downsampling strategies proposed in this paper.
+The provided definitions of filter clearance ($\alpha$) and bandwidth ($\beta$) may also be extended to non-separable wavelets, such as the rotational construction employed in \cite{2dscattering}. Other scattering transforms may also benefit from the downsampling strategies proposed in this paper.
 
 % A \ac{1d} wavelet filterbank is constructed with a set of filters $\mathbb{F} := \left\{\uppsi_\lambda \middle| \lambda \in \Lambda\right\}$ and a \ac{lpf} $\phi$ with the following specified parameters:
 % \begin{enumerate}
@@ -93,7 +99,7 @@ For some audio applications, for example speech recognition, low-frequency conte
 
 The \ac{lpf} $\phi$ is constant across all layers in a \ac{1d} scattering transform, and is chosen as $\phi(t) = \theta_{\sigma_{\phi, t}}(t)$, where $\sigma_{\phi, t} = \dfrac{d}{ \pi \beta}$.
 
-The scattering transform requires that the time support of all filters do not exceed the time support of $\phi$, ensuring no filters contain time information exceeding the invariance scale $d$. $d$ is equivalently defined as the total downsample factor of the scattering tranform, and is unique for each dimension. Equivalently, the frequency \ac{std} of the filters may not exceed the \ac{std} of $\phi(\omega)$. For brevity, we denote the frequency \ac{std}s as $\sigma_{\lambda, \omega}$ and $\sigma_{\phi, \omega}$ for the Morlets and the \ac{lpf} respectively. 
+The scattering transform requires that the time support of all filters do not exceed the time support of $\phi$, ensuring no filters contain time information exceeding the invariance scale $d$. The invariance scale $d$ is equivalently defined as the total downsample factor of the scattering tranform, and is unique for each dimension. Equivalently, the frequency \ac{std} of the filters may not exceed the \ac{std} of $\phi(\omega)$. For brevity, we denote the frequency \ac{std}s as $\sigma_{\lambda, \omega}$ and $\sigma_{\phi, \omega}$ for the Morlets and the \ac{lpf} respectively. 
 
  Since the maximum time support (minimum bandwidth) is a function of $d$, all dilated wavelets have their Gaussian envelopes restricted to a maximum time support of $\sigma_{\phi, t}$. This requires linearly spaced filters until the dilated bandwidth is larger than the \ac{lpf} bandwidth. To construct a set of positive dilation factors $\lambda \in \Lambda^+$, refer to algorithm \ref{alg:fb}.
 
@@ -125,9 +131,9 @@ The scattering transform requires that the time support of all filters do not ex
 \end{algorithmic}
 \end{algorithm}
 
-Only positive $\lambda$'s have been defined thus far, which provides inadequate coverage of the frequency domain in multiple dimensions. For real input signals, it is only necessary to cover half of one of the dimensions (only positive $\lambda$'s), whereas full coverage (both negative and positive $\lambda$'s) is required for additional dimensions. On-axis coverage is also required, in which each $\uppsi_\lambda$ must be multiplied with a Gaussian (zero-frequency wavelet), which the dilated wavelet definition in equation (\ref{eqn:dilwav}) defines as $\lambda=0$. A similar construction procedure is followed in \citep{jointtfscattering2}.
+Only positive $\lambda$'s have been defined thus far, which provides inadequate coverage of the frequency domain in multiple dimensions. For real input signals, it is only necessary to cover half of one of the dimensions (only positive $\lambda$'s), whereas full coverage (both negative and positive $\lambda$'s) is required for additional dimensions. On-axis coverage is also required, in which each $\uppsi_\lambda$ must be multiplied with a Gaussian (zero-frequency wavelet), which the dilated wavelet definition in equation (\ref{eqn:dilwav}) defines as $\lambda=0$. A similar construction procedure is followed in \cite{jointtfscattering2}.
 
-Given $m$ 1D filterbanks, with $m \ge 2$, each having Morlet filters with a positive set of lambdas $\Lambda_i^+$ and invariance scales $\vect{d} \in \mathbb{N}^m$, with $i = 1, ..., m$ indexing the dimension, we construct the $m$-dimensional filterbank with 
+Given $m$ 1D filterbanks, with $m \ge 2$, each having Morlet filters with a positive set of centre frequencies $\Lambda_i^+$ and invariance scales $\vect{d} \in \mathbb{N}^m$, with $i = 1, ..., m$ indexing the dimension, we construct the $m$-dimensional filterbank with 
 \begin{equation}
     \mathbb{F} = \left\{ \uppsi_{\vect{\lambda} }(\mathbf{u}) \ \middle| \ \vect{\lambda} \in \mathbb{L} \setminus \{\vect{0}\} \right\},
 \end{equation}
@@ -136,26 +142,15 @@ where $\vect{u}$ is the $m$-dimensional spatial and/or time variable in which th
     \mathbb{L} = (\Lambda_1^+ \!\cup\! \{0\})\!\times\! (\Lambda_2^+ \!\cup\! \Lambda_2^- \!\cup \!\{0\}) \!\times\! ... \!\times\! (\Lambda_m^+ \!\cup\! \Lambda_m^- \!\cup\! \{0\}); \\
     \Lambda_i^- = \left\{-\lambda \ \middle| \ \lambda \in \Lambda_i^+\right\},
 \end{gather}
-where $\cup$ indicates the set union operator and $\times$ the Cartesian product. For $m=1$, the provided definitions result in a conventional \ac{1d} scattering transform \citep{1dscattering1}.
+where $\cup$ indicates the set union operator and $\times$ the Cartesian product. For $m=1$, the provided definitions result in a conventional \ac{1d} scattering transform \cite{1dscattering1}.
 
 The $m$-dimensional \ac{lpf} is defined as 
 \begin{equation}
     \phi(\vect{u}) = \uppsi_{\vect{0}}(\vect{u}).
 \end{equation}
 
-% The dilated wavelet definition provided by (\ref{eqn:dilwav}) therefore provides a concise set construction, with which to construct the \ac{lpf} and on-axis wavelets simultaneously.
-
-% All on-axis filters will be highly correlated with their negative counterpart due to the symmetry of the multidimensional Fourier transform of real signals. For example, the 2D filter specified by $\lambda = [0, x]^T$ will be highly correlated with the filter at $[0, -x]^T$. As the invariance scale $d$ increases, the on-axis filters will become more narrow in the zero coordinate dimension, thereby becoming increasingly correlated.
-
-
-% \subsection{Discretisation}
-
-% Morlets do not have compact support, as such, they must be truncated for computation. The invariance scale $d$ specifies the maximum allowable time support of all filters. Since input signals must be at least of length $d$, filters can be precomputed using the padded signal length, while also guaranteeing a suitable level of truncation. The padding required is on the order of $d$ samples.
-
-% Note that, due to their separability, all $\uppsi_{\vect{\lambda}} \in \mathbb{F}$ can be stored as $d$ one-dimensional filters, and not as $N_1 \times ... \times N_d$ tensors, thereby saving on the storage required for pre-computed filters. The savings on storage space allow implementations to compute the filters at multiple input sample frequencies, allowing for optimal downsampling strategies without incurring a significant storage cost.
-
 \section{Separable Scattering Transform} \label{sec:wst}
-% In this section, we describe the efficient computation of $m$-dimensional separable scattering transforms. The described downsampling strategy is utilised to a limited extent in Kymatio scattering implementations \citep{kymatio} and the original proposed fast algorithms \citep{2dscattering}, which is generalised further in this section.
+% In this section, we describe the efficient computation of $m$-dimensional separable scattering transforms. The described downsampling strategy is utilised to a limited extent in Kymatio scattering implementations \cite{kymatio} and the original proposed fast algorithms \cite{2dscattering}, which is generalised further in this section.
 
 \subsection{Transform}
 
@@ -169,7 +164,7 @@ The scattering operator $\mathcal{S}_j$ provides the output coefficients at the 
 \begin{equation}
     \mathcal{S}_j x[\vect{n}, \vect{\lambda}_1, ..., \vect{\lambda}_j] = \mathcal{U}_j x * \phi.
 \end{equation}
-The \ac{lpf} $\phi$ remains constant throughout the transform. Note that the modulus/magnitude operator $|\cdot|$ demodulates the output of the filters, effectively extracting the Hilbert envelope from a band-limited signal \citep{waveletsandsubbandcoding}. 
+The \ac{lpf} $\phi$ remains constant throughout the transform. Note that the modulus/magnitude operator $|\cdot|$ demodulates the output of the filters, effectively extracting the Hilbert envelope from a band-limited signal \cite{waveletsandsubbandcoding}. 
 
 The $j$'th scattering order adds an additional axis of paths indexed by $\vect{\lambda}_j$. However, not all paths need to be evaluated, since some paths have smaller bandwidths, thereby requiring fewer filters to extract the information lost by averaging. In particular, we only evaluate paths in which the centre frequencies of all elements of the vector $\vect{\lambda}_{j}$ are smaller than their corresponding bandwidth of the previous path's filter $\uppsi_{\vect{\lambda}_{j-1}}$. Path pruning is therefore dependent on $\alpha$ and $\beta$.
 
@@ -184,7 +179,7 @@ Many applications are insensitive to small changes in $d$. As such, we propose a
 
 Without prior knowledge of the filterbank configurations, given a target invariance scale of $\bar{d}$ samples and a tolerance $\epsilon$, we can optimise $d \in \{\floor{(1 - \epsilon)\bar{d}}, \ceil{(1 + \epsilon)\bar{d}}\}$ such that it results in largest number of supported downsampling configurations.
 
-A downsample factor $d$ which decomposes into a set of $n$ prime factors $\{p_1, ..., p_n\}$ with a corresponding multiset $\mathbb{M} = \left\{ m_1, ..., m_n \right\}$, where $m_i$ is the multiplicity of the prime $p_i$. We can find an optimal $d$ by maximising the sum $\sum\limits_{m \in M} m$.
+A downsample factor $d$ decomposes into a set of $n$ prime factors $\{p_1, ..., p_n\}$ with a corresponding multiset $\mathbb{M} = \left\{ m_1, ..., m_n \right\}$, where $m_i$ is the multiplicity of the prime $p_i$. We can find an optimal $d$ by maximising the sum $\sum\limits_{m \in \mathbb{M}} m$.
 
 % However, the proposed scheme for finding an optimal $d$ allows for more choices, thereby no restricting the choice of $d$ much, while also allowing for efficient dowmsampling.
 
@@ -228,7 +223,7 @@ We can efficiently compute $s_1$ using compounded downsampling steps:
 \begin{equation}
     \left(s_1\right)_{\downarrow d} = \left( \left(u_1\right)_{\downarrow d_1} * (\phi)_{\downarrow d_1}\right)_{\downarrow d_2},
 \end{equation}
-such that $d = d_1 \cdot d_2, \ d_1, d_2 \in \mathbb{N}^+$, with $d_1 | d$ and $d_1 \le  d_{\uppsi_1}$. In order to find $d_1$, we decrement $d_{\uppsi_1}$ until it divides $d$ evenly. Each scalogram $u_j[n]$ is not necessarily downsampled optimally, but has a downsampling factor which guarentees a consistent scattering coefficient output sample frequency. 
+such that $d = d_1 \cdot d_2, \ d_1, d_2 \in \mathbb{N}^+$, with $d_1 | d$ and $d_1 \le  d_{\uppsi_1}$. The notation $x | y$ indicates that $x$ evenly divides $y$. In order to find $d_1$, we decrement $d_{\uppsi_1}$ until it divides $d$ evenly. Each scalogram $u_j[n]$ is not necessarily downsampled optimally, but has a downsampling factor which guarentees a consistent scattering coefficient output sample frequency. 
 
 % This strategy may counter intuitively result in faster computations for filterbanks with more filters, since a higher $Q$ implies a smaller bandwidth of each filter. 
 
@@ -238,9 +233,6 @@ A second order of scattering with a filter path of $(\uppsi_1, \uppsi_2)$ is per
     \left(s_2\right)_{\downarrow d} = \left( \left(u_2\right)_{\downarrow d_3} * (\phi)_{\downarrow d_3}\right)_{\downarrow d_4},
 \end{gather}
 such that $d = d_1 \cdot d_3 \cdot d_4, \ d_1, d_3, d_4 \in \mathbb{N}^+, d_3 \le d_{\uppsi_2}, d_3 | \frac{d}{d_1}$. The proposed downsampling scheme can be extended to an arbitrary number of scattering orders.
-
-% Since the filterbank configuration is known, all required combinations of downsampled filters and their downsampling factors can be precomputed.
-
 
 
 
@@ -252,26 +244,11 @@ Optimal \ac{fft} convolutions can be achieved by performing downsampling in the 
 \end{equation}
 where the $\otimes$ operator represents a circular convolution and $k$ is the frequency index.
 
-Given that $r|N$, we can express (\ref{eqn:circconv}) when downsampled as a periodised summation \citep{waveletsandsubbandcoding} in the frequency domain
+Given that $r|N$, we can express (\ref{eqn:circconv}) when downsampled as a periodised summation \cite{waveletsandsubbandcoding} in the frequency domain
 \begin{equation}
     (x \otimes \uppsi [n])_{\downarrow r} \xleftrightarrow{\mathcal{FFT}}  \frac{1}{r} \sum_{i=0}^{r-1} \hat{x} \cdot \hat{\uppsi} [k + iN/r], %https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=5216ea733e562541b33a7f97dab0de072b2e8827
 \end{equation}
-which can be efficiently implemented via shape manipulation of tensors in computational packages like MATLAB or PyTorch \citep{pytorch}. To compute valid convolutions, we must pad $x$ and $\uppsi$ to have a total length of $N = N_x + d + c$, where $c \in \mathbb{N}^+$ is a constant that ensures that $d | N$. 
-
-% Note that only $d$ additional samples are required instead of $2d$, since $d$ is, by definition, the time support of $\phi$ in number of samples. Padding is applied equally to the left and right of $x$. For further reduction of boundary effects, reflection padding is utilised. Kymatio's 2D scattering implementation utilises a similar padding scheme. 
-
-% Thus far, the techniques discussed may be equivalently implemented on many scattering transforms. Separable scattering benefits from reduced computations resulting from filter separability. In particular, given a $m$-dimensional signal $x[\vect{n}]$ indexed by $\vect{n} = (n_1, ..., n_m)^T$, with each dimension having downsample factors expressed as a vector $\vect{r} = (r_1, ..., r_m)^T$, we can chain downsampling for each dimension:
-% \begin{equation}
-%     \left(x * \uppsi_{\vect{\lambda}}[\vect{n}]\right )_{\downarrow \vect{r}} = \left( \left(x[\vect{\lambda}] * \uppsi_{\lambda_i}[n_i]\right)_{\downarrow r_1} ... * \uppsi_{\lambda_m}[n_m]\right)_{\downarrow r_m}.
-% \end{equation}.
-
-% We abuse notation to indicate that $\downarrow r_i$ is an operator that downsamples the $i$'th dimension, and $\downarrow \vect{r}$ downsamples all dimensions each with their correponding downsample factor in $\vect{r} \in \mathbb{N}^m$.
-
-% For $m$-dimensional sequences of dimensional lengths $N_1, ..., N_m$, the forward and inverse \acp{fft} computation time is reduced from $2\sum_{i} T \log N_i$ (no frequency periodisation), with $T = \prod_i N_i$ to $\sum_{i} \frac{T}{K_i} \log \frac{N_i}{K_i} + P \log P$, where $K_1 = 1$, $K_i = \prod_{j < i} r_j$ and $P = \prod_i \frac{N_i}{r_i}$. However, the number of convolution multiplications in the frequency domain increases from $\prod_i N_i$ to $\sum_i \prod_j \frac{N_j}{K_i} \leq m \prod_i N_i$.
-
-% In contrast, optimal non-separable scattering transforms can achieve a computational cost of $\sum_{i} N_i \log N_i + P \log P$, since a full forward \ac{fft} is required to compute a convolution with a non-separable $m$-dimensional filter.
-
-% The greatest computational advantage is during direct convolution computations, as is present in \acp{cnn}. For an $m$-dimensional filter impulse response with filter lengths $L_1, ..., L_m$, the computational cost reduces from $P\prod_i L_i$ to $P \sum_i L_i$.
+which can be efficiently implemented via shape manipulation of tensors in computational packages like MATLAB or PyTorch \cite{pytorch}. To compute valid convolutions, we must pad $x$ and $\uppsi$ to have a total length of $N = N_x + d + c$, where $c \in \mathbb{N}^+$ is a constant that ensures that $d | N$. 
 
 
 \section{Results}
@@ -280,15 +257,15 @@ which can be efficiently implemented via shape manipulation of tensors in comput
 
 \subsection{MNIST}
 
-% We benchmark separable \ac{ws} against 2D scattering by repeating the MNIST hand-written digit dataset experiment in \citep{2dscattering}. 
+% We benchmark separable \ac{ws} against 2D scattering by repeating the MNIST hand-written digit dataset experiment in \cite{2dscattering}. 
 
-The MNIST dataset \citep{mnist} contains 60000 training and 10000 test samples. Unlike in \citep{2dscattering}, which decorrelates scattering coefficients with a discrete cosine transform prior to classification, we perform classification on the scattering coefficients directly. Kymatio \citep{kymatio} is used to produce the 2D scattering coefficients. Our implementation of separable scattering is implemented similarly to Kymatio, with PyTorch \citep{pytorch} as a backend for FFT convolutions and \ac{nn} models.
+The MNIST dataset \cite{mnist} contains 60000 training and 10000 test samples. Unlike in \cite{2dscattering}, which decorrelates scattering coefficients with a discrete cosine transform prior to classification, we perform classification on the scattering coefficients directly. Kymatio \cite{kymatio} is used to produce the 2D scattering coefficients. Our implementation of separable scattering is implemented similarly to Kymatio, with PyTorch \cite{pytorch} as a backend for FFT convolutions and \ac{nn} models.
 
 Unless specified otherwise, all experiments have $\beta = \alpha = 2.5$. Scattering features are normalised prior to classification, according to the mean and \ac{std} calculated on the training set. No data augmentation is performed.
 
 \begin{table}
 \centering
-\caption{MNIST classification error rate (\%) of separable and \ac{2d} scattering coefficients using a \ac{nn} classifier} \label{tab:mnistnn}
+\caption{MNIST classification error rate (\%) of separable and \ac{2d} scattering coefficients using a NN classifier.} \label{tab:mnistnn}
 \begin{tabular}{|lr|l|} \hline
 \multirow{2}{*}{2D WS + NN}        & $l=1$, $J=2$  & $0.64 \pm 0.05$    \\
           & $l=2$, $J=3$ & $0.50 \pm 0.03$     \\ \hline
@@ -297,43 +274,22 @@ Unless specified otherwise, all experiments have $\beta = \alpha = 2.5$. Scatter
 \end{tabular}
 \end{table}
 
-
-% Table \ref{tab:mnistlda} shows the results for MNIST using a \ac{lda} classifier from the Scikit-learn python package \citep{sklearn}, with a covariance shrinkage factor of $5\cdot 10^{-3}$. Scattering is performed for $l=1, 2$ levels.
-
-% \begin{table}[!h] 
-% \centering
-% \caption{MNIST classification error rate (\%) of separable and \ac{2d} scattering coefficients  using an \ac{lda} classifier} \label{tab:mnistlda}
-% \begin{tabular}{|r|rr|rr|} \hline
-% \multirow{2}{*}{Training size}              & \multicolumn{2}{l}{2D}                               & \multicolumn{2}{l|}{Separable}                             \\
-%  & \multicolumn{1}{l}{$l=1$} & \multicolumn{1}{l}{$l=2$} & \multicolumn{1}{l}{$l=1$} & \multicolumn{1}{l|}{$l=2$} \\ \hline
-% 1000                              & 4.58                        & 2.69                        & 4.87                        & 4.58                        \\
-% 2000                              & 3.89                        & 1.62                        & 4.31                        & 2.6                         \\
-% 5000                              & 3.54                        & 1.12                        & 3.84                        & 1.7                         \\
-% 10000                             & 3.35                        & 1.05                        & 3.54                        & 1.5                         \\
-% 20000                             & 3.16                        & 0.87                        & 3.41                        & 1.41                        \\
-% 40000                             & 2.92                        & 0.86                        & 3.34                        & 1.25                        \\
-% 60000                             & 2.92                        & 0.81                        & 3.27                        & 1.34     \\ \hline                  
-% \end{tabular}
-% \end{table}
-
-Due to its separability and non-angularly spaced filters, separable scattering does not perform as well compared to 2D scattering when using simple classifiers, such as \ac{lda} \citep{lda}. To illustrate that this performance discrepancy is not of significant consequence in a \ac{nn} setting, we test performance on the full dataset utilising a simple architecture. The neural network architecture used has an input layer with 256 neurons, followed by two hidden layers with 128 and 64 neurons respectively. The output layer has 10 neurons - one for each digit. Input and hidden layers are followed by a batch norm layer \citep{batchnorm} and ReLU activation function \citep{relu}. The output layer is followed by a softmax function. The Adam optimiser \citep{adam} is used with cross-entropy loss, a batch size of 256 and learning rate of $3 \cdot 10^{-5}$. 5000 of the 60000 training samples are reserved for validation and removed from the training set. Training is stopped when validation loss starts to increase. The \ac{nn} model is initialised with random weights, and the experiment is repeated 50 times. Different invariance scales were tested, and the best results are reported in table \ref{tab:mnistnn}. Tests are repeated for $l \in \{1, 2\}$ levels of scattering.
+Due to its separability and non-angularly spaced filters, separable scattering does not perform as well compared to 2D scattering when using simple classifiers, such as \ac{lda} \cite{lda}. To illustrate that this performance discrepancy is not of significant consequence in a \ac{nn} setting, we test performance on the full dataset utilising a simple architecture. The neural network architecture used has an input layer with 256 neurons, followed by two hidden layers with 128 and 64 neurons respectively. The output layer has 10 neurons - one for each digit. Input and hidden layers are followed by a batch norm layer \cite{batchnorm} and ReLU activation function \cite{relu}. The output layer is followed by a softmax function. The Adam optimiser \cite{adam} is used with cross-entropy loss, a batch size of 256 and learning rate of $3 \cdot 10^{-5}$. 5000 of the 60000 training samples are reserved for validation and removed from the training set. Training is stopped when validation loss starts to increase. The \ac{nn} model is initialised with random weights, and the experiment is repeated 50 times. Different invariance scales were tested, and the best results are reported in table \ref{tab:mnistnn}. Tests are repeated for $l \in \{1, 2\}$ levels of scattering.
 
 
 
 
 
 \subsection{MedMNIST3D}
+The MedMNIST3D datasets are a subset of the MedMNIST dataset group \cite{medmnist}, where each 3D dataset contains $28\times 28 \times 28$ images with 2, 3 or 11 classes. Train, test and validation data partitions are provided by the authors. All datasets have on the order of 1000 training samples. We compare the baseline \ac{nn} results provided in \cite{medmnist} with separable scattering features combined with a simple \ac{nn} classifier.
 
+We use \ac{nn} classifier with an input layer containing 1024 neurons, followed by two hidden layers with 512 and 256 neurons respectively. Input and hidden layers layers are each followed by a batch norm layer \cite{batchnorm} and a ReLU non-linearity \cite{relu}. For datasets with two classes, the output layer is a single neuron followed by a sigmoid activation function. For datasets with more than two classes, the output layer has a size equal to the number of classes, followed by a softmax activation. Binary cross-entropy loss are used for datasets with two classes, otherwise cross-entropy loss is used. The Adam optimiser \cite{adam} with a learning rate of $1 \cdot 10^{-5}$ is used. All other configuration parameters are identical to the model used for the MNIST dataset.
 
-The MedMNIST3D datasets are a subset of the MedMNIST dataset group \citep{medmnist}, where each 3D dataset contains $28\times 28 \times 28$ images with 2, 3 or 11 classes. Train, test and validation data partitions are provided by the authors. All datasets have on the order of 1000 training samples. We compare the baseline \ac{nn} results provided in \citep{medmnist} with separable scattering features combined with a simple \ac{nn} classifier.
+A single level of scattering coefficients are computed, with $Q = (2, 2, 2)$ and $d = (4, 4, 4)$. Many MedMNIST3D datasets tend to be unbalanced, implying that \ac{auc} is a more reliable metric to measure model performance. The results are shown in table \ref{tab:medmnist}, in which \ac{sota} \ac{auc} performance is achieved for the Organ, Adrenal and Vessel datasets. Table \ref{tab:medmnist} indicates the number of classes ($c$) for each of the datasets, with accuracy (ACC) also shown for reference. Non-\ac{sota} results are comparable to the other baseline \ac{nn} approaches presented in \cite{medmnist}. It is likely that better results can be achieved by the proposed method if the filters are made learnable and/or scattering parameters and network architectures are uniquely optimised for each dataset.
 
-We use \ac{nn} classifier with an input layer containing 1024 neurons, followed by two hidden layers with 512 and 256 neurons respectively. Input and hidden layers layers are each followed by a batch norm layer \citep{batchnorm} and a ReLU non-linearity \citep{relu}. For datasets with two classes, the output layer is a single neuron followed by a sigmoid activation function. For datasets with more than two classes, the output layer has a size equal to the number of classes, followed by a softmax activation. Binary cross-entropy loss are used for datasets with two classes, otherwise cross-entropy loss is used. The Adam optimiser \citep{adam} with a learning rate of $1 \cdot 10^{-5}$ is used. All other configuration parameters are identical to the model used for the MNIST dataset.
-
-A single level of scattering coefficients are computed, with $Q = (2, 2, 2)$ and $d = (4, 4, 4)$. Many MedMNIST3D datasets tend to be unbalanced, implying that \ac{auc} is a more reliable metric to measure model performance. The results are shown in table \ref{tab:medmnist}, in which \ac{sota} \ac{auc} performance is achieved for the Organ, Adrenal and Vessel datasets. Table \ref{tab:medmnist} indicates the number of classes ($c$) for each of the datasets, with accuracy (ACC) also shown for reference. The performance of our method on non-\ac{sota} results are comparable to the other baseline \ac{nn} approaches presented in \citep{medmnist}. It is likely that better results can be achieved by the proposed method if the filters are made learnable and/or scattering parameters are uniquely optimised for each dataset.
-
-\begin{table*}[t!]
+\begin{table*}[]
     \centering
-    \caption{MedMNIST classification results of compared to baseline \ac{nn} approaches (\citep{medmnist})} \label{tab:medmnist}
+    \caption[MedMNIST classification results of compared to baseline \ac{nn} approaches.]{MedMNIST classification results of compared to baseline NN approaches (\citep{medmnist}).} \label{tab:medmnist}
     \begin{adjustbox}{angle=90}
 \begin{tabular}{|l|rr|rr|rr|rr|rr|rr|}
 \hline

@@ -2,26 +2,27 @@
 \label{chap:p1}
 
 
-\articleinfo{M.W. Rademan, D.J.J Verself, J.A. Du Preez}{Ecological Informatics}{15 May 2024}{doi}{Underwater passive acoustic monitoring systems record many hours of audio data for marine research, 
-making fast and reliable non-causal signal detection paramount. Such detectors assist in reducing the amount of 
-labor required for signal annotations, which often contain large portions devoid of signals.\par
-Cetacean vocalization detection based on spectral entropy is investigated as a means of vocalization discovery. 
-Previous techniques using spectral entropy mostly consider time-frequency enhancement of the entropy measure, and 
-utilize the short time Fourier transform (STFT) as its time-frequency (TF) decomposition. Spectral entropy methods 
-also requires the user to set a detection threshold manually, which call for knowledge of the produced entropy measures.\par
-This paper considers median filtering as a simple, effective way to provide temporal stabilization to the entropy measure, 
-and considers the continuous wavelet transform (CWT) as an alternative TF decomposition. K-means clustering is used to 
-determine the threshold required to accurately separate the signal/no-signal entropy measures, resulting in a  one-dimensional, 
-two-class classification problem. The class means are used to perform pseudo-probabilistic soft class assignment, which is a 
-useful metric in algorithmic development. The effect of median filtering, signal-to-noise ratio and the chosen TF decomposition are investigated.\par 
-The accuracy and specificity measures of the proposed detection technique are simulated using a pulsed frequency modulated sweep, 
-corrupted by a sample of ocean noise. The results show that median filtering is particularly effective for low signal-to-noise ratios. 
-Both the STFT and CWT prove to be effective TF analyses for signal detection purposes, each presenting with different advantages and drawbacks. 
-The simulated results provide insight into configuring the proposed detector, which is compared to a conventional STFT-based spectral entropy 
-detector using manually annotated humpback whale (\textit{Megaptera novaeangliae}) songs recorded in False Bay, South Africa, July 2021.\par
-The proposed method shows a significant improvement in detection accuracy and specificity, while also providing a more interpretable 
-detection threshold setting via soft class assignment, providing a detector for use in development of adaptive algorithms.%
-}
+\articleinfo{Soft-output Signal Detection for Cetacean Vocalizations using
+Spectral \break Entropy, K-means Clustering and the Continuous Wavelet Transform}{Ecological Informatics}{15 May 2024}{doi}
+
+\section*{CRediT}
+\textbf{M.W. Rademan}: conceptualisation; methodology; software; formal analysis; writing -- original draft.
+
+\textbf{D.J.J. Verseld}: data collection; writing -- review and editing; supervision.
+
+\textbf{J.A. Du Preez}: writing -- review and editing; supervision.
+
+\section*{Abstract}
+Underwater passive acoustic monitoring systems record many hours of audio data for marine research, 
+making fast and reliable non-causal signal detection paramount. Such detectors assist in reducing the amount of labor required for signal annotations, which often contain large portions devoid of signals.
+
+Cetacean vocalization detection based on spectral entropy is investigated as a means of vocalization discovery. Previous techniques using spectral entropy mostly consider time-frequency enhancement of the entropy measure, and utilize the short time Fourier transform (STFT) as its time-frequency (TF) decomposition. Spectral entropy methods also requires the user to set a detection threshold manually, which call for knowledge of the produced entropy measures.
+
+This paper considers median filtering as a simple, effective way to provide temporal stabilization to the entropy measure, and considers the continuous wavelet transform (CWT) as an alternative TF decomposition. K-means clustering is used to determine the threshold required to accurately separate the signal/no-signal entropy measures, resulting in a  one-dimensional, two-class classification problem. The class means are used to perform pseudo-probabilistic soft class assignment, which is a useful metric in algorithmic development. The effect of median filtering, signal-to-noise ratio and the chosen TF decomposition are investigated.
+
+The accuracy and specificity measures of the proposed detection technique are simulated using a pulsed frequency modulated sweep, corrupted by a sample of ocean noise. The results show that median filtering is particularly effective for low signal-to-noise ratios. Both the STFT and CWT prove to be effective TF analyses for signal detection purposes, each presenting with different advantages and drawbacks. The simulated results provide insight into configuring the proposed detector, which is compared to a conventional STFT-based spectral entropy detector using manually annotated humpback whale (\textit{Megaptera novaeangliae}) songs recorded in False Bay, South Africa, July 2021.
+
+The proposed method shows a significant improvement in detection accuracy and specificity, while also providing a more interpretable detection threshold setting via soft class assignment, providing a detector for use in development of adaptive algorithms.
 
 \section{Introduction}
 
@@ -120,7 +121,7 @@ Erbe and King \citep{entropyJASA} used SE to detect  cetacean calls in the Canad
 		below= 0.7cm of MF
 		] (KM) {\scriptsize K-Means};
 		
-		\node (cs)[right=0.3cm of Sigmoid] {\scriptsize $c_s(H[m])$};	
+		\node (cs)[right=0.3cm of Sigmoid] {\scriptsize $p_\text{soft}(H[m])$};	
 		
 		\draw[->] (x) -- (TF.west);
 		\draw[->] (TF.east) -- (SE.west);
@@ -128,7 +129,7 @@ Erbe and King \citep{entropyJASA} used SE to detect  cetacean calls in the Canad
 		\draw[->] (MF.east) -- (Sigmoid.west)node[above, midway]{\scriptsize $H[m]$};
 		\draw[->] (Sigmoid.east) -- (cs.west);
 		\draw[->] (MF.south) -- (KM.north);
-		\draw[<-]  (Sigmoid.south) |- (KM.east) node[above, near end]{\scriptsize $\mu_S$, $\mu_{NS}$};
+		\draw[<-]  (Sigmoid.south) |- (KM.east) node[above, near end]{\scriptsize $\mu_s$, $\mu_n$};
 		
 	\end{tikzpicture}
 	\caption{Block diagram of the proposed soft-output detector.}\label{fig:systdiag}
@@ -166,7 +167,7 @@ The data used in this paper was recorded via a hydrophone at False Bay, on 1 Jul
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{fbdata1}
-	\caption{Audio snippet and spectrogram of a humpback song recorded in False Bay. The waveform shown is high-passed at 100 Hz, resampled and normalized. The signal annotations are shown on the spectrogram. The spectrogram is calculated before high-passing the signal.}
+	\caption[Audio snippet and spectrogram of a humpback song recorded in False Bay.]{Audio snippet and spectrogram of a humpback song recorded in False Bay. The waveform shown is high-passed at 100 Hz, resampled and normalized. The signal annotations are shown on the spectrogram. The spectrogram is calculated before high-passing the signal.}
 	\label{fig:fbdata1}
 \end{figure}
 
@@ -190,7 +191,7 @@ Figure \ref{fig:fbhist} show the combined statistics of the humpback songs. Call
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{real_data_hist}
-	\caption{Histograms indicating the combined call length and distance between calls of the two humpback songs, for use in determining median filter window length limits.}
+	\caption[Humpback call length and time spread.]{Histograms indicating the combined call length and distance between calls of the two humpback songs, for use in determining median filter window length limits.}
 	\label{fig:fbhist}
 \end{figure}
 
@@ -301,7 +302,7 @@ More information on the fast numerical calculation of the CWT may be found in \c
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{cwt_fb_example}
-	\caption{An example of a CWT filterbank, shown as the L1 and L2 normalized versions , with $\gamma = 10$, $\beta=50$ and 4 voices per octave.}
+	\caption[An example of a CWT filterbank.]{An example of a CWT filterbank, shown as the L1 and L2 normalized versions , with $\gamma = 10$, $\beta=50$ and 4 voices per octave.}
 	\label{fig:cwt_fb_example}
 \end{figure}
 
@@ -326,14 +327,14 @@ Many variants of the k-means algorithm were independently developed by researche
 
 \subsection{Soft Output}\label{sec:softoutput}
 
-Given the class means $\mu_S$ (signal), $\mu_{NS}$ (no signal) determined by k-means clustering, the k-means decision boundary $\beta$ is the midpoint:
+Given the class means $\mu_s$ (signal), $\mu_n$ (no signal) determined by k-means clustering, the k-means decision boundary $\beta$ is the midpoint:
 \begin{equation*}
-	\beta = \mu_S + \frac{\mu_{NS} - \mu_S}{2}
+	\beta = \mu_s + \frac{\mu_n - \mu_s}{2}
 \end{equation*}
 
-In classical K-means, the assigned class $c_h(H[m])$ results in a hard output:
+In classical K-means, the assigned class $p_\text{hard}(H[m])$ results in a hard output:
 \begin{equation*}
-	c_h(H[m]) = \begin{cases}
+	p_\text{hard}(H[m]) = \begin{cases}
 		1, & H[m] \leq \beta \\
 		0, & H[m] > \beta
 	\end{cases}
@@ -341,7 +342,7 @@ In classical K-means, the assigned class $c_h(H[m])$ results in a hard output:
 
 \noindent where a value of $1$ corresponds to signal presence and a value of $0$ representing no signal.
 
-To provide a soft output, a function which smoothly transitions from one class to another in the interval $H[m] \in [\mu_S, \mu_{NS}]$ is required. Since an entropy measurement which is lower than $\mu_S$ is more probable to contain signal and, conversely, an entropy measurement which is greater than $\mu_{NS}$ is more probable to be noise, the transition function $\alpha(t)$ should satisfy the following criteria:
+To provide a soft output, a function which smoothly transitions from one class to another in the interval $H[m] \in [\mu_s, \mu_n]$ is required. Since an entropy measurement which is lower than $\mu_s$ is more probable to contain signal and, conversely, an entropy measurement which is greater than $\mu_n$ is more probable to be noise, the transition function $\alpha(t)$ should satisfy the following criteria:
 \begin{enumerate}
 	\item  $\alpha(t)$ is monotonically decreasing.
 	\item Approaches hard classification in the limit: $\lim\limits_{t \rightarrow \infty} \alpha(t) = 0$ and $\lim\limits_{t \rightarrow -\infty} \alpha(t) = 1$.
@@ -356,17 +357,17 @@ The sigmoid function $\sigma(x)$ evaluated at $x = -t$ satisfies all the above c
 
 $\sigma(x)$ is proposed in the style of logistic regression \citep{logit}. A piecewise-linear function may also satisfy the above criteria.
 
-The shape of the sigmoid function may be set by specifying the gain $g > 0$ as a hyper parameter. A higher gain will result in a steeper shape, thus attributing more certainty to entropy measurements closer to the class means, and vice versa for lower gains. It may also be beneficial to normalize the entropy measure such that $H[m] = \mu_S$ and $H[m] = \mu_{NS}$ map to $\pm1$. The normalization will ensure consistency in the behaviour of the hyper parameter $g$ over a range of class means. Figure \ref{fig:sigmoid} shows the effect of $g$ on the classification output.
+The shape of the sigmoid function may be set by specifying the gain $g > 0$ as a hyper parameter. A higher gain will result in a steeper shape, thus attributing more certainty to entropy measurements closer to the class means, and vice versa for lower gains. It may also be beneficial to normalize the entropy measure such that $H[m] = \mu_s$ and $H[m] = \mu_n$ map to $\pm1$. The normalization will ensure consistency in the behaviour of the hyper parameter $g$ over a range of class means. Figure \ref{fig:sigmoid} shows the effect of $g$ on the classification output.
 
 The soft-output classification function $c_{s}(H[m])$ is therefore
 \begin{equation*}
-	c_{s}(H[m]) = \sigma\left(	-2g	\frac{H[m] - \beta}{\mu_{NS} - \mu_S}	\right).
+	c_{s}(H[m]) = \sigma\left(	-2g	\frac{H[m] - \beta}{\mu_n - \mu_s}	\right).
 \end{equation*}
 
-To assign a specific pseudo-probability $c_{s}(H[m]) = p$ that corresponds to signal presence when $H[m] = \mu_S$, then the gain hyper parameter $g$ is calculated as
+To assign a specific pseudo-probability $c_{s}(H[m]) = p$ that corresponds to signal presence when $H[m] = \mu_s$, then the gain hyper parameter $g$ is calculated as
 \begin{equation}
 	\label{eqn:sigmoidg}
-	g = \frac{1}{2} \frac{\mu_{NS} - \mu_S}{\mu_S - \beta} \ln\left(\frac{1}{p} - 1\right)
+	g = \frac{1}{2} \frac{\mu_n - \mu_s}{\mu_s - \beta} \ln\left(\frac{1}{p} - 1\right)
 \end{equation}
 
 For $g>0$, equation (\ref{eqn:sigmoidg}) requires $p > \frac{1}{2}$.
@@ -374,7 +375,7 @@ For $g>0$, equation (\ref{eqn:sigmoidg}) requires $p > \frac{1}{2}$.
 \begin{figure}[!t]
 	\centering
 	\includegraphics[width=0.6\textwidth]{sigmoid}
-	\caption{Example of the sigmoid function for soft output classification for various gains ($\mu_S=2$, $\mu_{NS}=4$).}
+	\caption[Example of the sigmoid function.]{Example of the sigmoid function for soft output classification for various gains ($\mu_s=2$, $\mu_n=4$).}
 	\label{fig:sigmoid}
 \end{figure}
 
@@ -389,7 +390,7 @@ If the window is chosen large enough, it will suppress the entropy fluctuations 
 
 Given a discrete-time signal $x[n]$, and an window of odd length $M$, the median-filtered signal $y[n]$ is
 \begin{equation*}
-	y[n] = \text{med}(x[n - R], ..., x[0], ..., x[n + R] ),
+	y[n] = \text{median}(x[n - R], ..., x[0], ..., x[n + R] ),
 \end{equation*}
 
 \noindent where $R = \frac{M-1}{2}$ is the half-window length, and $\text{med}(x_1, ..., x_M)$ refers to the median of a sequence of $M$ numbers $x_1$ to $x_M$. Note that if $M=1$, then no median filtering is applied.
@@ -397,7 +398,7 @@ Given a discrete-time signal $x[n]$, and an window of odd length $M$, the median
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{entropymf}
-	\caption{Median filtered entropy (STFT) with $M=355$.}
+	\caption[Median filtered entropy.]{Median filtered entropy (STFT) with $M=355$.}
 	\label{fig:entropymf}
 \end{figure}
 
@@ -406,7 +407,7 @@ Figure \ref{fig:entropymf} shows an example of applying median filtering ($M=355
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{kmeans1}
-	\caption{The resulting class means from the K-means algorithm on median filtered entropy with $M=355$.}
+	\caption[K-means class means on entropy.]{The resulting class means from the K-means algorithm on median filtered entropy with $M=355$.}
 	\label{fig:kmeans1}
 \end{figure}
 
@@ -448,15 +449,15 @@ All STFT's are performed with a Hamming window of length 256 with an overlap of 
 
 Given an observed signal $y[n] = w[n] + x[n]$ of length $N$, where $w[n]$ is noise and $x[n]$ is a sporadically appearing signal. The presence of $x[n]$ is encoded by the set $S_x = \{ {n_1, n_2, ..., n_L} \}$, where $n_i \in \{0, 1, ..., N -1\}$ is the indices at which the signal is present. The cardinality (size) of the set is denoted as $|S_x|$.
 
-The soft-output classification function $c_s(H[m])$ is used to determine the soft true positive (STPR) and true negative (STNR) discovery rates:
+The soft-output classification function $p_\text{soft}(H[m])$ is used to determine the soft true positive (STPR) and true negative (STNR) discovery rates:
 \begin{equation*}
-	\text{STPR} = \frac{1}{|S_x|} \sum_{n \in S_x} c_s(H[m])
+	\text{STPR} = \frac{1}{|S_x|} \sum_{n \in S_x} p_\text{soft}(H[m])
 \end{equation*}
 \begin{equation*}
-	\text{STNR} = \frac{1}{N - |S_x|} \sum_{n \notin S_x} 1 - c_s(H[m])
+	\text{STNR} = \frac{1}{N - |S_x|} \sum_{n \notin S_x} 1 - p_\text{soft}(H[m])
 \end{equation*}
 
-This is equivalent to calculating the conventional TPR and TNR discovery rates if $c_h(H[m])$ is used instead of $c_s(H[m])$.
+This is equivalent to calculating the conventional TPR and TNR discovery rates if $p_\text{hard}(H[m])$ is used instead of $p_\text{soft}(H[m])$.
  
  \subsection{Results}
  \label{sec:fmsweep} 
@@ -466,7 +467,7 @@ Figure \ref{fig:res_snr_mf} shows the STPR and STNR measures for various SNRs an
  \begin{figure}[h!]
  	\centering
  	\includegraphics[width=0.6\textwidth]{res_snr_mf}
- 	\caption{STFT and CWT soft discovery rates over a range of SNR's and median filter window lengths. The left-hand side of the figure shows the STPR and STNR of the STFT respectively. The CWT soft discovery rates are on the right-hand side.}
+ 	\caption[STFT and CWT soft discovery rates over SNR.]{STFT and CWT soft discovery rates over a range of SNR's and median filter window lengths. The left-hand side of the figure shows the STPR and STNR of the STFT respectively. The CWT soft discovery rates are on the right-hand side.}
  	\label{fig:res_snr_mf}
  \end{figure}
 
@@ -476,7 +477,7 @@ Figure \ref{fig:res_mf_snr} shows the STPR and STNR measures for median filter w
  \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{res_mf_snr}
-	\caption{STFT and CWT soft discovery rates over a range median filter window lengths for low SNRs. The left and right sides of the figure show the results for the STFT and CWT respectively.}
+	\caption[STFT and CWT soft discovery rates over median filter length.]{STFT and CWT soft discovery rates over a range median filter window lengths for low SNRs. The left and right sides of the figure show the results for the STFT and CWT respectively.}
 	\label{fig:res_mf_snr}
 \end{figure}
 
@@ -487,7 +488,7 @@ Figure \ref{fig:res_classmeans} shows how the class mean separation is affected 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{res_classmeans}
-	\caption{STFT and CWT difference in class means ($\mu_{NS} - \mu_S$) over a range of SNRs and median filter window lengths.}
+	\caption[STFT and CWT difference in class means.]{STFT and CWT difference in class means ($\mu_n - \mu_s$) over a range of SNRs and median filter window lengths.}
 	\label{fig:res_classmeans}
 \end{figure}
 
@@ -545,7 +546,7 @@ The the STFT outperforms the L2-CWT on all accounts, making the L1-CWT the super
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{res_snr_mf_L2}
-	\caption{Comparing L1 and L2 CWT normalization for spectral entropy calculation. The left side of the figure shows the results without MF ($M=1$). The right side of the figure shows with MF ($M=501$). Note the large differences between L1 and L2 normalization for STNR and STPR.}
+	\caption[Comparing L1 and L2 CWT normalization for spectral entropy calculation.]{Comparing L1 and L2 CWT normalization for spectral entropy calculation. The left side of the figure shows the results without MF ($M=1$). The right side of the figure shows with MF ($M=501$). Note the large differences between L1 and L2 normalization for STNR and STPR.}
 	\label{fig:res_snr_mf_L2}
 \end{figure}
 
@@ -560,7 +561,7 @@ The manual annotations are considered as the ground truth. However, it should be
  \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1\textwidth]{res_realdata_snippet1}
-	\caption{A snippet showing the measures produced by the entropy and the proposed soft-output signal detector.}
+	\caption[A snippet showing the measures produced by the proposed entropy detector.]{A snippet showing the measures produced by the entropy and the proposed soft-output signal detector.}
 	\label{fig:res_realdata_snippet1}
 \end{figure}
 
@@ -586,20 +587,20 @@ The ROC curve shown in figure \ref{fig:res_realdata_roc} is constructed from the
  \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.5\textwidth]{res_realdata_roc}
-	\caption{The ROC curves comparing the proposed technique and the baseline STFT SE. Median filter window lengths of 1, 201 and 501 are shown. The sigmoid gain is set such that $p=0.95$. FPR is plotted on a log scale, which better illustrates the TPR differences for small FPR values.}
+	\caption[The ROC curves comparing the proposed technique and the baseline STFT SE.]{The ROC curves comparing the proposed technique and the baseline STFT SE. Median filter window lengths of 1, 201 and 501 are shown. The sigmoid gain is set such that $p=0.95$. FPR is plotted on a log scale, which better illustrates the TPR differences for small FPR values.}
 	\label{fig:res_realdata_roc}
 \end{figure}
 
  \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.55\textwidth]{res_realdata_thresh}
-	\caption{The thresholds used to produce the ROC curve and the TPR/FPR of the baseline SE and the proposed technique. Median filter window length of 1, 201 and 501 are shown on the right. The baseline entropy is shown on the left. }
+	\caption[The thresholds used to produce the ROC curve.]{The thresholds used to produce the ROC curve and the TPR/FPR of the baseline SE and the proposed technique. Median filter window length of 1, 201 and 501 are shown on the right. The baseline entropy is shown on the left. }
 	\label{fig:res_realdata_thresh}
 \end{figure}
 
 From figure \ref{fig:res_realdata_roc}, it is clear that the proposed technique which uses a median filtering window of 501 samples and the CWT as a TF decomposition outperforms the conventional STFT-based SE. The proposed method shows an increase of around 10\% in sensitivity (TPR) for FPRs  below 3\%, and remains a better detector overall. \changes{As shown previously \citep{entropyJASA}, SE greatly outperforms a standard BLED detector.}
 
-In practice, the detector should be tuned such that the FPR is below 5\%. From figure \ref{fig:res_realdata_thresh}, this corresponds to a threshold of $c_s(H[m]) > 0.1$ for $p=0.95$. This threshold will vary depending on the choice of $p$. Also note that the CWT SE without median filtering ($M=1$) outperforms the STFT in the $\text{FPR} < 5\%$ region, indicating that it is the best TF-decomposition for similar practical applications.
+In practice, the detector should be tuned such that the FPR is below 5\%. From figure \ref{fig:res_realdata_thresh}, this corresponds to a threshold of $p_\text{soft}(H[m]) > 0.1$ for $p=0.95$. This threshold will vary depending on the choice of $p$. Also note that the CWT SE without median filtering ($M=1$) outperforms the STFT in the $\text{FPR} < 5\%$ region, indicating that it is the best TF-decomposition for similar practical applications.
 
 \section{Discussion}
 \changes{The proposed detector based on the CWT with median filtering outperforms the traditional SE detector as described in \citep{entropyJASA} for practical applications, verified by real and simulated experiments. The comparison method is done on a per-sample basis, which also indicates increased time localization capabilities of the proposed detector. This is to be expected, since the CWT improves time localization for higher frequencies as a trade-off for filter bandwidth, as opposed to the STFT which has a fixed time-localization as a function of window length \citep{waveletbook}. Median filtering significantly decreases the FPR by suppressing fluctuations in the SE measure. Overall, the proposed detector indicates an approximate 10\% increase of TPR for FPRs below 3\%. As shown by \citep{entropyJASA}, we have again demonstrated that SE detectors outperform BLED on all accounts.}
@@ -608,7 +609,7 @@ In practice, the detector should be tuned such that the FPR is below 5\%. From f
 
 \changes{This paper introduces the k-mean clustering algorithm as a method to provide a pseudo-probabilistic measure of signal presence. This idea may be adapted to any binary signal detector, such as BLED \citep{internalsignaldetection}, to assist in providing a more intepretable measure of signal presence which does not depend on the magnitude of test statistic produced by the detector. The pseudo-probabilistic measure yields a threshold setting which may be more intuitive to non-experts, while also providing a value to be used to create adaptive algorithms which deal with sporadically appearing signals. Possible fields of application include denoising \citep{denoising, denoiseSSN}, instantaneous frequency estimation \citep{frequencyestimation} and classification (for example, as an additional input to a deep neural network) \citep{MLcnn}. Additionally, the CWT may offer better computational efficiency compared to the STFT if per-sample signal segmentation accuracy is required \citep{fcwt}, which could be relevant in preparing datasets for supervised learning.}
 
-\changes{The addition of the k-means algorithm presents another advantage: utilizing the class-mean separation ($\mu_{NS} - \mu_S$) as metric to quickly determine whether there are points of interest within an audio segment. Furthermore, the k-means algorithm may be restricted to converge within a set number of iterations. Whether the algorithm converged indicates if there are points of interest within an audio segment. By segmenting the long recording and testing for appropriate class mean separation and k-means algorithm convergence, the proposed technique provides a fast way of discarding large portions of noise in long audio recordings. This method may be robust to changes in noise conditions, as long as the changes in noise are not experienced in a given segment of a long audio recording. The use of such a system remains to be explored.}
+\changes{The addition of the k-means algorithm presents another advantage: utilizing the class-mean separation ($\mu_n - \mu_s$) as metric to quickly determine whether there are points of interest within an audio segment. Furthermore, the k-means algorithm may be restricted to converge within a set number of iterations. Whether the algorithm converged indicates if there are points of interest within an audio segment. By segmenting the long recording and testing for appropriate class mean separation and k-means algorithm convergence, the proposed technique provides a fast way of discarding large portions of noise in long audio recordings. This method may be robust to changes in noise conditions, as long as the changes in noise are not experienced in a given segment of a long audio recording. The use of such a system remains to be explored.}
 
 \changes{Automatic threshold setting is a possible extension of this study. This may be achieved by fitting a 2-component GMM to the SE distribution, with k-means clustering acting as the seed values of the fitting procedure, similar to HMM literature \citep{hmm1, hmm2, hmm3}. If a good approximation of the SE distribution is achieved, an appropriate threshold can be automatically determined for a fixed FPR specified by the user \citep{vantrees}.}
 
@@ -644,12 +645,12 @@ In practice, the detector should be tuned such that the FPR is below 5\%. From f
 		\end{cases}.
 	\end{equation*}
 	
-	Given the class means $\mu_S$, $\mu_{NS}$ and the entropy measure $H[m]$ of length $N$, the assignment function assigns the class with the closest mean:
+	Given the class means $\mu_s$, $\mu_n$ and the entropy measure $H[m]$ of length $N$, the assignment function assigns the class with the closest mean:
 	
 	\begin{equation} 
 	\label{eqn:classassign}
 		w[m] = \begin{cases}
-			1, & (H[m] - \mu_S)^2 \leq (H[m] - \mu_{NS})^2 \\
+			1, & (H[m] - \mu_s)^2 \leq (H[m] - \mu_n)^2 \\
 			0, & \text{otherwise}
 		\end{cases}.
 	\end{equation}
@@ -658,18 +659,18 @@ In practice, the detector should be tuned such that the FPR is below 5\%. From f
 	\begin{enumerate}
 		\item Assign initial means:
 		\begin{equation*}
-			\mu_S = \min\limits_{m}\left(H[m]\right);
+			\mu_s = \min\limits_{m}\left(H[m]\right);
 		\end{equation*}
 		\begin{equation*}
-			\mu_{NS} = \max\limits_{m}\left(H[m]\right).
+			\mu_n = \max\limits_{m}\left(H[m]\right).
 		\end{equation*}
 		\item Perform class assignment using equation (\ref{eqn:classassign}).
 		\item Update the means according to:
 			\begin{equation*}
-				\mu_S = \frac{\sum_{m=0}^{N-1} w[m] H[m]}{\sum_{m=0}^{N-1} w[m] };
+				\mu_s = \frac{\sum_{m=0}^{N-1} w[m] H[m]}{\sum_{m=0}^{N-1} w[m] };
 			\end{equation*}
 			\begin{equation*}
-				\mu_{NS} = \frac{\sum_{m=0}^{N-1} (1-w[m]) H[m]}{\sum_{m=0}^{N-1} 1 - w[m] }.
+				\mu_n = \frac{\sum_{m=0}^{N-1} (1-w[m]) H[m]}{\sum_{m=0}^{N-1} 1 - w[m] }.
 			\end{equation*}
 		\item Repeat steps 2 and 3 until the maximum change in means converges to a specified value $\epsilon$. Terminate if it exceeds a predefined number of iterations.
 	\end{enumerate}

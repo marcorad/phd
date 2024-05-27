@@ -2,11 +2,22 @@
 \label{chap:p2}
 
 
-\articleinfo{M.W. Rademan, D.J.J Verseld, J.A. Du Preez}{the Journal of the Acoustical Society of America (JASA)}{15 May 2024}{doi}{Current literature trends for whale classification in passive acoustic monitoring systems are mainly concerned with high accuracies obtained via deep learning approaches. This requires preparation of large and accurate annotated datasets, which are often not available when surveying new regions, nor are they wholly accurate when they are. In contrast to classification, many efforts are still being made in improving generalised detectors for the purpose of disregarding noise. As such, there is a disparity between detectors and classification models. 
+\articleinfo{Detecting and classifying Whale Calls with Wavelet Scattering
+and Spectral Entropy}{the Journal of the Acoustical Society of America (JASA)}{15 May 2024}{doi}
+
+\section*{CRediT}
+\textbf{M.W. Rademan}: conceptualisation; methodology; software; formal analysis; writing -- original draft.
+
+\textbf{D.J.J. Verseld}: writing -- review and editing; supervision
+
+\textbf{J.A. Du Preez}: writing -- review and editing; supervision.
+
+\section*{Abstract}
+Current literature trends for whale classification in passive acoustic monitoring systems are mainly concerned with high accuracies obtained via deep learning approaches. This requires preparation of large and accurate annotated datasets, which are often not available when surveying new regions, nor are they wholly accurate when they are. In contrast to classification, many efforts are still being made in improving generalised detectors for the purpose of disregarding noise. As such, there is a disparity between detectors and classification models. 
 
 This paper aims to bridge the gap between detection and classification, while exploring the application of wavelet scattering features not yet popularised in the field of passive acoustic monitoring. This paper improves on the classical spectral entropy detector regarding noise adaptivity and uses wavelet scattering for entropy calculation. The same scattering decomposition is further fed to a classification stage: a linear classifier using scattering features provided by windows identified by the entropy detector.
 
-The proposed method works well for small datasets and aims to form the foundation of wavelet scattering classification/detection using non-neural network approaches. The purpose of this work is to provide a practical classification and detection system for new regions in which very little annotated data is available.  }
+The proposed method works well for small datasets and aims to form the foundation of wavelet scattering classification/detection using non-neural network approaches. The purpose of this work is to provide a practical classification and detection system for new regions in which very little annotated data is available.  
 
 
 \section{Introduction}
@@ -33,7 +44,7 @@ In this paper, we introduce a method which combines an improved traditional \ac{
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{system_diagram_v2.png}
-    \caption{The detection and classifying system. The audio database constists of 1-hour long recordings, which are segmented for computational efficiency. The detection system provides input to the feature extraction and classification steps. The classifier and detector are evaluated separately in this study.}
+    \caption[The detection and classifying system.]{The detection and classifying system. The audio database constists of 1-hour long recordings, which are segmented for computational efficiency. The detection system provides input to the feature extraction and classification steps. The classifier and detector are evaluated separately in this study.}
     \label{fig:system}
 \end{figure}
 
@@ -70,7 +81,7 @@ Annotations are provided that give the time-frequency bounding boxes of blue and
          \centering
          \includegraphics[width=\textwidth]{Bm_D_173.jpg}
      \end{subfigure}
-        \caption{High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls. Note the logarithmic frequency scale.  \textit{Bm\_Ant\_A} (a) is a constant frequency pulse which occurs around 20 Hz. \textit{Bm\_Ant\_B} (b) and \textit{Bm\_Ant\_Z} (c) are similar to \textit{Bm\_Ant\_A}, but with the addition of frequency modulated tails. \textit{Bm\_D} (d) is a frequency modulated downsweep which typically starts around the 80 Hz and sweeps to 30 Hz.}
+        \caption[High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls.]{High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls. Note the logarithmic frequency scale.  \textit{Bm\_Ant\_A} (a) is a constant frequency pulse which occurs around 20 Hz. \textit{Bm\_Ant\_B} (b) and \textit{Bm\_Ant\_Z} (c) are similar to \textit{Bm\_Ant\_A}, but with the addition of frequency modulated tails. \textit{Bm\_D} (d) is a frequency modulated downsweep which typically starts around the 80 Hz and sweeps to 30 Hz.}
         \label{fig:Bm_Ex}
 \end{figure}
 
@@ -96,7 +107,7 @@ We estimate the number of false positives by investigating a subset of annotatio
 
 \begin{table}[h!]
     \centering
-\caption{Estimated erroneous (false positives) proportion of annotations per class that could be considered noise. This table does not reflect on whether annotations are of the correct class (i.e., misclassifications). The total proportion of false positives are calculated according to the number of annotations per class.}
+\caption[Estimated erroneous (false positives) proportion of annotations per class that could be considered noise.]{Estimated erroneous (false positives) proportion of annotations per class that could be considered noise. This table does not reflect on whether annotations are of the correct class (i.e., misclassifications). The total proportion of false positives are calculated according to the number of annotations per class.}
 \label{tab:errannotations}
 % \begin{ruledtabular}    
 \begin{tabular}{lr} 
@@ -191,7 +202,7 @@ Refer to Figure \ref{fig:scattering} for a visualisation of the successive filte
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{scattering.png}
-    \caption{An illustration of the successive filtering operations performed by a scattering transform. Nodes in colour represent the extracted scattering coefficients, which is down-sampled according to an invariance scale specified by the user.}
+    \caption[An illustration of the successive filtering operations performed by a scattering transform.]{An illustration of the successive filtering operations performed by a scattering transform. Nodes in colour represent the extracted scattering coefficients, which is down-sampled according to an invariance scale specified by the user.}
     \label{fig:scattering}
 \end{figure}
 
@@ -217,7 +228,7 @@ The second filter banks in equations (\ref{eqn:scattering:s1}, \ref{eqn:scatteri
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{fb.jpg}
-    \caption{The filter banks used in this study, with $Q_1 = 16$ and $Q_2 = 4$. The filter bank used to calculate $\mathcal{U}_1$ is shown on the left and the $\mathcal{U}_2$ filter bank on the right. Note that the maximum magnitude of 2 accounts for the analytic nature of the wavelet, thereby capturing the true frequency amplitudes in a signal.}
+    \caption[The filter banks used in this study.]{The filter banks used in this study, with $Q_1 = 16$ and $Q_2 = 4$. The filter bank used to calculate $\mathcal{U}_1$ is shown on the left and the $\mathcal{U}_2$ filter bank on the right. Note that the maximum magnitude of 2 accounts for the analytic nature of the wavelet, thereby capturing the true frequency amplitudes in a signal.}
     \label{fig:fb}
 \end{figure}
 
@@ -397,7 +408,7 @@ $p_\text{max}$ and $p_\text{min}$ are numerically approximated\footnote{The maxi
 \begin{figure}[]
     \centering
     \includegraphics[width=1\textwidth]{detector_example_2.eps}
-    \caption{An example of the output of the detector taken from a densely populated vocalisation region of the dataset. The annotation bounding boxes are also indicated (top). In this example, the detector successfully detects all vocalisations. The whitened SE measure is shown (middle) with the posterior probability of signal (bottom).}
+    \caption[An example of the output of the detector.]{An example of the output of the detector taken from a densely populated vocalisation region of the dataset. The annotation bounding boxes are also indicated (top). In this example, the detector successfully detects all vocalisations. The whitened SE measure is shown (middle) with the posterior probability of signal (bottom).}
     \label{fig:det_example_1}
 \end{figure}
 
@@ -514,7 +525,7 @@ Figure \ref{fig:det_roc} shows the \ac{roc} curve for detection on a sample-by-s
     \includegraphics[width=1\textwidth]{calls.eps}    
     \caption{} \label{fig:det_calls}
      \end{subfigure}
-     \caption{Results of the evaluated detectors. \ac{se} detectors are indicated as a solid line, while \ac{bled} is dashed. (a) The performance of the detectors when compared on a sample-by-sample bases. (b) The performance curve of the detectors expressed as the percentage of detected noise samples versus the percentage of detected calls. The whitened \ac{se} with \ac{gmm} detector significantly outperforms all other detectors.}
+     \caption[ROC curves of the evaluated detectors.]{Results of the evaluated detectors. \ac{se} detectors are indicated as a solid line, while \ac{bled} is dashed. (a) The performance of the detectors when compared on a sample-by-sample bases. (b) The performance curve of the detectors expressed as the percentage of detected noise samples versus the percentage of detected calls. The whitened \ac{se} with \ac{gmm} detector significantly outperforms all other detectors.}
 \end{figure}
 
 
@@ -637,7 +648,7 @@ Classification accuracy is measured using the observations not included in the t
 
 
 \begin{table}[h!]
-\caption{Number of labeled detections for all vocalisations of interest. The detections are produced by the whitened \ac{gmm} \ac{se} detector. A significant number of detections are discarded in the training data due to overlapping.}
+\caption[Number of labeled detections for all vocalisations of interest.]{Number of labeled detections for all vocalisations of interest. The detections are produced by the whitened \ac{gmm} \ac{se} detector. A significant number of detections are discarded in the training data due to overlapping.}
 \label{tab:numdetections}
 % \begin{ruledtabular}
 % \renewcommand{\arraystretch}{0.8}
@@ -688,7 +699,7 @@ Overlapping & 150 \footnotemark[1]      \\
 % \end{table}
 
 \begin{table}[]
-\caption{Average model classification accuracies for varying train-test splits with chi-squared feature selection. An 80\% training split without chi-square feature selection is included as a baseline. 20 trials are performed, whereas 5\% splits use 100 trials. The median accuracy is displayed.}
+\caption[Average model classification accuracies for varying train-test splits with chi-squared feature selection.]{Average model classification accuracies for varying train-test splits with chi-squared feature selection. An 80\% training split without chi-square feature selection is included as a baseline. 20 trials are performed, whereas 5\% splits use 100 trials. The median accuracy is displayed.}
 \label{tab:clsres}
 % \begin{ruledtabular}  
 \renewcommand{\arraystretch}{0.8}
@@ -863,11 +874,11 @@ This paper provides the groundwork required to implement \ac{ws}-based classific
     \section{Summary of parameter values}
     
     \begin{table}[h]
-        \caption{Summary of parameter values used in this study. Chosen values are indicated in boldface text, whereas non-bold parameters result from the chosen parameters.}
+        \caption[Summary of parameter values used in this study. ]{Summary of parameter values used in this study. Chosen values are indicated in boldface text, whereas non-bold parameters result from the chosen parameters.}
         \label{tab:parameters}
         % \begin{ruledtabular}    
-            \renewcommand{\arraystretch}{0.8}% Tighter
-            \begin{tabular}{lll}  \small
+            % \renewcommand{\arraystretch}{0.8}% Tighter
+            \begin{tabular}{lll} 
                 \textbf{Parameter}      & \textbf{Description} & \textbf{Value} \\ \hline
                 $T$ & \ac{ws} invariance scale & \textbf{1.5 seconds} \\
                 $Q_1$ & Wavelets per octave in $\mathcal{S}_1$ & \textbf{16} \\

@@ -12,32 +12,33 @@ Formally, given a \ac{1d} \ac{dt} signal $x[n]$, with an index variable $n$, a \
 \begin{equation}
     X[k, n] = \sum_i x[n] \upsilon_k[i - n] = x * \upsilon_k,
 \end{equation}
-where $\upsilon_k \in \Upsilon$ is the $k$'th \ac{bpf} in the decomposition filter dictionary $\Upsilon$. Note that a \ac{lpf} can be considered to be a \ac{bpf} with a centre-frequency of 0.
+where $\upsilon_k \in \Upsilon$ is the $k$'th \ac{bpf} in the decomposition filter dictionary $\Upsilon$. Note that we consider a \ac{lpf} to be a \ac{bpf} with a centre-frequency of 0.
 
-Generally, the entire convolution $X[n,k]$ is not computed. Instead, only select samples are computed by speficying a hop-distance or downsample factor $d$. We indicate this by tranforming the index variable $m = dn$ as 
+Generally, the entire convolution $X[n,k]$ is not computed. Instead, only select samples are computed by specifying a hop-distance or downsample factor $d$. We indicate this by transforming the index variable $m = dn$ as 
 \begin{equation}
     \label{eqn:gentf}
     X[k, m] \triangleq X[k, dn] = \left(x * \upsilon_k\right)_{\downarrow d}.
 \end{equation}
 
-The is equivalent to applying a downsample operator $\left(\cdot\right)_{\downarrow d}$ to the convolution. 
+Hop-distance is equivalently expressed by applying the downsample operator $\left(\cdot\right)_{\downarrow d}$ to the convolution. 
 
 \section{Fourier Transforms}
 
 A \ac{ct} Fourier transform of $x(t)$ is given as 
 \begin{equation}
+    \label{eqn:fouriertransform}
     \mathcal{F} \{x\} \triangleq \hat{x}(\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt = \left(x * e^{j\omega t}\right)\bigg|_{t=0}.
 \end{equation}
 
 
-Derived from the conventional Fourier transform, a \ac{dt} signal $x[n], n \in \{0, ..., N-1\}$ (length $N$) has a \ac{dtft}
+Derived from the conventional Fourier transform given by equation (\ref*{eqn:fouriertransform}), a \ac{dt} signal $x[n], n \in \{0, ..., N-1\}$ of length $N$ samples has a \ac{dtft}
 \begin{equation}
     \label{eqn:dtft}
     \text{DTFT}\{x\} \triangleq \hat{x}[k] = \sum_{n=0}^{N} x(t) e^{-j \frac{2\pi k n}{N}} = \left(x \otimes \upsilon_k\right)\bigg|_{n=0},
 \end{equation}
-for which $\upsilon_k = e^{j \frac{2\pi k n}{N}}, \ k \in \{0, ..., N-1\}$ forms an orthogonal basis of $x$. The circular convolution operator $\otimes$ implies the infinite periodic extension of $x$ beyond its boundaries of $n \in \{0, ..., N-1\}$. 
+for which $\upsilon_k = e^{j \frac{2\pi k n}{N}}, \ k \in \{0, ..., N-1\}$ forms an orthogonal basis of $x$. The circular convolution operator $\otimes$ implies the infinite periodic extension of $x$ beyond its boundaries of $n \in \{0, ..., N-1\}$ \citep{dspbook}. 
 
-Equation (\ref{eqn:dtft}) describes the \ac{dtft} as convolution evaluated at the index 0 as a useful link to the generalised notion of \ac{tf} analyses: Fourier transforms can be considered as complex sinusoidal filters being applied to the signal of interest, with periodic boundary extension.
+Equation (\ref{eqn:dtft}) describes the \ac{dtft} as a convolution evaluated at the index 0 as a useful link to the generalised notion of \ac{tf} analyses: Fourier transforms can be considered as complex sinusoidal filters being applied to the signal of interest, with periodic boundary extension.
 
 The \ac{dtft} is commonly used to quickly compute convolutions for which the \ac{fft} is a fast alorithm with $N \log N$ computational complexity. In particular, to circularly convolve signals $x$ and $y$, a fast computation is implemented as
 \begin{equation}
@@ -45,7 +46,7 @@ The \ac{dtft} is commonly used to quickly compute convolutions for which the \ac
     x \otimes y = \text{FFT}^{-1}\{\hat{x} \cdot \hat{y}\}.
 \end{equation}
 
-With the correct padding procedures, one can compute $x * y$ using (\ref{eqn:fftconv}).
+With the correct padding procedures, one can compute $x * y$ using equation (\ref{eqn:fftconv}).
 
 Fourier transforms as decribed above are invertible operators, since they are orthogonal decompositions. However, for \ac{tf} analyses, invertibility is not necessarily a requirement of the application. As such, this disseration does not consider invertibility for the remainder of the content.
 
@@ -53,12 +54,12 @@ Fourier transforms as decribed above are invertible operators, since they are or
 \section{Constructing Filters}
 \label{sec:p1i:tfa}
 
-The most popular \ac{tf} analysis is the \ac{stft}. In terms of equation (\ref{eqn:gentf}), a \ac{stft} is computed with 
+The most popular \ac{tf} analysis is the \ac{stft}. In terms of equation (\ref{eqn:gentf}), a \ac{stft} is computed with a set of \ac{tf} filters
 \begin{equation}
     \label{eqn:stftfilter}
     \upsilon_k[n] =  w[n] e^{j \frac{2\pi k n}{N}},
 \end{equation}
-where $w$ is a window function defined by the user. Various \acp{fft} are use to compute this transform, so the properties of $w$ is typically specified by the \ac{fft} length, and the window type (Hann, Hamming, Blackman, etc.). The hop-length (or downsample factor) $d$ is an additional parameter specified by the user. It is possible to choose $w$ and $d$ such that the \ac{stft} becomes an invertible operator -- the original signal can be entirely recovered.
+where $w$ is a window function defined by the user. Various \acp{fft} are use to compute this transform, so the properties of $w$ is typically specified by the \ac{fft} length, and the window type (Hann, Hamming, Blackman, etc.) \citep{dspbook}. The hop-length (or downsample factor) $d$ is an additional parameter specified by the user. It is possible to choose $w$ and $d$ such that the \ac{stft} becomes an invertible operator -- the original signal can be entirely recovered \citep{stftbook}.
 
 The frequency domain content $\hat{w}$ entirely specifies the filter behaviour of $\upsilon_k$, since the factor $e^{j \frac{2\pi k n}{N}}$ only serves to specify the centre frequency of $\upsilon_k$. The resulting filter dictionary $\Upsilon$ is therefore comprised of constant-bandwidth analytic (complex) filters, linearly spaced in the frequency domain. As such, depending on the definition of filter bandwidth, there exists an optimal $d$ which captures all of the necessary information of $|X[k, m]|$ such that no aliasing occurs across the index dimension $m$. This type of optimality is discussed, at length, for wavelet filterbanks in chapter \ref{chap:p3}.
 
@@ -66,7 +67,7 @@ The linearly-spaced filters and constant-bandwidth does not necessarily reflect 
 
 Formally, given a signal with a fundamental frequency most accurately captured in the frequency bin $k_0$, any change in frequency by a factor $a$ will move the fundamental frequency content to the bin $a k_0$. This has dire consequences for lower frequency signals - the frequency resolution of lower frequency signals is significantly poorer compared to the frequency resolution of its own harmonics. As such, a small frequency shift of a lower frequency signal with ample harmonic content which cause large index shifts for its harmonics, i.e., the $b$'th harmonic will be shifted to index $a b k_0$.
 
-Suppose that we design $\Upsilon$ to contain $Q$ filters per octave. A frequency change by a factor $a$ shifts the frequency index of the fundamental to $(Q\log_2 (a) + 1) k_0$. Similarly, the $b$'th harmonic's frequency index is shifted to $(Q\log_2 (a) + 1) (Q\log_2 (b) + 1) k_0$. For example, if $a=2$, the fundamental's frequency index is shifted to $k_0 + Q$ (as opposed to $2 k_0$ for the \ac{stft}). This property is referred to a frequency-shift invariance, since small frequency deformations of the order $Q^{-1}$ do not significantly change the frequency index structure of the \ac{tf} decomposition. The \ac{stft} is much more sensitive to such deformations across its entire structure for harmonically rich signals.
+Suppose that we design $\Upsilon$ to contain $Q$ filters per octave. A frequency change by a factor $a$ shifts the frequency index of the fundamental to $(Q\log_2 (a) + 1) k_0$. Similarly, the $b$'th harmonic's frequency index is shifted to $(Q\log_2 (a) + 1) (Q\log_2 (b) + 1) k_0$. For example, if $a=2$, the fundamental's frequency index is shifted to $k_0 + Q$ (as opposed to $2 k_0$ for the \ac{stft}). This property is referred to a frequency-shift invariance, since small frequency deformations of the order $Q^{-1}$ do not significantly change the frequency index structure of the \ac{tf} decomposition \citep{1dscattering1}. The \ac{stft} is much more sensitive to such deformations across its entire structure for harmonically rich signals.
 
 An exponential filterbank design has increased stability to small frequency fluctuations, which can make it more useful for feature-extraction methods in a \ac{ml} pipeline, since feature vectors are more stable against frequency deformations. The exponential filterbank is, in fact, the way wavelet filters are typically constructed. Additionally, the \ac{mfcc} filterbank attributes much of its sucess (compared to raw \ac{stft} magnitude coefficients) due to its exponentially placed filters.
 
@@ -83,7 +84,7 @@ The mother wavelet is a \ac{bpf} with the following properties:
 \end{enumerate}
 
 
-$\uppsi$ can the be scaled by a factor $\lambda$ such that
+$\uppsi$ can be scaled by a factor $\lambda$ such that
 \begin{equation}
     \upsilon_k(t) = \lambda_k \uppsi(\lambda_k t).
 \end{equation}
@@ -92,6 +93,8 @@ Notational shorthand is often used:
 \begin{equation}
     \uppsi_{\lambda_k}(t) \triangleq \lambda_k \uppsi(\lambda_k t).
 \end{equation}
+
+The multiplicate scaling, in addition to time scaling, ensures that $\uppsi_{\lambda_k}$ retains constant amplitude in the frequency domain, also referred to as L1 normalisation \cite{waveletbook}.
 
 We construct a set $\lambda_k \in \Lambda$ such that $\lambda_{k+1} = 2^\frac{1}{Q}\lambda_{k}$, which ensures $Q$ wavelets per octave. Since $\uppsi$ has a frequency of 1 rad/s, $\lambda_k$ becomes the centre frequency of $\uppsi_{\lambda_k}$, while also scaling its bandwidth by a factor of $\lambda_k$. 
 

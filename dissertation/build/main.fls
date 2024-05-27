@@ -423,6 +423,7 @@ INPUT /home/marco/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map
 INPUT /home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-t1.enc
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1728.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1095.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecti1095.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1200.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm1000.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecti1000.tfm
@@ -435,7 +436,6 @@ OUTPUT /home/marco/Repos/phd/dissertation/build/main.toc
 INPUT /home/marco/Repos/phd/dissertation/build/main.lof
 INPUT /home/marco/Repos/phd/dissertation/build/main.lof
 INPUT /home/marco/Repos/phd/dissertation/build/main.lof
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecti1095.tfm
 OUTPUT /home/marco/Repos/phd/dissertation/build/main.lof
 INPUT /home/marco/Repos/phd/dissertation/build/main.lot
 INPUT /home/marco/Repos/phd/dissertation/build/main.lot
@@ -445,8 +445,9 @@ INPUT ./content/nomenclature.tex
 INPUT ./content/nomenclature.tex
 INPUT content/nomenclature.tex
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1440.tfm
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm0800.tfm
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm0600.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb10.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb10.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb7.tfm
 INPUT ./content/introduction.tex
 INPUT ./content/introduction.tex
 INPUT ./content/introduction.tex
@@ -457,12 +458,13 @@ INPUT ./content/p1_intro.tex
 INPUT ./content/p1_intro.tex
 INPUT ./content/p1_intro.tex
 INPUT content/p1_intro.tex
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm0800.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm0600.tfm
 INPUT ./content/paper1/main.tex
 INPUT ./content/paper1/main.tex
 INPUT ./content/paper1/main.tex
 INPUT ./content/paper1/main.tex
 INPUT content/paper1/main.tex
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecxc1440.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/symbols/msam5.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
@@ -470,6 +472,7 @@ INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/cm/cmbx5.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/cmextra/cmmib5.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurm5.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm0500.tfm
 INPUT ./content/paper1/fig/fbdata1.eps
 INPUT ./content/paper1/fig/fbdata1.eps
 INPUT ./content/paper1/fig/fbdata1.eps
@@ -640,9 +643,6 @@ INPUT ./content/p2_intro.tex
 INPUT ./content/p2_intro.tex
 INPUT ./content/p2_intro.tex
 INPUT content/p2_intro.tex
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb10.tfm
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb10.tfm
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb7.tfm
 INPUT ./content/paper2/main.tex
 INPUT ./content/paper2/main.tex
 INPUT ./content/paper2/main.tex
@@ -735,9 +735,7 @@ INPUT ./content/paper2/fig/calls-eps-converted-to.pdf
 INPUT ./content/paper2/fig/calls-eps-converted-to.pdf
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecti0900.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/tcrm1095.tfm
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm0500.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1000.tfm
 INPUT ./content/p3_intro.tex
 INPUT ./content/p3_intro.tex
 INPUT ./content/p3_intro.tex
@@ -802,8 +800,6 @@ INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msa
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msam10.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msbm10.pfb
-INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1000.pfb
-INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1000.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1095.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1095.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1200.pfb
@@ -840,5 +836,3 @@ INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1095.pf
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1095.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sftt1095.pfb
 INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sftt1095.pfb
-INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfxc1440.pfb
-INPUT /home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfxc1440.pfb

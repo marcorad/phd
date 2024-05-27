@@ -30,7 +30,7 @@ PhD, a5block %... stb-thesis options
 % \else (Cited on pages~#2.)%
 % \fi}
 
-\newcommand\articleinfo[5]{%
+\newcommand\articleinfo[4]{%
 \noindent\rule{\textwidth}{0.5pt}
 \begin{center}\small\textit{#1}\par
     \begin{spacing}{0.1}
@@ -39,12 +39,6 @@ PhD, a5block %... stb-thesis options
 \end{spacing}\noindent
 \end{center}\noindent
 \noindent\rule{\textwidth}{0.25pt}%
-% \pagebreak
-\section*{\centering \textsc{Abstract}}
-\begin{spacing}{1.0}    
-    \small  #5 \noindent
-\end{spacing}
-\clearpage
 }
 
 \usepackage{paper1}
@@ -93,7 +87,7 @@ PhD, a5block %... stb-thesis options
 \faculty{Electrical and Electronic Engineering}
 \degree{PhD}{Doctor of Philosophy}
 \supervisor{D.J.J. Versfeld}
-\cosupervisor{J.A. Du Preez}
+\cosupervisor{J.A. du Preez}
 % \date{August}{2024} 
 \SetCopyrightOff
 \address{\AorE{Departement Elektriese en Elektroniese Ingenieurswese,\\ Stellenbosch Universiteit,\\
@@ -115,13 +109,30 @@ Private Bag X1, 7602 Matieland, South Africa.}}
 \end{singlespace}
 % \DeclarationPage
 
+
+\chapter*{Declaration of Publications}
+
+This dissertation includes three original papers published in peer-reviewed journals. The writing of these papers were the responsibility of myself and contain original work I have individually developed, under the supervision of professors Versfeld and Du Preez. Each paper includes a detailed statement of author contributions using the CRediT system where they appear, along with all necessary information to locate the original publications.
+
+\textit{Hierdie proefskrif sluit drie publikasies in, gepubliseer in eweknie-geëvalueerde joernale. Die skryf van hierdie publikasies was die hoofverantwoordelik van myself, waarvan ek die inhoud individueel ontwikkel het onder die leierskap van my toesighouers, Professore Versfeld en Du Preez. 'n Deeglike bydraestelling word voorsien waar die publikasies in hierdie proefskrif verskyn in terme van die CRediT sisteem.}
+
+\chapter*{Acknowledgements}
+
+I would like to thank my supervisors, for encouraging me to upgrade my Master's degree to PhD, allowing me to pursue my love for academics. It is an honour to be able contribute something to a world filled with brilliant minds. 
+
+A special thank you to my parents, who have supported me in various ways in my entire academic career. Without them, I would not have made it this far. A kind thank you to my mother, who has stood by side, and my father, who has helped me through writing countless impactful abstracts and dedicated many hours of his time to academic discussions. 
+
+Finally, a heartfelt thanks to my partner, who has stood by me through it all and meticulously read every single word. My countless work hours and your endless patience have finally paid off. I love you dearly.
+
 \begin{abstract}
     
-In this dissertation by publication, we investigate the application of wavelet scattering transforms on whale vocalisations, by following the natural progression of 3 consecutive papers.
+In this dissertation by publication, we investigate the application of wavelet scattering transforms on whale vocalisations, which is presented as three published papers.
 
-We consider how wavelets can be used to replace the short-time Fourier transform (STFT) in signal detection. Wavelet scattering is introduced to the field of passive acoustic monitoring as a convolutional neural network (CNN) alternative for small datasets, which is combined with an improved entropy-based signal detector.
+We first consider how wavelet transforms can provide an alternative time-frequency (TF) decomposition for use in signal detectors. Detectors typically utilise the short-time Fourier transform, for which the continuous wavelet transform (CWT) is a suitable alternative. As an additional contribution, we improve upon the spectral entropy (SE)detector, which is known to be superior in terms of signal detection compared to energy detectors.
 
-For 1-dimensional (1D) signals, wavelet scattering can be considered as a generalisation of Mel-frequency cepstral coefficients (MFCCs), and can typically outperform MFCCs in audio classification applications. In general, wavelet scattering filtering operations resemble the first layers of a CNN. An effective feature extractor may be constructed with wavelet scattering filters without requiring any learning. The main contribution of this dissertation is the introduction of separable filters for a wavelet scattering transform, which is generalised to an arbitrary number of dimensions.
+In the second publication, we expand on the relatedness of the CWT to wavelet scattering. Wavelet scattering is a feature extraction method akin to the filters of a convolutional neural network (CNN) frontend and Mel-frequency cepstral coefficients (MFCCs). We show that wavelet scattering coefficients can be combined with a SE detector, which can be fed into a classification system. We further improve upon the SE detector presented in the first paper and provide a critical discussion of the challenges faced when evaluating performance of the proposed methods on a large real-world dataset. 
+
+Finally, the concepts established in the previous papers are used to construct an entirely new and generalised form of the wavelet scattering transform -- separable wavelet scattering. We extend the definition of one-dimensional scattering to an arbitrary number of signal dimensions. Separable scattering benefits from various computational and conceptual advantages, which has not been generalised to this extent in the current literature.
 
 
     
@@ -129,11 +140,13 @@ For 1-dimensional (1D) signals, wavelet scattering can be considered as a genera
 
 \begin{abstract}[afrikaans]
     
-  In hierdie publikasie proefskrif, ondersoek ons die toepassing van wavelet scattering transformasies op walvis vokaliserings, deur middel van opeenvolgende joernaal arikels.
+In hierdie publikasie proefskrif, ondersoek ons die toepassing van \textit{wavelet} verstrooiing transformasies op walvis vokaliserings, deur middel van drie gepubliseerde joernaal arikels.
 
-  Ons orweeg hoe wavelets gebruik kan word om die kort-tyd Fourier transformasie (KTFT) in sein deteksie te vervang. Wavelet scattering is bekendgestel in die veld van passiewe akoustiese monitering, as an alternatief to konvolusionele neurale netwerke (KNNs). Verder, kombineer ons wavelet scattering met 'n klassieke entropie-gebasseerde sein detektor wat ons verbeter met addisionele tegnieke.
+Eerste oorweeg on hoe \textit{wavelet} transformasies 'n alternatiewe tyd-frekwensie (TF) ont-binding vir seindetektors kan voorsien. Detektors maak gewoonlik gebruik van die kort-tyd Fourier transform (STFT) waarvoor die kontinu\"e \textit{wavelet} trasnform (CWT) 'n alternatief is. Ons verbeter ook die spektrale entropy (SE) detector, wetend dat dit beter presteer as energie-gebasseerde seindetektors.
 
-  Vir eendimensionele seine kan wavelet scattering as 'n veralgemening van Mel-frekwensie kepstrale koeffisi\"{e}nte (MFKKs) beskou word, altans 'n verbeterde weergawe daarvan. In die algemeen, is wavelet scattering vergelykbaar met die eerste lae van KNNs. Die hoof bydrag van hierdie proefskrif is die bekendstelling van skeibare filters vir die wavelet scattering transform, wat veralgemeen is vir 'n arbitr\^{e}re aantal intreedimensies.
+In die tweede publikasie brei ons uit op die verwantskap tussen die CWT en \textit{wavelet} verstrooiing. \textit{Wavelet} verstrooiing is metode wat kenmerke uit seine onttrek in 'n soorgelyke manier aan konvolusionele neurale netwerke (CNNs) en Mel-frekwensie kepstrale ko\"effisi-\"ente (MFCCs). Ons wys dat \textnormal{wavelet} verstrooiing met 'n SE detektor gekombineer kan word wat verder in 'n klasifikasiesisteem invloei. Ons bied 'n kritiese gesprek aan wat die uitdagings van sisteemevaluasie deur middle van 'n groot praktiese datastel bespreek.
+
+Laastens word die konsepte wat in die vorige publikasies vasgestel is gerbuik om 'n splinter-nuwe en veralgemene \textnormal{wavelet} verstrooiing metode te definieer -- skeibare \textnormal{wavelet} ver-strooiing. Ons veralgemeen die eendimensionele \textnormal{wavelet} verstrooiing to 'n arbitr\^ere aantal intree-dimensies wat nog nie tevore in die bestaande literatuur ondersoek is nie. 
     
 \end{abstract}
 
