@@ -31,6 +31,16 @@
 \newblock {Deep Learning using Rectified Linear Units (ReLU)}.
 \newblock \eprint{1803.08375}.
 
+\bibitem[{\citenamefont{And{\'e}n}
+  \emph{\bbletal{}}(2019)\citenamefont{And{\'e}n}, \citenamefont{Lostanlen}
+  \protect\BIBand{} \citenamefont{Mallat}}]{ws_joint_tf}
+\bibnamefont{And{\'e}n}, \bibfnamefont{J.}, \bibnamefont{Lostanlen},
+  \bibfnamefont{V.} \protect\BIBand{} \bibnamefont{Mallat}, \bibfnamefont{S.}
+  (2019).
+\newblock Joint time--frequency scattering.
+\newblock \emph{IEEE Transactions on Signal Processing}, \bblvol{}~67,
+  \bblno{}~14, \bblpp{} 3704--3718.
+
 \bibitem[{\citenamefont{And{\'e}n} \protect\BIBand{}
   \citenamefont{Mallat}(2011)}]{1dscattering1}
 \bibnamefont{And{\'e}n}, \bibfnamefont{J.} \protect\BIBand{}
@@ -62,16 +72,6 @@
 \newblock \emph{Journal of Machine Learning Research}, \bblvol{}~21,
   \bblno{}~60, \bblpp{} 1--6.
 \newline\bblurlpre\url{http://jmlr.org/papers/v21/19-047.html}
-
-\bibitem[{\citenamefont{Andén} \emph{\bbletal{}}(2015)\citenamefont{Andén},
-  \citenamefont{Lostanlen} \protect\BIBand{}
-  \citenamefont{Mallat}}]{ws_joint_tf}
-\bibnamefont{Andén}, \bibfnamefont{J.}, \bibnamefont{Lostanlen},
-  \bibfnamefont{V.} \protect\BIBand{} \bibnamefont{Mallat}, \bibfnamefont{S.}
-  (2015 12).
-\newblock {{Joint Time-Frequency Scattering for Audio Classification}}.
-\newline\bblurlpre\url{http://arxiv.org/abs/1512.02125
-  http://dx.doi.org/10.1109/MLSP.2015.7324385}
 
 \bibitem[{\citenamefont{Andén} \emph{\bbletal{}}(2018)\citenamefont{Andén},
   \citenamefont{Lostanlen} \protect\BIBand{}
@@ -796,8 +796,8 @@
   \bibnamefont{Zhang}, \bibfnamefont{F.}, \bibnamefont{Hu}, \bibfnamefont{W.},
   \bibnamefont{Sun}, \bibfnamefont{X.} \protect\BIBand{} \bibnamefont{Gao},
   \bibfnamefont{L.} (2018).
-\newblock Deep cnn with multi-scale rotation invariance features for ship
-  classification.
+\newblock {Deep CNN with multi-scale rotation invariance features for ship
+  classification}.
 \newblock \emph{IEEE Access}, \bblvol{}~6, \bblpp{} 38656--38668.
 
 \bibitem[{\citenamefont{Souli} \protect\BIBand{}
@@ -1029,12 +1029,12 @@
   transform.
 \newblock \emph{Nature Communications}, \bblvol{}~14, \bblno{}~1, \bblp{} 5258.
 
-\bibitem[{\citenamefont{Zhao12} \emph{\bbletal{}}(2017)\citenamefont{Zhao12},
-  \citenamefont{Li}, \citenamefont{Zhao}, \citenamefont{Yan13}
-  \protect\BIBand{} \citenamefont{Feng}}]{cnninvariance2}
-\bibnamefont{Zhao12}, \bibfnamefont{J.}, \bibnamefont{Li}, \bibfnamefont{J.},
-  \bibnamefont{Zhao}, \bibfnamefont{F.}, \bibnamefont{Yan13}, \bibfnamefont{S.}
-  \protect\BIBand{} \bibnamefont{Feng}, \bibfnamefont{J.} (2017).
-\newblock Marginalized cnn: Learning deep invariant representations.
+\bibitem[{\citenamefont{Zhao} \emph{\bbletal{}}(2017)\citenamefont{Zhao},
+  \citenamefont{Li}, \citenamefont{Zhao}, \citenamefont{Yan} \protect\BIBand{}
+  \citenamefont{Feng}}]{cnninvariance2}
+\bibnamefont{Zhao}, \bibfnamefont{J.}, \bibnamefont{Li}, \bibfnamefont{J.},
+  \bibnamefont{Zhao}, \bibfnamefont{F.}, \bibnamefont{Yan}, \bibfnamefont{S.}
+  \protect\BIBand{} \bibnamefont{Feng}, \bibfnamefont{J.} (2017 09).
+\newblock {Marginalized CNN: Learning Deep Invariant Representations}.
 
 \end{thebibliography}

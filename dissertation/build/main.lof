@@ -4,30 +4,30 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Block diagram of the proposed soft-output detector.}}{27}{figure.caption.32}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Audio snippet and spectrogram of a humpback song recorded in False Bay.}}{29}{figure.caption.33}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Humpback call length and time spread.}}{30}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Spectral entropy (STFT) calculated for different frequency bin ranges.}}{31}{figure.caption.35}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces An example of a CWT filterbank.}}{34}{figure.caption.36}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Example of the sigmoid function.}}{37}{figure.caption.37}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Median filtered entropy.}}{38}{figure.caption.38}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces K-means class means on entropy.}}{38}{figure.caption.39}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Spectrogram of the test signal (0 dB SNR).}}{40}{figure.caption.40}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces STFT and CWT soft discovery rates over SNR.}}{41}{figure.caption.41}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces STFT and CWT soft discovery rates over median filter length.}}{41}{figure.caption.42}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces STFT and CWT difference in class means.}}{42}{figure.caption.43}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Comparing L1 and L2 CWT normalization for spectral entropy calculation.}}{44}{figure.caption.46}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces A snippet showing the measures produced by the proposed entropy detector.}}{44}{figure.caption.47}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces The ROC curves comparing the proposed technique and the baseline STFT SE.}}{46}{figure.caption.48}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces The thresholds used to produce the ROC curve.}}{46}{figure.caption.49}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Block diagram of the proposed soft-output detector.}}{27}{figure.caption.33}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Audio snippet and spectrogram of a humpback song recorded in False Bay.}}{29}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Humpback call length and time spread.}}{30}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Spectral entropy (STFT) calculated for different frequency bin ranges.}}{31}{figure.caption.36}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces An example of a CWT filterbank.}}{34}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Example of the sigmoid function.}}{37}{figure.caption.38}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Median filtered entropy.}}{38}{figure.caption.39}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces K-means class means on entropy.}}{38}{figure.caption.40}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Spectrogram of the test signal (0 dB SNR).}}{40}{figure.caption.41}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces STFT and CWT soft discovery rates over SNR.}}{41}{figure.caption.42}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces STFT and CWT soft discovery rates over median filter length.}}{41}{figure.caption.43}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces STFT and CWT difference in class means.}}{42}{figure.caption.44}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Comparing L1 and L2 CWT normalization for spectral entropy calculation.}}{44}{figure.caption.47}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces A snippet showing the measures produced by the proposed entropy detector.}}{44}{figure.caption.48}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces The ROC curves comparing the proposed technique and the baseline STFT SE.}}{45}{figure.caption.49}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces The thresholds used to produce the ROC curve.}}{46}{figure.caption.50}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces The detection and classifying system.}}{59}{figure.caption.57}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls.}}{60}{figure.caption.58}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces An illustration of the successive filtering operations performed by a scattering transform.}}{64}{figure.caption.62}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces The filter banks used in this study.}}{65}{figure.caption.63}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces An example of the output of the detector.}}{69}{figure.caption.66}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces ROC curves of the evaluated detectors.}}{71}{figure.caption.68}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces The detection and classifying system.}}{58}{figure.caption.57}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces High SNR examples of the first level scattering transform to illustrate the characteristics of blue whale calls.}}{59}{figure.caption.58}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces An illustration of the successive filtering operations performed by a scattering transform.}}{63}{figure.caption.62}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces The filter banks used in this study.}}{64}{figure.caption.63}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces An example of the output of the detector.}}{68}{figure.caption.66}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces ROC curves of the evaluated detectors.}}{70}{figure.caption.68}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

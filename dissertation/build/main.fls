@@ -421,8 +421,9 @@ INPUT /home/marco/.miktex/texmfs/install/tex/latex/stellenbosch-2/figs/stb-thesi
 INPUT /home/marco/.miktex/texmfs/install/tex/latex/stellenbosch-2/figs/stb-thesis-frntp.pdf
 INPUT /home/marco/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map
 INPUT /home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-t1.enc
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1728.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1095.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1440.tfm
+INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1728.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecti1095.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1200.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecrm1000.tfm
@@ -444,7 +445,6 @@ OUTPUT /home/marco/Repos/phd/dissertation/build/main.lot
 INPUT ./content/nomenclature.tex
 INPUT ./content/nomenclature.tex
 INPUT content/nomenclature.tex
-INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/jknappen/ec/ecbx1440.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb10.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb10.tfm
 INPUT /home/marco/.miktex/texmfs/install/fonts/tfm/public/amsfonts/euler/eurb7.tfm

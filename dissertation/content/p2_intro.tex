@@ -3,7 +3,7 @@
 \chapter{Feature Extraction with Wavelet Transforms}
 \label{chap:p2i}
 
-\ac{tf} decompositions are often used to extract features from signals. In audio, \acp{mfcc} are features calculated from the \ac{stft} of the signal. Note that a ``\ac{tf}'' decomposition, as referred to in this dissertation, does not necesarrily require a time variable: spatial variables are often present instead. In this sense, a \ac{cnn} is can also be considered as a ``\ac{tf}'' decomposition, where multi-dimensional index variables (or index vectors) are used for ``time'' and frequency:
+\ac{tf} decompositions are often used to extract features from signals. In audio, \acp{mfcc} are features calculated from the \ac{stft} of the signal. Note that a ``\ac{tf}'' decomposition, as referred to in this dissertation, does not necessarily require a time variable: spatial variables are often present instead. In this sense, a \ac{cnn} is can also be considered as a ``\ac{tf}'' decomposition, where multi-dimensional index variables (or index vectors) are used for ``time'' and frequency:
 \begin{equation}
     X[\vect{k}, \vect{m}] = \left( x * \upsilon_{\vect{k}} \right)_{\downarrow \vect{d}}, \ \upsilon_{\vect{k}} \in \Upsilon.
 \end{equation}
@@ -18,7 +18,7 @@ The decomposition $X$ is often further processed by additional filters $\Phi_i[\
 \begin{equation}
     \tilde{X_i}[\vect{k}, \vect{m}] = X * \Phi_i.
 \end{equation}
-The filters $\Phi_i$ are not necesarrily multi-dimensional, and may only operate along a single dimension of $X$. If $\Phi_i$ is an averaging (low-pass) filter, some additional stability can be observed in $\tilde{X_i}$ compared with $X$. This allows for the introduction of invariances to various deformations applied to $X$, which can be greatly beneficial for some applications \citep{cnninvariance}. In a sense, cascased structures of $X$ and $\tilde{X_i}$ are defined in a \ac{cnn} for which the network learns the required invariances \cite{2dscattering}.
+The filters $\Phi_i$ are not necessarily multi-dimensional, and may only operate along a single dimension of $X$. If $\Phi_i$ is an averaging (low-pass) filter, some additional stability can be observed in $\tilde{X_i}$ compared with $X$. This allows for the introduction of invariances to various deformations applied to $X$, which can be greatly beneficial for some applications \citep{cnninvariance}. In a sense, cascaded structures of $X$ and $\tilde{X_i}$ are defined in a \ac{cnn} for which the network learns the required invariances \cite{2dscattering}.
 
 It is widely known that enforcing invariance in feature extraction and \ac{ml} pipelines increase performance. Enforcing invariance in \acp{nn} has been shown to improve the network, while also improving the interpretability of the network \cite{cnninvariance2}. For example, when classifying images, invariance to scale, shear, rotation and translation deformations, de\-pending on image properties, may be useful when extracting features. Specifically, defor\-mations of a specified order should approximately map to the same point in feature space:
 \begin{equation}
@@ -26,7 +26,7 @@ It is widely known that enforcing invariance in feature extraction and \ac{ml} p
 \end{equation}
 where $\Gamma$ is the feature extraction operator, and $\delta$ is the deformation operator applied to $x$.
 
-Invariance filters ($\Phi_i$) can also have additional properties that makes it favourable for audio applications. For example, many applications ``blur'' (low-pass) the TF decomposition \citep{seyicwt, speechmodulation}, which can reduce the impact of noise fluctuations, and can also serve to suppress small frequency fluctuations across adjascent frequency bins (if the blurring kernel $\Phi_i$ filters across frequency as well). The blurring operation can improve the performance of signal detectors and classifiers. However, as a cost, time localisation and/or frequency localisation is reduced.
+Invariance filters ($\Phi_i$) can also have additional properties that makes it favourable for audio applications. For example, many applications ``blur'' (low-pass) the TF decom\-position \citep{seyicwt, speechmodulation}, which can reduce the impact of noise fluctuations, and can also serve to suppress small frequency fluctuations across adjacent frequency bins (if the blurring kernel $\Phi_i$ filters across frequency as well). The blurring operation can improve the performance of signal detectors and classifiers. However, as a cost, time localisation and/or frequency localisation is reduced.
 
 A new problem is introduced when enforcing invariances via the $\Phi_i$ filters - information is lost via averaging \cite{1dscattering1}. Various techniques can be used to further retain information, while also retaining invariance. Wavelet scattering is such a method \cite{ws,2dscattering}. In a sense, multilayer \acp{cnn} topologies with skip connections can be thought of as a method to recover lost information in the deeper layers.
 

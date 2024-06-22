@@ -59,9 +59,22 @@ PhD, a5block %... stb-thesis options
 
 % Chapter format
 \usepackage{titlesec}
-\titleformat{\chapter}
-  {\LARGE\bfseries}{\thechapter}{1em}{}
-\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+
+\titleformat{\chapter}[display]
+{\bfseries\Large}
+{\LARGE\chaptertitlename \ \thechapter}
+{0pt}
+{\vspace{0pt}%
+\LARGE}
+\titlespacing*{\chapter}{0pt}{0pt}{1em}
+
+\titleformat{\section}
+{\bfseries\Large}
+{\Large\thesection}
+{0.75em}
+{\Large}
+
+\titlespacing*{\section}{0pt}{1em}{0.75em}
 
 
 \graphicspath{{./content/paper2/fig/}{./content/paper1/fig/}}
@@ -82,7 +95,7 @@ PhD, a5block %... stb-thesis options
 \fi
 
 \begin{document}
-\title{\AorE{Wavelet Scattering Transformasies Toegepas op Walvis Vokaliserings}{Wavelet Scattering Transforms Applied to Whale Vocalisations}}
+\title{\AorE{Wavelet Verstrooiing Transformasies Toegepas op Walvis Vokaliserings}{Wavelet Scattering Transforms Applied to Whale Vocalisations}}
 \author{M.W. Rademan}{Marco Wiehann Rademan}
 \faculty{Electrical and Electronic Engineering}
 \degree{PhD}{Doctor of Philosophy}
@@ -118,17 +131,18 @@ This dissertation includes three original papers published in peer-reviewed jour
 
 \chapter*{Acknowledgements}
 
-I would like to thank my supervisors, for encouraging me to upgrade my Master's degree to PhD, allowing me to pursue my love for academics. It is an honour to be able contribute something to a world filled with brilliant minds. 
+I would like to thank my supervisors, Professors Versfeld and Du Preez, for encouraging me to upgrade my Master's degree to PhD, allowing me to pursue my love for academics. It is an honour to be able contribute something to a world filled with brilliant minds. 
 
 A special thank you to my parents, who have supported me in various ways in my entire academic career. Without them, I would not have made it this far. A kind thank you to my mother, who has stood by side, and my father, who has helped me through writing countless impactful abstracts and dedicated many hours of his time to academic discussions. 
 
-Finally, a heartfelt thanks to my partner, who has stood by me through it all and meticulously read every single word. My countless work hours and your endless patience have finally paid off. I love you dearly.
+Finally, a heartfelt thanks to my partner, who meticulously read every single word and has been my pillar and primary motivation since the day I started this journey. My countless work hours and your endless patience have finally paid off. I love you dearly.
 
 \begin{abstract}
+
     
 In this dissertation by publication, we investigate the application of wavelet scattering transforms on whale vocalisations, which is presented as three published papers.
 
-We first consider how wavelet transforms can provide an alternative time-frequency (TF) decomposition for use in signal detectors. Detectors typically utilise the short-time Fourier transform, for which the continuous wavelet transform (CWT) is a suitable alternative. As an additional contribution, we improve upon the spectral entropy (SE)detector, which is known to be superior in terms of signal detection compared to energy detectors.
+We first consider how wavelet transforms can provide an alternative time-frequency (TF) decomposition for use in signal detectors. Detectors typically utilise the short-time Fourier transform, for which the continuous wavelet transform (CWT) is a suitable alternative. As an additional contribution, we improve upon the spectral entropy (SE) detector, which is known to be superior in terms of signal detection compared to energy detectors.
 
 In the second publication, we expand on the relatedness of the CWT to wavelet scattering. Wavelet scattering is a feature extraction method akin to the filters of a convolutional neural network (CNN) frontend and Mel-frequency cepstral coefficients (MFCCs). We show that wavelet scattering coefficients can be combined with a SE detector, which can be fed into a classification system. We further improve upon the SE detector presented in the first paper and provide a critical discussion of the challenges faced when evaluating performance of the proposed methods on a large real-world dataset. 
 
@@ -142,11 +156,11 @@ Finally, the concepts established in the previous papers are used to construct a
     
 In hierdie publikasie proefskrif, ondersoek ons die toepassing van \textit{wavelet} verstrooiing transformasies op walvis vokaliserings, deur middel van drie gepubliseerde joernaal arikels.
 
-Eerste oorweeg on hoe \textit{wavelet} transformasies 'n alternatiewe tyd-frekwensie (TF) ont-binding vir seindetektors kan voorsien. Detektors maak gewoonlik gebruik van die kort-tyd Fourier transform (STFT) waarvoor die kontinu\"e \textit{wavelet} trasnform (CWT) 'n alternatief is. Ons verbeter ook die spektrale entropy (SE) detector, wetend dat dit beter presteer as energie-gebasseerde seindetektors.
+Aanvanklink oorweeg ons hoe \textit{wavelet} transformasies 'n alternatiewe tyd-frekwensie (TF) ont-binding vir seindetektors kan voorsien. Detektors maak gewoonlik gebruik van die kort-tyd Fourier transform (STFT) waarvoor die kontinu\"e \textit{wavelet} transform (CWT) 'n alternatief is. Ons verbeter ook die spektrale entropie (SE) detektor, wetend dat dit beter presteer as energie-gebasseerde seindetektors.
 
-In die tweede publikasie brei ons uit op die verwantskap tussen die CWT en \textit{wavelet} verstrooiing. \textit{Wavelet} verstrooiing is metode wat kenmerke uit seine onttrek in 'n soorgelyke manier aan konvolusionele neurale netwerke (CNNs) en Mel-frekwensie kepstrale ko\"effisi-\"ente (MFCCs). Ons wys dat \textnormal{wavelet} verstrooiing met 'n SE detektor gekombineer kan word wat verder in 'n klasifikasiesisteem invloei. Ons bied 'n kritiese gesprek aan wat die uitdagings van sisteemevaluasie deur middle van 'n groot praktiese datastel bespreek.
+In die tweede publikasie brei ons uit op die verwantskap tussen die CWT en \textit{wavelet} verstrooiing. \textit{Wavelet} verstrooiing is metode wat kenmerke uit seine onttrek in 'n soorgelyke manier as konvolusionele neurale netwerke (CNNs) en Mel-frekwensie kepstrale ko\"effisi-\"ente (MFCCs). Ons wys dat \textnormal{wavelet} verstrooiing met 'n SE detektor gekombineer kan word wat verder in 'n klassifikasiesisteem invloei. Ons bied 'n kritiese gesprek aan wat die uitdagings van sisteemevaluasie deur middle van 'n groot praktiese datastel bespreek.
 
-Laastens word die konsepte wat in die vorige publikasies vasgestel is gerbuik om 'n splinter-nuwe en veralgemene \textnormal{wavelet} verstrooiing metode te definieer -- skeibare \textnormal{wavelet} ver-strooiing. Ons veralgemeen die eendimensionele \textnormal{wavelet} verstrooiing to 'n arbitr\^ere aantal intree-dimensies wat nog nie tevore in die bestaande literatuur ondersoek is nie. 
+Laastens word die konsepte wat in die vorige publikasies gevestig is, gebruik om 'n splinter-nuwe en veralgemene \textnormal{wavelet} verstrooiing metode te definieer -- skeibare \textnormal{wavelet} ver-strooiing. Ons veralgemeen die eendimensionele \textnormal{wavelet} verstrooiing tot 'n arbitr\^ere aantal intree-dimensies, wat nie tevore in die bestaande literatuur ondersoek is nie. 
     
 \end{abstract}
 

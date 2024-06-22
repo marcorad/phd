@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.14)  27 MAY 2024 12:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.14)  22 JUN 2024 12:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -719,34 +719,27 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 File: l3backend-pdftex.def 2024-04-11 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count342
 \l__pdf_internal_box=\box72
-) (/home/marco/Repos/phd/dissertation/build/main.aux
-
-LaTeX Warning: Label `eqn:specdist' multiply defined.
-
-
-LaTeX Warning: Label `eqn:entropy' multiply defined.
-
-)
+) (/home/marco/Repos/phd/dissertation/build/main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 84.
-LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
  (/home/marco/.miktex/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count343
@@ -761,7 +754,7 @@ LaTeX Font Info:    ... okay on input line 84.
 \makeMPintoPDFobject=\count348
 \everyMPtoPDFconversion=\toks46
 )
-Package hyperref Info: Link coloring OFF on input line 84.
+Package hyperref Info: Link coloring OFF on input line 97.
  (/home/marco/Repos/phd/dissertation/build/main.out) (/home/marco/Repos/phd/dissertation/build/main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
@@ -769,18 +762,18 @@ Package hyperref Info: Link coloring OFF on input line 84.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 102.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 115.
  (/home/marco/.miktex/texmfs/install/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 102.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 115.
  (/home/marco/.miktex/texmfs/install/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<stb-thesis-frntp.pdf, id=312, 597.50786pt x 845.04686pt>
+<stb-thesis-frntp.pdf, id=316, 597.50786pt x 845.04686pt>
 File: stb-thesis-frntp.pdf Graphic file (type pdf)
 <use stb-thesis-frntp.pdf>
-Package pdftex.def Info: stb-thesis-frntp.pdf  used on input line 102.
+Package pdftex.def Info: stb-thesis-frntp.pdf  used on input line 115.
 (pdftex.def)             Requested size: 598.08076pt x 845.93451pt.
  [1
 
@@ -789,7 +782,7 @@ Package pdftex.def Info: stb-thesis-frntp.pdf  used on input line 102.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.113 \chapter
+l.126 \chapter
               *{Declaration of Publications} [1
 
 ] [2
@@ -797,14 +790,14 @@ l.113 \chapter
 ] [3
 
 ]
-Overfull \hbox (3.88882pt too wide) in paragraph at lines 135--136
+Overfull \hbox (3.88882pt too wide) in paragraph at lines 149--150
 \T1/cmr/m/n/10.95 new and generalised form of the wavelet scattering transform -- separable wavelet scattering.
  []
 
 [4
 
 ]
-Overfull \hbox (4.27174pt too wide) in paragraph at lines 147--148
+Overfull \hbox (4.27174pt too wide) in paragraph at lines 161--162
 \T1/cmr/m/n/10.95 verstrooiing. \T1/cmr/m/it/10.95 Wavelet \T1/cmr/m/n/10.95 verstrooiing is metode wat kenmerke uit seine onttrek in 'n soorgelyke
  []
 
@@ -838,7 +831,7 @@ although it is yet undefined on input line 20.
 ] (content/nomenclature.tex [11
 
 ] [12]
-Overfull \vbox (42.75694pt too high) has occurred while \output is active []
+Overfull \vbox (40.07933pt too high) has occurred while \output is active []
 
  [13]) (content/introduction.tex [14]
 Chapter 1.
@@ -883,7 +876,12 @@ Overfull \hbox (2.51048pt too wide) in paragraph at lines 51--52
 \T1/cmr/bx/n/10.95 Spectral Entropy, K-means Clustering and the Continuous Wavelet Trans-
  []
 
-) (content/p1_intro.tex [18
+[18
+
+]
+Package acronym Info: Label `acro:ws' newly defined as it shall be overridden
+although it is yet undefined on input line 71.
+) (content/p1_intro.tex [19
 
 ]
 Chapter 2.
@@ -902,17 +900,17 @@ Package acronym Info: Label `acro:lpf' newly defined as it shall be overridden
 although it is yet undefined on input line 15.
 Package acronym Info: Label `acro:dtft' newly defined as it shall be overridden
 although it is yet undefined on input line 34.
-[19
+[20
 
 ]
 Package acronym Info: Label `acro:fft' newly defined as it shall be overridden
 although it is yet undefined on input line 43.
- [20] [21]
-Overfull \hbox (4.35368pt too wide) in paragraph at lines 77--78
-\T1/cmr/m/n/10.95 To construct a wavelet filterbank with $\OML/cmm/m/it/10.95 ^^][] \OMS/cmsy/m/n/10.95 2 \OT1/cmr/m/n/10.95 ^^G$ \T1/cmr/m/n/10.95 which has the exponentially-spaced frequency
+
+Overfull \hbox (0.2973pt too wide) in paragraph at lines 43--44
+\T1/cmr/m/n/10.95 transform ([])[] is a fast algorithm with $\OML/cmm/m/it/10.95 N [] N$ \T1/cmr/m/n/10.95 computational complexity. In particular,
  []
 
-[22]) (content/paper1/main.tex [23]
+[21] [22]) (content/paper1/main.tex [23]
 Chapter 3.
 [24
 
@@ -961,7 +959,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/fbdata1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/fbdata1-eps-converted-to.pdf ./content/paper1/fig/fbdata1.eps>
 (epstopdf)             \includegraphics on input line 169.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/fbdata1-eps-converted-to.pdf, id=764, 264.99pt x 233.87375pt>
+<./content/paper1/fig/fbdata1-eps-converted-to.pdf, id=786, 264.99pt x 233.87375pt>
 File: ./content/paper1/fig/fbdata1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/fbdata1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/fbdata1-eps-converted-to.pdf  used on input line 169.
@@ -980,7 +978,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/real_data_hist.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/real_data_hist-eps-converted-to.pdf ./content/paper1/fig/real_data_hist.eps>
 (epstopdf)             \includegraphics on input line 193.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/real_data_hist-eps-converted-to.pdf, id=771, 344.28625pt x 164.615pt>
+<./content/paper1/fig/real_data_hist-eps-converted-to.pdf, id=793, 344.28625pt x 164.615pt>
 File: ./content/paper1/fig/real_data_hist-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/real_data_hist-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/real_data_hist-eps-converted-to.pdf  used on input line 193.
@@ -999,7 +997,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/entropy1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/entropy1-eps-converted-to.pdf ./content/paper1/fig/entropy1.eps>
 (epstopdf)             \includegraphics on input line 230.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/entropy1-eps-converted-to.pdf, id=793, 302.12875pt x 206.7725pt>
+<./content/paper1/fig/entropy1-eps-converted-to.pdf, id=815, 302.12875pt x 206.7725pt>
 File: ./content/paper1/fig/entropy1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/entropy1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/entropy1-eps-converted-to.pdf  used on input line 230.
@@ -1023,7 +1021,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf ./content/paper1/fig/cwt_fb_example.eps>
 (epstopdf)             \includegraphics on input line 304.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf, id=821, 408.52625pt x 169.63374pt>
+<./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf, id=843, 408.52625pt x 169.63374pt>
 File: ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/cwt_fb_example-eps-converted-to.pdf  used on input line 304.
@@ -1038,7 +1036,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/sigmoid.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/sigmoid-eps-converted-to.pdf ./content/paper1/fig/sigmoid.eps>
 (epstopdf)             \includegraphics on input line 377.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/sigmoid-eps-converted-to.pdf, id=867, 342.27875pt x 251.94125pt>
+<./content/paper1/fig/sigmoid-eps-converted-to.pdf, id=887, 342.27875pt x 251.94125pt>
 File: ./content/paper1/fig/sigmoid-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/sigmoid-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/sigmoid-eps-converted-to.pdf  used on input line 377.
@@ -1058,7 +1056,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/entropymf.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/entropymf-eps-converted-to.pdf ./content/paper1/fig/entropymf.eps>
 (epstopdf)             \includegraphics on input line 400.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/entropymf-eps-converted-to.pdf, id=881, 307.1475pt x 239.89626pt>
+<./content/paper1/fig/entropymf-eps-converted-to.pdf, id=901, 307.1475pt x 239.89626pt>
 File: ./content/paper1/fig/entropymf-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/entropymf-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/entropymf-eps-converted-to.pdf  used on input line 400.
@@ -1076,7 +1074,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/kmeans1.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/kmeans1-eps-converted-to.pdf ./content/paper1/fig/kmeans1.eps>
 (epstopdf)             \includegraphics on input line 409.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/kmeans1-eps-converted-to.pdf, id=883, 335.2525pt x 242.9075pt>
+<./content/paper1/fig/kmeans1-eps-converted-to.pdf, id=903, 335.2525pt x 242.9075pt>
 File: ./content/paper1/fig/kmeans1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/kmeans1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/kmeans1-eps-converted-to.pdf  used on input line 409.
@@ -1099,7 +1097,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/testsigstft.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/testsigstft-eps-converted-to.pdf ./content/paper1/fig/testsigstft.eps>
 (epstopdf)             \includegraphics on input line 436.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/testsigstft-eps-converted-to.pdf, id=912, 332.24126pt x 158.5925pt>
+<./content/paper1/fig/testsigstft-eps-converted-to.pdf, id=932, 332.24126pt x 158.5925pt>
 File: ./content/paper1/fig/testsigstft-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/testsigstft-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/testsigstft-eps-converted-to.pdf  used on input line 436.
@@ -1118,7 +1116,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_snr_mf-eps-converted-to.pdf ./content/paper1/fig/res_snr_mf.eps>
 (epstopdf)             \includegraphics on input line 469.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_snr_mf-eps-converted-to.pdf, id=918, 360.34625pt x 278.03876pt>
+<./content/paper1/fig/res_snr_mf-eps-converted-to.pdf, id=938, 360.34625pt x 278.03876pt>
 File: ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_snr_mf-eps-converted-to.pdf  used on input line 469.
@@ -1135,7 +1133,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_mf_snr.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_mf_snr-eps-converted-to.pdf ./content/paper1/fig/res_mf_snr.eps>
 (epstopdf)             \includegraphics on input line 479.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_mf_snr-eps-converted-to.pdf, id=922, 362.35374pt x 279.0425pt>
+<./content/paper1/fig/res_mf_snr-eps-converted-to.pdf, id=942, 362.35374pt x 279.0425pt>
 File: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf  used on input line 479.
@@ -1143,7 +1141,7 @@ Package pdftex.def Info: ./content/paper1/fig/res_mf_snr-eps-converted-to.pdf  u
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[40 <./content/paper1/fig/testsigstft-eps-converted-to.pdf>] [41 <./content/paper1/fig/res_snr_mf-eps-converted-to.pdf> <./content/paper1/fig/res_mf_snr-eps-converted-to.pdf>]
+[40 <./content/paper1/fig/testsigstft-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_classmeans.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 30632 bytes
@@ -1159,11 +1157,21 @@ File: ./content/paper1/fig/res_classmeans-eps-converted-to.pdf Graphic file (typ
 Package pdftex.def Info: ./content/paper1/fig/res_classmeans-eps-converted-to.pdf  used on input line 490.
 (pdftex.def)             Requested size: 253.20258pt x 114.46405pt.
 
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
 Overfull \hbox (0.49611pt too wide) in paragraph at lines 531--532
 \T1/cmr/m/n/10.95 the equivalent sinusoidal power from equation ([]3.6[]) unevenly weights some of the frequency
  []
 
-[42 <./content/paper1/fig/res_classmeans-eps-converted-to.pdf>]
+[41 <./content/paper1/fig/res_snr_mf-eps-converted-to.pdf> <./content/paper1/fig/res_mf_snr-eps-converted-to.pdf>] [42 <./content/paper1/fig/res_classmeans-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 34081 bytes
@@ -1173,7 +1181,7 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf ./content/paper1/fig/res_snr_mf_L2.eps>
 (epstopdf)             \includegraphics on input line 548.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf, id=973, 363.3575pt x 279.0425pt>
+<./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf, id=993, 363.3575pt x 279.0425pt>
 File: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf  used on input line 548.
@@ -1182,7 +1190,6 @@ Package pdftex.def Info: ./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[43]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_snippet1.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 154814 bytes
@@ -1192,12 +1199,15 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_snippet1.
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf ./content/paper1/fig/res_realdata_snippet1.eps>
 (epstopdf)             \includegraphics on input line 563.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf, id=979, 538.01pt x 232.87pt>
+<./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf, id=995, 538.01pt x 232.87pt>
 File: ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf  used on input line 563.
 (pdftex.def)             Requested size: 422.0pt x 182.65765pt.
- [44 <./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf> <./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[43] [44 <./content/paper1/fig/res_snr_mf_L2-eps-converted-to.pdf> <./content/paper1/fig/res_realdata_snippet1-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 26593 bytes
@@ -1207,15 +1217,11 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf ./content/paper1/fig/res_realdata_roc.eps>
 (epstopdf)             \includegraphics on input line 589.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf, id=1003, 297.11pt x 235.88126pt>
+<./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf, id=1023, 297.11pt x 235.88126pt>
 File: ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf  used on input line 589.
 (pdftex.def)             Requested size: 211.0pt x 167.52365pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_thresh.eps>
 (epstopdf)                    date: 2024-05-05 12:31:35
 (epstopdf)                    size: 44142 bytes
@@ -1225,20 +1231,21 @@ Package epstopdf Info: Source file: <./content/paper1/fig/res_realdata_thresh.ep
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf ./content/paper1/fig/res_realdata_thresh.eps>
 (epstopdf)             \includegraphics on input line 596.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf, id=1004, 342.27875pt x 285.065pt>
+<./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf, id=1024, 342.27875pt x 285.065pt>
 File: ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf  used on input line 596.
 (pdftex.def)             Requested size: 232.10129pt x 193.31096pt.
 
+
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
+[45 <./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf>]
 Overfull \hbox (2.84192pt too wide) in paragraph at lines 606--607
 []\T1/cmr/m/n/10.95 The proposed detector based on the CWT with median filtering outperforms the traditional
  []
 
-[45] [46 <./content/paper1/fig/res_realdata_roc-eps-converted-to.pdf> <./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>]
+[46 <./content/paper1/fig/res_realdata_thresh-eps-converted-to.pdf>]
 Overfull \hbox (3.65074pt too wide) in paragraph at lines 608--609
 \T1/cmr/m/n/10.95 classification problems, accurate audio segmentation and time localization is not necessarily
  []
@@ -1248,30 +1255,26 @@ Overfull \hbox (4.41301pt too wide) in paragraph at lines 622--623
 \T1/cmr/m/n/10.95 manual annotations, the effectiveness of the CWT as a TF-decomposition for SE calculation
  []
 
-[48] [49]
+[48]
 Overfull \hbox (2.37804pt too wide) in paragraph at lines 635--636
 \T1/cmr/m/n/10.95 process such as Gaussian white noise (GWN) or colored white noise (CWN). The variability
  []
 
-[50]) (content/p2_intro.tex [51]
+[49]) (content/p2_intro.tex [50]
 Chapter 4.
-[52
+[51
 
 ]
-Overfull \hbox (5.22305pt too wide) in paragraph at lines 29--30
-\T1/cmr/m/n/10.95 audio applications. For example, many applications ``blur'' (low-pass) the TF decomposition
- []
-
 Package acronym Info: Label `acro:dct' newly defined as it shall be overridden
 although it is yet undefined on input line 35.
-[53]) (content/paper2/main.tex [54]
+ [52]) (content/paper2/main.tex [53]
 Chapter 5.
 
 Overfull \hbox (1.28958pt too wide) in paragraph at lines 16--17
 \T1/cmr/m/n/10.95 requires preparation of large and accurate annotated datasets, which are often not available
  []
 
-[55
+[54
 
 ]
 Package acronym Info: Label `acro:poi' newly defined as it shall be overridden
@@ -1280,15 +1283,13 @@ Package acronym Info: Label `acro:bled' newly defined as it shall be overridden
 although it is yet undefined on input line 29.
 Package acronym Info: Label `acro:hmm' newly defined as it shall be overridden
 although it is yet undefined on input line 32.
-Package acronym Info: Label `acro:ws' newly defined as it shall be overridden
-although it is yet undefined on input line 34.
- [56]
+ [55]
 Package acronym Info: Label `acro:svm' newly defined as it shall be overridden
 although it is yet undefined on input line 36.
 Package acronym Info: Label `acro:lstm' newly defined as it shall be overridden
 although it is yet undefined on input line 40.
- [57]
-<./content/paper2/fig/system_diagram_v2.png, id=1196, 751.80875pt x 675.52374pt>
+ [56]
+<./content/paper2/fig/system_diagram_v2.png, id=1211, 751.80875pt x 675.52374pt>
 File: ./content/paper2/fig/system_diagram_v2.png Graphic file (type png)
 <use ./content/paper2/fig/system_diagram_v2.png>
 Package pdftex.def Info: ./content/paper2/fig/system_diagram_v2.png  used on input line 46.
@@ -1297,23 +1298,23 @@ Package pdftex.def Info: ./content/paper2/fig/system_diagram_v2.png  used on inp
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[58]
-<./content/paper2/fig/Bm_Ant-A_11.jpg, id=1210, 878.28125pt x 658.46pt>
+[57]
+<./content/paper2/fig/Bm_Ant-A_11.jpg, id=1225, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-A_11.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-A_11.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-A_11.jpg  used on input line 67.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_Ant-B_54.jpg, id=1211, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-B_54.jpg, id=1226, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-B_54.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-B_54.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-B_54.jpg  used on input line 72.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_Ant-Z_98.jpg, id=1212, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_Ant-Z_98.jpg, id=1227, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_Ant-Z_98.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_Ant-Z_98.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_Ant-Z_98.jpg  used on input line 77.
 (pdftex.def)             Requested size: 189.89871pt x 142.36992pt.
-<./content/paper2/fig/Bm_D_173.jpg, id=1213, 878.28125pt x 658.46pt>
+<./content/paper2/fig/Bm_D_173.jpg, id=1228, 878.28125pt x 658.46pt>
 File: ./content/paper2/fig/Bm_D_173.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/Bm_D_173.jpg>
 Package pdftex.def Info: ./content/paper2/fig/Bm_D_173.jpg  used on input line 82.
@@ -1322,42 +1323,49 @@ Package pdftex.def Info: ./content/paper2/fig/Bm_D_173.jpg  used on input line 8
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[59 <./content/paper2/fig/system_diagram_v2.png>] [60 <./content/paper2/fig/Bm_Ant-A_11.jpg> <./content/paper2/fig/Bm_Ant-B_54.jpg> <./content/paper2/fig/Bm_Ant-Z_98.jpg> <./content/paper2/fig/Bm_D_173.jpg>] [61]
+[58 <./content/paper2/fig/system_diagram_v2.png>] [59 <./content/paper2/fig/Bm_Ant-A_11.jpg> <./content/paper2/fig/Bm_Ant-B_54.jpg> <./content/paper2/fig/Bm_Ant-Z_98.jpg> <./content/paper2/fig/Bm_D_173.jpg>] [60]
 Overfull \hbox (0.29446pt too wide) in paragraph at lines 169--170
 []\T1/cmr/m/n/10.95 For computational efficiency, the critically down-sampled scattering coefficients are instead
  []
 
-[62]
+[61]
 Package acronym Info: Label `acro:gpu' newly defined as it shall be overridden
 although it is yet undefined on input line 178.
- [63]
-<./content/paper2/fig/scattering.png, id=1255, 3126.68124pt x 1324.95pt>
+<./content/paper2/fig/scattering.png, id=1259, 3126.68124pt x 1324.95pt>
 File: ./content/paper2/fig/scattering.png Graphic file (type png)
 <use ./content/paper2/fig/scattering.png>
 Package pdftex.def Info: ./content/paper2/fig/scattering.png  used on input line 204.
 (pdftex.def)             Requested size: 379.79742pt x 160.92798pt.
- [64 <./content/paper2/fig/scattering.png>]
-<./content/paper2/fig/fb.jpg, id=1269, 830.10126pt x 291.0875pt>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[62]
+<./content/paper2/fig/fb.jpg, id=1278, 830.10126pt x 291.0875pt>
 File: ./content/paper2/fig/fb.jpg Graphic file (type jpg)
 <use ./content/paper2/fig/fb.jpg>
 Package pdftex.def Info: ./content/paper2/fig/fb.jpg  used on input line 230.
 (pdftex.def)             Requested size: 422.0pt x 147.9774pt.
- [65 <./content/paper2/fig/fb.jpg>]
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[63 <./content/paper2/fig/scattering.png>] [64 <./content/paper2/fig/fb.jpg>]
 Package acronym Info: Label `acro:psd' newly defined as it shall be overridden
 although it is yet undefined on input line 265.
- [66]
+ [65]
 Overfull \hbox (3.58351pt too wide) in paragraph at lines 323--324
 []\T1/cmr/m/n/10.95 Although this allows for normalized measure between 0 and 1, there is still some uncertainty
  []
 
 Package acronym Info: Label `acro:em' newly defined as it shall be overridden
 although it is yet undefined on input line 325.
-[67]
+[66]
 Overfull \hbox (9.99756pt too wide) in paragraph at lines 334--336
 \T1/cmr/m/n/10.95 where $\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^V[]; ^^V[]\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 and $\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^[[]; ^^[[]\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 are the noise and signal entropy means and variances respectively.
  []
 
-[68]
+[67]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 408.
@@ -1371,14 +1379,14 @@ Package epstopdf Info: Source file: <./content/paper2/fig/detector_example_2.eps
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/detector_example_2-eps-converted-to.pdf ./content/paper2/fig/detector_example_2.eps>
 (epstopdf)             \includegraphics on input line 410.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/detector_example_2-eps-converted-to.pdf, id=1314, 561.09625pt x 230.8625pt>
+<./content/paper2/fig/detector_example_2-eps-converted-to.pdf, id=1331, 561.09625pt x 230.8625pt>
 File: ./content/paper2/fig/detector_example_2-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/detector_example_2-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/detector_example_2-eps-converted-to.pdf  used on input line 410.
 (pdftex.def)             Requested size: 422.0pt x 173.62904pt.
 Package acronym Info: Label `acro:roc' newly defined as it shall be overridden
 although it is yet undefined on input line 472.
-[69 <./content/paper2/fig/detector_example_2-eps-converted-to.pdf>]
+[68 <./content/paper2/fig/detector_example_2-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./content/paper2/fig/roc.eps>
 (epstopdf)                    date: 2024-05-05 12:20:34
 (epstopdf)                    size: 28320 bytes
@@ -1388,7 +1396,7 @@ Package epstopdf Info: Source file: <./content/paper2/fig/roc.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/roc-eps-converted-to.pdf ./content/paper2/fig/roc.eps>
 (epstopdf)             \includegraphics on input line 519.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/roc-eps-converted-to.pdf, id=1332, 263.98625pt x 210.7875pt>
+<./content/paper2/fig/roc-eps-converted-to.pdf, id=1349, 263.98625pt x 210.7875pt>
 File: ./content/paper2/fig/roc-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/roc-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/roc-eps-converted-to.pdf  used on input line 519.
@@ -1402,7 +1410,7 @@ Package epstopdf Info: Source file: <./content/paper2/fig/calls.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=./content/paper2/fig/calls-eps-converted-to.pdf ./content/paper2/fig/calls.eps>
 (epstopdf)             \includegraphics on input line 525.
 Package epstopdf Info: Output file is already uptodate.
-<./content/paper2/fig/calls-eps-converted-to.pdf, id=1333, 263.98625pt x 210.7875pt>
+<./content/paper2/fig/calls-eps-converted-to.pdf, id=1350, 263.98625pt x 210.7875pt>
 File: ./content/paper2/fig/calls-eps-converted-to.pdf Graphic file (type pdf)
 <use ./content/paper2/fig/calls-eps-converted-to.pdf>
 Package pdftex.def Info: ./content/paper2/fig/calls-eps-converted-to.pdf  used on input line 525.
@@ -1411,7 +1419,7 @@ Package pdftex.def Info: ./content/paper2/fig/calls-eps-converted-to.pdf  used o
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[70] [71 <./content/paper2/fig/roc-eps-converted-to.pdf> <./content/paper2/fig/calls-eps-converted-to.pdf>]
+[69] [70 <./content/paper2/fig/roc-eps-converted-to.pdf> <./content/paper2/fig/calls-eps-converted-to.pdf>]
 Package acronym Info: Label `acro:lda' newly defined as it shall be overridden
 although it is yet undefined on input line 559.
 
@@ -1419,10 +1427,10 @@ Overfull \hbox (13.39017pt too wide) in paragraph at lines 566--567
 \T1/cmr/m/n/10.95 occurs in the same timeframe, with the noise class being assigned if there are no corresponding
  []
 
-[72]
+[71]
 Package acronym Info: Label `acro:cls' newly defined as it shall be overridden
 although it is yet undefined on input line 579.
- [73] [74]
+ [72] [73]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 701.
@@ -1432,7 +1440,7 @@ Overfull \hbox (10.61046pt too wide) in paragraph at lines 792--793
 []\T1/cmr/m/n/10.95 Using Table []5.1[], we estimate that the true accuracies of the models' vocalisation classification
  []
 
-[75] [76{/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+[74] [75{/home/marco/.miktex/texmfs/install/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 Overfull \hbox (24.49318pt too wide) in paragraph at lines 796--797
 \T1/cmr/m/n/10.95 require temporal information and adjacent frequency information to be extracted. Furthermore,
  []
@@ -1457,38 +1465,38 @@ Overfull \hbox (20.91743pt too wide) in paragraph at lines 802--803
 \T1/cmr/m/n/10.95 capabilities. The \T1/cmr/m/it/10.95 Bm_Ant_A \T1/cmr/m/n/10.95 and \T1/cmr/m/it/10.95 Bm_Ant_B \T1/cmr/m/n/10.95 models detect many unannotated vocalisations
  []
 
-[77]
+[76]
 Overfull \hbox (0.97961pt too wide) in paragraph at lines 806--807
 []\T1/cmr/m/n/10.95 Our disposal of the time dimension by using the maximum naturally lends our classification
  []
 
-[78] [79]
+[77] [78]
 Overfull \hbox (4.17279pt too wide) in paragraph at lines 824--825
 []\T1/cmr/m/n/10.95 This paper provides the groundwork required to implement [][]-based classification without
  []
 
-[80] [81
+[79] [80
 
 ]
 Overfull \hbox (7.54626pt too wide) in paragraph at lines 881--903
 [][] 
  []
 
-) (content/p3_intro.tex [82]
+) (content/p3_intro.tex [81]
 Chapter 6.
-[83
+[82
 
 ]
 Package acronym Info: Label `acro:dwt' newly defined as it shall be overridden
 although it is yet undefined on input line 26.
- [84]) (content/paper3/main.tex [85]
+ [83]) (content/paper3/main.tex [84]
 Chapter 7.
 
 Overfull \hbox (3.77243pt too wide) in paragraph at lines 17--18
 \T1/cmr/m/n/10.95 Wavelet scattering is a widely used feature extraction method due to it efficacy in extracting
  []
 
-[86
+[85
 
 ]
 Overfull \hbox (5.09169pt too wide) in paragraph at lines 27--28
@@ -1502,7 +1510,7 @@ Overfull \hbox (1.24046pt too wide) in paragraph at lines 27--28
 
 Package acronym Info: Label `acro:fir' newly defined as it shall be overridden
 although it is yet undefined on input line 29.
-[87]
+[86]
 Overfull \hbox (7.69112pt too wide) in paragraph at lines 33--34
 \T1/cmr/m/n/10.95 separable scattering transform with three-dimensional medical datasets from MedMNIST3D
  []
@@ -1517,7 +1525,7 @@ Overfull \hbox (6.22762pt too wide) in paragraph at lines 64--66
 \T1/cmr/m/n/10.95 where $\OML/cmm/m/it/10.95 ^^^$ \T1/cmr/m/n/10.95 represents the 1D [][] utilised in scattering computations for the current dimension
  []
 
-[88]
+[87]
 Package acronym Info: Label `acro:std' newly defined as it shall be overridden
 although it is yet undefined on input line 81.
 
@@ -1525,17 +1533,17 @@ Overfull \hbox (11.30786pt too wide) in paragraph at lines 98--99
 \T1/cmr/m/n/10.95 negligible, motivating filterbank construction starting at a specified frequency $\OML/cmm/m/it/10.95 ![]$\T1/cmr/m/n/10.95 . Otherwise,
  []
 
-[89]
+[88]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 107.
- [90]
+ [89]
 Overfull \hbox (1.8991pt too wide) in paragraph at lines 166--168
 \T1/cmr/m/n/10.95 The [][] $\OML/cmm/m/it/10.95 ^^^$ \T1/cmr/m/n/10.95 remains constant throughout the transform. Note that the modulus/magnitude
  []
 
-[91] [92] [93] [94]
+[90] [91] [92] [93]
 Package acronym Info: Label `acro:auc' newly defined as it shall be overridden
 although it is yet undefined on input line 288.
- [95]
+ [94]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 290.
@@ -1543,19 +1551,9 @@ LaTeX Warning: No positions in optional float specifier.
 
 LaTeX Warning: Float too large for page by 88.01811pt on input line 309.
 
-) (content/conclusion.tex [96] [97]
+) (content/conclusion.tex [95] [96]
 Chapter 8.
-
-Overfull \hbox (1.63783pt too wide) in paragraph at lines 11--12
-[]\T1/cmr/m/n/10.95 Further work includes deploying separable wavelet scattering and the improved [][] detector
- []
-
-
-Overfull \hbox (12.13599pt too wide) in paragraph at lines 11--12
-\T1/cmr/m/n/10.95 from chapter 5[] in a [][] detection and classification system, while evaluating its performance
- []
-
-) (/home/marco/Repos/phd/dissertation/build/main.bbl [98
+) (/home/marco/Repos/phd/dissertation/build/main.bbl [97
 
 ] (/home/marco/.miktex/texmfs/install/tex/latex/stellenbosch-2/stb-bib.eng)
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 32.
@@ -1566,19 +1564,19 @@ Underfull \hbox (badness 1406) in paragraph at lines 95--100
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 http : / / arxiv . org / abs / 1304 . 6763http : / / dx . doi . org / 10 . 1109 /
  []
 
-[99
+[98
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 142--149
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[100]
+
 Underfull \hbox (badness 10000) in paragraph at lines 204--207
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / ravensoundsoftware . com / knowledge-[]base /
  []
 
-
+[99]
 Underfull \hbox (badness 1859) in paragraph at lines 216--229
 \T1/cmr/m/n/10.95 Wavelet Scattering: Predicting Quantum Molecular Energy from Invariant
  []
@@ -1598,12 +1596,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 241--248
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / onlinelibrary . wiley . com / doi / abs / 10 . 1111 / j .
  []
 
-[101]
+[100]
 Underfull \hbox (badness 10000) in paragraph at lines 326--336
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[102]
+[101]
 Underfull \hbox (badness 10000) in paragraph at lines 407--415
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
@@ -1613,7 +1611,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 438--445
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[103]
+[102]
 Underfull \hbox (badness 1565) in paragraph at lines 559--567
 []\T1/cmr/m/n/10.95 Mohebbi-Kalkhoran, H. and Ratilal, P. (2022).  Automatic detection and
  []
@@ -1623,7 +1621,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 580--588
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[104]
+[103]
 Underfull \hbox (badness 10000) in paragraph at lines 592--600
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
@@ -1648,12 +1646,12 @@ Overfull \hbox (17.76172pt too wide) in paragraph at lines 659--678
 \T1/cmtt/m/n/10.95 9015-[]pytorch-[]an-[]imperative-[]style-[]high-[]performance-[]deep-[]learning-[]library .
  []
 
-[105]
+[104]
 Underfull \hbox (badness 10000) in paragraph at lines 739--745
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / linkinghub . elsevier . com / retrieve / pii /
  []
 
-[106]
+[105]
 Underfull \hbox (badness 10000) in paragraph at lines 777--785
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
@@ -1668,7 +1666,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 823--831
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[107]
+[106]
 Underfull \hbox (badness 10000) in paragraph at lines 883--890
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
@@ -1678,39 +1676,35 @@ Underfull \hbox (badness 10000) in paragraph at lines 931--939
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-[108]
+
 Underfull \hbox (badness 10000) in paragraph at lines 943--951
 \T1/cmr/m/n/10.95 Available at: []$\T1/cmtt/m/n/10.95 https : / / pubs . aip . org / jel / article / 3 / 9 / 096002 / 2911548 /
  []
 
-) [109] (/home/marco/Repos/phd/dissertation/build/main.aux)
+[107]) [108] (/home/marco/Repos/phd/dissertation/build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-04-11>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D18F263291B92EFDA8EE4D3D5764D723;11700.
+(rerunfilecheck)             Checksum: DE5CFB8B870E6CC2085586F9C5F42F93;11724.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 55 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 29663 strings out of 476305
- 545138 string characters out of 5792265
+ 29678 strings out of 476305
+ 545269 string characters out of 5792265
  1945751 words of memory out of 5000000
- 50725 multiletter control sequences out of 15000+600000
+ 50728 multiletter control sequences out of 15000+600000
  593158 words of font info for 130 fonts, out of 8000000 for 9000
  0 hyphenation exceptions out of 8191
- 99i,15n,107p,1543b,1195s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,15n,107p,1543b,1197s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx8.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmex10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi6.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi8.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr6.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/euler/eurm10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msam10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msbm10.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfbx1728.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0600.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0800.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1440.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfrm1728.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfsl1200.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti0900.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1000.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sfti1095.pfb></home/marco/.miktex/texmfs/install/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on /home/marco/Repos/phd/dissertation/build/main.pdf (110 pages, 3542520 bytes).
+Output written on /home/marco/Repos/phd/dissertation/build/main.pdf (109 pages, 3546384 bytes).
 PDF statistics:
- 2008 PDF objects out of 2073 (max. 8388607)
- 477 named destinations out of 1000 (max. 500000)
- 759 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2023 PDF objects out of 2073 (max. 8388607)
+ 489 named destinations out of 1000 (max. 500000)
+ 767 words of extra memory for PDF output out of 10000 (max. 10000000)
 

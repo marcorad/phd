@@ -4,18 +4,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Comparing the STPR of the STFT and CWT at varying SNR's and MF Window Lengths}}{42}{table.caption.44}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Comparing the STNR of the STFT and CWT at varying SNR's and MF Window Lengths}}{42}{table.caption.45}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Comparing the STPR of the STFT and CWT at varying SNR's and MF Window Lengths}}{42}{table.caption.45}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Comparing the STNR of the STFT and CWT at varying SNR's and MF Window Lengths}}{42}{table.caption.46}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Total number of annotations in the Casey 2017 dataset.}}{60}{table.caption.59}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Estimated erroneous (false positives) proportion of annotations per class that could be considered noise.}}{61}{table.caption.60}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces The number of missed calls as a result of a non-converging \ac {gmm} fit.}}{70}{table.caption.69}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Number of labeled detections for all vocalisations of interest.}}{75}{table.caption.72}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Average model classification accuracies for varying train-test splits with chi-squared feature selection.}}{76}{table.caption.73}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Summary of parameter values used in this study. }}{82}{table.caption.74}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Total number of annotations in the Casey 2017 dataset.}}{59}{table.caption.59}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Estimated erroneous (false positives) proportion of annotations per class that could be considered noise.}}{60}{table.caption.60}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces The number of missed calls as a result of a non-converging \ac {gmm} fit.}}{69}{table.caption.69}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Number of labeled detections for all vocalisations of interest.}}{74}{table.caption.72}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Average model classification accuracies for varying train-test splits with chi-squared feature selection.}}{75}{table.caption.73}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Summary of parameter values used in this study. }}{81}{table.caption.74}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces MNIST classification error rate (\%) of separable and \ac {2d} scattering coefficients using a NN classifier.}}{95}{table.caption.78}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces MedMNIST classification results of compared to baseline \ac {nn} approaches.}}{97}{table.caption.80}%
+\contentsline {table}{\numberline {7.1}{\ignorespaces MNIST classification error rate (\%) of separable and \ac {2d} scattering coefficients using a NN classifier.}}{94}{table.caption.78}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces MedMNIST classification results of compared to baseline \ac {nn} approaches.}}{96}{table.caption.80}%
 \addvspace {10\p@ }

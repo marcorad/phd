@@ -3,14 +3,14 @@
 
 
 \articleinfo{Soft-output Signal Detection for Cetacean Vocalizations using
-Spectral \break Entropy, K-means Clustering and the Continuous Wavelet Transform}{Ecological Informatics}{15 May 2024}{doi}
+Spectral \break Entropy, K-means Clustering and the Continuous Wavelet Transform}{Ecological Informatics}{May 2023}{https://doi.org/10.1016/j.ecoinf.2023.101990}
 
 \section*{CRediT}
 \textbf{M.W. Rademan}: conceptualisation; methodology; software; formal analysis; writing -- original draft.
 
-\textbf{D.J.J. Verseld}: data collection; writing -- review and editing; supervision.
+\textbf{D.J.J. Versfeld}: data collection; writing -- review and editing; supervision.
 
-\textbf{J.A. Du Preez}: writing -- review and editing; supervision.
+\textbf{J.A. du Preez}: writing -- review and editing; supervision.
 
 \section*{Abstract}
 Underwater passive acoustic monitoring systems record many hours of audio data for marine research, 
@@ -213,13 +213,13 @@ The power spectrum $S[k, m]$ may be derived from $X[k, m]$ as
 
 \noindent which may then be converted to a pseudo-probability density $P[k,m]$, referred to as the spectral distribution:
 \begin{equation}
-\label{eqn:specdist}
+\label{eqn:specdistp1}
 	P[k,m] = \frac{S[k,m]}{\sum_{j=0}^{N-1} S[j,m]}.
 \end{equation}
 
 The spectral distribution is used to construct a time-varying entropy measure $H[m]$, based on Shannon's entropy:
 \begin{equation}
-\label{eqn:entropy}
+\label{eqn:entropyp1}
 	H[m] = - \sum_{k=0}^{N/2} P[k,m] \log (P[k,m]).
 \end{equation}
 
@@ -316,7 +316,7 @@ Given then the discretized/numerical calculation of the CWT with L1 normalizatio
 
 The bandwidth of the filter influences the observed power, especially in the presence of noise. However, the equivalent sinusoidal power may be more useful in most applications. When a sinusoid is present, the equivalent sinusoidal power does not reduce as frequency increases (as with L2 normalization). However, higher frequency wavelets will be more sensitive to noise, due to their increased bandwidth.
 
-SE is calculated by substituting the CWT equivalent sinusoidal power from equation (\ref{eqn:cwtps}) into equations (\ref{eqn:specdist}) and (\ref{eqn:entropy}).
+SE is calculated by substituting the CWT equivalent sinusoidal power from equation (\ref{eqn:cwtps}) into equations (\ref{eqn:specdistp1}) and (\ref{eqn:entropyp1}).
 
 \section{Signal detection}
 \subsection{K-means}

@@ -7,7 +7,6 @@ Reallocating 'name_of_file' (item size: 1) to 24 items.
 Database file #1: references_consolodated.bib
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-Warning--empty journal in ws_joint_tf
 Warning--empty journal in jointtfscattering2
 Warning--empty journal in ws
 Warning--empty journal in pamguide
@@ -15,46 +14,46 @@ Warning--empty journal in logit
 Warning--can't use both volume and number fields in origkmeans
 Warning--empty chapter and pages in kmeansoverview
 Warning--missing publisher in kmeansoverview
-Warning--empty journal in cnninvariance2
+Warning--empty booktitle in cnninvariance2
 You've used 100 entries,
             3324 wiz_defined-function locations,
-            1247 strings with 26250 characters,
-and the built_in function-call counts, 101341 in all, are:
-= -- 7912
+            1250 strings with 26226 characters,
+and the built_in function-call counts, 101653 in all, are:
+= -- 7944
 > -- 3080
-< -- 199
+< -- 202
 + -- 1188
 - -- 1078
-* -- 10221
-:= -- 12204
-add.period$ -- 337
+* -- 10237
+:= -- 12226
+add.period$ -- 338
 call.type$ -- 100
 change.case$ -- 852
 chr.to.int$ -- 104
-cite$ -- 109
-duplicate$ -- 9893
-empty$ -- 8965
+cite$ -- 108
+duplicate$ -- 9919
+empty$ -- 8997
 format.name$ -- 2130
-if$ -- 20665
+if$ -- 20746
 int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 1177
+missing$ -- 1180
 newline$ -- 584
 num.names$ -- 402
-pop$ -- 2659
+pop$ -- 2660
 preamble$ -- 1
 purify$ -- 755
 quote$ -- 0
-skip$ -- 2579
+skip$ -- 2600
 stack$ -- 0
-substring$ -- 5733
-swap$ -- 5064
-text.length$ -- 151
+substring$ -- 5773
+swap$ -- 5092
+text.length$ -- 154
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 882
-warning$ -- 9
-while$ -- 906
+warning$ -- 8
+while$ -- 909
 width$ -- 0
-write$ -- 1398
-(There were 9 warnings)
+write$ -- 1400
+(There were 8 warnings)

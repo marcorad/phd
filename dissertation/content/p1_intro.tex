@@ -34,13 +34,13 @@ A \ac{ct} Fourier transform of $x(t)$ is given as
 Derived from the conventional Fourier transform given by equation (\ref*{eqn:fouriertransform}), a \ac{dt} signal $x[n], n \in \{0, ..., N-1\}$ of length $N$ samples has a \ac{dtft}
 \begin{equation}
     \label{eqn:dtft}
-    \text{DTFT}\{x\} \triangleq \hat{x}[k] = \sum_{n=0}^{N} x(t) e^{-j \frac{2\pi k n}{N}} = \left(x \otimes \upsilon_k\right)\bigg|_{n=0},
+    \text{DTFT}\{x\} \triangleq \hat{x}[k] = \sum_{n=0}^{N} x[n] e^{-j \frac{2\pi k n}{N}} = \left(x \otimes \upsilon_k\right)\bigg|_{n=0},
 \end{equation}
 for which $\upsilon_k = e^{j \frac{2\pi k n}{N}}, \ k \in \{0, ..., N-1\}$ forms an orthogonal basis of $x$. The circular convolution operator $\otimes$ implies the infinite periodic extension of $x$ beyond its boundaries of $n \in \{0, ..., N-1\}$ \citep{dspbook}. 
 
 Equation (\ref{eqn:dtft}) describes the \ac{dtft} as a convolution evaluated at the index 0 as a useful link to the generalised notion of \ac{tf} analyses: Fourier transforms can be considered as complex sinusoidal filters being applied to the signal of interest, with periodic boundary extension.
 
-The \ac{dtft} is commonly used to quickly compute convolutions for which the \ac{fft} is a fast alorithm with $N \log N$ computational complexity. In particular, to circularly convolve signals $x$ and $y$, a fast computation is implemented as
+The \ac{dtft} is commonly used to quickly compute convolutions for which the \ac{fft} is a fast algorithm with $N \log N$ computational complexity. In particular, to circularly convolve signals $x$ and $y$, a fast computation is implemented as
 \begin{equation}
     \label{eqn:fftconv}
     x \otimes y = \text{FFT}^{-1}\{\hat{x} \cdot \hat{y}\}.
@@ -48,7 +48,7 @@ The \ac{dtft} is commonly used to quickly compute convolutions for which the \ac
 
 With the correct padding procedures, one can compute $x * y$ using equation (\ref{eqn:fftconv}).
 
-Fourier transforms as decribed above are invertible operators, since they are orthogonal decompositions. However, for \ac{tf} analyses, invertibility is not necessarily a requirement of the application. As such, this disseration does not consider invertibility for the remainder of the content.
+Fourier transforms as described above are invertible operators, since they are orthogonal decompositions. However, for \ac{tf} analyses, invertibility is not necessarily a requirement of the application. As such, this dissertation does not consider invertibility for the remainder of the content.
 
 
 \section{Constructing Filters}
@@ -65,16 +65,16 @@ The frequency domain content $\hat{w}$ entirely specifies the filter behaviour o
 
 The linearly-spaced filters and constant-bandwidth does not necessarily reflect and/or capture the natural phenomena typically present in audio signals. In particular, an audio signal can be expressed as a series of harmonics above its fundamental. This motivates the use of exponentially placed filters.
 
-Formally, given a signal with a fundamental frequency most accurately captured in the frequency bin $k_0$, any change in frequency by a factor $a$ will move the fundamental frequency content to the bin $a k_0$. This has dire consequences for lower frequency signals - the frequency resolution of lower frequency signals is significantly poorer compared to the frequency resolution of its own harmonics. As such, a small frequency shift of a lower frequency signal with ample harmonic content which cause large index shifts for its harmonics, i.e., the $b$'th harmonic will be shifted to index $a b k_0$.
+Formally, given a signal with a fundamental frequency most accurately captured in the frequency bin $k_0$, any change in frequency by a factor $a$ will move the fundamental frequency content to the bin $a k_0$. This has dire consequences for lower frequency signals - the frequency resolution of lower frequency signals is significantly poorer compared to the frequency resolution of that signal's harmonics. A small frequency shift of a low frequency signal with harmonic content which cause large index shifts for its harmonics, i.e., the $b$'th harmonic will be shifted to index $a b k_0$.
 
-Suppose that we design $\Upsilon$ to contain $Q$ filters per octave. A frequency change by a factor $a$ shifts the frequency index of the fundamental to $(Q\log_2 (a) + 1) k_0$. Similarly, the $b$'th harmonic's frequency index is shifted to $(Q\log_2 (a) + 1) (Q\log_2 (b) + 1) k_0$. For example, if $a=2$, the fundamental's frequency index is shifted to $k_0 + Q$ (as opposed to $2 k_0$ for the \ac{stft}). This property is referred to a frequency-shift invariance, since small frequency deformations of the order $Q^{-1}$ do not significantly change the frequency index structure of the \ac{tf} decomposition \citep{1dscattering1}. The \ac{stft} is much more sensitive to such deformations across its entire structure for harmonically rich signals.
+Suppose that we design $\Upsilon$ to contain $Q$ filters per octave. A frequency change by a factor $a$ shifts the frequency index of the fundamental to $(Q\log_2 (a) + 1) k_0$. Similarly, the $b$'th harmonic's frequency index is shifted to $(Q\log_2 (a) + 1) (Q\log_2 (b) + 1) k_0$. For example, if $a=2$, the fundamental's frequency index is shifted to $k_0 + Q$ (as opposed to $2 k_0$ for the \ac{stft}). This property is referred to as frequency-shift invariance, since small frequency deformations of the order $Q^{-1}$ do not significantly change the frequency index structure of the \ac{tf} decomposition \citep{1dscattering1}. The \ac{stft} of a signal with harmonic content is much more sensitive to such deformations across its entire structure.
 
-An exponential filterbank design has increased stability to small frequency fluctuations, which can make it more useful for feature-extraction methods in a \ac{ml} pipeline, since feature vectors are more stable against frequency deformations. The exponential filterbank is, in fact, the way wavelet filters are typically constructed. Additionally, the \ac{mfcc} filterbank attributes much of its sucess (compared to raw \ac{stft} magnitude coefficients) due to its exponentially placed filters.
+An exponential filterbank design has increased stability to small frequency fluctuations, which can make it more useful for feature-extraction methods in a \ac{ml} pipeline, since feature vectors are more stable against frequency deformations. The exponential filterbank is, in fact, the way wavelet filters are typically constructed. Additionally, the \ac{mfcc} filterbank attributes much of its success (compared to raw \ac{stft} magnitude coefficients) due to its exponentially placed filters.
 
 \section{Wavelet Filters}
 \label{sec:p1i:wavelets}
 
-To construct a wavelet filterbank with $\upsilon_k \in \Upsilon$ which has the exponentially-spaced frequency properties discussed in section \ref{sec:p1i:tfa}, we use a ``template'' wavelet $\uppsi(t)$, referred to as the mother wavelet \cite{waveletbook}. Conventionally, wavelet filters are defined as \ac{ct} filters and then discretised in software implementations. 
+To construct a wavelet filterbank with $\upsilon_k \in \Upsilon$ which has the exponentially spaced fre\-quency properties discussed in section \ref{sec:p1i:tfa}, we use a ``template'' wavelet $\uppsi(t)$, referred to as the mother wavelet \cite{waveletbook}. Conventionally, wavelet filters are defined as \ac{ct} filters and then discretised in software implementations. 
 
 The mother wavelet is a \ac{bpf} with the following properties:
 \begin{enumerate}
@@ -94,11 +94,11 @@ Notational shorthand is often used:
     \uppsi_{\lambda_k}(t) \triangleq \lambda_k \uppsi(\lambda_k t).
 \end{equation}
 
-The multiplicate scaling, in addition to time scaling, ensures that $\uppsi_{\lambda_k}$ retains constant amplitude in the frequency domain, also referred to as L1 normalisation \cite{waveletbook}.
+The multiplicative scaling, in addition to time scaling, ensures that $\uppsi_{\lambda_k}$ retains constant amplitude in the frequency domain, also referred to as L1 normalisation \cite{waveletbook}.
 
 We construct a set $\lambda_k \in \Lambda$ such that $\lambda_{k+1} = 2^\frac{1}{Q}\lambda_{k}$, which ensures $Q$ wavelets per octave. Since $\uppsi$ has a frequency of 1 rad/s, $\lambda_k$ becomes the centre frequency of $\uppsi_{\lambda_k}$, while also scaling its bandwidth by a factor of $\lambda_k$. 
 
 An additional advantage resulting from bandwidth scaling is that higher frequencies become more localised in time, allowing for better localisation precision as frequency increases. This results from the fact that $\uppsi_{\lambda_k}$ maintains the same number of oscillations over scale, which is not true for the \ac{stft}.
 
-Chapter \ref{chap:p1} discusses the applications of such a filterbank in terms of the \ac{cwt}, obtaining a scalogram. Note that traditional \ac{cwt} notation typically uses the scale variable $s = \frac{1}{\lambda}$, where $s$ is made continuous. Discretisations of the \ac{cwt} approximate the transform by limiting $s$ to the set $s_k \in \frac{1}{\lambda_k}, \ \lambda_k \in \Lambda$. Chapter \ref{chap:p1} specifically considers the application of the \ac{cwt} for signal detectors, while also using other techniques to improve traditional methods.
+Chapter \ref{chap:p1} discusses the applications of such a filterbank in terms of the \ac{cwt}, obtaining a scalogram. Note that traditional \ac{cwt} notation typically uses the scale variable $s = \frac{1}{\lambda}$, where $s$ is made continuous. Discretisations of the \ac{cwt} approximate the transform by limiting $s$ to the set $s_k \in \frac{1}{\lambda_k}, \ \lambda_k \in \Lambda$. Chapter \ref{chap:p1} specifically considers the application of the \ac{cwt} for signal detectors, alongside additional detector improvements.
 
